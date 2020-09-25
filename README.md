@@ -1,9 +1,9 @@
 # LAIG 2020/2021
 
-## Group T0xG0y
+## Group T07G04
 | Name             | Number    | E-Mail              |
 | ---------------- | --------- | ------------------  |
-| Joao Romao       | 201806779 | up201806680@fe.up.pt|
+| Joao Romao       | 201806779 | up201806779@fe.up.pt|
 | Rafael Cristino  | 201806680 | up201806680@fe.up.pt|
 
 ----
