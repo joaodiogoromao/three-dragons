@@ -15,6 +15,13 @@ towerBodyWall
 towerCeilingTriangle
     triangle
 
+fieldGroundBarrier
+    torus
+
+fieldPlayingSurface
+    # made with rectangles; sits above the ground and the rectangles need to cover the elipse's inside
+    # if this proves very difficult, need to find alternative
+
 tower
     towerCeiling
         towerCeilingTriangle1
@@ -42,8 +49,10 @@ tower
 
 
 ground
-    field
-        fieldPlayingSurface
+    rectangle
+    quidditchField
+        fieldPlayingArea
+            fieldPlayingSurface
             hoopL1
                 hoop
             hoopL2
@@ -56,8 +65,8 @@ ground
                 hoop
             hoopR3
                 hoop
-        fieldGroundBarriers
-            torus
+        fieldDelimiters
+            fieldGroundBarrier
             towerT1
                 tower
             towerT2
