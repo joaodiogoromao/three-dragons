@@ -1,0 +1,82 @@
+
+# this is only a sketch of how to structure the field
+
+ROOT: ground
+
+hoop
+    hoopPole
+        cylinder
+    hoopHole
+        torus
+
+towerBodyWall
+    rectangle
+
+towerCeilingTriangle
+    triangle
+
+tower
+    towerCeiling
+        towerCeilingTriangle1
+            towerCeilingTriangle
+        towerCeilingTriangle2
+            towerCeilingTriangle
+        towerCeilingTriangle3
+            towerCeilingTriangle
+        towerCeilingTriangle4
+            towerCeilingTriangle
+        towerCeilingFlag
+            towerCeilingPole
+                cylinder
+    towerCabin
+        (...)
+    towerBody
+        towerBodyWall1
+            towerBodyWall
+        towerBodyWall2
+            towerBodyWall
+        towerBodyWall3
+            towerBodyWall
+        towerBodyWall4
+            towerBodyWall
+
+
+ground
+    field
+        fieldPlayingSurface
+            hoopL1
+                hoop
+            hoopL2
+                hoop
+            hoopL3
+                hoop
+            hoopR1
+                hoop
+            hoopR2
+                hoop
+            hoopR3
+                hoop
+        fieldGroundBarriers
+            torus
+            towerT1
+                tower
+            towerT2
+                tower
+            towerT3
+                tower
+            towerT4
+                tower
+            towerD1
+                tower
+            towerD2
+                tower
+            towerD3
+                tower
+            towerD4
+                tower
+    tent
+        (...)
+
+
+
+
