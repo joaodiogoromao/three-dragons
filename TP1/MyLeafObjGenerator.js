@@ -47,7 +47,15 @@ function getTorusPrimitive(scene, reader, node) {
     return new MyTorus(scene, inner, outer, slices, loops);
 }
 
+function getPlaceHolderPrimitive(type) {
+    return new PrimitivePlaceHolder(type);
+}
+
 const leafObjGenerator = {
     rectangle: getRectanglePrimitive,
-    torus: getTorusPrimitive
+    torus: getTorusPrimitive,
+    triangle: () => getPlaceHolderPrimitive("triangle"),
+    sphere: () => getPlaceHolderPrimitive("sphere"),
+    cylinder: () => getPlaceHolderPrimitive("cylinder")
+
 }
