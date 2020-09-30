@@ -16,7 +16,7 @@
 
     <illumination>
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />           <!-- global ambient -->
-        <background r="0" g="0" b="1" a="1.0" />        <!-- background color -->
+        <background r="0" g="0" b="0" a="1.0" />        <!-- background color -->
     </illumination>
 
 
@@ -123,8 +123,8 @@
             </texture>
 
             <descendants>
-                <noderef id="hoopPole">
-                <noderef id="hoopHole">
+                <noderef id="hoopPole" />
+                <noderef id="hoopHole" />
             </descendants>
         </node>
         <!--
