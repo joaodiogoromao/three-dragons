@@ -75,7 +75,7 @@
             </texture>
 
             <descendants>
-                <noderef id="fieldPlayingSurface" />
+                <noderef id="fieldPlayingArea" />
                 <noderef id="fieldDelimiters" />
             </descendants>
         </node>
