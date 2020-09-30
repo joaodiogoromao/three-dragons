@@ -42,31 +42,9 @@ tower
                     banner
     towerCabin
         towerCabinRoof
-            towerCabinRoof1
-                triangle
-            towerCabinRoof2
-                triangle
-            towerCabinRoof3
-                triangle
-            towerCabinRoof4
-                triangle
-            towerCabinRoofWall1
-                triangle
-            towerCabinRoofWall2
-                triangle
-            towerCabinRoofWall1
-                rectangle
-            towerCabinRoofWall2
-                rectangle
-        towerCabinBody
-            towerCabinBodyWall1
-                triangle
-            towerCabinBodyWall2
-                triangle
-            towerCabinBodyWall1
-                rectangle
-            towerCabinBodyWall2
-                rectangle
+            cabinStructure
+        towerCabinStand
+            cabinStructure
     towerBody
         towerBodyWall1
             towerBodyWall
@@ -76,6 +54,22 @@ tower
             towerBodyWall
         towerBodyWall4
             towerBodyWall
+
+cabinStructure
+    cabinWall1
+        wallTriangle
+    cabinWall2
+        wallTriangle
+    cabinStands
+        standsRectangle
+    cabinBackWall
+        standsRectangle
+
+wallTriangle
+    triangle
+
+standsRectangle
+    rectangle     
 
 banner
     bannerTriangle
@@ -119,6 +113,17 @@ ground
             towerD4
                 tower
     tent
-        rectangles
-        triangle
+        tentRoof
+            tentTriangle1
+            tentTriangle2
+            tentParallelogram
+        tentWalls
+            tentWall1
+            tentWall2
+            tentWall3
+            tentWall4
 
+tentParallelogram
+    parallelogramTriangle1
+    parallelogramTriangle2
+    parallelogramRectangle
