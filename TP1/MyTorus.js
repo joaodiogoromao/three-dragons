@@ -36,7 +36,7 @@ class MyTorus extends CGFobject {
         }
 
         for (let slice = 0; slice < this.slices; slice++) {
-            const offset = this.slices+1;
+            const offset = this.loops+1;
             const currentOffset = slice*offset;
             for (let loop = 0; loop < this.loops; loop++) {
                 this.indices.push(loop + currentOffset);

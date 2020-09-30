@@ -67,24 +67,15 @@
                 <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" /><!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
             </descendants>
         </node>
-        <node id="quidditchField">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
-
-            <descendants>
-                <noderef id="fieldPlayingArea" />
-                <noderef id="fieldDelimiters" />
-            </descendants>
-        </node>
+        <!--
+            **********************************
+            ********** OUTSIDE TENT **********
+            **********************************
+        -->
         <node id="tent">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentRoof" />
@@ -94,9 +85,7 @@
         <node id="tentRoof">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentTriangle1" />
@@ -108,9 +97,7 @@
         <node id="tentTriangle1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentTriangle" />
@@ -119,9 +106,7 @@
         <node id="tentTriangle2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentTriangle" />
@@ -130,9 +115,7 @@
         <node id="tentTriangle">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -141,9 +124,7 @@
         <node id="tentParallelogram1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentParallelogram" />
@@ -152,9 +133,7 @@
         <node id="tentParallelogram2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentParallelogram" />
@@ -163,9 +142,7 @@
         <node id="tentParallelogram">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="parallelogramTriangle1" />
@@ -176,9 +153,7 @@
         <node id="parallelogramTriangle1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="parallelogramTriangle" />
@@ -187,9 +162,7 @@
         <node id="parallelogramTriangle2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="parallelogramTriangle" />
@@ -198,9 +171,7 @@
         <node id="parallelogramTriangle">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -209,9 +180,7 @@
         <node id="parallelogramRectangle">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
@@ -220,9 +189,7 @@
         <node id="tentWalls">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentWall1" />
@@ -234,9 +201,7 @@
         <node id="tentWall1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentWall" />
@@ -245,9 +210,7 @@
         <node id="tentWall2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentWall" />
@@ -256,9 +219,7 @@
         <node id="tentWall3">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentWall" />
@@ -267,9 +228,7 @@
         <node id="tentWall4">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tentWall" />
@@ -278,20 +237,32 @@
         <node id="tentWall">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
             </descendants>
         </node>
+
+        <!--
+            *************************************
+            ********** QUIDDITCH FIELD **********
+            *************************************
+        -->
+        <node id="quidditchField">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <descendants>
+                <noderef id="fieldPlayingArea" />
+                <noderef id="fieldDelimiters" />
+            </descendants>
+        </node>
         <node id="fieldPlayingArea">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="fieldPlayingSurface" />
@@ -306,9 +277,7 @@
         <node id="fieldDelimiters">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="fieldGroundBarrier" />
@@ -322,12 +291,22 @@
                 <noderef id="towerD4" />
             </descendants>
         </node>
+        <node id="fieldGroundBarrier">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <descendants>
+                <leaf type="torus" inner="2" outer="15" slices="32" loops="64" /> 
+            </descendants>
+        </node>
+        <!--
+            ********** QUIDDITCH HOOPS **********
+        -->
         <node id="hoopL1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="hoop" />
@@ -336,9 +315,7 @@
         <node id="hoopL2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="hoop" />
@@ -347,9 +324,7 @@
         <node id="hoopL3">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="hoop" />
@@ -358,9 +333,7 @@
         <node id="hoopR1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="hoop" />
@@ -369,9 +342,7 @@
         <node id="hoopR2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="hoop" />
@@ -380,9 +351,7 @@
         <node id="hoopR3">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="hoop" />
@@ -391,9 +360,7 @@
         <node id="hoop">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="hoopPole" />
@@ -403,31 +370,29 @@
         <node id="hoopHole">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
-                <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
+                <!--<leaf type="torus" inner="3" outer="10" slices="64" loops="64" />-->
             </descendants>
         </node>
         <node id="hoopPole">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
             </descendants>
         </node>
+
+        <!--
+            ********** QUIDDITCH TOWERS **********
+        -->
         <node id="towerT1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
@@ -436,29 +401,25 @@
         <node id="towerT2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
+            </descendants>
         </node>
         <node id="towerT3">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
+            </descendants>
         </node>
         <node id="towerT4">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
@@ -467,9 +428,7 @@
         <node id="towerD1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
@@ -478,9 +437,7 @@
         <node id="towerD2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
@@ -489,9 +446,7 @@
         <node id="towerD3">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
@@ -500,9 +455,7 @@
         <node id="towerD4">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="tower" />
@@ -511,9 +464,7 @@
         <node id="tower">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerCeiling" />
@@ -524,9 +475,7 @@
         <node id="towerCeiling">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerCeilingTriangle1" />
@@ -539,9 +488,7 @@
         <node id="towerCeilingTraingle1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -550,9 +497,7 @@
         <node id="towerCeilingTraingle2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -561,9 +506,7 @@
         <node id="towerCeilingTraingle3">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -572,9 +515,7 @@
         <node id="towerCeilingTraingle4">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -583,9 +524,7 @@
         <node id="towerCeilingFlag">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerCeilingPole" />
@@ -595,9 +534,7 @@
         <node id="towerCeilingPole">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
@@ -606,9 +543,7 @@
         <node id="towerCeilingBanner">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="banner1" />
@@ -618,9 +553,7 @@
         <node id="banner1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="banner" />
@@ -629,9 +562,7 @@
         <node id="banner2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="banner" />
@@ -640,9 +571,7 @@
         <node id="banner">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="bannerTriangle" />
@@ -652,9 +581,7 @@
         <node id="bannerTriangle">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -663,9 +590,7 @@
         <node id="towerBody">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerBodyWall1" />
@@ -677,9 +602,7 @@
         <node id="towerBodyWall1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerBodyWall" />
@@ -688,9 +611,7 @@
         <node id="towerBodyWall2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerBodyWall" />
@@ -699,9 +620,7 @@
         <node id="towerBodyWall3">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerBodyWall" />
@@ -710,9 +629,7 @@
         <node id="towerBodyWall4">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerBodyWall" />
@@ -721,9 +638,7 @@
         <node id="towerBodyWall">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
@@ -732,9 +647,7 @@
         <node id="towerCabin">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="towerCabinRoof" /> <!-- One needs to be turned upside down -->
@@ -744,9 +657,7 @@
         <node id="towerCabinRoof">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="cabinStructure" />
@@ -755,9 +666,7 @@
         <node id="towerCabinStand">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="cabinStructure" />
@@ -766,9 +675,7 @@
         <node id="cabinStructure">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="cabinWall1" />
@@ -780,9 +687,7 @@
         <node id="cabinWall1">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="wallTriangle" />
@@ -791,9 +696,7 @@
         <node id="cabinWall2">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="wallTriangle" />
@@ -802,9 +705,7 @@
         <node id="cabinStands">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="standsRectangle" />
@@ -813,9 +714,7 @@
         <node id="cabinBackWall">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <noderef id="standsRectangle" />
@@ -824,9 +723,7 @@
         <node id="wallTriangle">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
@@ -835,9 +732,7 @@
         <node id="standsRectangle">
             <material id="null" />
 
-            <texture id="null">
-                <amplification afs="2.0" aft="2.0" />
-            </texture>
+            <texture id="null" />
 
             <descendants>
                 <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
