@@ -127,6 +127,249 @@
                 <noderef id="hoopHole" />
             </descendants>
         </node>
+        <node id="hoopHole">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="torus" inner="ff" outer="ff" slices="ii" loops="ii" />
+            </descendants>
+        </node>
+        <node id="hoopPole">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+            </descendants>
+        </node>
+        <node id="tower">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerCeiling" />
+                <noderef id="towerCabin" />
+                <noderef id="towerBody" />
+            </descendants>
+        </node>
+        <node id="towerCeiling">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle1" />
+                <noderef id="towerCeilingTriangle2" />
+                <noderef id="towerCeilingTriangle3" />
+                <noderef id="towerCeilingTriangle4" />
+                <noderef id="towerCeilingFlag" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTraingle1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTraingle2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTraingle3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTraingle4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+        <node id="towerCeilingFlag">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerCeilingPole" />
+                <noderef id="towerCeilingBanner" />
+            </descendants>
+        </node>
+        <node id="towerCeilingPole">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+            </descendants>
+        </node>
+        <node id="towerCeilingBanner">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="banner1" />
+                <noderef id="banner2" />
+            </descendants>
+        </node>
+        <node id="banner1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="banner" />
+            </descendants>
+        </node>
+        <node id="banner2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="banner" />
+            </descendants>
+        </node>
+        <node id="banner">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="bannerTriangle" />
+                <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            </descendants>
+        </node>
+        <node id="bannerTriangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+            </descendants>
+        </node>
+        <node id="towerBody">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerBodyWall1" />
+                <noderef id="towerBodyWall2" />
+                <noderef id="towerBodyWall3" />
+                <noderef id="towerBodyWall4" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="2.0" aft="2.0" />
+            </texture>
+
+            <descendants>
+                <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+            </descendants>
+        </node>
         <!--
             ******* NEW NODE TEMPLATE *******
             <node id="">
