@@ -29,6 +29,7 @@ class MySceneGraph {
         this.nodes = [];
 
         this.idRoot = null; // The id of the root element.
+        this.objRoot = null;
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
@@ -482,7 +483,7 @@ class MySceneGraph {
                 } else if (child.nodeName === "leaf") {
                     const leafObj = this.parseLeafNode(child);
                     if (leafObj == null) continue;
-                    
+
                     node.addDescendantObj(new LeafNode(leafObj));
 
                 } else {
@@ -496,9 +497,10 @@ class MySceneGraph {
                 this.onXMLMinorError("node with id " + this.reader.getString(children[i], 'id') + " has no descendants");
                 continue;
             }
-
+            
             this.nodes[nodeID] = node;
         }
+
 
         let unmatchedIds = [];
         for (let n in this.nodes) {
@@ -510,10 +512,12 @@ class MySceneGraph {
         
         this.onXMLMinorError("the following ids do not have a correspondent node: " + unmatchedIds.join());
 
+        this.objRoot = this.nodes[this.idRoot];
+
     }
 
     parseLeafNode(node) {
-        return "";
+        return null;
     }
 
 
@@ -615,9 +619,6 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
-        //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        
-        //this.nodes[this.idRoot].display()
+        this.objRoot.display();
     }
 }
