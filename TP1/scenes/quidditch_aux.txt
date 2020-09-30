@@ -35,8 +35,38 @@ tower
         towerCeilingFlag
             towerCeilingPole
                 cylinder
+            towerCeilingBanner
+                banner1
+                    banner
+                banner2
+                    banner
     towerCabin
-        (...)
+        towerCabinRoof
+            towerCabinRoof1
+                triangle
+            towerCabinRoof2
+                triangle
+            towerCabinRoof3
+                triangle
+            towerCabinRoof4
+                triangle
+            towerCabinRoofWall1
+                triangle
+            towerCabinRoofWall2
+                triangle
+            towerCabinRoofWall1
+                rectangle
+            towerCabinRoofWall2
+                rectangle
+        towerCabinBody
+            towerCabinBodyWall1
+                triangle
+            towerCabinBodyWall2
+                triangle
+            towerCabinBodyWall1
+                rectangle
+            towerCabinBodyWall2
+                rectangle
     towerBody
         towerBodyWall1
             towerBodyWall
@@ -46,6 +76,11 @@ tower
             towerBodyWall
         towerBodyWall4
             towerBodyWall
+
+banner
+    bannerTriangle
+        triangle
+    rectangle
 
 
 ground
@@ -84,8 +119,6 @@ ground
             towerD4
                 tower
     tent
-        (...)
-
-
-
+        rectangles
+        triangle
 
