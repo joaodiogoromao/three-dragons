@@ -23,6 +23,31 @@ function getRectanglePrimitive(scene, reader, node) {
     return new MyRectangle(scene, x1, y1, x2, y2);
 }
 
+function getTorusPrimitive(scene, reader, node) {
+    const inner = reader.getString(node, 'inner');
+    if (inner == null) {
+        this.onXMLMinorError("no inner defined for torus primitive");
+        return null;
+    }
+    const outer = reader.getString(node, 'outer');
+    if (outer == null) {
+        this.onXMLMinorError("no outer defined for torus primitive");
+        return null;
+    }
+    const slices = reader.getString(node, 'slices');
+    if (slices == null) {
+        this.onXMLMinorError("no slices defined for torus primitive");
+        return null;
+    }
+    const loops = reader.getString(node, 'loops');
+    if (loops == null) {
+        this.onXMLMinorError("no loops defined for torus primitive");
+        return null;
+    }
+    return new MyTorus(scene, inner, outer, slices, loops);
+}
+
 const leafObjGenerator = {
-    rectangle: getRectanglePrimitive
+    rectangle: getRectanglePrimitive,
+    torus: getTorusPrimitive
 }

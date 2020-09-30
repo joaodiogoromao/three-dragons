@@ -510,10 +510,9 @@ class MySceneGraph {
             return arr.indexOf(val) === idx;
         });          
         
-        this.onXMLMinorError("the following ids do not have a correspondent node: " + unmatchedIds.join());
+        this.onXMLMinorError("the following ids are referenced but do not have a correspondent node: " + unmatchedIds.join());
 
         this.objRoot = this.nodes[this.idRoot];
-
     }
 
     parseLeafNode(node) {

@@ -50,7 +50,6 @@ class IntermediateNode extends Node {
 class LeafNode extends Node {
     
     /**
-     * 
      * @param {CGFObject} obj the leaf object
      */
     constructor(obj) {
