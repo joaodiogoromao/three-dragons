@@ -517,7 +517,19 @@ class MySceneGraph {
     }
 
     parseLeafNode(node) {
-        return null;
+        const leafType = this.reader.getString(node, 'type');
+        if (leafType == null) {
+            this.onXMLMinorError("no type defined for leaf");
+            return null;
+        }
+
+        const generatePrimitive = leafObjGenerator[leafType];
+        if (generatePrimitive === undefined) {
+            this.onXMLMinorError("the leaf type " + leafType + " is not implemented");
+            return null;
+        }
+
+        return generatePrimitive(this.scene, this.reader, node);
     }
 
 
