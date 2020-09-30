@@ -426,6 +426,9 @@ class MySceneGraph {
         var grandgrandChildren = [];
         var nodeNames = [];
 
+
+        this.onXMLMinorError("Incomplete: parse nodes");
+
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
 
@@ -455,7 +458,8 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            this.onXMLMinorError("To do: Parse nodes.");
+            const node = new IntermediateNode();
+
             // Transformations
 
             // Material
@@ -463,7 +467,53 @@ class MySceneGraph {
             // Texture
 
             // Descendants
+            let descendantCount = 0;
+            let descendantsNode = grandChildren[descendantsIndex];
+            grandgrandChildren = descendantsNode.children;
+
+            for (let child of grandgrandChildren) {
+                if (child.nodeName === "noderef") {
+                    let noderefID = this.reader.getString(child, 'id');
+                    if (noderefID == null)
+                        return "no ID defined for noderef";
+                    
+                    node.addDescendantId(noderefID);
+
+                } else if (child.nodeName === "leaf") {
+                    const leafObj = this.parseLeafNode(child);
+                    if (leafObj == null) continue;
+                    
+                    node.addDescendantObj(new LeafNode(leafObj));
+
+                } else {
+                    this.onXMLMinorError("unknown tag <" + child.nodeName + "> inside descendants of node with id " + this.reader.getString(children[i], 'id'));
+                    continue;
+                }
+                descendantCount++;
+            }
+
+            if (descendantCount <= 0) {
+                this.onXMLMinorError("node with id " + this.reader.getString(children[i], 'id') + " has no descendants");
+                continue;
+            }
+
+            this.nodes[nodeID] = node;
         }
+
+        let unmatchedIds = [];
+        for (let n in this.nodes) {
+            unmatchedIds = unmatchedIds.concat(this.nodes[n].correspondIdsToObjects(this.nodes));
+        }
+        unmatchedIds = unmatchedIds.filter((val, idx, arr) => {
+            return arr.indexOf(val) === idx;
+        });          
+        
+        this.onXMLMinorError("the following ids do not have a correspondent node: " + unmatchedIds.join());
+
+    }
+
+    parseLeafNode(node) {
+        return "";
     }
 
 
