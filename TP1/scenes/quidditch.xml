@@ -68,7 +68,20 @@
             <descendants>
                 <noderef id="quidditchField" />
                 <noderef id="tent" />
-                <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" /><!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+                <noderef id="groundSurface" />
+            </descendants>
+        </node>
+        <node id="groundSurface">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
             </descendants>
         </node>
         <!--
@@ -291,6 +304,7 @@
 
             <transformations>
                 <scale sx="1.6" sy="1.2" sz="1" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -449,6 +463,10 @@
 
             <texture id="null" />
 
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformation>
+
             <descendants>
                 <leaf type="cylinder" height="10" topRadius="1" bottomRadius="1" stacks="5" slices="20"/>
             </descendants>
@@ -563,7 +581,7 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
+                <translation x="0" y="20" z="0" />
             </transformations>
 
             <descendants>
@@ -589,7 +607,7 @@
             <texture id="null" />
 
             <transformations>
-                <rotation axis="y" angle="45" />
+                <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
@@ -602,7 +620,7 @@
             <texture id="null" />
 
             <transformations>
-                <rotation axis="y" angle="90" />
+                <rotation axis="y" angle="180" />
             </transformations>
 
             <descendants>
@@ -615,7 +633,7 @@
             <texture id="null" />
 
             <transformations>
-                <rotation axis="y" angle="135" />
+                <rotation axis="y" angle="270" />
             </transformations>
 
             <descendants>
@@ -628,18 +646,22 @@
             <texture id="null" />
 
             <transformations>
-                <rotation axis="x" angle="-45" />
-                <translation x="" y="" z="" />
+                <translation x="-2" y="0" z="-2" />
+                <rotation axis="x" angle="45" />
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="0" y1="0" x2="4" y2="0" x3="2" y3="4.4721" />  <!-- y3 = sqrt(20) -->
             </descendants>
         </node>
         <node id="towerCeilingFlag">
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+                <translate x="0" y="3" z="0" />
+            </transformations>
 
             <descendants>
                 <noderef id="towerCeilingPole" />
@@ -651,14 +673,22 @@
 
             <texture id="null" />
 
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
             <descendants>
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
+                <leaf type="cylinder" height="7" topRadius="0.3" bottomRadius="0.3" stacks="5" slices="10"/>
             </descendants>
         </node>
-        <node id="towerCeilingBanner">
+        <node id="towerCeilingBanner"> <!-- TODOOOOO -->
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+                <translate x="0" y="29.4" z="0" />
+            </transformations>
 
             <descendants>
                 <noderef id="banner1" />
@@ -679,6 +709,10 @@
 
             <texture id="null" />
 
+            <transformations>
+                <translate x="0" y="0.3" z="0" />
+            </transformations>
+
             <descendants>
                 <noderef id="banner" />
             </descendants>
@@ -690,7 +724,7 @@
 
             <descendants>
                 <noderef id="bannerTriangle" />
-                <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="0.3" />
             </descendants>
         </node>
         <node id="bannerTriangle">
@@ -699,7 +733,7 @@
             <texture id="null" />
 
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
+                <leaf type="triangle" x1="1" y1="0" x2="1.6" y2="0.15" x3="1" y3="0.3" />
             </descendants>
         </node>
         <node id="towerBody">
@@ -719,6 +753,10 @@
 
             <texture id="null" />
 
+            <transformations>
+                <translate x="0" y="0" z="2" />
+            </transformations>
+
             <descendants>
                 <noderef id="towerBodyWall" />
             </descendants>
@@ -727,6 +765,11 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+                <translate x="2" y="0" z="0" />
+                <rotate axis="y" angle="90" />
+            </transformations>
 
             <descendants>
                 <noderef id="towerBodyWall" />
@@ -737,6 +780,11 @@
 
             <texture id="null" />
 
+            <transformations>
+                <translate x="-2" y="0" z="0" />
+                <rotate axis="y" angle="270" />
+            </transformations>
+
             <descendants>
                 <noderef id="towerBodyWall" />
             </descendants>
@@ -745,6 +793,11 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+                <translate x="0" y="0" z="-2" />
+                <rotate axis="y" angle="180" />
+            </transformations>
 
             <descendants>
                 <noderef id="towerBodyWall" />
@@ -756,7 +809,7 @@
             <texture id="null" />
 
             <descendants>
-                <leaf type="rectangle" x1="ff" y1="ff" x2="ff" y2="ff" />
+                <leaf type="rectangle" x1="-2" y1="0" x2="2" y2="12" />
             </descendants>
         </node>
         <node id="towerCabin">
@@ -858,9 +911,7 @@
             <node id="">
                 <material id="null" />
 
-                <texture id="null">
-                    <amplification afs="2.0" aft="2.0" />
-                </texture>
+                <texture id="null" />
 
                 <descendants>
 

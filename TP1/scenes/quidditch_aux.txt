@@ -3,11 +3,30 @@
 
 ROOT: ground
 
-hoop
+hoopSetL
+    hoop1   # hoop 1, 2 and 3 differ in their heights
+    hoop2
+    hoop3
+
+hoopSetR
+    hoop1
+    hoop2
+    hoop3
+
+hoop[1, 2, 3]
+    hoopPole[1, 2, 3]
+    hoopHole[1, 2, 3]
+
+hoopPole[1, 2, 3]  # they differ in the cylinder height
     hoopPole
-        cylinder
+
+hoopHole[1, 2, 3]  # they differ in the distance from the ground
     hoopHole
-        torus
+
+hoopPole
+    cylinder
+hoopHole
+    torus
 
 towerBodyWall
     rectangle
@@ -18,9 +37,18 @@ towerCeilingTriangle
 fieldGroundBarrier
     torus
 
-fieldPlayingSurface
-    # made with rectangles; sits above the ground and the rectangles need to cover the elipse's inside
-    # if this proves very difficult, need to find alternative
+towerSetT
+    tower1
+    tower2
+    tower3
+    tower4
+
+towerSetD
+    towerSetT # rotated 180 degrees
+
+tower[1, 2, 3, 4] # the difference is in the tower position and rotation
+    tower
+
 
 tower
     towerCeiling
@@ -78,40 +106,16 @@ banner
 
 
 ground
-    rectangle
+    groundSurface
+        rectangle
     quidditchField
         fieldPlayingArea
-            fieldPlayingSurface
-            hoopL1
-                hoop
-            hoopL2
-                hoop
-            hoopL3
-                hoop
-            hoopR1
-                hoop
-            hoopR2
-                hoop
-            hoopR3
-                hoop
+            hoopSetL
+            hoopSetR
         fieldDelimiters
             fieldGroundBarrier
-            towerT1
-                tower
-            towerT2
-                tower
-            towerT3
-                tower
-            towerT4
-                tower
-            towerD1
-                tower
-            towerD2
-                tower
-            towerD3
-                tower
-            towerD4
-                tower
+            towerSetT
+            towerSetD
     tent
         tentRoof
             tentTriangle1
