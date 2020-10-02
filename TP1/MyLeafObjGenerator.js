@@ -48,7 +48,8 @@ function getTorusPrimitive(scene, reader, node) {
 }
 
 function getPlaceHolderPrimitive(type) {
-    return new PrimitivePlaceHolder(type);
+    console.warn("Placeholder of type " + type + " created.")
+    return new PrimitivePlaceHolder();
 }
 
 const leafObjGenerator = {

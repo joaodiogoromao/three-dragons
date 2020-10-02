@@ -61,6 +61,10 @@
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformation>
+
             <descendants>
                 <noderef id="quidditchField" />
                 <noderef id="tent" />
@@ -266,12 +270,8 @@
 
             <descendants>
                 <noderef id="fieldPlayingSurface" />
-                <noderef id="hoopL1" />
-                <noderef id="hoopL2" />
-                <noderef id="hoopL3" />
-                <noderef id="hoopR1" />
-                <noderef id="hoopR2" />
-                <noderef id="hoopR3" />
+                <noderef id="hoopSetL" />
+                <noderef id="hoopSetR" />
             </descendants>
         </node>
         <node id="fieldPlayingSurface">
@@ -316,92 +316,157 @@
         <!--
             ********** QUIDDITCH HOOPS **********
         -->
-        <node id="hoopL1">
+        <node id="hoopSetL">
             <material id="null" />
 
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
+                <translation x="-15" y="0" z="0" />
             </transformations>
 
             <descendants>
-                <noderef id="hoop" />
+                <noderef id="hoop1" />
+                <noderef id="hoop2" />
+                <noderef id="hoop3" />
             </descendants>
         </node>
-        <node id="hoopL2">
+
+        <node id="hoopSetR">
             <material id="null" />
 
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
+                <translation x="15" y="0" z="0" />
             </transformations>
 
             <descendants>
-                <noderef id="hoop" />
+                <noderef id="hoop1" />
+                <noderef id="hoop2" />
+                <noderef id="hoop3" />
             </descendants>
         </node>
-        <node id="hoopL3">
+        <node id="hoop1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <descendants>
+                <noderef id="hoopPole1" />
+                <noderef id="hoopHole1" />
+            </descendants>
+        </node>
+        <node id="hoopHole1">
             <material id="null" />
 
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
+                <translation x="0" y="11" z="0" />
             </transformations>
 
             <descendants>
-                <noderef id="hoop" />
+                <noderef="hoopHole" />
             </descendants>
         </node>
-        <node id="hoopR1">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="" y="" z="" />
-            </transformations>
-
-            <descendants>
-                <noderef id="hoop" />
-            </descendants>
-        </node>
-        <node id="hoopR2">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="" y="" z="" />
-            </transformations>
-
-            <descendants>
-                <noderef id="hoop" />
-            </descendants>
-        </node>
-        <node id="hoopR3">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="" y="" z="" />
-            </transformations>
-
-            <descendants>
-                <noderef id="hoop" />
-            </descendants>
-        </node>
-        <node id="hoop">
+        <node id="hoopPole1">
             <material id="null" />
 
             <texture id="null" />
 
             <descendants>
                 <noderef id="hoopPole" />
-                <noderef id="hoopHole" />
+            </descendants>
+        </node>
+        <node id="hoop2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="3.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole2" />
+                <noderef id="hoopHole2" />
+            </descendants>
+        </node>
+        <node id="hoopHole2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="9" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef="hoopHole" />
+            </descendants>
+        </node>
+        <node id="hoopPole2">
+            <material id="null" />
+
+            <texture id="null" />
+ 
+            <transformations>
+                <scale sx="0" sy="0.8" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole" />
+            </descendants>
+        </node>
+        <node id="hoop3">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="-3.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole3" />
+                <noderef id="hoopHole3" />
+            </descendants>
+        </node>
+        <node id="hoopHole3">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="7" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef="hoopHole" />
+            </descendants>
+        </node>
+        <node id="hoopPole3">
+            <material id="null" />
+
+            <texture id="null" />
+ 
+            <transformations>
+                <scale sx="0" sy="0.6" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef="hoopPole" />
+            </descendants>
+        </node>
+
+        <node id="hoopPole">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <descendants>
+                <leaf type="cylinder" height="10" topRadius="1" bottomRadius="1" stacks="5" slices="20"/>
             </descendants>
         </node>
         <node id="hoopHole">
@@ -409,28 +474,10 @@
 
             <texture id="null" />
 
-            <transformations>
-                <translation x="0" y="10" z="0" />
-            </transformations>
-
             <descendants>
                 <leaf type="torus" inner=".3" outer="1" slices="16" loops="64" />
             </descendants>
         </node>
-        <node id="hoopPole">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <rotation axis="x" andle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="cylinder" height="ff" topRadius="ff" bottomRadius="ff" stacks="ii" slices="ii"/>
-            </descendants>
-        </node>
-
         <!--
             ********** QUIDDITCH TOWERS **********
         -->
