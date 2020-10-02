@@ -269,18 +269,8 @@
             <texture id="null" />
 
             <descendants>
-                <noderef id="fieldPlayingSurface" />
                 <noderef id="hoopSetL" />
                 <noderef id="hoopSetR" />
-            </descendants>
-        </node>
-        <node id="fieldPlayingSurface">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <descendants>
-                <leaf type="rectangle" x1="" y1="" x2="" y2="" />
             </descendants>
         </node>
         <node id="fieldDelimiters">
@@ -290,14 +280,8 @@
 
             <descendants>
                 <noderef id="fieldGroundBarrier" />
-                <noderef id="towerT1" />
-                <noderef id="towerT2" />
-                <noderef id="towerT3" />
-                <noderef id="towerT4" />
-                <noderef id="towerD1" />
-                <noderef id="towerD2" />
-                <noderef id="towerD3" />
-                <noderef id="towerD4" />
+                <noderef id="towerSetT" />
+                <noderef id="towerSetD" />
             </descendants>
         </node>
         <node id="fieldGroundBarrier">
