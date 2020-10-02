@@ -63,7 +63,7 @@
 
             <transformations>
                 <rotation axis="x" angle="-90" />
-            </transformation>
+            </transformations>
 
             <descendants>
                 <noderef id="quidditchField" />
@@ -351,7 +351,7 @@
             </transformations>
 
             <descendants>
-                <noderef="hoopHole" />
+                <noderef id="hoopHole" />
             </descendants>
         </node>
         <node id="hoopPole1">
@@ -387,7 +387,7 @@
             </transformations>
 
             <descendants>
-                <noderef="hoopHole" />
+                <noderef id="hoopHole" />
             </descendants>
         </node>
         <node id="hoopPole2">
@@ -427,7 +427,7 @@
             </transformations>
 
             <descendants>
-                <noderef="hoopHole" />
+                <noderef id="hoopHole" />
             </descendants>
         </node>
         <node id="hoopPole3">
@@ -440,7 +440,7 @@
             </transformations>
 
             <descendants>
-                <noderef="hoopPole" />
+                <noderef id="hoopPole" />
             </descendants>
         </node>
 
