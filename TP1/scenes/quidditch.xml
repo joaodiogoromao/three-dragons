@@ -481,112 +481,81 @@
         <!--
             ********** QUIDDITCH TOWERS **********
         -->
-        <node id="towerT1">
+        <node id="towerSetT">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <descendants>
+                <noderef id="tower1" />
+                <noderef id="tower2" />
+                <noderef id="tower3" />
+                <noderef id="tower4" />
+            </descendants>
+        </node>
+        <node id="towerSetD">
             <material id="null" />
 
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
+                <rotate axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerSetT" />
+            </descendants>
+        </node>
+        <node id="tower1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="-19.416" y="0" z="8.816" />
+                <rotate axis="y" angle="54" />
             </transformations>
 
             <descendants>
                 <noderef id="tower" />
             </descendants>
         </node>
-        <node id="towerT2">
+        <node id="tower2">
             <material id="null" />
 
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
+                <translation x="-7.416" y="0" z="14.26" />
+                <rotate axis="y" angle="18" />
             </transformations>
 
             <descendants>
                 <noderef id="tower" />
             </descendants>
         </node>
-        <node id="towerT3">
+        <node id="tower3">
             <material id="null" />
 
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
+                <translation x="7.416" y="0" z="14.26" />
+                <rotate axis="y" angle="-18" />
             </transformations>
 
             <descendants>
                 <noderef id="tower" />
             </descendants>
         </node>
-        <node id="towerT4">
+        <node id="tower4">
             <material id="null" />
 
             <texture id="null" />
 
             <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
-            </transformations>
-
-            <descendants>
-                <noderef id="tower" />
-            </descendants>
-        </node>
-        <node id="towerD1">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
-            </transformations>
-
-            <descendants>
-                <noderef id="tower" />
-            </descendants>
-        </node>
-        <node id="towerD2">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
-            </transformations>
-
-            <descendants>
-                <noderef id="tower" />
-            </descendants>
-        </node>
-        <node id="towerD3">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
-            </transformations>
-
-            <descendants>
-                <noderef id="tower" />
-            </descendants>
-        </node>
-        <node id="towerD4">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="" y="" z="" />
-                <rotate axis="" angle="" />
+                <translation x="19.416" y="0" z="8.816" />
+                <rotate axis="y" angle="-54" />
             </transformations>
 
             <descendants>
