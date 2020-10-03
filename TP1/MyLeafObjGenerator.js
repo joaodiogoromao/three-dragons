@@ -58,5 +58,4 @@ const leafObjGenerator = {
     triangle: () => getPlaceHolderPrimitive("triangle"),
     sphere: () => getPlaceHolderPrimitive("sphere"),
     cylinder: () => getPlaceHolderPrimitive("cylinder")
-
 }
