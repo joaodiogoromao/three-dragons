@@ -222,7 +222,7 @@
 
             <transformations>
                 <translation x="0" y="0" z="20" />
-            <transformations />
+            </transformations>
 
             <descendants>
                 <noderef id="tentWall" />
@@ -236,7 +236,7 @@
             <transformations>
                 <rotation axis="y" angle="270" />
                 <scale sx="2.5" sy="1" sz="1" />
-            <transformations />
+            </transformations>
 
             <descendants>
                 <noderef id="tentWall" />
@@ -250,7 +250,7 @@
             <transformations>
                 <translation x="8" y="0" z="0" />
                 <rotation axis="y" angle="180" />
-            <transformations />
+            </transformations>
 
             <descendants>
                 <noderef id="tentWall" />
@@ -265,7 +265,7 @@
                 <translation x="8" y="0" z="20" />
                 <scale sx="1" sy="2.5" sz="1" />
                 <rotation axis="y" angle="90" />
-            <transformations />
+            </transformations>
 
             <descendants>
                 <noderef id="tentWall" />
@@ -485,7 +485,7 @@
 
             <transformations>
                 <rotation axis="x" angle="-90" />
-            </transformation>
+            </transformations>
 
             <descendants>
                 <leaf type="cylinder" height="10" topRadius="1" bottomRadius="1" stacks="5" slices="20"/>
