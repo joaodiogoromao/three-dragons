@@ -47,6 +47,35 @@ function getTorusPrimitive(scene, reader, node) {
     return new MyTorus(scene, inner, outer, slices, loops);
 }
 
+function getCylinderPrimitive(scene, reader, node) {
+    const height = reader.getFloat(node, 'height');
+    if (height == null) {
+        this.onXMLMinorError("no height defined for cylinder primitive");
+        return null;
+    }
+    const topRadius = reader.getFloat(node, 'topRadius');
+    if (topRadius == null) {
+        this.onXMLMinorError("no topRadius defined for cylinder primitive");
+        return null;
+    }
+    const bottomRadius = reader.getFloat(node, 'bottomRadius');
+    if (bottomRadius == null) {
+        this.onXMLMinorError("no bottomRadius defined for cylinder primitive");
+        return null;
+    }
+    const stacks = reader.getFloat(node, 'stacks');
+    if (stacks == null) {
+        this.onXMLMinorError("no stacks defined for cylinder primitive");
+        return null;
+    }
+    const slices = reader.getFloat(node, 'slices');
+    if (slices == null) {
+        this.onXMLMinorError("no slices defined for cylinder primitive");
+        return null;
+    }
+    return new MyCylinder(scene, height, topRadius, bottomRadius, stacks, slices);
+}
+
 function getPlaceHolderPrimitive(type) {
     console.warn("Placeholder of type " + type + " created.")
     return new PrimitivePlaceHolder();
@@ -55,7 +84,7 @@ function getPlaceHolderPrimitive(type) {
 const leafObjGenerator = {
     rectangle: getRectanglePrimitive,
     torus: getTorusPrimitive,
+    cylinder: getCylinderPrimitive,
     triangle: () => getPlaceHolderPrimitive("triangle"),
-    sphere: () => getPlaceHolderPrimitive("sphere"),
-    cylinder: () => getPlaceHolderPrimitive("cylinder")
+    sphere: () => getPlaceHolderPrimitive("sphere")
 }
