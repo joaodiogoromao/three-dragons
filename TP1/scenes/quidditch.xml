@@ -718,6 +718,21 @@
             <descendants>
                 <noderef id="towerCeilingPole" />
                 <noderef id="towerCeilingBanner" />
+                <noderef id="flagSphere" />
+            </descendants>
+        </node>
+        <node id="flagSphere">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translate x="0" y="6.95" z="0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.2" slices="5" stacks="5" />
             </descendants>
         </node>
         <node id="towerCeilingPole">
@@ -730,7 +745,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="7" topRadius="0.3" bottomRadius="0.3" stacks="5" slices="10"/>
+                <leaf type="cylinder" height="7" topRadius="0.1" bottomRadius="0.1" stacks="5" slices="10"/>
             </descendants>
         </node>
         <node id="towerCeilingBanner">
