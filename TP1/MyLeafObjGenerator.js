@@ -1,79 +1,41 @@
+function getRectanglePrimitive(sceneGraph, node) {
+    const isNotNull = sceneGraph.isNotNull;
 
-function getRectanglePrimitive(scene, reader, node) {
-    const x1 = reader.getFloat(node, 'x1');
-    if (x1 == null) {
-        this.onXMLMinorError("no x1 defined for rectangle primitive");
-        return null;
-    }
-    const y1 = reader.getFloat(node, 'y1');
-    if (y1 == null) {
-        this.onXMLMinorError("no y1 defined for rectangle primitive");
-        return null;
-    }
-    const x2 = reader.getFloat(node, 'x2');
-    if (x2 == null) {
-        this.onXMLMinorError("no x2 defined for rectangle primitive");
-        return null;
-    }
-    const y2 = reader.getFloat(node, 'y2');
-    if (y2 == null) {
-        this.onXMLMinorError("no y2 defined for rectangle primitive");
-        return null;
-    }
-    return new MyRectangle(scene, x1, y1, x2, y2);
+    const x1 = sceneGraph.getFloatParameter(node, 'x1');
+    const y1 = sceneGraph.getFloatParameter(node, 'y1');
+    const x2 = sceneGraph.getFloatParameter(node, 'x2');
+    const y2 = sceneGraph.getFloatParameter(node, 'y2');
+
+    if (isNotNull(x1) && isNotNull(y1) && isNotNull(x2) && isNotNull(y2))
+        return new MyRectangle(sceneGraph.scene, x1, y1, x2, y2);
+    return null;
 }
 
-function getTorusPrimitive(scene, reader, node) {
-    const inner = reader.getFloat(node, 'inner');
-    if (inner == null) {
-        this.onXMLMinorError("no inner defined for torus primitive");
-        return null;
-    }
-    const outer = reader.getFloat(node, 'outer');
-    if (outer == null) {
-        this.onXMLMinorError("no outer defined for torus primitive");
-        return null;
-    }
-    const slices = reader.getFloat(node, 'slices');
-    if (slices == null) {
-        this.onXMLMinorError("no slices defined for torus primitive");
-        return null;
-    }
-    const loops = reader.getFloat(node, 'loops');
-    if (loops == null) {
-        this.onXMLMinorError("no loops defined for torus primitive");
-        return null;
-    }
-    return new MyTorus(scene, inner, outer, slices, loops);
+function getTorusPrimitive(sceneGraph, node) {
+    const isNotNull = sceneGraph.isNotNull;
+
+    const inner = sceneGraph.getFloatParameter(node, 'inner');
+    const outer = sceneGraph.getFloatParameter(node, 'outer');
+    const slices = sceneGraph.getFloatParameter(node, 'slices');
+    const loops = sceneGraph.getFloatParameter(node, 'loops');
+
+    if (isNotNull(inner) && isNotNull(outer) && isNotNull(slices) && isNotNull(loops))
+        return new MyTorus(sceneGraph.scene, inner, outer, slices, loops);
+    return null;
 }
 
-function getCylinderPrimitive(scene, reader, node) {
-    const height = reader.getFloat(node, 'height');
-    if (height == null) {
-        this.onXMLMinorError("no height defined for cylinder primitive");
-        return null;
-    }
-    const topRadius = reader.getFloat(node, 'topRadius');
-    if (topRadius == null) {
-        this.onXMLMinorError("no topRadius defined for cylinder primitive");
-        return null;
-    }
-    const bottomRadius = reader.getFloat(node, 'bottomRadius');
-    if (bottomRadius == null) {
-        this.onXMLMinorError("no bottomRadius defined for cylinder primitive");
-        return null;
-    }
-    const stacks = reader.getFloat(node, 'stacks');
-    if (stacks == null) {
-        this.onXMLMinorError("no stacks defined for cylinder primitive");
-        return null;
-    }
-    const slices = reader.getFloat(node, 'slices');
-    if (slices == null) {
-        this.onXMLMinorError("no slices defined for cylinder primitive");
-        return null;
-    }
-    return new MyCylinder(scene, height, topRadius, bottomRadius, stacks, slices);
+function getCylinderPrimitive(sceneGraph, node) {
+    const isNotNull = sceneGraph.isNotNull;
+
+    const height = sceneGraph.getFloatParameter(node, 'height');
+    const topRadius = sceneGraph.getFloatParameter(node, 'topRadius');
+    const bottomRadius = sceneGraph.getFloatParameter(node, 'bottomRadius');
+    const stacks = sceneGraph.getFloatParameter(node, 'stacks');
+    const slices = sceneGraph.getFloatParameter(node, 'slices');
+    
+    if (isNotNull(height) && isNotNull(topRadius) && isNotNull(bottomRadius) && isNotNull(stacks) && isNotNull(slices))
+        return new MyCylinder(sceneGraph.scene, height, topRadius, bottomRadius, stacks, slices);
+    return null;
 }
 
 function getPlaceHolderPrimitive(type) {

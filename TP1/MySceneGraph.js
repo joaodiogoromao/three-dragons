@@ -528,9 +528,25 @@ class MySceneGraph {
             return null;
         }
 
-        return generatePrimitive(this.scene, this.reader, node);
+        return generatePrimitive(this, node);
     }
 
+    isNotNull(v) {
+        return v != null;
+    }
+
+    getFloatParameter(node, parameter) {
+        const value = this.reader.getFloat(node, parameter);
+        if (!this.isNotNull(value)) {
+            this.onXMLMinorError('no ' + parameter + ' defined');
+            return null;
+        }
+        if (isNaN(value)) {
+            this.onXMLMinorError('parameter ' + parameter + ' is not a valid float');
+            return null;
+        }
+        return value;
+    }
 
     parseBoolean(node, name, messageError){
         var boolVal = true;
