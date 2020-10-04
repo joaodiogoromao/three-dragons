@@ -462,7 +462,7 @@
             <texture id="null" />
  
             <transformations>
-                <scale sx="0" sy="0.8" z="0" />
+                <scale sx="0" sy="0.8" sz="0" />
             </transformations>
 
             <descendants>
@@ -502,7 +502,7 @@
             <texture id="null" />
  
             <transformations>
-                <scale sx="0" sy="0.6" z="0" />
+                <scale sx="0" sy="0.6" sz="0" />
             </transformations>
 
             <descendants>
