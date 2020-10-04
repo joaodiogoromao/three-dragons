@@ -9,6 +9,8 @@ var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
 var NODES_INDEX = 6;
 
+const isNotNull = (v) => v != null;
+
 /**
  * MySceneGraph class, representing the scene graph.
  */
@@ -531,21 +533,33 @@ class MySceneGraph {
         return generatePrimitive(this, node);
     }
 
-    isNotNull(v) {
-        return v != null;
-    }
-
+    /**
+     * @param node the node to get the parameter from
+     * @param {string} parameter the parameter's name
+     */
     getFloatParameter(node, parameter) {
         const value = this.reader.getFloat(node, parameter);
-        if (!this.isNotNull(value)) {
+        if (!isNotNull(value)) {
             this.onXMLMinorError('no ' + parameter + ' defined');
             return null;
-        }
-        if (isNaN(value)) {
+        } else if (isNaN(value)) {
             this.onXMLMinorError('parameter ' + parameter + ' is not a valid float');
             return null;
         }
         return value;
+    }
+
+    /**
+     * @param node the node to get the parameters from
+     * @param {array} parameters array with parameter names
+     */
+    getFloatParameters(node, parameters) {
+        const res = [];
+        for (const p of parameters) {
+            res[p] = this.getFloatParameter(node, p);
+            if (!isNotNull(res[p]) || isNaN(res[p])) return null;
+        }
+        return res;
     }
 
     parseBoolean(node, name, messageError){

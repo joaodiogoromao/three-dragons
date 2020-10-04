@@ -1,45 +1,35 @@
 function getRectanglePrimitive(sceneGraph, node) {
-    const isNotNull = sceneGraph.isNotNull;
+    const params = ['x1', 'y1', 'x2', 'y2'];
 
-    const x1 = sceneGraph.getFloatParameter(node, 'x1');
-    const y1 = sceneGraph.getFloatParameter(node, 'y1');
-    const x2 = sceneGraph.getFloatParameter(node, 'x2');
-    const y2 = sceneGraph.getFloatParameter(node, 'y2');
+    const res = sceneGraph.getFloatParameters(node, params);
 
-    if (isNotNull(x1) && isNotNull(y1) && isNotNull(x2) && isNotNull(y2))
-        return new MyRectangle(sceneGraph.scene, x1, y1, x2, y2);
+    if (isNotNull(res))
+        return new MyRectangle(sceneGraph.scene, res.x1, res.y1, res.x2, res.y2);
     return null;
 }
 
 function getTorusPrimitive(sceneGraph, node) {
-    const isNotNull = sceneGraph.isNotNull;
+    const params = ['inner', 'outer', 'slices', 'loops'];
 
-    const inner = sceneGraph.getFloatParameter(node, 'inner');
-    const outer = sceneGraph.getFloatParameter(node, 'outer');
-    const slices = sceneGraph.getFloatParameter(node, 'slices');
-    const loops = sceneGraph.getFloatParameter(node, 'loops');
+    const res = sceneGraph.getFloatParameters(node, params);
 
-    if (isNotNull(inner) && isNotNull(outer) && isNotNull(slices) && isNotNull(loops))
-        return new MyTorus(sceneGraph.scene, inner, outer, slices, loops);
+    if (isNotNull(res))
+        return new MyTorus(sceneGraph.scene, res.inner, res.outer, res.slices, res.loops);
     return null;
 }
 
 function getCylinderPrimitive(sceneGraph, node) {
-    const isNotNull = sceneGraph.isNotNull;
+    const params = ['height', 'topRadius', 'bottomRadius', 'stacks', 'slices'];
 
-    const height = sceneGraph.getFloatParameter(node, 'height');
-    const topRadius = sceneGraph.getFloatParameter(node, 'topRadius');
-    const bottomRadius = sceneGraph.getFloatParameter(node, 'bottomRadius');
-    const stacks = sceneGraph.getFloatParameter(node, 'stacks');
-    const slices = sceneGraph.getFloatParameter(node, 'slices');
+    const res = sceneGraph.getFloatParameters(node, params);
     
-    if (isNotNull(height) && isNotNull(topRadius) && isNotNull(bottomRadius) && isNotNull(stacks) && isNotNull(slices))
-        return new MyCylinder(sceneGraph.scene, height, topRadius, bottomRadius, stacks, slices);
+    if (isNotNull(res))
+        return new MyCylinder(sceneGraph.scene, res.height, res.topRadius, res.bottomRadius, res.stacks, res.slices);
     return null;
 }
 
 function getPlaceHolderPrimitive(type) {
-    console.warn("Placeholder of type " + type + " created.")
+    console.warn("Placeholder of type " + type + " created.");
     return new PrimitivePlaceHolder();
 }
 
