@@ -266,8 +266,9 @@
             <texture id="null" />
 
             <transformations>
-                <rotation axis="y" angle="270" />
-                <scale sx="2.5" sy="1" sz="1" />
+                <translation x="8" y="0" z="20" />
+                <scale sx="1" sy="1" sz="2.5" />
+                <rotation axis="y" angle="-270" />
             </transformations>
 
             <descendants>
@@ -294,9 +295,8 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="8" y="0" z="20" />
-                <scale sx="1" sy="2.5" sz="1" />
-                <rotation axis="y" angle="90" />
+                <scale sx="1" sy="1" sz="2.5" />
+                <rotation axis="y" angle="-90" />
             </transformations>
 
             <descendants>
@@ -309,7 +309,7 @@
             <texture id="null" />
 
             <descendants>
-                <leaf type="rectangle" x1="8" y1="0" x2="0" y2="5" />
+                <leaf type="rectangle" x1="0" y1="0" x2="8" y2="5" />
             </descendants>
         </node>
 
