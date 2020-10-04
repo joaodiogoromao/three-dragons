@@ -34,8 +34,10 @@
 
 
     <textures>
-        <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <!--<texture id="demoTexture" path="./scenes/images/vidral.jpg" />-->
+        <texture id="gryffindorTexture" path="./scenes/images/gryffindorPattern.jpg" />
+        <texture id="ravenclawTexture" path="./scenes/images/ravenclawPattern.jpg" />
+        <texture id="hufflepuffTexture" path="./scenes/images/hufflepuffPattern.jpg" />
+        <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
     </textures>
 
 
@@ -559,7 +561,7 @@
         <node id="tower1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="hufflepuffTexture" />
 
             <transformations>
                 <translation x="-19.416" y="0" z="8.816" />
@@ -573,7 +575,7 @@
         <node id="tower2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="ravenclawTexture" />
 
             <transformations>
                 <translation x="-7.416" y="0" z="14.26" />
@@ -587,7 +589,7 @@
         <node id="tower3">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="gryffindorTexture" />
 
             <transformations>
                 <translation x="7.416" y="0" z="14.26" />
@@ -601,7 +603,7 @@
         <node id="tower4">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="slytherinTexture" />
 
             <transformations>
                 <translation x="19.416" y="0" z="8.816" />
@@ -695,7 +697,7 @@
 
             <transformations>
                 <translation x="-2" y="0" z="-2" />
-                <rotation axis="x" angle="26.56" /><!-- 90 - arctan(4/2)-->
+                <rotation axis="x" angle="26.56" /><!-- 90 - arctan(4/2) -->
             </transformations>
 
             <descendants>
@@ -720,7 +722,7 @@
         <node id="flagSphere">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear" />
 
             <transformations>
                 <translation x="0" y="6.95" z="0" />
@@ -734,7 +736,7 @@
         <node id="towerCeilingPole">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear" />
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -761,7 +763,7 @@
         <node id="banner1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear" />
 
             <descendants>
                 <noderef id="banner" />
@@ -929,7 +931,7 @@
         <node id="cabinFloor">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear" />
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -972,7 +974,7 @@
         <node id="cabinStands">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear" />
 
             <descendants>
                 <noderef id="cabinStandStep1" />
@@ -1040,7 +1042,7 @@
         <node id="cabinBackWall">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear" />
 
             <transformations>
                 <translation x="0" y="2" z="-2" />
