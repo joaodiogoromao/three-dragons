@@ -192,7 +192,7 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="7" y="0" z="0" />
+                <translation x="3" y="0" z="0" />
             </transformations>
 
             <descendants>
@@ -205,8 +205,8 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="-7" y="0" z="0" />
-                <rotation axis="z" angle="90" />
+                <translation x="17" y="0" z="0" />
+                <rotation axis="z" angle="-90" />
             </transformations>
 
             <descendants>
@@ -219,7 +219,7 @@
             <texture id="null" />
 
             <descendants>
-                <leaf type="triangle" x1="3" y1="0" x2="0" y2="0" x3="0" y3="5" />
+                <leaf type="triangle" x1="-3" y1="0" x2="0" y2="0" x3="0" y3="5" />
             </descendants>
         </node>
         <node id="parallelogramRectangle">
@@ -227,12 +227,8 @@
 
             <texture id="null" />
 
-            <transformations>
-                <translation x="-7" y="0" z="0" />
-            </transformations>
-
             <descendants>
-                <leaf type="rectangle" x1="14" y1="0" x2="0" y2="5" />
+                <leaf type="rectangle" x1="3" y1="0" x2="17" y2="5" />
             </descendants>
         </node>
         <node id="tentWalls">
