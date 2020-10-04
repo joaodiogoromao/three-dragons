@@ -114,8 +114,8 @@
             
             <transformations>
                 <translation x="4" y="5" z="0" />
-                <rotation axis="y" angle="180" />
                 <rotation axis="x" angle="45" />
+                <rotation axis="y" angle="180" />
             </transformations>
 
             <descendants>
@@ -129,7 +129,7 @@
 
             <transformations>
                 <translation x="4" y="5" z="20" />
-                <rotation axis="x" angle="45" />
+                <rotation axis="x" angle="-45" />
             </transformations>
 
             <descendants>
@@ -142,7 +142,7 @@
             <texture id="null" />
 
             <descendants>
-                <leaf type="triangle" x1="-4" y1="0" x2="4" y2="0" x3="0" y3="4.2426" /> <!-- sqrt(18) -->
+                <leaf type="triangle" x1="-4" y1="0" x2="4" y2="0" x3="0" y3="4.2426" /> <!-- sqrt(18) => sqrt(34)**2 = 4**2 + x**2-->
             </descendants>
         </node>
         <node id="tentParallelogram1">
@@ -151,7 +151,7 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="8" y="5" z="10" />
+                <translation x="8" y="5" z="20" />
                 <rotation axis="z" angle="36.87" /> <!-- arctan(3/4) -->
                 <rotation axis="y" angle="90" />
             </transformations>
@@ -166,7 +166,7 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="0" y="5" z="10" />
+                <translation x="0" y="5" z="0" />
                 <rotation axis="z" angle="-36.87" /> <!-- arctan(3/4) -->
                 <rotation axis="y" angle="270" />
             </transformations>
