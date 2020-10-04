@@ -695,7 +695,7 @@
 
             <transformations>
                 <translation x="-2" y="0" z="-2" />
-                <rotation axis="x" angle="45" />
+                <rotation axis="x" angle="26.56" /><!-- 90 - arctan(4/2)-->
             </transformations>
 
             <descendants>
