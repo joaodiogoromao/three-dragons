@@ -44,6 +44,7 @@ class MyCylinder extends CGFobject {
         for (var nstack = 0; nstack < this.stacks; nstack++) {
             const bottomOffset = nstack * offset;
             const topOffset = (nstack + 1) * offset;
+            
             for (var nslice = 0; nslice < this.slices; nslice++){
                 var a = nslice + bottomOffset;
                 var b = nslice + bottomOffset + 1;
