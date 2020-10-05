@@ -28,6 +28,18 @@ function getCylinderPrimitive(sceneGraph, node) {
     return null;
 }
 
+function getTrianglePrimitive(sceneGraph, node) {
+    const params = ['x1', 'y1', 'x2', 'y2', 'x3', 'y3'];
+
+    const res = sceneGraph.getFloatParameters(node, params);
+
+    const coords = [res.x1, res.y1, res.x2, res.y2, res.x3, res.y3];
+    
+    if (isNotNull(res))
+        return new MyTriangle(sceneGraph.scene, coords);
+    return null;
+}
+
 function getPlaceHolderPrimitive(type) {
     console.warn("Placeholder of type " + type + " created.");
     return new PrimitivePlaceHolder();
@@ -37,6 +49,6 @@ const leafObjGenerator = {
     rectangle: getRectanglePrimitive,
     torus: getTorusPrimitive,
     cylinder: getCylinderPrimitive,
-    triangle: () => getPlaceHolderPrimitive("triangle"),
+    triangle: getTrianglePrimitive,
     sphere: () => getPlaceHolderPrimitive("sphere")
 }
