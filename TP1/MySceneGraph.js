@@ -29,6 +29,7 @@ class MySceneGraph {
         scene.graph = this;
 
         this.nodes = [];
+        this.materials = [];
 
         this.idRoot = null; // The id of the root element.
         this.objRoot = null;
@@ -38,7 +39,7 @@ class MySceneGraph {
         this.axisCoords['y'] = [0, 1, 0];
         this.axisCoords['z'] = [0, 0, 1];
 
-        // File reading 
+        // File reading
         this.reader = new CGFXMLreader();
 
         /*
@@ -417,10 +418,10 @@ class MySceneGraph {
     }
 
     /**
-   * Parses the <nodes> block.
-   * @param {nodes block element} nodesNode
-   */
-  parseNodes(nodesNode) {
+     * Parses the <nodes> block.
+     * @param {nodes block element} nodesNode
+     */
+    parseNodes(nodesNode) {
         var children = nodesNode.children;
 
         this.nodes = [];
@@ -553,7 +554,7 @@ class MySceneGraph {
                 const params = ['x', 'y', 'z'];
     
                 const res = this.getFloatParameters(child, params);
-    
+
                 if (isNotNull(res)) {
                     mat4.translate(transfMx, transfMx, [res.x, res.y, res.z]);
                     hadTransformation = true;
@@ -561,11 +562,11 @@ class MySceneGraph {
             } else if (child.nodeName === "rotation") {    
                 const angle = this.getFloatParameter(child, 'angle');
                 const axis = this.getCharParameter(child, 'axis');
-                const ax = [];
-                ax['x'] = [1, 0, 0]; ax['y'] = [0, 1, 0]; ax['z'] = [0, 0, 1];
 
-                if (isNotNull(angle) && isNotNull(axis) && ax[axis] != undefined) {
-                    mat4.rotate(transfMx, transfMx, angle*DEGREE_TO_RAD, ax[axis]);
+                if (this.axisCoords[axis] == undefined) {
+                    this.onXMLMinorError("Rotation child of 'transformations' node has invalid axis.");
+                } else if (isNotNull(angle) && isNotNull(axis)) {
+                    mat4.rotate(transfMx, transfMx, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
                     hadTransformation = true;
                 }
             } else {
