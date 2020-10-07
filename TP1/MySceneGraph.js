@@ -456,42 +456,7 @@ class MySceneGraph {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
-            var transformationsIndex = nodeNames.indexOf("transformations");
-            var materialIndex = nodeNames.indexOf("material");
-            var textureIndex = nodeNames.indexOf("texture");
-            var descendantsIndex = nodeNames.indexOf("descendants");
-
-            const node = new IntermediateNode(this.scene);
-
-            // Transformations
-            let tmat = null;
-            if (transformationsIndex != -1) {
-                const transformationsNode = grandChildren[transformationsIndex];
-                const transformations = transformationsNode.children;
-
-                tmat = this.parseTransformations(transformations);
-            }
-
-            node.setTransformationMatrix(tmat);
-
-            // Material
-
-
-            // Texture
-
-
-            // Descendants
-            const descendantsNode = grandChildren[descendantsIndex];
-            const descendantCount = this.parseDescendants(descendantsNode.children, node);
-
-            if (descendantCount <= 0) {
-                this.onXMLMinorError("node with id " + this.reader.getString(children[i], 'id') + " has no descendants");
-                continue;
-            }
-
-            // end of parsing
-
-            this.nodes[nodeID] = node;
+            this.nodes[nodeID] = this.parseNode(children[i], nodeNames, grandChildren);
         }
 
 
@@ -506,6 +471,41 @@ class MySceneGraph {
         if (unmatchedIds.length) this.onXMLMinorError("the following ids are referenced but do not have a correspondent node: " + unmatchedIds.join());
 
         this.objRoot = this.nodes[this.idRoot];
+    }
+
+    parseNode(nodeBlock, nodeChildrenNames, nodeChildren) {
+        var transformationsIndex = nodeChildrenNames.indexOf("transformations");
+        var materialIndex = nodeChildrenNames.indexOf("material");
+        var textureIndex = nodeChildrenNames.indexOf("texture");
+        var descendantsIndex = nodeChildrenNames.indexOf("descendants");
+
+        const node = new IntermediateNode(this.scene);
+
+        // Transformations
+        if (transformationsIndex != -1) {
+            const transformationsNode = nodeChildren[transformationsIndex];
+            const transformations = transformationsNode.children;
+
+            const tmat = this.parseTransformations(transformations);
+            node.setTransformationMatrix(tmat);
+        }
+
+        // Material
+
+
+        // Texture
+
+
+        // Descendants
+        const descendantsNode = nodeChildren[descendantsIndex];
+        const descendantCount = this.parseDescendants(descendantsNode.children, node);
+
+        if (descendantCount <= 0) {
+            this.onXMLMinorError("node with id " + this.reader.getString(nodeBlock, 'id') + " has no descendants");
+            return null;
+        }
+
+        return node;
     }
 
     parseDescendants(descendants, node) {
