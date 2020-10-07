@@ -464,12 +464,12 @@ class MySceneGraph {
             const node = new IntermediateNode();
 
             // Transformations
-            let tmat = mat4.create();
+            let tmat = null;
             if (transformationsIndex != -1) {
                 const transformationsNode = grandChildren[transformationsIndex];
                 const transformations = transformationsNode.children;
 
-                this.parseTransformations(transformations, tmat);
+                tmat = this.parseTransformations(transformations);
             }
 
             node.setTransformationMatrix(tmat);
@@ -479,36 +479,16 @@ class MySceneGraph {
             // Texture
 
             // Descendants
-            let descendantCount = 0;
-            let descendantsNode = grandChildren[descendantsIndex];
-            grandgrandChildren = descendantsNode.children;
-
-            for (let child of grandgrandChildren) {
-                if (child.nodeName === "noderef") {
-                    let noderefID = this.reader.getString(child, 'id');
-                    if (noderefID == null)
-                        return "no ID defined for noderef";
-                    
-                    node.addDescendantId(noderefID);
-
-                } else if (child.nodeName === "leaf") {
-                    const leafObj = this.parseLeafNode(child);
-                    if (leafObj == null) continue;
-
-                    node.addDescendantObj(new LeafNode(leafObj));
-
-                } else {
-                    this.onXMLMinorError("unknown tag <" + child.nodeName + "> inside descendants of node with id " + this.reader.getString(children[i], 'id'));
-                    continue;
-                }
-                descendantCount++;
-            }
+            const descendantsNode = grandChildren[descendantsIndex];
+            const descendantCount = this.parseDescendants(descendantsNode.children, node);
 
             if (descendantCount <= 0) {
                 this.onXMLMinorError("node with id " + this.reader.getString(children[i], 'id') + " has no descendants");
                 continue;
             }
-            
+
+            // end of parsing
+
             this.nodes[nodeID] = node;
         }
 
@@ -526,38 +506,77 @@ class MySceneGraph {
         this.objRoot = this.nodes[this.idRoot];
     }
 
-    parseTransformations(transformations, tmat) {
-        const transfMx = [];
+    parseDescendants(descendants, node) {
+        let descendantCount = 0;
+
+        for (let child of descendants) {
+            if (child.nodeName === "noderef") {
+                let noderefID = this.reader.getString(child, 'id');
+                if (noderefID == null) {
+                    this.onXMLMinorError("noderef hasn't got id");
+                    continue;
+                }
+                
+                node.addDescendantId(noderefID);
+
+            } else if (child.nodeName === "leaf") {
+                const leafObj = this.parseLeafNode(child);
+                if (leafObj == null) continue;
+
+                node.addDescendantObj(new LeafNode(leafObj));
+
+            } else {
+                this.onXMLMinorError("unknown tag <" + child.nodeName + "> inside descendants of node with id " + this.reader.getString(children[i], 'id'));
+                continue;
+            }
+            descendantCount++;
+        }
+        return descendantCount;
+    }
+
+    parseTransformations(transformations) {
+        let transfMx = mat4.create();
+        let hadTransformation = false;
         for (let child of transformations) {
             if (child.nodeName === "scale") {
                 const params = ['sx', 'sy', 'sz'];
 
                 const res = this.getFloatParameters(child, params);
 
-                /*if (isNotNull(res)) {
-                    transfMx.push(mx);
-                } else continue;*/
+                if (isNotNull(res)) {
+                    mat4.scale(transfMx, transfMx, [res.sx, res.sy, res.sz]);
+                    hadTransformation = true;
+                }
             } else if (child.nodeName === "translation") {
                 const params = ['x', 'y', 'z'];
     
                 const res = this.getFloatParameters(child, params);
     
-                /*if (isNotNull(res))
-                    transfMx.push(createMx(res.x, res.y, res.z));
-                else continue;*/
-                
+                if (isNotNull(res)) {
+                    mat4.translate(transfMx, transfMx, [res.x, res.y, res.z]);
+                    hadTransformation = true;
+                }
             } else if (child.nodeName === "rotation") {    
                 const angle = this.getFloatParameter(child, 'angle');
-                //const axis = this.getCharParameter(child, 'axis');
-    
-               /* if (isNotNull(angle) && isNotNull(axis))
-                    transfMx.push(createMx(axis, angle));
-                else continue;*/
+                const axis = this.getCharParameter(child, 'axis');
+                const ax = [];
+                ax['x'] = [1, 0, 0]; ax['y'] = [0, 1, 0]; ax['z'] = [0, 0, 1];
 
+                if (isNotNull(angle) && isNotNull(axis)) {
+                    mat4.rotate(transfMx, transfMx, angle*DEGREE_TO_RAD, ax[axis]);
+                    hadTransformation = true;
+                }
+            } else {
+                this.onXMLMinorError("Child of 'transformations' node has got an invalid nodeName.");
             }
         }
+        return hadTransformation ? transfMx : null;
     }
 
+    /**
+     * Generates the primitive for the leaf node
+     * @param node the leaf node
+     */
     parseLeafNode(node) {
         const leafType = this.reader.getString(node, 'type');
         if (leafType == null) {
@@ -572,6 +591,14 @@ class MySceneGraph {
         }
 
         return generatePrimitive(this, node);
+    }
+
+    /**
+     * @param node the node to get the parameter from
+     * @param {string} parameter the parameter's name 
+     */
+    getCharParameter(node, parameter) {
+        return null;
     }
 
     /**
