@@ -19,7 +19,7 @@ class MyCylinder extends CGFobject {
         var angle = 2*Math.PI / this.slices;
 
         for (var nstack = 0, v = 0; nstack <= this.stacks; nstack++, v = nstack / this.stacks){
-            var stack_height = this.heigth * nstack / this.stacks;
+            var stack_height = this.height * nstack / this.stacks;
             var increment_angle = 0;
             var current_radius = 0;
 
@@ -29,8 +29,8 @@ class MyCylinder extends CGFobject {
                 current_radius = this.bottomRadius - (this.bottomRadius - this.topRadius) * (nstack / this.stacks);
 
             for (var nslice = 0, u = 0; nslice <= this.slices; nslice++, u = nslice / this.slices){
-                var x = Math.cos(angle) * current_radius;
-                var y = Math.sin(angle) * current_radius;
+                var x = Math.cos(increment_angle) * current_radius;
+                var y = Math.sin(increment_angle) * current_radius;
 
                 this.vertices.push(x, y, stack_height);
                 this.normals.push(x, y, 0);
