@@ -1,8 +1,9 @@
 /**
  * This class seems quite useless right now, but I think it will be useful for the textures, materials and transformations
  */
-class Node {
-    constructor(texture, material, transformationMatrix) {
+class Node extends CGFobject {
+    constructor(scene) {
+        super(scene);
         this.texture = null;
         this.material = null;
         this.transformationMatrix = null;
@@ -19,12 +20,22 @@ class Node {
     setTransformationMatrix(transformationMatrix) {
         this.transformationMatrix = transformationMatrix;
     }
+
+    display(displayFunction) {
+        this.scene.pushMatrix();
+
+        if (this.transformationMatrix != null)
+            this.scene.multMatrix(this.transformationMatrix);
+        displayFunction();
+
+        this.scene.popMatrix();
+    }
 }
 
 
 class IntermediateNode extends Node {
-    constructor() {
-        super();
+    constructor(scene) {
+        super(scene);
         this.descendantIds = [];
         this.descendantObjs = [];
     }
@@ -60,7 +71,10 @@ class IntermediateNode extends Node {
     }
 
     display() {
-        for (let desc of this.descendantObjs) desc.display();
+        const displayFunc = function() {
+            for (let desc of this.descendantObjs) desc.display();
+        }
+        super.display(displayFunc.bind(this));
     }
 }
 
@@ -69,13 +83,16 @@ class LeafNode extends Node {
     /**
      * @param {CGFObject} obj the leaf object
      */
-    constructor(obj) {
-        super();
+    constructor(scene, obj) {
+        super(scene);
         this.obj = obj;
     }
 
     display() {
-        this.obj.display();
+        const displayFunc = function() {
+            this.obj.display();
+        }
+        super.display(displayFunc.bind(this));
     }
 }
 

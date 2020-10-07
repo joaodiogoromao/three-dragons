@@ -461,7 +461,7 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            const node = new IntermediateNode();
+            const node = new IntermediateNode(this.scene);
 
             // Transformations
             let tmat = null;
@@ -476,7 +476,9 @@ class MySceneGraph {
 
             // Material
 
+
             // Texture
+
 
             // Descendants
             const descendantsNode = grandChildren[descendantsIndex];
@@ -523,7 +525,7 @@ class MySceneGraph {
                 const leafObj = this.parseLeafNode(child);
                 if (leafObj == null) continue;
 
-                node.addDescendantObj(new LeafNode(leafObj));
+                node.addDescendantObj(new LeafNode(this.scene, leafObj));
 
             } else {
                 this.onXMLMinorError("unknown tag <" + child.nodeName + "> inside descendants of node with id " + this.reader.getString(children[i], 'id'));
@@ -562,7 +564,7 @@ class MySceneGraph {
                 const ax = [];
                 ax['x'] = [1, 0, 0]; ax['y'] = [0, 1, 0]; ax['z'] = [0, 0, 1];
 
-                if (isNotNull(angle) && isNotNull(axis)) {
+                if (isNotNull(angle) && isNotNull(axis) && ax[axis] != undefined) {
                     mat4.rotate(transfMx, transfMx, angle*DEGREE_TO_RAD, ax[axis]);
                     hadTransformation = true;
                 }
@@ -598,7 +600,12 @@ class MySceneGraph {
      * @param {string} parameter the parameter's name 
      */
     getCharParameter(node, parameter) {
-        return null;
+        const value = this.reader.getString(node, parameter);
+        if (!isNotNull(value)) {
+            this.onXMLMinorError('no ' + parameter + ' defined');
+            return null;
+        }
+        return value[0];
     }
 
     /**
