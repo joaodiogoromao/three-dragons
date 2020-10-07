@@ -2,6 +2,23 @@
  * This class seems quite useless right now, but I think it will be useful for the textures, materials and transformations
  */
 class Node {
+    constructor(texture, material, transformationMatrix) {
+        this.texture = null;
+        this.material = null;
+        this.transformationMatrix = null;
+    }
+
+    setTexture(texture) {
+        this.texture = texture;
+    }
+
+    setMaterial(material) {
+        this.material = material;
+    }
+
+    setTransformationMatrix(transformationMatrix) {
+        this.transformationMatrix = transformationMatrix;
+    }
 }
 
 

@@ -464,6 +464,15 @@ class MySceneGraph {
             const node = new IntermediateNode();
 
             // Transformations
+            let tmat = mat4.create();
+            if (transformationsIndex != -1) {
+                const transformationsNode = grandChildren[transformationsIndex];
+                const transformations = transformationsNode.children;
+
+                this.parseTransformations(transformations, tmat);
+            }
+
+            node.setTransformationMatrix(tmat);
 
             // Material
 
@@ -515,6 +524,38 @@ class MySceneGraph {
         if (unmatchedIds.length) this.onXMLMinorError("the following ids are referenced but do not have a correspondent node: " + unmatchedIds.join());
 
         this.objRoot = this.nodes[this.idRoot];
+    }
+
+    parseTransformations(transformations, tmat) {
+        const transfMx = [];
+        for (let child of transformations) {
+            if (child.nodeName === "scale") {
+                const params = ['sx', 'sy', 'sz'];
+
+                const res = this.getFloatParameters(child, params);
+
+                /*if (isNotNull(res)) {
+                    transfMx.push(mx);
+                } else continue;*/
+            } else if (child.nodeName === "translation") {
+                const params = ['x', 'y', 'z'];
+    
+                const res = this.getFloatParameters(child, params);
+    
+                /*if (isNotNull(res))
+                    transfMx.push(createMx(res.x, res.y, res.z));
+                else continue;*/
+                
+            } else if (child.nodeName === "rotation") {    
+                const angle = this.getFloatParameter(child, 'angle');
+                //const axis = this.getCharParameter(child, 'axis');
+    
+               /* if (isNotNull(angle) && isNotNull(axis))
+                    transfMx.push(createMx(axis, angle));
+                else continue;*/
+
+            }
+        }
     }
 
     parseLeafNode(node) {
