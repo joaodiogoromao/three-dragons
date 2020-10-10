@@ -193,12 +193,8 @@
 
             <texture id="null" />
 
-            <transformations>
-                <translation x="3" y="0" z="0" />
-            </transformations>
-
             <descendants>
-                <noderef id="parallelogramTriangle" />
+                <leaf type="triangle" x1="0" y1="0" x2="3" y2="0" x3="3" y3="5" />
             </descendants>
         </node>
         <node id="parallelogramTriangle2">
@@ -207,12 +203,10 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="17" y="0" z="0" />
-                <rotation axis="z" angle="-90" />
             </transformations>
 
             <descendants>
-                <noderef id="parallelogramTriangle" />
+                <leaf type="triangle" x1="17" y1="0" x2="20" y2="0" x3="17" y3="5" />
             </descendants>
         </node>
         <node id="parallelogramTriangle">
