@@ -10,6 +10,11 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+        this.materialStack = [];
+        this.textureStack = [];
+
+        this.currentMaterial = null;
+        this.currentTexture = null;
     }
 
     /**
@@ -92,6 +97,38 @@ class XMLscene extends CGFscene {
         this.initLights();
 
         this.sceneInited = true;
+    }
+
+    setMaterial(material) {
+        this.currentMaterial = material;
+        this.currentMaterial.setTexture(this.currentTexture);
+        this.currentMaterial.apply();
+    }
+
+    pushMaterial() {
+        this.materialStack.push(this.currentMaterial);
+    }
+
+    popMaterial() {
+        if (!this.materialStack.length) return;
+        let mat = this.materialStack.splice(this.materialStack.length-1, this.materialStack.length);
+        this.setMaterial(mat[0]);
+    }
+
+    setTexture(texture) {
+        this.currentTexture = texture;
+        this.currentMaterial.setTexture(texture);
+        this.currentMaterial.apply();
+    }
+
+    pushTexture() {
+        this.textureStack.push(this.currentTexture);
+    }
+
+    popTexture() {
+        if (!this.textureStack.length) return;
+        let txt = this.textureStack.splice(this.textureStack.length-1, this.textureStack.length);
+        this.setTexture(txt[0]);
     }
 
     /**
