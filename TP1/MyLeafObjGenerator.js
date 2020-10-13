@@ -41,12 +41,12 @@ function getTrianglePrimitive(sceneGraph, node) {
 }
 
 function getSpherePrimitive(sceneGraph, node) {
-    const params = ['slices', 'stacks'];
+    const params = ['radius', 'slices', 'stacks'];
 
     const res = sceneGraph.getFloatParameters(node, params);
     
     if (isNotNull(res))
-        return new MySphere(sceneGraph.scene, res.slices, res.stacks);
+        return new MySphere(sceneGraph.scene, res.radius, res.slices, res.stacks);
     return null;
 }
 
