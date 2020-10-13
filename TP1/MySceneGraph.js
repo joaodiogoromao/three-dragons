@@ -30,6 +30,7 @@ class MySceneGraph {
 
         this.nodes = [];
         this.materials = [];
+        this.textures = [];
 
         this.idRoot = null; // The id of the root element.
         this.objRoot = null;
@@ -376,7 +377,10 @@ class MySceneGraph {
     parseTextures(texturesNode) {
 
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
+        //this.onXMLMinorError("To do: Parse textures.");
+
+
+
         return null;
     }
 
@@ -410,7 +414,58 @@ class MySceneGraph {
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
 
             //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            
+            const material = new CGFappearance(this.scene);
+            grandChildren = children[i].children;
+
+            for (let child of grandChildren) {
+                if (child.nodeName === "shininess") {
+                    const res = this.getFloatParameter(child, 'value');
+    
+                    if (isNotNull(res)) {
+                        material.setShininess(res);
+                    }
+                } else if (child.nodeName === "ambient") {
+                    const params = ['r', 'g', 'b', 'a'];
+        
+                    const res = this.getFloatParameters(child, params);
+    
+                    if (isNotNull(res)) {
+                        material.setAmbient(res.r, res.g, res.b, res.a);
+                    }
+                } else if (child.nodeName === "diffuse") {    
+                    
+                    const params = ['r', 'g', 'b', 'a'];
+        
+                    const res = this.getFloatParameters(child, params);
+    
+                    if (isNotNull(res)) {
+                        material.setDiffuse(res.r, res.g, res.b, res.a);
+                    }
+                } else if (child.nodeName === "specular") {    
+                    
+                    const params = ['r', 'g', 'b', 'a'];
+        
+                    const res = this.getFloatParameters(child, params);
+    
+                    if (isNotNull(res)) {
+                        material.setSpecular(res.r, res.g, res.b, res.a);
+                    }
+                } else if (child.nodeName === "emissive") {    
+                    
+                    const params = ['r', 'g', 'b', 'a'];
+        
+                    const res = this.getFloatParameters(child, params);
+    
+                    if (isNotNull(res)) {
+                        material.setEmission(res.r, res.g, res.b, res.a);
+                    }
+                } else {
+                    this.onXMLMinorError("Child of 'transformations' node has got an invalid nodeName.");
+                }
+            }
+
+            this.materials[materialID] = material;
         }
 
         //this.log("Parsed materials");
