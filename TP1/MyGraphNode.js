@@ -23,11 +23,22 @@ class Node extends CGFobject {
 
     display(displayFunction) {
         this.scene.pushMatrix();
+        this.scene.pushMaterial();
+        this.scene.pushTexture();
 
+        if (this.material != null && this.material != "null") {
+            this.scene.setMaterial(this.material);
+        }
+        if (this.texture != null && this.texture != "null" && this.texture != "clear") {
+            this.scene.setTexture(this.texture);
+        }
         if (this.transformationMatrix != null)
             this.scene.multMatrix(this.transformationMatrix);
         displayFunction();
 
+        
+        this.scene.popMaterial();
+        this.scene.popTexture();
         this.scene.popMatrix();
     }
 }
@@ -38,6 +49,8 @@ class IntermediateNode extends Node {
         super(scene);
         this.descendantIds = [];
         this.descendantObjs = [];
+        this.material = null;
+        this.texture = null;
     }
 
     /**

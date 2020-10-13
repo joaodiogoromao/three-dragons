@@ -378,8 +378,33 @@ class MySceneGraph {
 
         //For each texture in textures block, check ID and file URL
         //this.onXMLMinorError("To do: Parse textures.");
+        var children = texturesNode.children;
 
+        for (const tex of children) {
 
+            if (tex.nodeName != "texture") {
+                this.onXMLMinorError("unknown tag <" + tex.nodeName + ">");
+                continue;
+            }
+
+            // Get id of the current material.
+            var textureID = this.reader.getString(tex, 'id');
+            if (textureID == null)
+                return "no ID defined for texture";
+
+            // Checks for repeated IDs.
+            if (this.textures[textureID] != null)
+                return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
+
+            //Continue here
+            var path = this.reader.getString(tex, 'path');
+            if (path == null)
+                return "no path defined for texture";
+            
+            const texture = new CGFtexture(this.scene, path);
+            this.textures[textureID] = texture;
+
+        }
 
         return null;
     }
@@ -394,7 +419,6 @@ class MySceneGraph {
         this.materials = [];
 
         var grandChildren = [];
-        var nodeNames = [];
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -548,8 +572,36 @@ class MySceneGraph {
 
         // Material
 
+        const materialNode = nodeChildren[materialIndex];
+        var matID = this.reader.getString(materialNode, 'id');
+        if (matID == null)
+            this.onXMLMinorError("no id defined for material");
+        if (matID == "null") {
+            node.setMaterial("null");
+        } else if (this.materials[matID] != undefined) {
+            node.setMaterial(this.materials[matID]);
+        } else {
+            this.onXMLMinorError("referenced texture id " + matID + "isn't defined");
+        }
+
 
         // Texture
+
+        const textureNode = nodeChildren[textureIndex];
+        var texID = this.reader.getString(textureNode, 'id');
+        if (texID == null)
+            this.onXMLMinorError("no id defined for material");
+        if (texID == "clear") {
+            node.setTexture(texID);
+        } else if (texID == "null") {
+            node.setTexture(texID);
+        } else {
+            if (this.textures[texID] != undefined) {
+                node.setTexture(this.textures[texID]);
+            } else {
+                this.onXMLMinorError("referenced texture id " + texID + "isn't defined");
+            }
+        }
 
 
         // Descendants
