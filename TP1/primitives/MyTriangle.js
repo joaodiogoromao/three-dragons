@@ -40,6 +40,8 @@ class MyTriangle extends CGFobject{
         ret.push(0, 0);
         ret.push(a/length_u, 0);
         ret.push((c*cos_alpha)/length_u, c*sin_alpha/length_v);
+
+        return ret;
     }
 
     distance_points(point1, point2){
