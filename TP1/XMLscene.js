@@ -42,7 +42,6 @@ class XMLscene extends CGFscene {
         this.loadingProgress=0;
 
         this.defaultAppearance=new CGFappearance(this);
-
     }
 
     /**
@@ -162,6 +161,7 @@ class XMLscene extends CGFscene {
             this.axis.display();
  
             this.defaultAppearance.apply();
+            this.currentMaterial = this.defaultAppearance;
 
             // Displays the scene (MySceneGraph function).
             this.graph.displayScene();
