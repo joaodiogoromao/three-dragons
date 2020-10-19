@@ -116,7 +116,7 @@ class XMLscene extends CGFscene {
     }
 
     setTexture(texture) {
-        if (!(texture instanceof CGFtexture) || this.currentMaterial == null || texture == null) return;
+        if (!(texture instanceof CGFtexture) || this.currentMaterial == null) return;
         this.currentTexture = texture;
         this.currentMaterial.setTexture(texture);
         this.currentMaterial.apply();
