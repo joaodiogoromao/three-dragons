@@ -1,11 +1,14 @@
 class MyTriangle extends CGFobject{
-    constructor(scene, coords){
+    constructor(scene, coords, afs, aft){
         super(scene);
 
         this.point1 = [coords[0], coords[1]];
         this.point2 = [coords[2], coords[3]];
         this.point3 = [coords[4], coords[5]];
         this.points = [this.point1, this.point2, this.point3];
+
+        this.afs = afs;
+        this.aft = aft;
 
         this.initBuffers();
     }

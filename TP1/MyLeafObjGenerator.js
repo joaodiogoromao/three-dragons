@@ -4,7 +4,7 @@ function getRectanglePrimitive(sceneGraph, node) {
     const res = sceneGraph.getFloatParameters(node, params);
 
     if (isNotNull(res))
-        return new MyRectangle(sceneGraph.scene, res.x1, res.y1, res.x2, res.y2);
+        return new MyRectangle(sceneGraph.scene, res.x1, res.y1, res.x2, res.y2, 1, 1);
     return null;
 }
 
@@ -36,7 +36,7 @@ function getTrianglePrimitive(sceneGraph, node) {
     const coords = [res.x1, res.y1, res.x2, res.y2, res.x3, res.y3];
     
     if (isNotNull(res))
-        return new MyTriangle(sceneGraph.scene, coords);
+        return new MyTriangle(sceneGraph.scene, coords, 1, 1);
     return null;
 }
 

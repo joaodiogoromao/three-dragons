@@ -63,6 +63,7 @@ class MyCylinder extends CGFobject {
                 this.indices.push(a, b, d);
                 this.indices.push(d, c, a);
 
+                //Circle indices
                 if (nstack == 0) {
                     a = nslice + firstCircleIndex;
                     b = nslice + firstCircleIndex + 1;
@@ -89,7 +90,7 @@ class MyCylinder extends CGFobject {
 
             this.vertices.push(x, y, height);
             this.normals.push(0, 0, value);
-            this.texCoords.push(Math.cos(increment_angle), Math.sin(increment_angle));
+            this.texCoords.push(Math.cos(increment_angle)/0.5 + 0.5, Math.sin(increment_angle)/0.5 + 0.5);
             increment_angle += this.angle;
         }
     }
