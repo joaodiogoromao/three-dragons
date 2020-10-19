@@ -285,8 +285,12 @@ class MySceneGraph {
                     } else if (child.nodeName === "from" && fromObj === null) {
                         fromObj = child;
                     } else {
-                        this.onXMLMinorError("Duplicate or invalid node inside perspective light");
+                        this.onXMLMinorError("Duplicate or invalid node inside perspective camera");
                     }
+                }
+
+                if (!isNotNull(toObj) || !isNotNull(fromObj)) {
+                    continue;
                 }
 
                 const xyz = ['x', 'y', 'z'];
@@ -297,9 +301,41 @@ class MySceneGraph {
                     continue;
 
                 this.cameras[cameraId] = new CGFcamera(cameraAngle * DEGREE_TO_RAD, cameraNF.near, cameraNF.far, [ cameraFrom.x, cameraFrom.y, cameraFrom.z ], [ cameraTo.x, cameraTo.y, cameraTo.z ]);
-                console.log(this.cameras[cameraId]);
             } else if (child.nodeName === "ortho") {
-                console.log("ortho!!");
+                const cameraLRTB = this.getFloatParameters(child, ['left', 'right', 'top', 'bottom']);
+                if (!isNotNull(cameraLRTB))
+                    continue;
+                
+                let toObj = null, fromObj = null, upObj = null;
+
+                for (child of grandChildren) {
+                    if (child.nodeName === "to" && toObj === null) {
+                        toObj = child;
+                    } else if (child.nodeName === "from" && fromObj === null) {
+                        fromObj = child;
+                    } else if (child.nodeName === "up" && upObj === null) {
+                        upObj = child;
+                    } else {
+                        this.onXMLMinorError("Duplicate or invalid node inside ortho camera");
+                    }
+                }
+
+                if (!isNotNull(toObj) || !isNotNull(fromObj)) {
+                    continue;
+                }
+
+                const xyz = ['x', 'y', 'z'];
+                const cameraTo = this.getFloatParameters(toObj, xyz);
+                const cameraFrom = this.getFloatParameters(fromObj, xyz);
+                let cameraUp = null;
+                if (isNotNull(upObj)) cameraUp = this.getFloatParameters(upObj, xyz);
+
+                if (!isNotNull(cameraTo) || !isNotNull(cameraFrom))  {
+                    continue;
+                }
+
+                this.cameras[cameraId] = new CGFcameraOrtho(cameraLRTB.left, cameraLRTB.right, cameraLRTB.bottom, cameraLRTB.top, cameraNF.near, cameraNF.far, [ cameraFrom.x, cameraFrom.y, cameraFrom.z ], [ cameraTo.x, cameraTo.y, cameraTo.z ], cameraUp === null ? null : [ cameraUp.x, cameraUp.y, cameraUp.z ]);
+                console.log("hey", this.cameras[cameraId]);
             } else {
                 this.onXMLMinorError("Invalid node in 'views' node.");
             }
@@ -309,7 +345,7 @@ class MySceneGraph {
         if (!isNotNull(this.cameras[defaultCameraId])) 
             return "There is no camera with id equal to the default camera id.";
         this.scene.camera = this.cameras[defaultCameraId];
-        
+        console.log("Parsed Views");
         return null;
     }
 
