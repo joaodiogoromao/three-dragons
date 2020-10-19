@@ -7,6 +7,7 @@ class Node extends CGFobject {
         this.texture = null;
         this.material = null;
         this.transformationMatrix = null;
+        this.scaleFactors = [1, 1];
     }
 
     setTexture(texture) {
@@ -19,6 +20,10 @@ class Node extends CGFobject {
 
     setTransformationMatrix(transformationMatrix) {
         this.transformationMatrix = transformationMatrix;
+    }
+
+    setScaleFactors(scaleFactors){
+        this.scaleFactors = scaleFactors;
     }
 
     display(displayFunction) {

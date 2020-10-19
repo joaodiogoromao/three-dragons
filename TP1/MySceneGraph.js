@@ -683,6 +683,15 @@ class MySceneGraph {
         // Texture
 
         const textureNode = nodeChildren[textureIndex];
+
+        if (textureNode.children.length == 0){}
+            //this.onXMLMinorError("no amplification defined for texture"); //uncomment when xml ready
+        else{
+            var amplification = this.getFloatParameters(textureNode.children[0], ['afs', 'aft']);
+            node.setScaleFactors(amplification);
+            console.log("Amplification", amplification);
+        }
+
         var texID = this.reader.getString(textureNode, 'id');
         if (texID == null)
             this.onXMLMinorError("no id defined for material");
@@ -725,7 +734,7 @@ class MySceneGraph {
                 node.addDescendantId(noderefID);
 
             } else if (child.nodeName === "leaf") {
-                const leafObj = this.parseLeafNode(child);
+                const leafObj = this.parseLeafNode(child, node);
                 if (leafObj == null) continue;
 
                 node.addDescendantObj(new LeafNode(this.scene, leafObj));
@@ -782,7 +791,7 @@ class MySceneGraph {
      * Generates the primitive for the leaf node
      * @param node the leaf node
      */
-    parseLeafNode(node) {
+    parseLeafNode(node, parent) {
         const leafType = this.reader.getString(node, 'type');
         if (leafType == null) {
             this.onXMLMinorError("no type defined for leaf");
@@ -795,7 +804,7 @@ class MySceneGraph {
             return null;
         }
 
-        return generatePrimitive(this, node);
+        return generatePrimitive(this, node, parent);
     }
 
     /**

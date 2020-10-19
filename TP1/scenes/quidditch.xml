@@ -601,7 +601,9 @@
         <node id="tower3">
             <material id="null" />
 
-            <texture id="gryffindorTexture" />
+            <texture id="gryffindorTexture" >
+                <amplification afs="3" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="7.416" y="0" z="-14.26" />
