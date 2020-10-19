@@ -958,13 +958,9 @@
 
             <descendants>
                 <noderef id="cabinWall1" />
-                <noderef id="cabinWall1Back" />
                 <noderef id="cabinWall2" />
-                <noderef id="cabinWall2Back" />
                 <noderef id="cabinBackWall" />
-                <noderef id="cabinBackWallBack" />
                 <noderef id="cabinFloor" />
-                <noderef id="cabinFloorBack" />
             </descendants>
         </node>
         <node id="cabinFloor">
@@ -979,19 +975,6 @@
 
             <descendants>
                 <noderef id="standsRectangle" />
-            </descendants>
-        </node>
-        <node id="cabinFloorBack">
-            <material id="null" />
-
-            <texture id="clear" />
-
-            <transformations>
-                <rotation axis="x" angle="180" />
-            </transformations>
-
-            <descendants>
-                <noderef id="cabinFloor" />
             </descendants>
         </node>
         <node id="cabinWall1">
@@ -1021,35 +1004,6 @@
 
             <descendants>
                 <noderef id="wallTriangle" />
-            </descendants>
-        </node>
-        <node id="cabinWall1Back">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="-2" y="0" z="-2" />
-                <rotation axis="y" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <noderef id="wallTriangleBack" />
-            </descendants>
-        </node>
-        <node id="cabinWall2Back">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <transformations>
-                <translation x="2" y="0" z="-2" />
-                <scale sx="1" sy="1" sz="-1" />
-                <rotation axis="y" angle="90" />
-            </transformations>
-
-            <descendants>
-                <noderef id="wallTriangleBack" />
             </descendants>
         </node>
         <node id="cabinStands">
@@ -1158,14 +1112,6 @@
 
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="4" y2="0" x3="0" y3="4" />
-            </descendants>
-        </node>
-        <node id="wallTriangleBack">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="0" y2="4" x3="4" y3="0" />
             </descendants>
         </node>
@@ -1176,6 +1122,7 @@
 
             <descendants>
                 <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+                <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" />
             </descendants>
         </node>
         <!--
