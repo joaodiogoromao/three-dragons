@@ -31,6 +31,7 @@ class MySceneGraph {
         this.nodes = [];
         this.materials = [];
         this.textures = [];
+        this.cameras = [];
 
         this.idRoot = null; // The id of the root element.
         this.objRoot = null;
@@ -250,7 +251,65 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+        let children = viewsNode.children;
+        const defaultCameraId = this.reader.getString(viewsNode, 'default');
+        if (!isNotNull(defaultCameraId))
+            return "No default camera set";
+
+        for (let child of children) {
+            const grandChildren = child.children;
+
+            const cameraId = this.reader.getString(child, 'id');
+            if (!isNotNull(cameraId))
+                continue;
+
+            if (this.cameras[cameraId] != null)
+                return "ID must be unique for each camera (conflict: ID = " + cameraId + ")";
+
+
+            const cameraNF = this.getFloatParameters(child, ['near', 'far']);
+            if (!isNotNull(cameraNF))
+                continue;
+
+            
+            if (child.nodeName === "perspective") {
+                const cameraAngle = this.getFloatParameter(child, 'angle');
+                if (!isNotNull(cameraAngle))
+                    continue;
+                
+                let toObj = null, fromObj = null;
+
+                for (child of grandChildren) {
+                    if (child.nodeName === "to" && toObj === null) {
+                        toObj = child;
+                    } else if (child.nodeName === "from" && fromObj === null) {
+                        fromObj = child;
+                    } else {
+                        this.onXMLMinorError("Duplicate or invalid node inside perspective light");
+                    }
+                }
+
+                const xyz = ['x', 'y', 'z'];
+                const cameraTo = this.getFloatParameters(toObj, xyz);
+                const cameraFrom = this.getFloatParameters(fromObj, xyz);
+
+                if (!isNotNull(cameraTo) || !isNotNull(cameraFrom)) 
+                    continue;
+
+                this.cameras[cameraId] = new CGFcamera(cameraAngle * DEGREE_TO_RAD, cameraNF.near, cameraNF.far, [ cameraFrom.x, cameraFrom.y, cameraFrom.z ], [ cameraTo.x, cameraTo.y, cameraTo.z ]);
+                console.log(this.cameras[cameraId]);
+            } else if (child.nodeName === "ortho") {
+                console.log("ortho!!");
+            } else {
+                this.onXMLMinorError("Invalid node in 'views' node.");
+            }
+        }
+            
+
+        if (!isNotNull(this.cameras[defaultCameraId])) 
+            return "There is no camera with id equal to the default camera id.";
+        this.scene.camera = this.cameras[defaultCameraId];
+        
         return null;
     }
 
@@ -286,7 +345,6 @@ class MySceneGraph {
             this.background = color;
 
         this.log("Parsed Illumination.");
-
         return null;
     }
 
@@ -723,10 +781,10 @@ class MySceneGraph {
     getFloatParameter(node, parameter) {
         const value = this.reader.getFloat(node, parameter);
         if (!isNotNull(value)) {
-            this.onXMLMinorError('no ' + parameter + ' defined');
+            this.onXMLMinorError('no ' + parameter + ' defined for ' + node.nodeName);
             return null;
         } else if (isNaN(value)) {
-            this.onXMLMinorError('parameter ' + parameter + ' is not a valid float');
+            this.onXMLMinorError('parameter ' + parameter + ' of ' + node.nodeName + ' is not a valid float');
             return null;
         }
         return value;
