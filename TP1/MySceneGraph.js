@@ -656,7 +656,7 @@ class MySceneGraph {
         var textureIndex = nodeChildrenNames.indexOf("texture");
         var descendantsIndex = nodeChildrenNames.indexOf("descendants");
 
-        const node = new IntermediateNode(this.scene);
+        const node = new IntermediateNode(nodeBlock.nodeName, this.scene);
 
         // Transformations
         if (transformationsIndex != -1) {

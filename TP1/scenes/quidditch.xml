@@ -43,6 +43,7 @@
         <texture id="ravenclawTexture" path="./scenes/images/ravenclawPattern.jpg" />
         <texture id="hufflepuffTexture" path="./scenes/images/hufflepuffPattern.jpg" />
         <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
+        <texture id="tentTissue" path="./scenes/images/tentTissue.jpeg" />
     </textures>
 
 
@@ -97,7 +98,7 @@
         <node id="tent">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="tentTissue"/>
 
             <descendants>
                 <noderef id="tentRoof" />
@@ -153,7 +154,9 @@
         <node id="tentTriangle">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
 
             <descendants>
                 <leaf type="triangle" x1="-4" y1="0" x2="4" y2="0" x3="0" y3="4.2426" /> <!-- sqrt(18) => sqrt(34)**2 = 4**2 + x**2-->
@@ -203,7 +206,9 @@
         <node id="parallelogramTriangle1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
 
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="3" y2="0" x3="3" y3="5" />
@@ -212,7 +217,9 @@
         <node id="parallelogramTriangle2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -221,19 +228,12 @@
                 <leaf type="triangle" x1="17" y1="0" x2="20" y2="0" x3="17" y3="5" />
             </descendants>
         </node>
-        <node id="parallelogramTriangle">
-            <material id="null" />
-
-            <texture id="null" />
-
-            <descendants>
-                <leaf type="triangle" x1="-3" y1="0" x2="0" y2="0" x3="0" y3="5" />
-            </descendants>
-        </node>
         <node id="parallelogramRectangle">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
 
             <descendants>
                 <leaf type="rectangle" x1="3" y1="0" x2="17" y2="5" />
@@ -310,7 +310,9 @@
         <node id="tentWall">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="8" aft="8" />
+            </texture>
 
             <descendants>
                 <leaf type="rectangle" x1="0" y1="0" x2="8" y2="5" />
