@@ -1132,7 +1132,9 @@
         <node id="standsRectangle">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification aft="0.75" afs="1"/>
+            </texture>
 
             <descendants>
                 <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />

@@ -42,7 +42,7 @@ class Node extends CGFobject {
         if (this.texture !== null && this.texture !== "null" && this.texture !== "clear") {
             this.scene.setTexture(this.texture);
         } else if (this.texture === "clear") {
-            //console.log("CLEAR texture");
+            console.log("CLEAR texture");
             this.scene.setTexture(null);
         }
         if (this.transformationMatrix != null)
