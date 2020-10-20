@@ -16,8 +16,8 @@ class MyCylinder extends CGFobject {
         this.normals = [];
         this.texCoords = [];
 
-        var angle = 2*Math.PI / this.slices;
-
+        this.angle = 2*Math.PI / this.slices;
+        
         for (var nstack = 0, v = 0; nstack <= this.stacks; nstack++, v = nstack / this.stacks){
             var stack_height = this.height * nstack / this.stacks;
             var increment_angle = 0;
@@ -34,16 +34,25 @@ class MyCylinder extends CGFobject {
 
                 this.vertices.push(x, y, stack_height);
                 this.normals.push(x, y, 0);
-
                 this.texCoords.push(u, v);
-                increment_angle += angle;
+
+                increment_angle += this.angle;
             }
         }
 
-        const offset = this.slices + 1;
+        this.generateCircle(0, -1, this.bottomRadius);
+        this.generateCircle(this.height, 1, this.topRadius);
+
+        this.generateCenterVertex(0, -1);
+        this.generateCenterVertex(this.height, 1);
+
+        const centerBottomIndex = (this.slices + 1) * (this.stacks + 3);
+        const centerTopIndex = (this.slices + 1) * (this.stacks + 3) + 1;
+        const firstCircleIndex = (this.slices + 1) * (this.stacks + 1);
+
         for (var nstack = 0; nstack < this.stacks; nstack++) {
-            const bottomOffset = nstack * offset;
-            const topOffset = (nstack + 1) * offset;
+            const bottomOffset = nstack * (this.slices + 1);
+            const topOffset = (nstack + 1) * (this.slices + 1);
             
             for (var nslice = 0; nslice < this.slices; nslice++){
                 var a = nslice + bottomOffset;
@@ -53,10 +62,42 @@ class MyCylinder extends CGFobject {
 
                 this.indices.push(a, b, d);
                 this.indices.push(d, c, a);
+
+                //Circle indices
+                if (nstack == 0) {
+                    a = nslice + firstCircleIndex;
+                    b = nslice + firstCircleIndex + 1;
+                    this.indices.push(b, a, centerBottomIndex);
+                } 
+                if (nstack == this.stacks - 1) {
+                    c = nslice + firstCircleIndex + this.slices + 1;
+                    d = nslice + firstCircleIndex + this.slices + 2;
+                    this.indices.push(c, d, centerTopIndex);
+                }
             }
         }
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
+    }
+
+    generateCircle(height, value, radius){
+        var increment_angle = 0;
+        
+        for (var nslice = 0; nslice <= this.slices; nslice++){
+            var x = Math.cos(increment_angle) * radius;
+            var y = Math.sin(increment_angle) * radius;
+
+            this.vertices.push(x, y, height);
+            this.normals.push(0, 0, value);
+            this.texCoords.push(Math.cos(increment_angle)/0.5 + 0.5, Math.sin(increment_angle)/0.5 + 0.5);
+            increment_angle += this.angle;
+        }
+    }
+
+    generateCenterVertex(height, value){
+        this.vertices.push(0, 0, height);
+        this.normals.push(0, 0, value);
+        this.texCoords.push(0.5, 0.5);
     }
 }
