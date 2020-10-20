@@ -13,6 +13,9 @@ class XMLscene extends CGFscene {
         this.materialStack = [];
         this.textureStack = [];
 
+        this.selectedCamera = "";
+        this.cameras = [];
+
         this.currentMaterial = null;
         this.currentTexture = null;
     }
@@ -95,7 +98,22 @@ class XMLscene extends CGFscene {
 
         this.initLights();
 
+        this.interface.createInterface();
+
         this.sceneInited = true;
+    }
+
+    setCamera(camera) {
+        this.camera = camera;
+        this.interface.setActiveCamera(camera);
+    }
+    
+    addCamera(cameraId, camera) {
+        this.cameras[cameraId] = camera;
+    }
+
+    setSelectedCamera() {
+        this.setCamera(this.cameras[this.selectedCamera]);
     }
 
     setMaterial(material) {

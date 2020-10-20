@@ -251,7 +251,7 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        let children = viewsNode.children;
+        const children = viewsNode.children;
         const defaultCameraId = this.reader.getString(viewsNode, 'default');
         if (!isNotNull(defaultCameraId))
             return "No default camera set";
@@ -300,7 +300,7 @@ class MySceneGraph {
                 if (!isNotNull(cameraTo) || !isNotNull(cameraFrom)) 
                     continue;
 
-                this.cameras[cameraId] = new CGFcamera(cameraAngle * DEGREE_TO_RAD, cameraNF.near, cameraNF.far, [ cameraFrom.x, cameraFrom.y, cameraFrom.z ], [ cameraTo.x, cameraTo.y, cameraTo.z ]);
+                this.scene.addCamera(cameraId, new CGFcamera(cameraAngle * DEGREE_TO_RAD, cameraNF.near, cameraNF.far, vec3.fromValues(cameraFrom.x, cameraFrom.y, cameraFrom.z), vec3.fromValues(cameraTo.x, cameraTo.y, cameraTo.z)));
             } else if (child.nodeName === "ortho") {
                 const cameraLRTB = this.getFloatParameters(child, ['left', 'right', 'top', 'bottom']);
                 if (!isNotNull(cameraLRTB))
@@ -334,17 +334,18 @@ class MySceneGraph {
                     continue;
                 }
 
-                this.cameras[cameraId] = new CGFcameraOrtho(cameraLRTB.left, cameraLRTB.right, cameraLRTB.bottom, cameraLRTB.top, cameraNF.near, cameraNF.far, [ cameraFrom.x, cameraFrom.y, cameraFrom.z ], [ cameraTo.x, cameraTo.y, cameraTo.z ], cameraUp === null ? null : [ cameraUp.x, cameraUp.y, cameraUp.z ]);
-                console.log("hey", this.cameras[cameraId]);
+                this.scene.addCamera(cameraId, new CGFcameraOrtho(cameraLRTB.left, cameraLRTB.right, cameraLRTB.bottom, cameraLRTB.top, cameraNF.near, cameraNF.far, vec3.fromValues(cameraFrom.x, cameraFrom.y, cameraFrom.z), vec3.fromValues(cameraTo.x, cameraTo.y, cameraTo.z), cameraUp === null ? null : vec3.fromValues(cameraUp.x, cameraUp.y, cameraUp.z)));
             } else {
                 this.onXMLMinorError("Invalid node in 'views' node.");
             }
         }
             
 
-        if (!isNotNull(this.cameras[defaultCameraId])) 
+        if (!isNotNull(this.scene.cameras[defaultCameraId])) 
             return "There is no camera with id equal to the default camera id.";
-        this.scene.camera = this.cameras[defaultCameraId];
+
+        this.scene.selectedCamera = defaultCameraId;
+        this.scene.setSelectedCamera();
         console.log("Parsed Views");
         return null;
     }
@@ -534,6 +535,7 @@ class MySceneGraph {
             //Continue here
             
             const material = new CGFappearance(this.scene);
+            material.setTextureWrap('REPEAT', 'REPEAT');
             grandChildren = children[i].children;
 
             for (let child of grandChildren) {
