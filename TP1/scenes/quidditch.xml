@@ -64,7 +64,7 @@
             <!-- next two lines are mandatory -->
             <material id="defaultMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="null"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
 
@@ -77,7 +77,9 @@
         <node id="groundSurface">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear">
+                <amplification afs="60" aft="60" />
+            </texture>
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -602,7 +604,6 @@
             <material id="null" />
 
             <texture id="gryffindorTexture" >
-                <amplification afs="3" aft="1" />
             </texture>
 
             <transformations>
@@ -913,7 +914,9 @@
         <node id="towerBodyWall">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+            <amplification afs="4" aft="4" />
+            </texture>
 
             <descendants>
                 <leaf type="rectangle" x1="-2" y1="0" x2="2" y2="12" />
@@ -1084,7 +1087,9 @@
         <node id="cabinBackWall">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="clear">
+                <!--<amplification afs="0.25" aft="0.25"/>-->
+            </texture>
 
             <transformations>
                 <translation x="0" y="2" z="-2" />
@@ -1099,7 +1104,9 @@
         <node id="cabinBackWallBack">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="clear">
+                <!--<amplification afs="0.25" aft="0.25"/>-->
+            </texture>
 
             <transformations>
                 <translation x="0" y="2" z="-2" />

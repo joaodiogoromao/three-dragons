@@ -7,7 +7,10 @@ class Node extends CGFobject {
         this.texture = null;
         this.material = null;
         this.transformationMatrix = null;
-        this.scaleFactors = [1, 1];
+        this.scaleFactors = {
+            afs: 1,
+            aft: 1
+        };
     }
 
     setTexture(texture) {
@@ -23,7 +26,9 @@ class Node extends CGFobject {
     }
 
     setScaleFactors(scaleFactors){
-        this.scaleFactors = scaleFactors;
+        this.scaleFactors = {...scaleFactors};
+
+        console.log("set scaleFactors", scaleFactors, this.scaleFactors);
     }
 
     display(displayFunction) {
@@ -34,9 +39,10 @@ class Node extends CGFobject {
         if (this.material != null && this.material != "null") {
             this.scene.setMaterial(this.material);
         }
-        if (this.texture != null && this.texture != "null" && this.texture != "clear") {
+        if (this.texture !== null && this.texture !== "null" && this.texture !== "clear") {
             this.scene.setTexture(this.texture);
-        } else if (this.texture == "clear") {
+        } else if (this.texture === "clear") {
+            //console.log("CLEAR texture");
             this.scene.setTexture(null);
         }
         if (this.transformationMatrix != null)
@@ -92,13 +98,13 @@ class IntermediateNode extends Node {
 
     display() {
         const displayFunc = function() {
-            for (let desc of this.descendantObjs) desc.display();
+            for (let desc of this.descendantObjs) desc.display(this.scaleFactors);
         }
         super.display(displayFunc.bind(this));
     }
 }
 
-class LeafNode extends Node {
+class LeafNode extends CGFobject {
     
     /**
      * @param {CGFobject} obj the leaf object
@@ -108,11 +114,12 @@ class LeafNode extends Node {
         this.obj = obj;
     }
 
-    display() {
-        const displayFunc = function() {
-            this.obj.display();
+    display(scaleFactors) {
+        if (this.obj instanceof MyRectangle || this.obj instanceof MyTriangle) {
+            //console.log(scaleFactors);
+            this.obj.updateTexCoords(scaleFactors);
         }
-        super.display(displayFunc.bind(this));
+        this.obj.display();
     }
 }
 

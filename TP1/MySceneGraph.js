@@ -686,12 +686,22 @@ class MySceneGraph {
 
         const textureNode = nodeChildren[textureIndex];
 
-        if (textureNode.children.length == 0){}
-            //this.onXMLMinorError("no amplification defined for texture"); //uncomment when xml ready
-        else{
-            var amplification = this.getFloatParameters(textureNode.children[0], ['afs', 'aft']);
-            node.setScaleFactors(amplification);
-            console.log("Amplification", amplification);
+        if (textureNode.children.length == 0) {
+            this.onXMLMinorError("no amplification defined for texture"); //uncomment when xml ready
+        } else {
+            const amplificationNode = textureNode.children[0];
+            if (amplificationNode.nodeName != "amplification") {
+                this.onXMLMinorError("invalid node name inside texture of node");
+            } else {
+                const amplification = this.getFloatParameters(textureNode.children[0], ['afs', 'aft']);
+                if (amplification === null) {
+                    this.onXMLMinorError("invalid amplification parameters inside texture of node");
+                } else {
+                    node.setScaleFactors({ afs: amplification.afs, aft: amplification.aft });
+                    //console.log("Amplification", amplification);
+                }
+
+            }
         }
 
         var texID = this.reader.getString(textureNode, 'id');

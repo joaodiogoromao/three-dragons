@@ -43,23 +43,14 @@ class MyRectangle extends CGFobject {
 			0, 0, 1,
 			0, 0, 1
 		];
-		
-		/*
-		Texture coords (s,t)
-		+----------> s
-        |
-        |
-		|
-		v
-        t
-        */
 
 		this.texCoords = [
-			0, this.aft,
-			this.afs, this.aft,
 			0, 0,
-			this.afs, 0
+			0, 1,
+			1, 0,
+			1, 1
 		]
+
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
 	}
@@ -70,8 +61,19 @@ class MyRectangle extends CGFobject {
 	 * @param {Array} coords - Array of texture coordinates
 	 */
 	updateTexCoords(coords) {
-		this.texCoords = [...coords];
+		const dX = this.x2 - this.x1;
+		const dY = this.y2 - this.y1;
+		if (coords == undefined || typeof coords.afs != 'number' || typeof coords.aft != 'number') {
+			//console.warn("RECEIVED INVALID AFS & AFT");
+			return;
+		}
+
+		this.texCoords = [
+			0, 0,
+			dX/coords.afs, 0,
+			0, dY/coords.aft,
+			dX/coords.afs, dY/coords.aft
+		]
 		this.updateTexCoordsGLBuffers();
 	}
 }
-
