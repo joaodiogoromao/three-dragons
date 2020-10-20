@@ -43,7 +43,11 @@
         <texture id="ravenclawTexture" path="./scenes/images/ravenclawPattern.jpg" />
         <texture id="hufflepuffTexture" path="./scenes/images/hufflepuffPattern.jpg" />
         <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
-        <texture id="tentTissue" path="./scenes/images/tentTissue.jpeg" />
+        <texture id="groundTexture" path="./scenes/images/quidditchField1.jpg" />
+        <texture id="groundBarrierTexture" path="./scenes/images/groundBarrierTexture.jpeg" />
+        <texture id="genericWood" path="./scenes/images/genericWood.jpeg" />
+        <texture id="tentTissue" path="./scenes/images/tentTissue2.jpeg" />
+        <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
     </textures>
 
 
@@ -78,7 +82,7 @@
         <node id="groundSurface">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="groundTexture">
                 <amplification afs="60" aft="60" />
             </texture>
 
@@ -358,15 +362,15 @@
         <node id="fieldGroundBarrier">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="groundBarrierTexture" />
 
             <transformations>
-                <scale sx="1.6" sy="1.2" sz="1" />
+                <scale sx="1.6" sy="1.6" sz="1" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2" outer="15" slices="32" loops="128" /> 
+                <leaf type="torus" inner="2.1" outer="15" slices="32" loops="128" /> 
             </descendants>
         </node>
         <!--
@@ -527,23 +531,23 @@
         <node id="hoopPole">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="metalTexture" />
 
             <transformations>
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="10" topRadius="1" bottomRadius="1" stacks="5" slices="20"/>
+                <leaf type="cylinder" height="10" topRadius="0.5" bottomRadius="0.5" stacks="5" slices="20"/>
             </descendants>
         </node>
         <node id="hoopHole">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="metalTexture" />
 
             <descendants>
-                <leaf type="torus" inner=".3" outer="1" slices="16" loops="64" />
+                <leaf type="torus" inner=".15" outer="1" slices="16" loops="64" />
             </descendants>
         </node>
         <!--
@@ -710,7 +714,9 @@
         <node id="towerCeilingTriangle">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="4" aft="4" />
+            </texture>
 
             <transformations>
                 <translation x="-2" y="0" z="-2" />
@@ -739,7 +745,7 @@
         <node id="flagSphere">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="null" />
 
             <transformations>
                 <translation x="0" y="6.95" z="0" />
@@ -747,13 +753,13 @@
             </transformations>
 
             <descendants>
-                <leaf type="sphere" radius="0.2" slices="5" stacks="5" />
+                <leaf type="sphere" radius="0.2" slices="15" stacks="15" />
             </descendants>
         </node>
         <node id="towerCeilingPole">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="metalTexture" />
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -782,7 +788,7 @@
         <node id="banner1">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="metalTexture" />
 
             <descendants>
                 <noderef id="banner" />
@@ -791,7 +797,7 @@
         <node id="banner1back">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="null" />
 
             <transformations>
                 <rotation axis="x" angle="180" />
@@ -817,7 +823,7 @@
         <node id="banner2back">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="metalTexture" />
 
             <transformations>
                 <rotation axis="x" angle="180" />
@@ -978,7 +984,7 @@
         <node id="cabinFloor">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="genericWood" />
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -1059,7 +1065,7 @@
         <node id="cabinStandStepRect1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="genericWood" />
 
             <transformations>
                 <translation x="0" y="0.5" z="1" />
@@ -1074,7 +1080,7 @@
         <node id="cabinStandStepRect2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="genericWood" />
 
             <transformations>
                 <translation x="0" y="1" z="0.5" />
@@ -1089,7 +1095,7 @@
         <node id="cabinBackWall">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <!--<amplification afs="0.25" aft="0.25"/>-->
             </texture>
 
@@ -1097,24 +1103,6 @@
                 <translation x="0" y="2" z="-2" />
                 <rotation axis="y" angle="180" />
                 <scale sx="4" sy="4" sz="1" />
-            </transformations>
-
-            <descendants>
-                <noderef id="standsRectangle" />
-            </descendants>
-        </node>
-        <node id="cabinBackWallBack">
-            <material id="null" />
-
-            <texture id="clear">
-                <!--<amplification afs="0.25" aft="0.25"/>-->
-            </texture>
-
-            <transformations>
-                <translation x="0" y="2" z="-2" />
-                <rotation axis="y" angle="180" />
-                <scale sx="4" sy="4" sz="1" />
-                <rotation axis="x" angle="180" />
             </transformations>
 
             <descendants>
@@ -1124,7 +1112,9 @@
         <node id="wallTriangle">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="4" aft="4" />
+            </texture>
 
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="4" y2="0" x3="0" y3="4" />

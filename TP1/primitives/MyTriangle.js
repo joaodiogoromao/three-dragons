@@ -57,8 +57,6 @@ class MyTriangle extends CGFobject{
 			return;
         }
         
-        if (coords.afs != 1)
-            console.log("My triangle factors, ", coords);
 
 		this.texCoords = this.findTexCoords(coords.afs, coords.aft);
 		this.updateTexCoordsGLBuffers();
