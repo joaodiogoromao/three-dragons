@@ -83,7 +83,7 @@
         <texture id="ravenclawTexture" path="./scenes/images/ravenclawPattern.jpg" />
         <texture id="hufflepuffTexture" path="./scenes/images/hufflepuffPattern.jpg" />
         <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
-        <texture id="groundTexture" path="./scenes/images/quidditchField1.jpg" />
+        <texture id="groundTexture" path="./scenes/images/quidditchField.jpg" />
         <texture id="lightWood" path="./scenes/images/lightWood.jpg" />
         <texture id="groundBarrierTexture" path="./scenes/images/groundBarrierTexture.jpeg" />
         <texture id="genericWood" path="./scenes/images/genericWood.jpeg" />
@@ -1046,7 +1046,7 @@
             <material id="null" />
 
             <texture id="null">
-            <amplification afs="4" aft="4" />
+            <amplification afs="4" aft="3" />
             </texture>
 
             <descendants>
