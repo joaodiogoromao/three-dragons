@@ -48,7 +48,7 @@
             <enable value="true" />
             <!-- enable/disable -->
             <position x="0" y="15" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="1" g="1" b="1" a="1.0" />                   <!-- ambient component -->
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
         </light>
@@ -76,6 +76,7 @@
         <texture id="hufflepuffTexture" path="./scenes/images/hufflepuffPattern.jpg" />
         <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
         <texture id="groundTexture" path="./scenes/images/quidditchField1.jpg" />
+        <texture id="lightWood" path="./scenes/images/lightWood.jpg" />
         <texture id="groundBarrierTexture" path="./scenes/images/groundBarrierTexture.jpeg" />
         <texture id="genericWood" path="./scenes/images/genericWood.jpeg" />
         <texture id="tentTissue" path="./scenes/images/tentTissue2.jpeg" />
@@ -88,10 +89,45 @@
          requires a distinct "id". At least one material should be present. -->
         <material id="defaultMaterial">
             <shininess value="0" />
-            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
-            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
-            <emissive r="0.2" g="0.2" b="0.2" a="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="metalMaterial">
+            <shininess value="0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.01" g="0.01" b="0.01" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="tentMaterial">
+            <shininess value="0" />
+            <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="towerMaterial">
+            <shininess value="0" />
+            <ambient r="0.85" g="0.85" b="0.85" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.7" g="0.7" b="0.7" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="woodMaterial">
+            <shininess value="0" />
+            <ambient r="0.65" g="0.65" b="0.65" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="groundMaterial">
+            <shininess value="0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
         </material>
     </materials>
 
@@ -113,7 +149,7 @@
             </descendants>
         </node>
         <node id="groundSurface">
-            <material id="null" />
+            <material id="groundMaterial" />
 
             <texture id="groundTexture">
                 <amplification afs="60" aft="60" />
@@ -179,7 +215,7 @@
             **********************************
         -->
         <node id="tent">
-            <material id="null" />
+            <material id="tentMaterial" />
 
             <texture id="tentTissue"/>
 
@@ -418,9 +454,9 @@
             </descendants>
         </node>
         <node id="fieldPlayingArea">
-            <material id="null" />
+            <material id="metalMaterial" />
 
-            <texture id="null" />
+            <texture id="metalTexture" />
 
             <descendants>
                 <noderef id="hoopSetL" />
@@ -439,7 +475,7 @@
             </descendants>
         </node>
         <node id="fieldGroundBarrier">
-            <material id="null" />
+            <material id="woodMaterial" />
 
             <texture id="groundBarrierTexture" />
 
@@ -610,7 +646,7 @@
         <node id="hoopPole">
             <material id="null" />
 
-            <texture id="metalTexture" />
+            <texture id="null" />
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -623,7 +659,7 @@
         <node id="hoopHole">
             <material id="null" />
 
-            <texture id="metalTexture" />
+            <texture id="null" />
 
             <descendants>
                 <leaf type="torus" inner=".15" outer="1" slices="16" loops="64" />
@@ -715,7 +751,7 @@
             </descendants>
         </node>
         <node id="tower">
-            <material id="null" />
+            <material id="towerMaterial" />
 
             <texture id="null" />
 
@@ -836,7 +872,7 @@
             </descendants>
         </node>
         <node id="towerCeilingPole">
-            <material id="null" />
+            <material id="metalMaterial" />
 
             <texture id="metalTexture" />
 
@@ -1104,9 +1140,9 @@
             </descendants>
         </node>
         <node id="cabinStands">
-            <material id="null" />
+            <material id="woodMaterial" />
 
-            <texture id="clear" />
+            <texture id="genericWood" />
 
             <descendants>
                 <noderef id="cabinStandStep1" />
@@ -1144,7 +1180,7 @@
         <node id="cabinStandStepRect1">
             <material id="null" />
 
-            <texture id="genericWood" />
+            <texture id="null" />
 
             <transformations>
                 <translation x="0" y="0.5" z="1" />
@@ -1159,7 +1195,7 @@
         <node id="cabinStandStepRect2">
             <material id="null" />
 
-            <texture id="genericWood" />
+            <texture id="null" />
 
             <transformations>
                 <translation x="0" y="1" z="0.5" />
