@@ -16,7 +16,20 @@
             <from x="20" y="5" z="30" />
             <to x="20" y="0" z="20" />
         </perspective>
-        <ortho id="ss"  near="0.1" far="500" left="-50" right="50" top="50" bottom="-50" >
+        <perspective id="flagDetail" near="0.1" far="500" angle="60">
+            <from x="-10.416" y="31" z="-17.26" />
+            <to x="-7.416" y="28" z="-14.26" />
+        </perspective>
+        <perspective id="insideCabin" near="0.1" far="500" angle="60">
+            <from x="0.416" y="17" z="-4.26" />
+            <to x="-7.416" y="16" z="-14.26" />
+        </perspective>
+
+        <perspective id="hoops" near="0.1" far="500" angle="60">
+            <from x="25" y="15" z="0" />
+            <to x="15" y="10" z="0" />
+        </perspective>
+        <ortho id="orthoView"  near="0.1" far="500" left="-50" right="50" top="50" bottom="-50" >
             <from x="30" y="30" z="30" />
             <to x="0" y="0" z="0" />
             <up x="0" y="1" z="0" /> <!-- optional, default 0,1,0 -->
