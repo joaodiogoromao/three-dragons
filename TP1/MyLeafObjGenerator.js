@@ -1,5 +1,4 @@
 function getRectanglePrimitive(sceneGraph, node, parent) {
-    console.log("Scale factors", parent.scaleFactors);
 
     const params = ['x1', 'y1', 'x2', 'y2'];
 

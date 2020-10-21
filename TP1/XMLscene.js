@@ -60,7 +60,6 @@ class XMLscene extends CGFscene {
         var i = 0;
         // Lights index.
 
-        // Reads the lights from the scene graph.
         for (var key in this.graph.lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebCGF on default shaders.
@@ -114,6 +113,17 @@ class XMLscene extends CGFscene {
 
     setSelectedCamera() {
         this.setCamera(this.cameras[this.selectedCamera]);
+    }
+
+    updateLights(){
+        for (let idx in this.lights) {
+            if (this["light"+idx])
+                this.lights[idx].enable();
+            else
+                this.lights[idx].disable();
+
+            this.lights[idx].update();
+        }
     }
 
     setMaterial(material) {

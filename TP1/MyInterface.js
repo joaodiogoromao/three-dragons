@@ -26,6 +26,13 @@ class MyInterface extends CGFinterface {
     createInterface() {
         // add a group of controls (and open/expand by defult)
         this.gui.add(this.scene, 'selectedCamera', Object.keys(this.scene.cameras)).name('Camera').onChange(this.scene.setSelectedCamera.bind(this.scene));
+
+        const lights = this.scene.graph.lights;
+        for (let id in lights){
+            this.scene[id] = lights[id][0];
+
+            this.gui.add(this.scene, id).name(id).onChange(this.scene.updateLights.bind(this.scene));
+        }
         
         this.initKeys();
     }
