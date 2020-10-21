@@ -1046,7 +1046,7 @@
             <material id="null" />
 
             <texture id="null">
-            <amplification afs="4" aft="4" />
+            <amplification afs="4" aft="3" />
             </texture>
 
             <descendants>
