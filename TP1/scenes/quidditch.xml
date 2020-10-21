@@ -12,7 +12,24 @@
             <from x="30" y="30" z="0" />
             <to x="0" y="0" z="0" />
         </perspective>
-        <ortho id="ss"  near="0.1" far="500" left="-50" right="50" top="50" bottom="-50" >
+        <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
+            <from x="20" y="5" z="30" />
+            <to x="20" y="0" z="20" />
+        </perspective>
+        <perspective id="flagDetail" near="0.1" far="500" angle="60">
+            <from x="-10.416" y="31" z="-17.26" />
+            <to x="-7.416" y="28" z="-14.26" />
+        </perspective>
+        <perspective id="insideCabin" near="0.1" far="500" angle="60">
+            <from x="0.416" y="17" z="-4.26" />
+            <to x="-7.416" y="16" z="-14.26" />
+        </perspective>
+
+        <perspective id="hoops" near="0.1" far="500" angle="60">
+            <from x="25" y="15" z="0" />
+            <to x="15" y="10" z="0" />
+        </perspective>
+        <ortho id="orthoView"  near="0.1" far="500" left="-50" right="50" top="50" bottom="-50" >
             <from x="30" y="30" z="30" />
             <to x="0" y="0" z="0" />
             <up x="0" y="1" z="0" /> <!-- optional, default 0,1,0 -->
@@ -93,6 +110,7 @@
                 <noderef id="quidditchField" />
                 <noderef id="tent" />
                 <noderef id="groundSurface" />
+                <noderef id="scalingFactorDemonstration" />
             </descendants>
         </node>
         <node id="groundSurface">
@@ -108,6 +126,52 @@
  
             <descendants>               
                 <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+            </descendants>
+        </node>
+        <node id="scalingFactorDemonstration">
+            <material id="null" />
+
+            <texture id="gryffindorTexture">
+            </texture>
+
+            <transformations>
+                <translation x="20" y="0" z="20" />
+                <scale sx="0.9" sy="0.9" sz="0.9" />
+            </transformations>
+ 
+            <descendants>
+                <noderef id="sfdemoTR1" />
+                <noderef id="sfdemoTR2" />
+            </descendants>
+        </node>
+        <node id="sfdemoTR1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="4" aft="4" />
+            </texture>
+
+            <transformations>
+            </transformations>
+ 
+            <descendants>
+                <leaf type="rectangle" x1="-10" y1="0" x2="-6" y2="4" />
+                <leaf type="triangle" x1="-5" y1="0" x2="-1" y2="0" x3="-3" y3="4" />
+            </descendants>
+        </node>
+        <node id="sfdemoTR2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.5" />
+            </texture>
+
+            <transformations>
+            </transformations>
+ 
+            <descendants>
+                <leaf type="rectangle" x1="1" y1="0" x2="5" y2="4" />
+                <leaf type="triangle" x1="6" y1="0" x2="10" y2="0" x3="8" y3="4" />
             </descendants>
         </node>
         <!--
