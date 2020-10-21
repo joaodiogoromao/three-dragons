@@ -41,8 +41,7 @@ class Node extends CGFobject {
         }
         if (this.texture !== null && this.texture !== "null" && this.texture !== "clear") {
             this.scene.setTexture(this.texture);
-        } else if (this.texture === "clear") {
-            //console.log("CLEAR texture");
+        } else if (this.texture === "clear") { // CLEARs the texture
             this.scene.setTexture(null);
         }
         if (this.transformationMatrix != null)
@@ -58,8 +57,9 @@ class Node extends CGFobject {
 
 
 class IntermediateNode extends Node {
-    constructor(scene) {
+    constructor(id, scene) {
         super(scene);
+        this.id = id;
         this.descendantIds = [];
         this.descendantObjs = [];
         this.material = null;
@@ -98,7 +98,10 @@ class IntermediateNode extends Node {
 
     display() {
         const displayFunc = function() {
-            for (let desc of this.descendantObjs) desc.display(this.scaleFactors);
+            for (const desc of this.descendantObjs) {
+                desc.display(this.scaleFactors);
+            }
+            
         }
         super.display(displayFunc.bind(this));
     }

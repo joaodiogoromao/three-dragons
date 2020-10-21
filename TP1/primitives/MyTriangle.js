@@ -25,7 +25,7 @@ class MyTriangle extends CGFobject{
             0, 0, 1
         ];
 
-        this.texCoords = this.findTexCoords(1,1);
+        this.texCoords = this.findTexCoords(2,2);
 
         this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
@@ -51,7 +51,14 @@ class MyTriangle extends CGFobject{
         return Math.sqrt(Math.pow(point2[0]-point1[0], 2) + Math.pow(point2[1]-point1[1], 2))
     }
 
-    updateTexCoords() {
+    updateTexCoords(coords) {
+		if (coords == undefined || typeof coords.afs != 'number' || typeof coords.aft != 'number') {
+			console.warn("RECEIVED INVALID AFS & AFT");
+			return;
+        }
         
+
+		this.texCoords = this.findTexCoords(coords.afs, coords.aft);
+		this.updateTexCoordsGLBuffers();
     }
 }
