@@ -76,7 +76,6 @@
         <texture id="hufflepuffTexture" path="./scenes/images/hufflepuffPattern.jpg" />
         <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
         <texture id="groundTexture" path="./scenes/images/quidditchField1.jpg" />
-        <texture id="lightWood" path="./scenes/images/lightWood.jpg" />
         <texture id="groundBarrierTexture" path="./scenes/images/groundBarrierTexture.jpeg" />
         <texture id="genericWood" path="./scenes/images/genericWood.jpeg" />
         <texture id="tentTissue" path="./scenes/images/tentTissue2.jpeg" />

@@ -116,14 +116,15 @@ class XMLscene extends CGFscene {
     }
 
     updateLights(){
-        for (var i = 0; i < Object.keys(this.graph.lights).length; i++) {
-            var lightno = i + 1;
-            if (this["light"+lightno])
+        var i = 0;
+        for (let id in this.graph.lights) {
+            if (this[id])
                 this.lights[i].enable();
             else
                 this.lights[i].disable();
 
             this.lights[i].update();
+            i++;
         }
     }
 
