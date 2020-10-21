@@ -913,6 +913,10 @@
 
             <texture id="metalTexture" />
 
+            <transformations>
+                <translation x="0" y="-0.3" z="0" />
+            </transformations>
+
             <descendants>
                 <noderef id="banner" />
             </descendants>
@@ -920,7 +924,7 @@
         <node id="banner1back">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="metalTexture" />
 
             <transformations>
                 <rotation axis="x" angle="180" />
@@ -936,7 +940,6 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="0" y="0.3" z="0" />
             </transformations>
 
             <descendants>
@@ -946,20 +949,23 @@
         <node id="banner2back">
             <material id="null" />
 
-            <texture id="metalTexture" />
+            <texture id="null" />
 
             <transformations>
+                <translation x="0" y="0.3" z="0" />
                 <rotation axis="x" angle="180" />
             </transformations>
 
             <descendants>
-                <noderef id="banner2" />
+                <noderef id="banner" />
             </descendants>
         </node>
         <node id="banner">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="0.4" aft="0.3" />
+            </texture>
 
             <descendants>
                 <noderef id="bannerTriangle" />
@@ -969,10 +975,12 @@
         <node id="bannerTriangle">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="0.3" aft="0.4" />
+            </texture>
 
             <descendants>
-                <leaf type="triangle" x1="1" y1="0" x2="1.6" y2="0.15" x3="1" y3="0.3" />
+                <leaf type="triangle" x1="1" y1="0.3" x2="1" y2="0" x3="1.6" y3="0.15" />
             </descendants>
         </node>
         <node id="towerBody">
