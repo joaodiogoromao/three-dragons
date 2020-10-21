@@ -830,7 +830,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="4" />
+                <amplification afs="4" aft="3" />
             </texture>
 
             <transformations>
@@ -839,7 +839,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="0" y1="0" x2="2" y2="4.4721" x3="4" y3="0" />  <!-- y3 = sqrt(20) -->
+                <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="2" y3="4.4721" />  <!-- y3 = sqrt(20) -->
             </descendants>
         </node>
         <node id="towerCeilingFlag">
@@ -1228,12 +1228,12 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="4" />
+                <amplification afs="4" aft="3" />
             </texture>
 
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="4" y2="0" x3="0" y3="4" />
-                <leaf type="triangle" x1="0" y1="0" x2="0" y2="4" x3="4" y3="0" />
+                <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="0" y3="4" />
             </descendants>
         </node>
         <node id="standsRectangle">
