@@ -18,6 +18,8 @@ class XMLscene extends CGFscene {
 
         this.currentMaterial = null;
         this.currentTexture = null;
+
+        this.displayAxis = false;
     }
 
     /**
@@ -188,7 +190,8 @@ class XMLscene extends CGFscene {
 
         if (this.sceneInited) {
             // Draw axis
-            this.axis.display();
+            if (this.displayAxis)
+                this.axis.display();
  
             this.defaultAppearance.apply();
             this.currentMaterial = this.defaultAppearance;

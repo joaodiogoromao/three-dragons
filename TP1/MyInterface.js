@@ -25,14 +25,11 @@ class MyInterface extends CGFinterface {
 
     createInterface() {
         // add a group of controls (and open/expand by defult)
+        this.gui.add(this.scene, 'displayAxis').name('Display Axis');
+        
         this.gui.add(this.scene, 'selectedCamera', Object.keys(this.scene.cameras)).name('Camera').onChange(this.scene.setSelectedCamera.bind(this.scene));
 
-        const lights = this.scene.graph.lights;
-        for (let id in lights){
-            this.scene[id] = lights[id][0];
-
-            this.gui.add(this.scene, id).name(id).onChange(this.scene.updateLights.bind(this.scene));
-        }
+        this.createLightsInterface();
         
         this.initKeys();
     }
@@ -56,5 +53,15 @@ class MyInterface extends CGFinterface {
 
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
+    }
+
+    createLightsInterface(){
+        var lights_folder = this.gui.addFolder("Lights");
+        const lights = this.scene.graph.lights;
+        for (let id in lights){
+            this.scene[id] = lights[id][0];
+
+            lights_folder.add(this.scene, id).name(id).onChange(this.scene.updateLights.bind(this.scene));
+        }
     }
 }

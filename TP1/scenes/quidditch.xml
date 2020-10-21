@@ -44,7 +44,7 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="default">            <!-- light identifier -->
+        <light id="default-light">            <!-- light identifier -->
             <enable value="true" />
             <!-- enable/disable -->
             <position x="0" y="15" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
