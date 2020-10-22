@@ -13,12 +13,12 @@
             <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="cylinderRadiusDemo" near="0.1" far="500" angle="60">
-            <from x="-20" y="15" z="40" />
-            <to x="-20" y="0" z="20" />
+            <from x="100" y="15" z="160" />
+            <to x="100" y="0" z="140" />
         </perspective>
         <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
-            <from x="20" y="5" z="30" />
-            <to x="20" y="0" z="20" />
+            <from x="140" y="5" z="150" />
+            <to x="140" y="0" z="140" />
         </perspective>
         <perspective id="flagDetail" near="0.1" far="500" angle="60">
             <from x="-10.416" y="31" z="-17.26" />
@@ -193,12 +193,12 @@
             </texture>
 
             <transformations>
-                <translation x="-20" y="6" z="20" />
+                <translation x="100" y="6" z="140" />
                 <rotation axis="x" angle="90" />
             </transformations>
  
             <descendants>               
-                <leaf type="cylinder" height="6" topRadius="4" bottomRadius="2" stacks="5" slices="20"/>
+                <leaf type="cylinder" height="6" topRadius="4" bottomRadius="2" stacks="5" slices="30"/>
             </descendants>
         </node>
         <node id="scalingFactorDemonstration">
@@ -208,7 +208,7 @@
             </texture>
 
             <transformations>
-                <translation x="20" y="0" z="20" />
+                <translation x="140" y="0" z="140" />
                 <scale sx="0.9" sy="0.9" sz="0.9" />
             </transformations>
  
