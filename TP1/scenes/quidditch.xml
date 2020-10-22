@@ -137,13 +137,6 @@
             <specular r="0" g="0" b="0" a="1.0" />
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
-        <material id="skyBoxMaterial">
-            <shininess value="0" />
-            <ambient r="1" g="1" b="1" a="1.0" />
-            <diffuse r="0" g="0" b="0" a="1.0" />
-            <specular r="0" g="0" b="0" a="1.0" />
-            <emissive r="0" g="0" b="0" a="1.0" />
-        </material>
         <material id="flagGenericMaterial">
             <shininess value="0" />
             <ambient r="0.15" g="0.15" b="0.15" a="1.0" />
