@@ -12,6 +12,10 @@
             <from x="50" y="40" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
+        <perspective id="cylinderRadiusDemo" near="0.1" far="500" angle="60">
+            <from x="-20" y="15" z="40" />
+            <to x="-20" y="0" z="20" />
+        </perspective>
         <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
             <from x="20" y="5" z="30" />
             <to x="20" y="0" z="20" />
@@ -84,7 +88,6 @@
         <texture id="hufflepuffTexture" path="./scenes/images/hufflepuffPattern.jpg" />
         <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
         <texture id="groundTexture" path="./scenes/images/quidditchField.jpg" />
-        <!--<texture id="lightWood" path="./scenes/images/lightWood.jpg" />-->
         <texture id="groundBarrierTexture" path="./scenes/images/groundBarrierTexture.jpeg" />
         <texture id="genericWood" path="./scenes/images/genericWood.jpeg" />
         <texture id="tentTissue" path="./scenes/images/tentTissue2.jpeg" />
@@ -164,6 +167,7 @@
                 <noderef id="tent" />
                 <noderef id="groundSurface" />
                 <noderef id="scalingFactorDemonstration" />
+                <noderef id="cylinderRadiusDemo" />
             </descendants>
         </node>
         <node id="groundSurface">
@@ -179,6 +183,22 @@
  
             <descendants>               
                 <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+            </descendants>
+        </node>
+        <node id="cylinderRadiusDemo">
+            <material id="groundMaterial" />
+
+            <texture id="groundTexture">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="-20" y="6" z="20" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="cylinder" height="6" topRadius="4" bottomRadius="2" stacks="5" slices="20"/>
             </descendants>
         </node>
         <node id="scalingFactorDemonstration">
