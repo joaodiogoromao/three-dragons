@@ -272,6 +272,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="tentTriangle1" />
                 <noderef id="tentTriangle2" />
@@ -315,6 +318,9 @@
                 <amplification afs="15" aft="15" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="triangle" x1="-4" y1="0" x2="4" y2="0" x3="0" y3="4.2426" /> <!-- sqrt(18) => sqrt(34)**2 = 4**2 + x**2-->
             </descendants>
@@ -354,6 +360,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="parallelogramTriangle1" />
                 <noderef id="parallelogramTriangle2" />
@@ -366,6 +375,9 @@
             <texture id="null">
                 <amplification afs="15" aft="15" />
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="3" y2="0" x3="3" y3="5" />
@@ -392,6 +404,9 @@
                 <amplification afs="15" aft="15" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="rectangle" x1="3" y1="0" x2="17" y2="5" />
             </descendants>
@@ -400,6 +415,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="tentWall1" />
@@ -471,6 +489,9 @@
                 <amplification afs="8" aft="8" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="rectangle" x1="0" y1="0" x2="8" y2="5" />
             </descendants>
@@ -486,6 +507,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="fieldPlayingArea" />
                 <noderef id="fieldDelimiters" />
@@ -496,6 +520,9 @@
 
             <texture id="metalTexture" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="hoopSetL" />
                 <noderef id="hoopSetR" />
@@ -505,6 +532,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="fieldGroundBarrier" />
@@ -565,6 +595,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="hoopPole1" />
@@ -699,6 +732,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="torus" inner=".15" outer="1" slices="16" loops="64" />
             </descendants>
@@ -710,6 +746,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="tower1" />
@@ -793,6 +832,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="towerCeiling" />
                 <noderef id="towerCabin" />
@@ -820,6 +862,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="towerCeilingTriangle" />
@@ -997,6 +1042,9 @@
                 <amplification afs="0.4" aft="0.2" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="bannerTriangle" />
                 <leaf type="rectangle" x1="0" y1="0" x2="1" y2="0.3" />
@@ -1009,6 +1057,9 @@
                 <amplification afs="0.4" aft="0.2" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="triangle" x1="1" y1="0.3" x2="1" y2="0" x3="1.6" y3="0.15" />
             </descendants>
@@ -1017,6 +1068,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="towerBodyWall1" />
@@ -1084,8 +1138,11 @@
             <material id="null" />
 
             <texture id="null">
-            <amplification afs="4" aft="2" />
+                <amplification afs="4" aft="2" />
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <leaf type="rectangle" x1="-2" y1="0" x2="2" y2="12" />
@@ -1125,6 +1182,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="cabinStructure" />
                 <noderef id="cabinStands" />
@@ -1134,6 +1194,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="cabinWall1" />
@@ -1189,6 +1252,9 @@
             <material id="woodMaterial" />
 
             <texture id="genericWood" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="cabinStandStep1" />
@@ -1256,9 +1322,7 @@
         <node id="cabinBackWall">
             <material id="null" />
 
-            <texture id="null">
-                <!--<amplification afs="0.25" aft="0.25"/>-->
-            </texture>
+            <texture id="null" />
 
             <transformations>
                 <translation x="0" y="2" z="-2" />
@@ -1277,6 +1341,9 @@
                 <amplification afs="4" aft="2" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="4" y2="0" x3="0" y3="4" />
                 <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="0" y3="4" />
@@ -1288,6 +1355,9 @@
             <texture id="null">
                 <amplification aft="0.5" afs="1"/>
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
