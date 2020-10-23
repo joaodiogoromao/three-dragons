@@ -40,9 +40,9 @@ class MyTriangle extends CGFobject{
         var cos_alpha = (a*a - b*b + c*c) / (2 * a * c)
         var sin_alpha = Math.sqrt(1 - Math.pow(cos_alpha, 2));
 
-        ret.push(0, 0);
-        ret.push(a/length_u, 0);
-        ret.push((c*cos_alpha)/length_u, c*sin_alpha/length_v);
+        ret.push(0, 1);
+        ret.push(a/length_u, 1);
+        ret.push((c*cos_alpha)/length_u, 1 - (c*sin_alpha/length_v));
 
         return ret;
     }

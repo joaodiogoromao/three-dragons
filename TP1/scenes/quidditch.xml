@@ -21,8 +21,8 @@
             <to x="140" y="0" z="140" />
         </perspective>
         <perspective id="flagDetail" near="0.1" far="500" angle="60">
-            <from x="-10.416" y="31" z="-17.26" />
-            <to x="-7.416" y="28" z="-14.26" />
+            <from x="10.416" y="31" z="17.26" />
+            <to x="7.416" y="28" z="14.26" />
         </perspective>
         <perspective id="insideCabin" near="0.1" far="500" angle="60">
             <from x="0.416" y="17" z="-4.26" />
@@ -221,7 +221,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="4" />
+                <amplification afs="4" aft="2" />
             </texture>
 
             <transformations>
@@ -236,7 +236,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
+                <amplification afs="0.5" aft="0.25" />
             </texture>
 
             <transformations>
@@ -868,7 +868,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="3" />
+                <amplification afs="4" aft="2" />
             </texture>
 
             <transformations>
@@ -994,7 +994,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.4" aft="0.3" />
+                <amplification afs="0.4" aft="0.2" />
             </texture>
 
             <descendants>
@@ -1006,7 +1006,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.3" aft="0.4" />
+                <amplification afs="0.4" aft="0.2" />
             </texture>
 
             <descendants>
@@ -1084,7 +1084,7 @@
             <material id="null" />
 
             <texture id="null">
-            <amplification afs="4" aft="3" />
+            <amplification afs="4" aft="2" />
             </texture>
 
             <descendants>
@@ -1274,7 +1274,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="3" />
+                <amplification afs="4" aft="2" />
             </texture>
 
             <descendants>
@@ -1286,7 +1286,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification aft="0.75" afs="1"/>
+                <amplification aft="0.5" afs="1"/>
             </texture>
 
             <descendants>
