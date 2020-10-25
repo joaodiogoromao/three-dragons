@@ -10,6 +10,7 @@
 ----
 ## Project information
 
+- All features implemented and working well
 - Error management
   - The parser will always try do draw the scene despite errors, showing warnings on the console.
 - Textures, materials and transformations inheritance
