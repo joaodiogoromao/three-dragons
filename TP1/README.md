@@ -15,9 +15,9 @@
   - The created scene represents a Quidditch field from the Harry Potter saga.
   - It contains representations of all the primitives:
     - *Torus* - present in the field delimiting object and in the field hoops.
-    - *Cylinder* - present in the hoop poles.
+    - *Cylinder* - present in the hoop poles and flag poles.
     - *Sphere* - present in the flag placed on the top of each tower.
-    - *Triangle and Rectangle* - both present in the structure of each tower and on the tent placed outside of the field.
+    - *Triangle and Rectangle* - both present in the structure of each tower and, the tent placed outside of the field and the flag on top of the towers.
   - The scene also has different cameras pointing to objects that represent features that were not easy to observe on the main scene:
     - Scale factors.
     - Cylinder with basis of different sizes.
