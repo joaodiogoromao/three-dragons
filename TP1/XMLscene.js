@@ -47,6 +47,7 @@ class XMLscene extends CGFscene {
         this.loadingProgress=0;
 
         this.defaultAppearance=new CGFappearance(this);
+        this.defaultAppearance.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     /**
