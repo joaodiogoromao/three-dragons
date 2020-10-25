@@ -1,5 +1,5 @@
 /**
- * MyRectangle
+ * Rectangle primitive
  * @constructor
  * @param scene - Reference to MyScene object
  * @param x1 - x coordinate corner 1
@@ -8,7 +8,7 @@
  * @param y2 - y coordinate corner 2
  */
 class MyRectangle extends CGFobject {
-	constructor(scene, x1, y1, x2, y2, afs, aft) {
+	constructor(scene, x1, y1, x2, y2) {
 		super(scene);
 
 		this.x1 = x1;
@@ -16,12 +16,13 @@ class MyRectangle extends CGFobject {
 		this.y1 = y1;
 		this.y2 = y2;
 
-		this.afs = afs;
-		this.aft = aft;
-
 		this.initBuffers();
 	}
-	
+
+	/**
+     * @method initBuffers
+     * Initializes the rectangle buffers
+     */
 	initBuffers() {
 		this.vertices = [
 			this.x1, this.y1, 0,	//0
@@ -64,9 +65,9 @@ class MyRectangle extends CGFobject {
 		const dX = this.x2 - this.x1;
 		const dY = this.y2 - this.y1;
 		if (coords == undefined || typeof coords.afs != 'number' || typeof coords.aft != 'number') {
-			//console.warn("RECEIVED INVALID AFS & AFT");
+			console.warn("RECEIVED INVALID AFS & AFT");
 			return;
-		}
+        }
 
 		this.texCoords = [
 			0, dY/coords.aft,

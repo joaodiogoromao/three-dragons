@@ -1,3 +1,12 @@
+/**
+ * Torus primitive
+ * @constructor
+ * @param scene - Reference to MyScene object
+ * @param inner - inner radius
+ * @param outer - outer radius
+ * @param slices - sections around the inner radius
+ * @param loops - sections around the outer radius
+ */
 class MyTorus extends CGFobject {
     constructor(scene, inner, outer, slices, loops) {
         super(scene);
@@ -9,6 +18,10 @@ class MyTorus extends CGFobject {
         this.initBuffers();
     }
 
+    /**
+     * @method initBuffers
+     * Initializes the torus buffers
+     */
     initBuffers() {
         this.vertices = [];
         this.indices = [];

@@ -1,11 +1,13 @@
+
+/**
+ * Sphere primitive
+ * @constructor
+ * @param  {CGFscene} scene - MyScene object
+ * @param  {float} radius
+ * @param  {integer} slices - number of slices around Y axis
+ * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
+ */
 class MySphere extends CGFobject {
-    /**
-     * @method constructor
-     * @param  {CGFscene} scene - MyScene object
-     * @param  {float} radius
-     * @param  {integer} slices - number of slices around Y axis
-     * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
-     */
     constructor(scene, radius, slices, stacks) {
       super(scene);
       this.radius = radius;
@@ -18,7 +20,6 @@ class MySphere extends CGFobject {
     /**
      * @method initBuffers
      * Initializes the sphere buffers
-     * TODO: DEFINE TEXTURE COORDINATES
      */
     initBuffers() {
 		this.vertices = [];

@@ -1,3 +1,13 @@
+/**
+ * Cylinder primitive
+ * @constructor
+ * @param scene - Reference to MyScene object
+ * @param height - the height of the cylinder
+ * @param topRadius - the radius of the top of the cylinder
+ * @param bottomRadius - the radius of the bottom of the cylinder
+ * @param stacks - sections along height
+ * @param slices - parts per section
+ */
 class MyCylinder extends CGFobject {
     constructor(scene, height, topRadius, bottomRadius, stacks, slices){
         super(scene);
@@ -10,6 +20,10 @@ class MyCylinder extends CGFobject {
         this.initBuffers();
     }
 
+    /**
+     * @method initBuffers
+     * Initializes the cylinder buffers
+     */
     initBuffers(){
         this.vertices = [];
         this.indices = [];
@@ -81,6 +95,13 @@ class MyCylinder extends CGFobject {
         this.initGLBuffers();
     }
 
+    /**
+     * Generates a circle
+     * @method generateCirle
+     * @param {Number} height 
+     * @param {Number} value 
+     * @param {Number} radius 
+     */
     generateCircle(height, value, radius){
         var increment_angle = 0;
         
@@ -95,6 +116,12 @@ class MyCylinder extends CGFobject {
         }
     }
 
+    /**
+     * Generates center vertex
+     * @method generateCenterVertex
+     * @param {Number} height 
+     * @param {Number} value 
+     */
     generateCenterVertex(height, value){
         this.vertices.push(0, 0, height);
         this.normals.push(0, 0, value);

@@ -766,11 +766,11 @@
         <node id="tower1">
             <material id="null" />
 
-            <texture id="gryffindorTexture" />
+            <texture id="null" />
 
             <transformations>
                 <translation x="-19.416" y="0" z="-8.816" />
-                <rotation axis="y" angle="45" />
+                <rotation axis="y" angle="43.8" />
             </transformations>
 
             <descendants>
@@ -783,7 +783,7 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="-7.416" y="0" z="-14.26" />
+                <translation x="-7.74" y="0" z="-14.6" />
                 <rotation axis="y" angle="13" />
             </transformations>
 
@@ -798,7 +798,7 @@
             </texture>
 
             <transformations>
-                <translation x="7.416" y="0" z="-14.26" />
+                <translation x="7.74" y="0" z="-14.6" />
                 <rotation axis="y" angle="-13" />
             </transformations>
 
@@ -813,7 +813,7 @@
 
             <transformations>
                 <translation x="19.416" y="0" z="-8.816" />
-                <rotation axis="y" angle="-45" />
+                <rotation axis="y" angle="-43.8" />
             </transformations>
 
             <descendants>
