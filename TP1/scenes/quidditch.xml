@@ -206,6 +206,7 @@
             <material id="null" />
 
             <texture id="gryffindorTexture">
+                <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
@@ -256,7 +257,9 @@
         <node id="tent">
             <material id="tentMaterial" />
 
-            <texture id="tentTissue"/>
+            <texture id="tentTissue">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <descendants>
                 <noderef id="tentRoof" />
@@ -271,7 +274,9 @@
         <node id="tentRoof">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -286,7 +291,9 @@
         <node id="tentTriangle1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
             
             <transformations>
                 <translation x="4" y="5" z="0" />
@@ -301,7 +308,9 @@
         <node id="tentTriangle2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="4" y="5" z="20" />
@@ -329,7 +338,9 @@
         <node id="tentParallelogram1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="8" y="5" z="20" />
@@ -344,7 +355,9 @@
         <node id="tentParallelogram2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="5" z="0" />
@@ -359,7 +372,9 @@
         <node id="tentParallelogram">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -415,7 +430,9 @@
         <node id="tentWalls">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -430,7 +447,9 @@
         <node id="tentWall1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0" z="20" />
@@ -443,7 +462,9 @@
         <node id="tentWall2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="8" y="0" z="20" />
@@ -458,7 +479,9 @@
         <node id="tentWall3">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="8" y="0" z="0" />
@@ -472,7 +495,9 @@
         <node id="tentWall4">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <scale sx="1" sy="1" sz="2.5" />
@@ -506,7 +531,9 @@
         <node id="quidditchField">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -519,7 +546,9 @@
         <node id="fieldPlayingArea">
             <material id="metalMaterial" />
 
-            <texture id="metalTexture" />
+            <texture id="metalTexture">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -532,7 +561,9 @@
         <node id="fieldDelimiters">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -546,7 +577,9 @@
         <node id="fieldGroundBarrier">
             <material id="woodMaterial" />
 
-            <texture id="groundBarrierTexture" />
+            <texture id="groundBarrierTexture">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <scale sx="1.6" sy="3" sz="1" />
@@ -563,7 +596,9 @@
         <node id="hoopSetL">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="-15" y="0" z="0" />
@@ -580,7 +615,9 @@
         <node id="hoopSetR">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="15" y="0" z="0" />
@@ -595,7 +632,9 @@
         <node id="hoop1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -608,7 +647,9 @@
         <node id="hoopHole1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="11" z="0" />
@@ -622,7 +663,9 @@
         <node id="hoopPole1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <scale sx="0.3" sy="1" sz="0.3" />
@@ -635,7 +678,9 @@
         <node id="hoop2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0" z="3.5" />
@@ -649,7 +694,9 @@
         <node id="hoopHole2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="9" z="0" />
@@ -663,7 +710,9 @@
         <node id="hoopPole2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
  
             <transformations>
                 <scale sx="0.3" sy="0.8" sz="0.3" />
@@ -676,7 +725,9 @@
         <node id="hoop3">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0" z="-3.5" />
@@ -690,7 +741,9 @@
         <node id="hoopHole3">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="7" z="0" />
@@ -704,7 +757,9 @@
         <node id="hoopPole3">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
  
             <transformations>
                 <scale sx="0.3" sy="0.6" sz="0.3" />
@@ -718,7 +773,9 @@
         <node id="hoopPole">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -731,7 +788,9 @@
         <node id="hoopHole">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -746,7 +805,9 @@
         <node id="towerSetT">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -761,7 +822,9 @@
         <node id="towerSetD">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="y" angle="180" />
@@ -774,7 +837,9 @@
         <node id="tower1">
             <material id="null" />
 
-            <texture id="hufflepuffTexture" />
+            <texture id="hufflepuffTexture">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="-19.416" y="0" z="-8.816" />
@@ -788,7 +853,9 @@
         <node id="tower2">
             <material id="null" />
 
-            <texture id="ravenclawTexture" />
+            <texture id="ravenclawTexture">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="-7.74" y="0" z="-14.6" />
@@ -802,7 +869,8 @@
         <node id="tower3">
             <material id="null" />
 
-            <texture id="gryffindorTexture" >
+            <texture id="gryffindorTexture">
+                <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
@@ -817,7 +885,9 @@
         <node id="tower4">
             <material id="null" />
 
-            <texture id="slytherinTexture" />
+            <texture id="slytherinTexture">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="19.416" y="0" z="-8.816" />
@@ -831,7 +901,9 @@
         <node id="tower">
             <material id="towerMaterial" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -845,7 +917,9 @@
         <node id="towerCeiling">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="20" z="0" />
@@ -862,7 +936,9 @@
         <node id="towerCeilingTriangle1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -874,7 +950,9 @@
         <node id="towerCeilingTriangle2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="y" angle="90" />
@@ -887,7 +965,9 @@
         <node id="towerCeilingTriangle3">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="y" angle="180" />
@@ -900,7 +980,9 @@
         <node id="towerCeilingTriangle4">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="y" angle="270" />
@@ -929,7 +1011,9 @@
         <node id="towerCeilingFlag">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="3" z="0" />
@@ -944,7 +1028,9 @@
         <node id="flagSphere">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="6.95" z="0" />
@@ -958,7 +1044,9 @@
         <node id="towerCeilingPole">
             <material id="metalMaterial" />
 
-            <texture id="metalTexture" />
+            <texture id="metalTexture">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -971,7 +1059,9 @@
         <node id="towerCeilingBanner">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="6.4" z="0" />
@@ -987,7 +1077,9 @@
         <node id="banner1">
             <material id="flagGenericMaterial" />
 
-            <texture id="clear" />
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="-0.3" z="0" />
@@ -1000,7 +1092,9 @@
         <node id="banner1back">
             <material id="flagGenericMaterial" />
 
-            <texture id="clear" />
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="x" angle="180" />
@@ -1013,7 +1107,9 @@
         <node id="banner2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -1025,7 +1121,9 @@
         <node id="banner2back">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0.3" z="0" />
@@ -1068,7 +1166,9 @@
         <node id="towerBody">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -1083,7 +1183,9 @@
         <node id="towerBodyWall1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0" z="2" />
@@ -1096,7 +1198,9 @@
         <node id="towerBodyWall2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="2" y="0" z="0" />
@@ -1110,7 +1214,9 @@
         <node id="towerBodyWall3">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="-2" y="0" z="0" />
@@ -1124,7 +1230,9 @@
         <node id="towerBodyWall4">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0" z="-2" />
@@ -1152,7 +1260,9 @@
         <node id="towerCabin">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="12" z="0" />
@@ -1166,7 +1276,9 @@
         <node id="towerCabinRoof">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="8" z="0" />
@@ -1181,7 +1293,9 @@
         <node id="towerCabinStands">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -1194,7 +1308,9 @@
         <node id="cabinStructure">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -1209,7 +1325,9 @@
         <node id="cabinFloor">
             <material id="null" />
 
-            <texture id="genericWood" />
+            <texture id="genericWood">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <rotation axis="x" angle="-90" />
@@ -1223,7 +1341,9 @@
         <node id="cabinWall1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="-2" y="0" z="-2" />
@@ -1237,7 +1357,9 @@
         <node id="cabinWall2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="2" y="0" z="-2" />
@@ -1252,7 +1374,9 @@
         <node id="cabinStands">
             <material id="woodMaterial" />
 
-            <texture id="genericWood" />
+            <texture id="genericWood">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
             </transformations>
@@ -1265,7 +1389,9 @@
         <node id="cabinStandStep2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="1" z="-2" />
@@ -1279,7 +1405,9 @@
         <node id="cabinStandStep1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0" z="-1" />
@@ -1293,7 +1421,9 @@
         <node id="cabinStandStepRect1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="0.5" z="1" />
@@ -1308,7 +1438,9 @@
         <node id="cabinStandStepRect2">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="1" z="0.5" />
@@ -1323,7 +1455,9 @@
         <node id="cabinBackWall">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
 
             <transformations>
                 <translation x="0" y="2" z="-2" />
