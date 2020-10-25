@@ -12,6 +12,10 @@
             <from x="50" y="40" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
+        <perspective id="birdsEye" near="0.1" far="500" angle="60">
+            <from x="1" y="70" z="0" />
+            <to x="0" y="0" z="0" />
+        </perspective>
         <perspective id="cylinderRadiusDemo" near="0.1" far="500" angle="60">
             <from x="100" y="15" z="160" />
             <to x="100" y="0" z="140" />
@@ -28,7 +32,6 @@
             <from x="0.416" y="17" z="-4.26" />
             <to x="-7.416" y="16" z="-14.26" />
         </perspective>
-
         <perspective id="hoops" near="0.1" far="500" angle="60">
             <from x="25" y="15" z="0" />
             <to x="15" y="10" z="0" />
