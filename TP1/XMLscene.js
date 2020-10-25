@@ -55,6 +55,7 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -104,19 +105,34 @@ class XMLscene extends CGFscene {
         this.sceneInited = true;
     }
 
+    /**
+     * Changes the active camera
+     * @param {CGFcamera} camera 
+     */
     setCamera(camera) {
         this.camera = camera;
         this.interface.setActiveCamera(camera);
     }
     
+    /**
+     * Adds a camera to the cameras array
+     * @param {string} cameraId 
+     * @param {CGFcamera} camera 
+     */
     addCamera(cameraId, camera) {
         this.cameras[cameraId] = camera;
     }
 
+    /**
+     * Sets the camera referenced by the selectedCamera variable
+     */
     setSelectedCamera() {
         this.setCamera(this.cameras[this.selectedCamera]);
     }
 
+    /**
+     * Updates the scene's lights
+     */
     updateLights(){
         var i = 0;
         for (let id in this.graph.lights) {
@@ -130,6 +146,10 @@ class XMLscene extends CGFscene {
         }
     }
 
+    /**
+     * Sets a given material
+     * @param {CGFappearance} material 
+     */
     setMaterial(material) {
         if (!(material instanceof CGFappearance) || material == null) return;
         this.currentMaterial = material;
@@ -137,16 +157,26 @@ class XMLscene extends CGFscene {
         this.currentMaterial.apply();
     }
 
+    /**
+     * Saves the current material in the stack
+     */
     pushMaterial() {
         this.materialStack.push(this.currentMaterial);
     }
 
+    /**
+     * Pops the previous material from the stack
+     */
     popMaterial() {
         if (!this.materialStack.length) return;
         let mat = this.materialStack.splice(this.materialStack.length-1, this.materialStack.length);
         this.setMaterial(mat[0]);
     }
 
+    /**
+     * Sets a given texture
+     * @param {CGFtexture} texture 
+     */
     setTexture(texture) {
         if (this.currentMaterial == null) return;
         this.currentTexture = texture;
@@ -154,10 +184,16 @@ class XMLscene extends CGFscene {
         this.currentMaterial.apply();
     }
 
+    /**
+     * Saves the current texture in the stack
+     */
     pushTexture() {
         this.textureStack.push(this.currentTexture);
     }
 
+    /**
+     * Pops the previous texture from the stack
+     */
     popTexture() {
         if (!this.textureStack.length) return;
         let txt = this.textureStack.splice(this.textureStack.length-1, this.textureStack.length);

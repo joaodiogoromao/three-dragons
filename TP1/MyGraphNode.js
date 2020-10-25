@@ -1,72 +1,55 @@
 /**
- * This class seems quite useless right now, but I think it will be useful for the textures, materials and transformations
+ * Saves a node's information, like texture, material, transformations and scale factors (afs and aft)
  */
 class Node extends CGFobject {
-    constructor(scene) {
+    constructor(id, scene) {
         super(scene);
-        this.texture = null;
+
+        this.id = id;
+        this.descendantIds = [];
+        this.descendantObjs = [];
+
         this.material = null;
+        this.texture = null;
+
         this.transformationMatrix = null;
+
         this.scaleFactors = {
             afs: 1,
             aft: 1
         };
     }
 
+    /**
+     * @param {CGFtexture} texture 
+     */
     setTexture(texture) {
         this.texture = texture;
     }
 
+    /**
+     * @param {CGFappearance} material 
+     */
     setMaterial(material) {
         this.material = material;
     }
 
+    /**
+     * @param {mat4} transformationMatrix 
+     */
     setTransformationMatrix(transformationMatrix) {
         this.transformationMatrix = transformationMatrix;
     }
 
+    /**
+     * @param {Object with afs and aft attributes} scaleFactors 
+     */
     setScaleFactors(scaleFactors){
         this.scaleFactors = {...scaleFactors};
-
-        console.log("set scaleFactors", scaleFactors, this.scaleFactors);
-    }
-
-    display(displayFunction) {
-        this.scene.pushMatrix();
-        this.scene.pushMaterial();
-        this.scene.pushTexture();
-
-        if (this.material != null && this.material != "null") {
-            this.scene.setMaterial(this.material);
-        }
-        if (this.texture !== null && this.texture !== "null" && this.texture !== "clear") {
-            this.scene.setTexture(this.texture);
-        } else if (this.texture === "clear") { // CLEARs the texture
-            this.scene.setTexture(null);
-        }
-        if (this.transformationMatrix != null)
-            this.scene.multMatrix(this.transformationMatrix);
-        displayFunction();
-
-        
-        this.scene.popMaterial();
-        this.scene.popTexture();
-        this.scene.popMatrix();
-    }
-}
-
-
-class IntermediateNode extends Node {
-    constructor(id, scene) {
-        super(scene);
-        this.id = id;
-        this.descendantIds = [];
-        this.descendantObjs = [];
-        this.material = null;
-        this.texture = null;
     }
 
     /**
+     * Adds a descendant's id
      * @param {string} id id of the descendant node 
      */
     addDescendantId(id) {
@@ -74,6 +57,7 @@ class IntermediateNode extends Node {
     }
 
     /**
+     * Adds a descendant's object
      * @param {Node} obj the descendant object
      */
     addDescendantObj(obj) {
@@ -81,6 +65,7 @@ class IntermediateNode extends Node {
     }
 
     /**
+     * Corresponds the ids in descendantIds to real objects
      * @param {array} array that maps ids to objects
      */
     correspondIdsToObjects(objMap) {
@@ -96,14 +81,34 @@ class IntermediateNode extends Node {
         return res;
     }
 
+    /**
+     * Draws the node and all its descendants
+     */
     display() {
-        const displayFunc = function() {
-            for (const desc of this.descendantObjs) {
-                desc.display(this.scaleFactors);
-            }
-            
+        this.scene.pushMatrix();
+        this.scene.pushMaterial();
+        this.scene.pushTexture();
+
+        if (this.material != null && this.material != "null") { // applies the material if it exists
+            this.scene.setMaterial(this.material);
         }
-        super.display(displayFunc.bind(this));
+        if (this.texture !== null && this.texture !== "null" && this.texture !== "clear") { // applies the texture if it exists
+            this.scene.setTexture(this.texture);
+        } else if (this.texture === "clear") { // clears the texture
+            this.scene.setTexture(null);
+        }
+        if (this.transformationMatrix != null)  // applies transformations if they exist
+            this.scene.multMatrix(this.transformationMatrix);
+        
+        // DRAWS THE DESCENDANTS
+        for (const desc of this.descendantObjs) {
+            desc.display(this.scaleFactors);
+        }
+
+        
+        this.scene.popMaterial();
+        this.scene.popTexture();
+        this.scene.popMatrix();
     }
 }
 
@@ -119,7 +124,6 @@ class LeafNode extends CGFobject {
 
     display(scaleFactors) {
         if (this.obj instanceof MyRectangle || this.obj instanceof MyTriangle) {
-            //console.log(scaleFactors);
             this.obj.updateTexCoords(scaleFactors);
         }
         this.obj.display();

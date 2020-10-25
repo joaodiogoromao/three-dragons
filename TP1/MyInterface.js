@@ -23,6 +23,9 @@ class MyInterface extends CGFinterface {
         return true;
     }
 
+    /**
+     * Creates the interface
+     */
     createInterface() {
         // add a group of controls (and open/expand by defult)
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
@@ -32,6 +35,20 @@ class MyInterface extends CGFinterface {
         this.createLightsInterface();
         
         this.initKeys();
+    }
+
+
+    /**
+     * Created the light's interface
+     */
+    createLightsInterface(){
+        var lights_folder = this.gui.addFolder("Lights");
+        const lights = this.scene.graph.lights;
+        for (let id in lights){
+            this.scene[id] = lights[id][0];
+
+            lights_folder.add(this.scene, id).name(id).onChange(this.scene.updateLights.bind(this.scene));
+        }
     }
 
     /**
@@ -53,15 +70,5 @@ class MyInterface extends CGFinterface {
 
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
-    }
-
-    createLightsInterface(){
-        var lights_folder = this.gui.addFolder("Lights");
-        const lights = this.scene.graph.lights;
-        for (let id in lights){
-            this.scene[id] = lights[id][0];
-
-            lights_folder.add(this.scene, id).name(id).onChange(this.scene.updateLights.bind(this.scene));
-        }
     }
 }

@@ -10,6 +10,7 @@ var MATERIALS_INDEX = 5;
 var NODES_INDEX = 6;
 
 const isNotNull = (v) => v != null;
+const isNull = (v) => v === null;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -231,16 +232,21 @@ class MySceneGraph {
 
         this.idRoot = id;
 
-        // Get axis length        
-        if(referenceIndex == -1)
+        // Get axis length       
+        let axis_length; 
+        if(referenceIndex == -1) {
             this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
+            axis_length = 1;
+        } else {
+            var refNode = children[referenceIndex];
+            axis_length = this.reader.getFloat(refNode, 'length');
+            if (axis_length == null) {
+                this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
+                axis_length = 1;
+            }
+        }
 
-        var refNode = children[referenceIndex];
-        var axis_length = this.reader.getFloat(refNode, 'length');
-        if (axis_length == null)
-            this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
-
-        this.referenceLength = axis_length || 1;
+        this.referenceLength = axis_length;
 
         this.log("Parsed initials");
 
@@ -254,96 +260,89 @@ class MySceneGraph {
     parseViews(viewsNode) {
         const children = viewsNode.children;
         const defaultCameraId = this.reader.getString(viewsNode, 'default');
-        if (!isNotNull(defaultCameraId))
+        if (isNull(defaultCameraId))
             return "No default camera set";
 
         for (let child of children) {
+            if (child.nodeName !== "perspective" && child.nodeName !== "ortho") {
+                this.onXMLMinorError(`Invalid nodeName '${child.nodeName}' in child${this.getIDErrorMessage(child)} of 'views' node.`);
+                continue;
+            }
+
             const grandChildren = child.children;
 
-            const cameraId = this.reader.getString(child, 'id');
-            if (!isNotNull(cameraId))
-                continue;
-
-            if (this.cameras[cameraId] != null)
+            const cameraId = this.getNodeID(child);
+            if (isNull(cameraId)) continue;
+            //console.log(cameraId);
+            if (isNotNull(this.cameras[cameraId]))
                 return "ID must be unique for each camera (conflict: ID = " + cameraId + ")";
 
 
             const cameraNF = this.getFloatParameters(child, ['near', 'far']);
-            if (!isNotNull(cameraNF))
+            if (isNull(cameraNF)) continue;
+
+            let toObj = null, fromObj = null;
+
+            for (const grandChild of grandChildren) {
+                if (grandChild.nodeName === "to" && isNull(toObj)) {
+                    toObj = grandChild;
+                } else if (grandChild.nodeName === "from" && isNull(fromObj)) {
+                    fromObj = grandChild;
+                } else if (grandChild.nodeName === "up") {
+                    continue;
+                } else {
+                    this.onXMLMinorError("Duplicate or invalid node inside camera" + this.getIDErrorMessage(child));
+                }
+            }
+
+            if (isNull(toObj) || isNull(fromObj)) {
+                if (isNull(toObj)) {
+                    this.onXMLMinorError("Didn't find a 'to' node inside camera" + this.getIDErrorMessage(child));
+                } else {
+                    this.onXMLMinorError("Didn't find a 'from' node inside camera" + this.getIDErrorMessage(child));
+                }
                 continue;
+            }
+
+            const xyz = ['x', 'y', 'z'];
+            const cameraTo = this.getFloatParameters(toObj, xyz);
+            const cameraFrom = this.getFloatParameters(fromObj, xyz);
+
+            if (isNull(cameraTo) || isNull(cameraFrom)) continue;
 
             
-            if (child.nodeName === "perspective") {
+            if (child.nodeName == "perspective") { // Parses perpective camera
                 const cameraAngle = this.getFloatParameter(child, 'angle');
-                if (!isNotNull(cameraAngle))
-                    continue;
-                
-                let toObj = null, fromObj = null;
-
-                for (child of grandChildren) {
-                    if (child.nodeName === "to" && toObj === null) {
-                        toObj = child;
-                    } else if (child.nodeName === "from" && fromObj === null) {
-                        fromObj = child;
-                    } else {
-                        this.onXMLMinorError("Duplicate or invalid node inside perspective camera");
-                    }
-                }
-
-                if (!isNotNull(toObj) || !isNotNull(fromObj)) {
-                    continue;
-                }
-
-                const xyz = ['x', 'y', 'z'];
-                const cameraTo = this.getFloatParameters(toObj, xyz);
-                const cameraFrom = this.getFloatParameters(fromObj, xyz);
-
-                if (!isNotNull(cameraTo) || !isNotNull(cameraFrom)) 
-                    continue;
+                if (isNull(cameraAngle)) continue;
 
                 this.scene.addCamera(cameraId, new CGFcamera(cameraAngle * DEGREE_TO_RAD, cameraNF.near, cameraNF.far, vec3.fromValues(cameraFrom.x, cameraFrom.y, cameraFrom.z), vec3.fromValues(cameraTo.x, cameraTo.y, cameraTo.z)));
-            } else if (child.nodeName === "ortho") {
+            
+            } else if (child.nodeName == "ortho") { // parses ortho camera
                 const cameraLRTB = this.getFloatParameters(child, ['left', 'right', 'top', 'bottom']);
-                if (!isNotNull(cameraLRTB))
-                    continue;
+                if (isNull(cameraLRTB)) continue;
                 
-                let toObj = null, fromObj = null, upObj = null;
+                let upObj = null;
 
-                for (child of grandChildren) {
-                    if (child.nodeName === "to" && toObj === null) {
-                        toObj = child;
-                    } else if (child.nodeName === "from" && fromObj === null) {
-                        fromObj = child;
-                    } else if (child.nodeName === "up" && upObj === null) {
-                        upObj = child;
+                for (const grandChild of grandChildren) {
+                    if (grandChild.nodeName === "up" && isNull(upObj)) {
+                        upObj = grandChild;
                     } else {
-                        this.onXMLMinorError("Duplicate or invalid node inside ortho camera");
+                        continue;
                     }
                 }
-
-                if (!isNotNull(toObj) || !isNotNull(fromObj)) {
-                    continue;
-                }
-
-                const xyz = ['x', 'y', 'z'];
-                const cameraTo = this.getFloatParameters(toObj, xyz);
-                const cameraFrom = this.getFloatParameters(fromObj, xyz);
                 let cameraUp = null;
                 if (isNotNull(upObj)) cameraUp = this.getFloatParameters(upObj, xyz);
+                
+                if (isNull(cameraUp)) this.onXMLMinorError(`No 'up' node child inside ortho camera${this.getIDErrorMessage(child)}; using default [0, 1, 0].`);
 
-                if (!isNotNull(cameraTo) || !isNotNull(cameraFrom))  {
-                    continue;
-                }
-
-                this.scene.addCamera(cameraId, new CGFcameraOrtho(cameraLRTB.left, cameraLRTB.right, cameraLRTB.bottom, cameraLRTB.top, cameraNF.near, cameraNF.far, vec3.fromValues(cameraFrom.x, cameraFrom.y, cameraFrom.z), vec3.fromValues(cameraTo.x, cameraTo.y, cameraTo.z), cameraUp === null ? null : vec3.fromValues(cameraUp.x, cameraUp.y, cameraUp.z)));
-            } else {
-                this.onXMLMinorError("Invalid node in 'views' node.");
+                this.scene.addCamera(cameraId, new CGFcameraOrtho(cameraLRTB.left, cameraLRTB.right, cameraLRTB.bottom, cameraLRTB.top, cameraNF.near, cameraNF.far, vec3.fromValues(cameraFrom.x, cameraFrom.y, cameraFrom.z), vec3.fromValues(cameraTo.x, cameraTo.y, cameraTo.z), isNull(cameraUp) ? vec3.fromValues(0, 1, 0) : vec3.fromValues(cameraUp.x, cameraUp.y, cameraUp.z)));
             }
         }
             
 
-        if (!isNotNull(this.scene.cameras[defaultCameraId])) 
-            return "There is no camera with id equal to the default camera id.";
+        if (isNull(this.scene.cameras[defaultCameraId]) || this.scene.cameras[defaultCameraId] == undefined) 
+            return `There is no camera with id equal to the default ('${defaultCameraId}') camera id.`;
+
 
         this.scene.selectedCamera = defaultCameraId;
         this.scene.setSelectedCamera();
@@ -399,7 +398,6 @@ class MySceneGraph {
         var grandChildren = [];
         var nodeNames = [];
 
-        // Any number of lights.
         for (var i = 0; i < children.length; i++) {
 
             // Storing light information
@@ -434,6 +432,8 @@ class MySceneGraph {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
+            let error = false;
+
             for (var j = 0; j < attributeNames.length; j++) {
                 var attributeIndex = nodeNames.indexOf(attributeNames[j]);
 
@@ -450,17 +450,21 @@ class MySceneGraph {
 
                     global.push(aux);
                 }
-                else
-                    return "light " + attributeNames[i] + " undefined for ID = " + lightId;
+                else {
+                    this.onXMLMinorError("light attribute '" + attributeNames[i] + "' undefined for light with id '" + lightId + "'.");
+                    error = true;
+                    break;
+                }
             }
+            if (error) continue;
             this.lights[lightId] = global;
             numLights++;
         }
 
         if (numLights == 0)
-            return "at least one light must be defined";
+            return "At least one light must be defined.";
         else if (numLights > 8)
-            this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
+            this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights.");
 
         this.log("Parsed lights");
         return null;
@@ -479,23 +483,25 @@ class MySceneGraph {
         for (const tex of children) {
 
             if (tex.nodeName != "texture") {
-                this.onXMLMinorError("unknown tag <" + tex.nodeName + ">");
+                this.onXMLMinorError("unknown tag <" + tex.nodeName + "> inside 'textures' block.");
                 continue;
             }
 
             // Get id of the current material.
-            var textureID = this.reader.getString(tex, 'id');
-            if (textureID == null)
-                return "no ID defined for texture";
+            var textureID = this.getNodeID(tex);
+            if (textureID == null) continue;
 
             // Checks for repeated IDs.
-            if (this.textures[textureID] != null)
-                return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
+            if (isNotNull(this.textures[textureID])) {
+                this.onXMLMinorError("ID must be unique for each texture (conflict: ID = " + textureID + "). Discarding the repeated");
+                continue;
+            } 
 
             //Continue here
             var path = this.reader.getString(tex, 'path');
-            if (path == null)
-                return "no path defined for texture";
+            if (path == null) {
+                this.onXMLMinorError(`No path defined for texture with id '${textureId}'.`);
+            }
             
             const texture = new CGFtexture(this.scene, path);
             this.textures[textureID] = texture;
@@ -525,9 +531,8 @@ class MySceneGraph {
             }
 
             // Get id of the current material.
-            var materialID = this.reader.getString(children[i], 'id');
-            if (materialID == null)
-                return "no ID defined for material";
+            var materialID = this.getNodeID(children[i]);
+            if (materialID == null) continue;
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
@@ -539,9 +544,17 @@ class MySceneGraph {
             material.setTextureWrap('REPEAT', 'REPEAT');
             grandChildren = children[i].children;
 
+            const parentObj = {
+                id: materialID
+            }
+            
+            const checkList = {};
+            const childNodes = ["shininess", "ambient", "diffuse", "specular", "emissive"];
+            for (const a of childNodes) checkList[a] = false;
+
             for (let child of grandChildren) {
                 if (child.nodeName === "shininess") {
-                    const res = this.getFloatParameter(child, 'value');
+                    const res = this.getFloatParameters(child, ['value'], parentObj);
     
                     if (isNotNull(res)) {
                         material.setShininess(res);
@@ -549,7 +562,7 @@ class MySceneGraph {
                 } else if (child.nodeName === "ambient") {
                     const params = ['r', 'g', 'b', 'a'];
         
-                    const res = this.getFloatParameters(child, params);
+                    const res = this.getFloatParameters(child, params, parentObj);
     
                     if (isNotNull(res)) {
                         material.setAmbient(res.r, res.g, res.b, res.a);
@@ -558,7 +571,7 @@ class MySceneGraph {
                     
                     const params = ['r', 'g', 'b', 'a'];
         
-                    const res = this.getFloatParameters(child, params);
+                    const res = this.getFloatParameters(child, params, parentObj);
     
                     if (isNotNull(res)) {
                         material.setDiffuse(res.r, res.g, res.b, res.a);
@@ -567,7 +580,7 @@ class MySceneGraph {
                     
                     const params = ['r', 'g', 'b', 'a'];
         
-                    const res = this.getFloatParameters(child, params);
+                    const res = this.getFloatParameters(child, params, parentObj);
     
                     if (isNotNull(res)) {
                         material.setSpecular(res.r, res.g, res.b, res.a);
@@ -576,16 +589,23 @@ class MySceneGraph {
                     
                     const params = ['r', 'g', 'b', 'a'];
         
-                    const res = this.getFloatParameters(child, params);
+                    const res = this.getFloatParameters(child, params, parentObj);
     
                     if (isNotNull(res)) {
                         material.setEmission(res.r, res.g, res.b, res.a);
                     }
                 } else {
-                    this.onXMLMinorError("Child of 'transformations' node has got an invalid nodeName.");
+                    this.onXMLMinorError(`Child of 'material' node with id '${materialID}' has got an invalid nodeName ('${child.nodeName}').`);
+                    continue;
+                }
+                checkList[child.nodeName] = true;
+            }
+            for (let a in checkList) {
+                if (checkList[a] == false) {
+                    this.onXMLMinorError(`Property '${a}' of material with id '${materialID}' is not defined.`);
+                    break;
                 }
             }
-
             this.materials[materialID] = material;
         }
 
@@ -602,41 +622,29 @@ class MySceneGraph {
 
         this.nodes = [];
 
-        var grandChildren = [];
-        var grandgrandChildren = [];
-        var nodeNames = [];
-
-
-        this.onXMLMinorError("Incomplete: parse nodes");
-
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
 
             if (children[i].nodeName != "node") {
-                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + "> inside 'nodes' block");
                 continue;
             }
 
             // Get id of the current node.
-            var nodeID = this.reader.getString(children[i], 'id');
-            if (nodeID == null)
-                return "no ID defined for nodeID";
+            var nodeID = this.getNodeID(children[i]);
+            if (nodeID == null) continue;
 
             // Checks for repeated IDs.
-            if (this.nodes[nodeID] != null)
-                return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
-
-            grandChildren = children[i].children;
-
-            nodeNames = [];
-            for (var j = 0; j < grandChildren.length; j++) {
-                nodeNames.push(grandChildren[j].nodeName);
+            if (this.nodes[nodeID] != null) {
+                this.onXMLMinorError("ID must be unique for each node (conflict: ID = " + nodeID + "). Ignoring nodes with repeated ids.");
+                continue;
             }
 
-            this.nodes[nodeID] = this.parseNode(children[i], nodeNames, grandChildren);
+            this.nodes[nodeID] = this.parseNode(children[i]);
         }
 
 
+        // ESTABLISHES CONNECTIONS BETWEEN REFERENCED IDS AND NODES
         let unmatchedIds = [];
         for (let n in this.nodes) {
             unmatchedIds = unmatchedIds.concat(this.nodes[n].correspondIdsToObjects(this.nodes));
@@ -645,26 +653,39 @@ class MySceneGraph {
             return arr.indexOf(val) === idx;
         });          
         
-        if (unmatchedIds.length) this.onXMLMinorError("the following ids are referenced but do not have a correspondent node: " + unmatchedIds.join());
-
+        if (unmatchedIds.length) this.onXMLMinorError("The following ids are referenced but do not have a correspondent node: " + unmatchedIds.join());
+    
         this.objRoot = this.nodes[this.idRoot];
     }
 
-    parseNode(nodeBlock, nodeChildrenNames, nodeChildren) {
+    /**
+     * Parses a given <node> block
+     * @param {node block element} nodeBlock
+     * @return {Node} node object
+     */
+    parseNode(nodeBlock) {
+        const nodeChildren = nodeBlock.children;
+
+        const nodeChildrenNames = [];
+        for (var j = 0; j < nodeChildren.length; j++) {
+            nodeChildrenNames.push(nodeChildren[j].nodeName);
+        }
         var transformationsIndex = nodeChildrenNames.indexOf("transformations");
         var materialIndex = nodeChildrenNames.indexOf("material");
         var textureIndex = nodeChildrenNames.indexOf("texture");
         var descendantsIndex = nodeChildrenNames.indexOf("descendants");
 
-        const node = new IntermediateNode(nodeBlock.nodeName, this.scene);
+        const node = new Node(this.getNodeID(nodeBlock, false), this.scene); // already checked if node id existed
 
         // Transformations
         if (transformationsIndex != -1) {
             const transformationsNode = nodeChildren[transformationsIndex];
             const transformations = transformationsNode.children;
 
-            const tmat = this.parseTransformations(transformations);
+            const tmat = this.parseTransformations(transformations, node);
             node.setTransformationMatrix(tmat);
+        } else {
+            this.onXMLMinorError(`Node${this.getIDErrorMessage(nodeBlock)} doesn't have a 'transformations' block.`);
         }
 
         // Material
@@ -678,43 +699,41 @@ class MySceneGraph {
         } else if (this.materials[matID] != undefined) {
             node.setMaterial(this.materials[matID]);
         } else {
-            this.onXMLMinorError("referenced texture id " + matID + "isn't defined");
+            this.onXMLMinorError(`Referenced material with id '${matID}' isn't defined.`);
         }
 
 
         // Texture
-
+        
         const textureNode = nodeChildren[textureIndex];
-
-        if (textureNode.children.length == 0) {
-            this.onXMLMinorError("no amplification defined for texture"); //uncomment when xml ready
-        } else {
-            const amplificationNode = textureNode.children[0];
-            if (amplificationNode.nodeName != "amplification") {
-                this.onXMLMinorError("invalid node name inside texture of node");
-            } else {
-                const amplification = this.getFloatParameters(textureNode.children[0], ['afs', 'aft']);
-                if (amplification === null) {
-                    this.onXMLMinorError("invalid amplification parameters inside texture of node");
-                } else {
-                    node.setScaleFactors({ afs: amplification.afs, aft: amplification.aft });
-                }
-
-            }
-        }
 
         var texID = this.reader.getString(textureNode, 'id');
         if (texID == null)
-            this.onXMLMinorError("no id defined for material");
-        if (texID == "clear") {
-            node.setTexture(texID);
-        } else if (texID == "null") {
+            this.onXMLMinorError("no id defined for texture");
+        if (texID == "clear" || texID == "null") {
             node.setTexture(texID);
         } else {
             if (this.textures[texID] != undefined) {
                 node.setTexture(this.textures[texID]);
             } else {
-                this.onXMLMinorError("referenced texture id " + texID + "isn't defined");
+                this.onXMLMinorError(`referenced texture with id '${texID}' isn't defined.`);
+            }
+        }
+
+        if (textureNode.children.length == 0) {
+            this.onXMLMinorError(`No amplification defined for texture in node (using default afs=1 & aft=1).`); //uncomment when xml ready
+        } else {
+            const amplificationNode = textureNode.children[0];
+            if (amplificationNode.nodeName != "amplification") {
+                this.onXMLMinorError(`Invalid node name inside texture of node${this.getIDErrorMessage(nodeBlock)}`);
+            } else {
+                const amplification = this.getFloatParameters(textureNode.children[0], ['afs', 'aft']);
+                if (amplification === null) {
+                    this.onXMLMinorError("invalid amplification parameters inside texture of node${this.getIDErrorMessage(nodeBlock)}");
+                } else {
+                    node.setScaleFactors({ afs: amplification.afs, aft: amplification.aft });
+                }
+
             }
         }
 
@@ -725,22 +744,23 @@ class MySceneGraph {
 
         if (descendantCount <= 0) {
             this.onXMLMinorError("node with id " + this.reader.getString(nodeBlock, 'id') + " has no descendants");
-            return null;
         }
 
         return node;
     }
 
+    /**
+     * Parses a given <node> block's descendants
+     * @param {descendants block element} descendants 
+     * @param {node block element} node 
+     */
     parseDescendants(descendants, node) {
         let descendantCount = 0;
 
         for (let child of descendants) {
             if (child.nodeName === "noderef") {
-                let noderefID = this.reader.getString(child, 'id');
-                if (noderefID == null) {
-                    this.onXMLMinorError("noderef hasn't got id");
-                    continue;
-                }
+                let noderefID = this.getNodeID(child);
+                if (noderefID == null) continue;
                 
                 node.addDescendantId(noderefID);
 
@@ -751,7 +771,7 @@ class MySceneGraph {
                 node.addDescendantObj(new LeafNode(this.scene, leafObj));
 
             } else {
-                this.onXMLMinorError("unknown tag <" + child.nodeName + "> inside descendants of node with id " + this.reader.getString(children[i], 'id'));
+                this.onXMLMinorError("unknown tag <" + child.nodeName + "> inside descendants of node with id " + node.id);
                 continue;
             }
             descendantCount++;
@@ -759,14 +779,20 @@ class MySceneGraph {
         return descendantCount;
     }
 
-    parseTransformations(transformations) {
+    /**
+     * Returns a transformation matrix from a block of transformation nodes (rotation, scale, translation).
+     * @param {transformations block element} transformations 
+     * @param {Node} parent the parent node
+     * @return the transformation matrix if not empty; null otherwise
+     */
+    parseTransformations(transformations, parent) {
         let transfMx = mat4.create();
         let hadTransformation = false;
         for (let child of transformations) {
             if (child.nodeName === "scale") {
                 const params = ['sx', 'sy', 'sz'];
 
-                const res = this.getFloatParameters(child, params);
+                const res = this.getFloatParameters(child, params, parent);
 
                 if (isNotNull(res)) {
                     mat4.scale(transfMx, transfMx, [res.sx, res.sy, res.sz]);
@@ -775,24 +801,24 @@ class MySceneGraph {
             } else if (child.nodeName === "translation") {
                 const params = ['x', 'y', 'z'];
     
-                const res = this.getFloatParameters(child, params);
+                const res = this.getFloatParameters(child, params, parent);
 
                 if (isNotNull(res)) {
                     mat4.translate(transfMx, transfMx, [res.x, res.y, res.z]);
                     hadTransformation = true;
                 }
             } else if (child.nodeName === "rotation") {    
-                const angle = this.getFloatParameter(child, 'angle');
+                const angle = this.getFloatParameters(child, ['angle'], parent);
                 const axis = this.getCharParameter(child, 'axis');
 
-                if (this.axisCoords[axis] == undefined) {
-                    this.onXMLMinorError("Rotation child of 'transformations' node has invalid axis.");
+                if (isNull(axis) || this.axisCoords[axis] == undefined) {
+                    this.onXMLMinorError(`Rotation child of 'transformations' node of node with id ${parent.id} has invalid axis.`);
                 } else if (isNotNull(angle) && isNotNull(axis)) {
-                    mat4.rotate(transfMx, transfMx, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
+                    mat4.rotate(transfMx, transfMx, angle.angle*DEGREE_TO_RAD, this.axisCoords[axis]);
                     hadTransformation = true;
                 }
             } else {
-                this.onXMLMinorError("Child of 'transformations' node has got an invalid nodeName.");
+                this.onXMLMinorError(`Child of 'transformations' node of node with id '${parent.id}' has got an invalid nodeName ('${child.nodeName}').`);
             }
         }
         return hadTransformation ? transfMx : null;
@@ -801,17 +827,18 @@ class MySceneGraph {
     /**
      * Generates the primitive for the leaf node
      * @param node the leaf node
+     * @param parent the parent node
      */
     parseLeafNode(node, parent) {
         const leafType = this.reader.getString(node, 'type');
         if (leafType == null) {
-            this.onXMLMinorError("no type defined for leaf");
+            this.onXMLMinorError(`No type defined for leaf inside 'descendants' of node with id '${parent.id}'.`);
             return null;
         }
 
         const generatePrimitive = leafObjGenerator[leafType];
         if (generatePrimitive === undefined) {
-            this.onXMLMinorError("the leaf type " + leafType + " is not implemented");
+            this.onXMLMinorError(`The leaf type ${leafType} inside 'descedants' of node with id '${parent.id}' is not implemented`);
             return null;
         }
 
@@ -824,7 +851,7 @@ class MySceneGraph {
      */
     getCharParameter(node, parameter) {
         const value = this.reader.getString(node, parameter);
-        if (!isNotNull(value)) {
+        if (isNull(value)) {
             this.onXMLMinorError('no ' + parameter + ' defined');
             return null;
         }
@@ -832,7 +859,37 @@ class MySceneGraph {
     }
 
     /**
-     * @param node the node to get the parameter from
+     * 
+     * @param {*} node 
+     * @param {*} parameter 
+     */
+    getIDErrorMessage(node) {
+        let id;
+        if ((id = this.getNodeID(node, false)) != null) {
+            return ` with id '${id}'`;
+        }
+        return "";
+    }
+
+    /**
+     * Gets a node id. By default shows an error.
+     * @param node the node to get the id from
+     * @return the id if it exists; null otherwise
+     */
+    getNodeID(node, giveError = true) {
+        const value = this.reader.getString(node, 'id');
+        if (isNull(value)) {
+            if (giveError)
+                this.onXMLMinorError(`Node with name '${node.nodeName}' doesn't have a valid ID.`);
+            return null;
+        }
+        return value;
+    }
+
+
+    /**
+     * Gets a float parameter from node
+     * @param {block element} node the node to get the parameter from
      * @param {string} parameter the parameter's name
      */
     getFloatParameter(node, parameter) {
@@ -848,26 +905,39 @@ class MySceneGraph {
     }
 
     /**
-     * @param node the node to get the parameters from
+     * Gets float parameters with names specified by 'parameters' from the specified 'node'.
+     * @param {block element} node the node to get the parameters from
      * @param {array} parameters array with parameter names
+     * @param {Node} parent parent obj. if != null, the parent id is used in error message
+     * @return returns null if at least one of the parameters is invalid; array with indexed values otherwise
      */
-    getFloatParameters(node, parameters) {
+    getFloatParameters(node, parameters, parent = null) {
         const res = [];
         for (const p of parameters) {
             res[p] = this.getFloatParameter(node, p);
-            if (!isNotNull(res[p]) || isNaN(res[p])) return null;
+            if (isNull(res[p]) || isNaN(res[p])) {
+                this.onXMLMinorError(`Node with name '${node.nodeName}'${this.getIDErrorMessage(node)}${parent != null ? ` child of node with id '${parent.id}'` : ""} doesn't have a valid '${p}' parameter.`);
+                return null;
+            }
         }
         return res;
     }
 
+    /**
+     * Gets a boolean value from node
+     * @param {node block element} node 
+     * @param {string} name 
+     * @param {string} messageError 
+     */
     parseBoolean(node, name, messageError) {
         var boolVal = this.reader.getBoolean(node, name);
         if (!(boolVal != null &&!isNaN(boolVal) && (boolVal == true || boolVal == false))) {
-          this.onXMLMinorError("unable to parse value component " + messageError + "; assuming 'value = 1'");
+          this.onXMLMinorError("Unable to parse value component " + messageError + "; assuming 'value = 1'.");
           return true;
         }
         return boolVal;
     }
+
     /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
