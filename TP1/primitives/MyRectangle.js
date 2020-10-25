@@ -1,11 +1,11 @@
 /**
  * Rectangle primitive
  * @constructor
- * @param scene - Reference to MyScene object
- * @param x1 - x coordinate corner 1
- * @param y1 - y coordinate corner 1
- * @param x2 - x coordinate corner 2
- * @param y2 - y coordinate corner 2
+ * @param {CGFscene} scene - Reference to the scene object
+ * @param {Number} x1 - x coordinate corner 1
+ * @param {Number} y1 - y coordinate corner 1
+ * @param {Number} x2 - x coordinate corner 2
+ * @param {Number} y2 - y coordinate corner 2
  */
 class MyRectangle extends CGFobject {
 	constructor(scene, x1, y1, x2, y2) {

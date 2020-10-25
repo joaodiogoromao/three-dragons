@@ -1,5 +1,8 @@
 /**
  * Saves a node's information, like texture, material, transformations and scale factors (afs and aft)
+ * @constructor
+ * @param {String} id - the id of the node
+ * @param {XMLscene} scene - reference to the XMLscene Object
  */
 class Node extends CGFobject {
     constructor(id, scene) {

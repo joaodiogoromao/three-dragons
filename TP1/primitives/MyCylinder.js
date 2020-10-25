@@ -1,12 +1,12 @@
 /**
  * Cylinder primitive
  * @constructor
- * @param scene - Reference to MyScene object
- * @param height - the height of the cylinder
- * @param topRadius - the radius of the top of the cylinder
- * @param bottomRadius - the radius of the bottom of the cylinder
- * @param stacks - sections along height
- * @param slices - parts per section
+ * @param {CGFscene} scene - Reference to the scene object
+ * @param {Number} height - the height of the cylinder
+ * @param {Number} topRadius - the radius of the top of the cylinder
+ * @param {Number} bottomRadius - the radius of the bottom of the cylinder
+ * @param {Number} stacks - sections along height
+ * @param {Number} slices - parts per section
  */
 class MyCylinder extends CGFobject {
     constructor(scene, height, topRadius, bottomRadius, stacks, slices){

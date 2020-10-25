@@ -1,11 +1,11 @@
 /**
  * Torus primitive
  * @constructor
- * @param scene - Reference to MyScene object
- * @param inner - inner radius
- * @param outer - outer radius
- * @param slices - sections around the inner radius
- * @param loops - sections around the outer radius
+ * @param {CGFscene} scene - Reference to the scene object
+ * @param {Number} inner - inner radius
+ * @param {Number} outer - outer radius
+ * @param {Number} slices - sections around the inner radius
+ * @param {Number} loops - sections around the outer radius
  */
 class MyTorus extends CGFobject {
     constructor(scene, inner, outer, slices, loops) {

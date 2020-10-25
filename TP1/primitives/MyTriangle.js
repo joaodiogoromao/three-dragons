@@ -1,7 +1,7 @@
 /**
  * Triangle primitive
  * @constructor
- * @param scene - Reference to MyScene object
+ * @param {CGFscene} scene - Reference to the scene object
  * @param coords - object with attributes x1, y1, x2, y2, x3, y3
  */
 class MyTriangle extends CGFobject{

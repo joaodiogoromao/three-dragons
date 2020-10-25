@@ -2,10 +2,10 @@
 /**
  * Sphere primitive
  * @constructor
- * @param  {CGFscene} scene - MyScene object
- * @param  {float} radius
- * @param  {integer} slices - number of slices around Y axis
- * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
+ * @param {CGFscene} scene - Reference to the scene object
+ * @param {float} radius
+ * @param {integer} slices - number of slices around Y axis
+ * @param {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
  */
 class MySphere extends CGFobject {
     constructor(scene, radius, slices, stacks) {
