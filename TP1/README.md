@@ -10,7 +10,14 @@
 ----
 ## Project information
 
-- (items describing main strong points)
+- Error management
+  - The parser will always try do draw the scene despite errors, showing warnings on the console.
+- Textures, materials and transformations inheritance
+  - Implemented material and texture stacks.
+  - Use of push and pop functions to, respectively, save the current property and apply the previous property.
+- Scaling factors
+  - Implemented on the rectangle and the triangle.
+  - Use of a method 'updateTexCoords' to update the coords when drawing a given rectangle or triangle leaf.
 - Scene
   - The created scene represents a Quidditch field from the Harry Potter saga.
   - It contains representations of all the primitives:
