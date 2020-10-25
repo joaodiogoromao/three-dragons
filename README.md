@@ -14,8 +14,8 @@
 
 - (items briefly describing main strong points)
 - Scene
-  - (Brief description of the created scene)
-  - (relative link to the scene)
+  - The created scene represents a Quidditch field from the Harry Potter saga.
+  - [scene link](TP1/scenes/quidditch.xml)
 
 -----
 
