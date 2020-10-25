@@ -484,7 +484,14 @@ class MySceneGraph {
         }
 
         if (numLights == 0) {
-            this.onXMLMinorError("At least one light should be defined!");
+            this.onXMLMinorError("At least one light should be defined! Using a generic one.");
+            this.lights['generic'] = [
+                true,
+                [0, 15, 0, 1],
+                [0.5, 0.5, 0.5, 1],
+                [1, 1, 1, 1],
+                [1, 1, 1, 1]
+            ]
             return null;
         }
         else if (numLights > 8)

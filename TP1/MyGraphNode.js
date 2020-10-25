@@ -115,11 +115,13 @@ class Node extends CGFobject {
     }
 }
 
+/**
+ * LeafNode (for leaves)
+ * @constructor
+ * @param {CGFobject} obj the leaf object
+ */
 class LeafNode extends CGFobject {
     
-    /**
-     * @param {CGFobject} obj the leaf object
-     */
     constructor(scene, obj) {
         super(scene);
         this.obj = obj;
