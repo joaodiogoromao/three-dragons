@@ -1,6 +1,6 @@
 <lsf>
     <initials>
-        <reference length="2" />
+        <reference length="20" />
         <!-- axis length; "0" means no axis displayed -->
         <root id="ground" />
         <!-- identifier of root node of the scene graph; this node -->
@@ -9,16 +9,20 @@
     <views default="defaultCamera">
         <!-- at least one of the following type of cameras must be declared -->
         <perspective id="defaultCamera" near="0.1" far="500" angle="60">
-            <from x="30" y="30" z="0" />
+            <from x="50" y="40" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
+        <perspective id="cylinderRadiusDemo" near="0.1" far="500" angle="60">
+            <from x="100" y="15" z="160" />
+            <to x="100" y="0" z="140" />
+        </perspective>
         <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
-            <from x="20" y="5" z="30" />
-            <to x="20" y="0" z="20" />
+            <from x="140" y="5" z="150" />
+            <to x="140" y="0" z="140" />
         </perspective>
         <perspective id="flagDetail" near="0.1" far="500" angle="60">
-            <from x="-10.416" y="31" z="-17.26" />
-            <to x="-7.416" y="28" z="-14.26" />
+            <from x="10.416" y="31" z="17.26" />
+            <to x="7.416" y="28" z="14.26" />
         </perspective>
         <perspective id="insideCabin" near="0.1" far="500" angle="60">
             <from x="0.416" y="17" z="-4.26" />
@@ -44,35 +48,43 @@
 
     <lights>
         <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="light1">            <!-- light identifier -->
+        <light id="default-light">            <!-- light identifier -->
             <enable value="true" />
             <!-- enable/disable -->
             <position x="0" y="15" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r=".5" g=".5" b=".5" a="1.0" />                   <!-- ambient component -->
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
         </light>
 
-        <light id="light2"> 
+        <light id="red-light"> 
             <enable value="false" />
-            <position x="5" y="15" z="5" w="1.0" />
+            <position x="0" y="15" z="0" w="1.0" />
             <ambient r=".5" g=".5" b=".5" a="1.0" />
             <diffuse r="1.0" g="0" b="0" a="1.0" />
             <specular r="1.0" g="0" b="0" a="1.0" />
         </light>
 
-        <light id="light3"> 
+        <light id="green-light"> 
             <enable value="false" />
-            <position x="0" y="15" z="10" w="1.0" />
+            <position x="0" y="15" z="0" w="1.0" />
             <ambient r=".5" g=".5" b=".5" a="1.0" />
             <diffuse r="0" g="1.0" b="0" a="1.0" />
             <specular r="0" g="1.0" b="0" a="1.0" />
         </light>
+
+        <light id="directional-light"> 
+            <enable value="false" />
+            <position x="10" y="10" z="10" w="0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </light>
     </lights>
 
     <textures>
-        <texture id="slytherinTexture" path="./scenes/images/slytherinPattern.jpg" />
         <texture id="gryffindorTexture" path="./scenes/images/gryffindorPattern.jpg" />
+        <texture id="ravenclawTexture" path="./scenes/images/ravenclawPattern.jpg" />
     </textures>
 
 
@@ -81,10 +93,52 @@
          requires a distinct "id". At least one material should be present. -->
         <material id="defaultMaterial">
             <shininess value="0" />
-            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
-            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+            <ambient r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="metalMaterial">
+            <shininess value="0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.01" g="0.01" b="0.01" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="tentMaterial">
+            <shininess value="0" />
+            <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="towerMaterial">
+            <shininess value="0" />
+            <ambient r="0.85" g="0.85" b="0.85" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.7" g="0.7" b="0.7" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="woodMaterial">
+            <shininess value="0" />
+            <ambient r="0.65" g="0.65" b="0.65" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="groundMaterial">
+            <shininess value="0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="flagGenericMaterial">
+            <shininess value="0" />
+            <ambient r="0.15" g="0.15" b="0.15" a="1.0" />
+            <diffuse r="0" g="0" b="0" a="1.0" />
             <specular r="0.2" g="0.2" b="0.2" a="1.0" />
-            <emissive r="0.2" g="0.2" b="0.2" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
         </material>
     </materials>
 
@@ -94,19 +148,23 @@
             <!-- next two lines are mandatory -->
             <material id="defaultMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
 
-            <texture id="slytherinTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+            <texture id="ravenclawTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
                 <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="quidditchField" />
                 <noderef id="tent" />
                 <noderef id="groundSurface" />
                 <noderef id="scalingFactorDemonstration" />
+                <noderef id="cylinderRadiusDemo" />
             </descendants>
         </node>
         <node id="groundSurface">
-            <material id="null" />
+            <material id="groundMaterial" />
 
             <texture id="null">
                 <amplification afs="60" aft="60" />
@@ -120,6 +178,22 @@
                 <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
             </descendants>
         </node>
+        <node id="cylinderRadiusDemo">
+            <material id="groundMaterial" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="100" y="6" z="140" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="cylinder" height="6" topRadius="4" bottomRadius="2" stacks="5" slices="30"/>
+            </descendants>
+        </node>
         <node id="scalingFactorDemonstration">
             <material id="null" />
 
@@ -127,7 +201,7 @@
             </texture>
 
             <transformations>
-                <translation x="20" y="0" z="20" />
+                <translation x="140" y="0" z="140" />
                 <scale sx="0.9" sy="0.9" sz="0.9" />
             </transformations>
  
@@ -140,7 +214,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="4" />
+                <amplification afs="4" aft="2" />
             </texture>
 
             <transformations>
@@ -155,7 +229,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="0.5" aft="0.5" />
+                <amplification afs="0.5" aft="0.25" />
             </texture>
 
             <transformations>
@@ -172,7 +246,7 @@
             **********************************
         -->
         <node id="tent">
-            <material id="null" />
+            <material id="tentMaterial" />
 
             <texture id="null"/>
 
@@ -190,6 +264,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="tentTriangle1" />
@@ -234,6 +311,9 @@
                 <amplification afs="15" aft="15" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="triangle" x1="-4" y1="0" x2="4" y2="0" x3="0" y3="4.2426" /> <!-- sqrt(18) => sqrt(34)**2 = 4**2 + x**2-->
             </descendants>
@@ -273,6 +353,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="parallelogramTriangle1" />
                 <noderef id="parallelogramTriangle2" />
@@ -285,6 +368,9 @@
             <texture id="null">
                 <amplification afs="15" aft="15" />
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="3" y2="0" x3="3" y3="5" />
@@ -311,6 +397,9 @@
                 <amplification afs="15" aft="15" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="rectangle" x1="3" y1="0" x2="17" y2="5" />
             </descendants>
@@ -319,6 +408,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="tentWall1" />
@@ -390,6 +482,9 @@
                 <amplification afs="8" aft="8" />
             </texture>
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="rectangle" x1="0" y1="0" x2="8" y2="5" />
             </descendants>
@@ -405,15 +500,21 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="fieldPlayingArea" />
                 <noderef id="fieldDelimiters" />
             </descendants>
         </node>
         <node id="fieldPlayingArea">
-            <material id="null" />
+            <material id="metalMaterial" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="hoopSetL" />
@@ -425,6 +526,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="fieldGroundBarrier" />
                 <noderef id="towerSetT" />
@@ -432,17 +536,17 @@
             </descendants>
         </node>
         <node id="fieldGroundBarrier">
-            <material id="null" />
+            <material id="woodMaterial" />
 
             <texture id="null" />
 
             <transformations>
-                <scale sx="1.6" sy="1.6" sz="1" />
+                <scale sx="1.6" sy="3" sz="1" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2.1" outer="15" slices="32" loops="128" /> 
+                <leaf type="torus" inner="1.45" outer="15" slices="4" loops="128" /> 
             </descendants>
         </node>
         <!--
@@ -484,6 +588,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="hoopPole1" />
@@ -618,6 +725,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <leaf type="torus" inner=".15" outer="1" slices="16" loops="64" />
             </descendants>
@@ -628,7 +738,10 @@
         <node id="towerSetT">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="clear" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="tower1" />
@@ -640,7 +753,7 @@
         <node id="towerSetD">
             <material id="null" />
 
-            <texture id="clear" />
+            <texture id="null" />
 
             <transformations>
                 <rotation axis="y" angle="180" />
@@ -657,7 +770,7 @@
 
             <transformations>
                 <translation x="-19.416" y="0" z="-8.816" />
-                <rotation axis="y" angle="54" />
+                <rotation axis="y" angle="45" />
             </transformations>
 
             <descendants>
@@ -671,7 +784,7 @@
 
             <transformations>
                 <translation x="-7.416" y="0" z="-14.26" />
-                <rotation axis="y" angle="18" />
+                <rotation axis="y" angle="13" />
             </transformations>
 
             <descendants>
@@ -686,7 +799,7 @@
 
             <transformations>
                 <translation x="7.416" y="0" z="-14.26" />
-                <rotation axis="y" angle="-18" />
+                <rotation axis="y" angle="-13" />
             </transformations>
 
             <descendants>
@@ -700,7 +813,7 @@
 
             <transformations>
                 <translation x="19.416" y="0" z="-8.816" />
-                <rotation axis="y" angle="-54" />
+                <rotation axis="y" angle="-45" />
             </transformations>
 
             <descendants>
@@ -708,9 +821,12 @@
             </descendants>
         </node>
         <node id="tower">
-            <material id="null" />
+            <material id="towerMaterial" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="towerCeiling" />
@@ -739,6 +855,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="towerCeilingTriangle" />
@@ -787,7 +906,7 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="4" />
+                <amplification afs="4" aft="2" />
             </texture>
 
             <transformations>
@@ -796,7 +915,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="0" y1="0" x2="2" y2="4.4721" x3="4" y3="0" />  <!-- y3 = sqrt(20) -->
+                <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="2" y3="4.4721" />  <!-- y3 = sqrt(20) -->
             </descendants>
         </node>
         <node id="towerCeilingFlag">
@@ -829,7 +948,7 @@
             </descendants>
         </node>
         <node id="towerCeilingPole">
-            <material id="null" />
+            <material id="metalMaterial" />
 
             <texture id="null" />
 
@@ -858,16 +977,20 @@
             </descendants>
         </node>
         <node id="banner1">
-            <material id="null" />
+            <material id="flagGenericMaterial" />
 
             <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="-0.3" z="0" />
+            </transformations>
 
             <descendants>
                 <noderef id="banner" />
             </descendants>
         </node>
         <node id="banner1back">
-            <material id="null" />
+            <material id="flagGenericMaterial" />
 
             <texture id="null" />
 
@@ -885,7 +1008,6 @@
             <texture id="null" />
 
             <transformations>
-                <translation x="0" y="0.3" z="0" />
             </transformations>
 
             <descendants>
@@ -898,17 +1020,23 @@
             <texture id="null" />
 
             <transformations>
+                <translation x="0" y="0.3" z="0" />
                 <rotation axis="x" angle="180" />
             </transformations>
 
             <descendants>
-                <noderef id="banner2" />
+                <noderef id="banner" />
             </descendants>
         </node>
         <node id="banner">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="0.4" aft="0.2" />
+            </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="bannerTriangle" />
@@ -918,16 +1046,24 @@
         <node id="bannerTriangle">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="null">
+                <amplification afs="0.4" aft="0.2" />
+            </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
-                <leaf type="triangle" x1="1" y1="0" x2="1.6" y2="0.15" x3="1" y3="0.3" />
+                <leaf type="triangle" x1="1" y1="0.3" x2="1" y2="0" x3="1.6" y3="0.15" />
             </descendants>
         </node>
         <node id="towerBody">
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="towerBodyWall1" />
@@ -995,8 +1131,11 @@
             <material id="null" />
 
             <texture id="null">
-            <amplification afs="4" aft="4" />
+                <amplification afs="4" aft="2" />
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <leaf type="rectangle" x1="-2" y1="0" x2="2" y2="12" />
@@ -1023,7 +1162,7 @@
 
             <transformations>
                 <translation x="0" y="8" z="0" />
-                <scale sx="1" sy="1" sz="-1" />
+                <scale sx="-1" sy="1" sz="-1" />
                 <rotation axis="x" angle="180" />
             </transformations>
 
@@ -1036,6 +1175,9 @@
 
             <texture id="null" />
 
+            <transformations>
+            </transformations>
+
             <descendants>
                 <noderef id="cabinStructure" />
                 <noderef id="cabinStands" />
@@ -1045,6 +1187,9 @@
             <material id="null" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="cabinWall1" />
@@ -1097,9 +1242,12 @@
             </descendants>
         </node>
         <node id="cabinStands">
-            <material id="null" />
+            <material id="woodMaterial" />
 
             <texture id="null" />
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <noderef id="cabinStandStep1" />
@@ -1167,9 +1315,7 @@
         <node id="cabinBackWall">
             <material id="null" />
 
-            <texture id="null">
-                <!--<amplification afs="0.25" aft="0.25"/>-->
-            </texture>
+            <texture id="null" />
 
             <transformations>
                 <translation x="0" y="2" z="-2" />
@@ -1185,20 +1331,26 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="4" />
+                <amplification afs="4" aft="2" />
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <leaf type="triangle" x1="0" y1="0" x2="4" y2="0" x3="0" y3="4" />
-                <leaf type="triangle" x1="0" y1="0" x2="0" y2="4" x3="4" y3="0" />
+                <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="0" y3="4" />
             </descendants>
         </node>
         <node id="standsRectangle">
             <material id="null" />
 
             <texture id="null">
-                <amplification aft="0.75" afs="1"/>
+                <amplification aft="0.5" afs="1"/>
             </texture>
+
+            <transformations>
+            </transformations>
 
             <descendants>
                 <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />

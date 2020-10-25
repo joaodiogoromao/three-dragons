@@ -548,12 +548,12 @@
             <texture id="groundBarrierTexture" />
 
             <transformations>
-                <scale sx="1.6" sy="2" sz="1" />
+                <scale sx="1.6" sy="3" sz="1" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="2.1" outer="15" slices="4" loops="128" /> 
+                <leaf type="torus" inner="1.45" outer="15" slices="4" loops="128" /> 
             </descendants>
         </node>
         <!--
@@ -777,7 +777,7 @@
 
             <transformations>
                 <translation x="-19.416" y="0" z="-8.816" />
-                <rotation axis="y" angle="54" />
+                <rotation axis="y" angle="45" />
             </transformations>
 
             <descendants>
@@ -791,7 +791,7 @@
 
             <transformations>
                 <translation x="-7.416" y="0" z="-14.26" />
-                <rotation axis="y" angle="18" />
+                <rotation axis="y" angle="13" />
             </transformations>
 
             <descendants>
@@ -806,7 +806,7 @@
 
             <transformations>
                 <translation x="7.416" y="0" z="-14.26" />
-                <rotation axis="y" angle="-18" />
+                <rotation axis="y" angle="-13" />
             </transformations>
 
             <descendants>
@@ -820,7 +820,7 @@
 
             <transformations>
                 <translation x="19.416" y="0" z="-8.816" />
-                <rotation axis="y" angle="-54" />
+                <rotation axis="y" angle="-45" />
             </transformations>
 
             <descendants>
