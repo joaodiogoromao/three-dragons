@@ -766,7 +766,7 @@
         <node id="tower1">
             <material id="null" />
 
-            <texture id="null" />
+            <texture id="gryffindorTexture" />
 
             <transformations>
                 <translation x="-19.416" y="0" z="-8.816" />
