@@ -315,10 +315,10 @@ class MySceneGraph {
 
             
             if (child.nodeName == "perspective") { // Parses perpective camera
-                const cameraAngle = this.getFloatParameter(child, 'angle');
+                const cameraAngle = this.getFloatParameters(child, ['angle']);
                 if (isNull(cameraAngle)) continue;
 
-                this.scene.addCamera(cameraId, new CGFcamera(cameraAngle * DEGREE_TO_RAD, cameraNF.near, cameraNF.far, vec3.fromValues(cameraFrom.x, cameraFrom.y, cameraFrom.z), vec3.fromValues(cameraTo.x, cameraTo.y, cameraTo.z)));
+                this.scene.addCamera(cameraId, new CGFcamera(cameraAngle.angle * DEGREE_TO_RAD, cameraNF.near, cameraNF.far, vec3.fromValues(cameraFrom.x, cameraFrom.y, cameraFrom.z), vec3.fromValues(cameraTo.x, cameraTo.y, cameraTo.z)));
             
             } else if (child.nodeName == "ortho") { // parses ortho camera
                 const cameraLRTB = this.getFloatParameters(child, ['left', 'right', 'top', 'bottom']);
@@ -755,7 +755,7 @@ class MySceneGraph {
         }
 
         if (textureNode.children.length == 0) {
-            this.onXMLMinorError(`No amplification defined for texture in node (using default afs=1 & aft=1).`); //uncomment when xml ready
+            this.onXMLMinorError(`No amplification defined for texture in node${this.getIDErrorMessage(nodeBlock)} (using default afs=1 & aft=1).`); //uncomment when xml ready
         } else {
             const amplificationNode = textureNode.children[0];
             if (amplificationNode.nodeName != "amplification") {
@@ -763,7 +763,7 @@ class MySceneGraph {
             } else {
                 const amplification = this.getFloatParameters(textureNode.children[0], ['afs', 'aft']);
                 if (amplification === null) {
-                    this.onXMLMinorError("invalid amplification parameters inside texture of node${this.getIDErrorMessage(nodeBlock)}");
+                    this.onXMLMinorError(`invalid amplification parameters inside texture of node${this.getIDErrorMessage(nodeBlock)}`);
                 } else {
                     node.setScaleFactors({ afs: amplification.afs, aft: amplification.aft });
                 }
@@ -928,10 +928,10 @@ class MySceneGraph {
     getFloatParameter(node, parameter) {
         const value = this.reader.getFloat(node, parameter);
         if (!isNotNull(value)) {
-            this.onXMLMinorError('no ' + parameter + ' defined for ' + node.nodeName);
+            //this.onXMLMinorError('no ' + parameter + ' defined for ' + node.nodeName);
             return null;
         } else if (isNaN(value)) {
-            this.onXMLMinorError('parameter ' + parameter + ' of ' + node.nodeName + ' is not a valid float');
+            //this.onXMLMinorError('parameter ' + parameter + ' of ' + node.nodeName + ' is not a valid float');
             return null;
         }
         return value;
