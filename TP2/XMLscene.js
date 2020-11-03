@@ -41,13 +41,15 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.setUpdatePeriod(100);
 
         this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
         this.loadingProgress=0;
 
+        this.animations = [];
+
         this.defaultAppearance=new CGFappearance(this);
         this.defaultAppearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.tStarted = null;
     }
 
     /**
@@ -104,6 +106,7 @@ class XMLscene extends CGFscene {
         this.interface.createInterface();
 
         this.sceneInited = true;
+        this.setUpdatePeriod(100);
     }
 
     /**
@@ -200,6 +203,18 @@ class XMLscene extends CGFscene {
         let txt = this.textureStack.splice(this.textureStack.length-1, this.textureStack.length);
         this.setTexture(txt[0]);
     }
+
+    update(t) {
+        if (this.tStarted == null) {
+            this.tStarted = t;
+            return;
+        }
+        const timeSinceProgramStarted = (t - this.tStarted)/1000;
+        for (const i in this.animations) { 
+            console.log("supposed:");
+            this.animations[i].update(timeSinceProgramStarted);
+        }
+    } 
 
     /**
      * Displays the scene.

@@ -14,6 +14,7 @@ class Node extends CGFobject {
 
         this.material = null;
         this.texture = null;
+        this.animation = null;
 
         this.transformationMatrix = null;
 
@@ -35,6 +36,13 @@ class Node extends CGFobject {
      */
     setMaterial(material) {
         this.material = material;
+    }
+
+    /**
+     * @param {Animation} animation 
+     */
+    setAnimation(animation) {
+        this.animation = animation;
     }
 
     /**
@@ -102,6 +110,8 @@ class Node extends CGFobject {
         }
         if (this.transformationMatrix != null)  // applies transformations if they exist
             this.scene.multMatrix(this.transformationMatrix);
+        if (this.animation != null)  //applies animations if it is defined
+            this.animation.apply(this.scene);
         
         // DRAWS THE DESCENDANTS
         for (const desc of this.descendantObjs) {

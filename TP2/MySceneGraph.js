@@ -7,7 +7,8 @@ var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
 var MATERIALS_INDEX = 5;
-var NODES_INDEX = 6;
+var ANIMATIONS_INDEX = 6;
+var NODES_INDEX = 7;
 
 const isNotNull = (v) => v != null;
 const isNull = (v) => v === null;
@@ -190,6 +191,18 @@ class MySceneGraph {
 
             //Parse materials block
             if ((error = this.parseMaterials(nodes[index])) != null)
+                return error;
+        }
+
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != ANIMATIONS_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse animations block
+            if ((error = this.parseAnimations(nodes[index])) != null)
                 return error;
         }
 
@@ -647,6 +660,58 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <animations> block.
+     * @param {animations block element} animationsNode 
+     */
+    parseAnimations(animationsNode) {
+        var children = animationsNode.children;
+
+        this.animations = [];
+
+        // Any number of nodes.
+        for (let i = 0; i < children.length; i++){
+            if (children[i].nodeName != "animation") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + "> inside 'nodes' block");
+                continue;
+            }
+
+            // Get id of the current animation.
+            let animationID = this.getNodeID(children[i]);
+            if (animationID == null) continue;
+
+            // Checks for repeated IDs.
+            if (this.animations[animationID] != null) {
+                this.onXMLMinorError("ID must be unique for each animation (conflict: ID = " + materialID + "). Ignoring animations with repeated ids.");
+                continue;
+            }
+            // Parse keyframes
+            this.animations[animationID] = new KeyframeAnimation(this.parseKeyframes(children[i].children));
+        }
+
+        this.scene.animations = this.animations;
+
+        this.log("Parsed animations");
+        return null;
+    }
+
+    parseKeyframes(keyframeNode) {
+        let keyframeArray = [];
+        for (let keyframe of keyframeNode){
+            const instant = this.getFloatParameters(keyframe, ['instant']);
+            let transformationObj = {};
+
+            for (let transformation of keyframe.children){
+                const transf = this.parseTransformation(transformation);
+                transformationObj[transf.type] = transf.params;
+            }
+            keyframeArray.push({instant: instant.instant, transf: transformationObj});
+        }
+        console.log(keyframeArray);
+        return keyframeArray;
+    }
+    
+
+    /**
      * Parses the <nodes> block.
      * @param {nodes block element} nodesNode
      */
@@ -707,6 +772,7 @@ class MySceneGraph {
         var transformationsIndex = nodeChildrenNames.indexOf("transformations");
         var materialIndex = nodeChildrenNames.indexOf("material");
         var textureIndex = nodeChildrenNames.indexOf("texture");
+        var animationIndex = nodeChildrenNames.indexOf("animationref");
         var descendantsIndex = nodeChildrenNames.indexOf("descendants");
 
         const node = new Node(this.getNodeID(nodeBlock, false), this.scene); // already checked if node id existed
@@ -771,6 +837,14 @@ class MySceneGraph {
             }
         }
 
+        // Animation
+        const animationNode = nodeChildren[animationIndex];
+        var animationID = this.reader.getString(animationNode, 'id');
+
+        if (this.animations[animationID] != undefined) {
+            node.setAnimation(this.animations[animationID]);
+        }
+
 
         // Descendants
         const descendantsNode = nodeChildren[descendantsIndex];
@@ -813,13 +887,42 @@ class MySceneGraph {
         return descendantCount;
     }
 
+    parseTransformation(transformation) {
+        if (transformation.nodeName === "scale") {
+            const params = ['sx', 'sy', 'sz'];
+
+            const res = this.getFloatParameters(transformation, params);
+
+            if (isNotNull(res)) {
+                return { type: "scale", params: res };
+            }
+        } else if (transformation.nodeName === "translation") {
+            const params = ['x', 'y', 'z'];
+
+            const res = this.getFloatParameters(transformation, params);
+
+            if (isNotNull(res)) {
+                return { type: "translation", params: res };
+            }
+        } else if (transformation.nodeName === "rotation") {  
+            const angle = this.getFloatParameters(transformation, ['angle']);
+            const axis = this.getCharParameter(transformation, 'axis');
+
+            if (isNull(axis) || this.axisCoords[axis] == undefined) {
+                this.onXMLMinorError(`Rotation transformation of 'animations' has invalid axis.`);
+            } else if (isNotNull(angle) && isNotNull(axis)) {
+                return { type: "rotation" + axis.toUpperCase(), params: { angle: angle.angle, axis: axis } };
+            }
+        }
+    }
+
     /**
      * Returns a transformation matrix from a block of transformation nodes (rotation, scale, translation).
      * @param {transformations block element} transformations 
      * @param {Node} parent the parent node
      * @return the transformation matrix if not empty; null otherwise
      */
-    parseTransformations(transformations, parent) {
+    parseTransformations(transformations, parent=null) {
         let transfMx = mat4.create();
         let hadTransformation = false;
         for (let child of transformations) {

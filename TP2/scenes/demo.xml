@@ -56,6 +56,103 @@
         </material>
     </materials>
 
+    <!--informacao de animacao -->
+    <!-- o bloco "animations" é opcional, mas quando existir -->
+    <!-- deve ser declarado imediatamente antes do bloco  "nodes" -->
+    <animations>
+    <!-- O bloco animations pode ser vazio, isto é, pode -->
+    <!-- não ser declarada qualquer animação -->
+        <animation id="animation" >
+            <!-- A animação inicia-se no tempo da primeira keyframe, -->
+            <!-- sendo que o objeto em causa deve permanecer -->
+            <!-- invisível até esse momento -->
+
+            <!-- Deve existir pelo menos 1 elemento keyframe. -->
+            <!-- instant e’ o tempo expresso em segundos -->
+            <!-- desde o inicio da animação. -->
+            <!-- Os keyframes devem ser declarados por -->
+            <!-- ordem crescente do tempo. -->
+                <keyframe instant="0">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="2">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+        </animation>
+
+        <animation id="test" >
+            <!-- A animação inicia-se no tempo da primeira keyframe, -->
+            <!-- sendo que o objeto em causa deve permanecer -->
+            <!-- invisível até esse momento -->
+
+            <!-- Deve existir pelo menos 1 elemento keyframe. -->
+            <!-- instant e’ o tempo expresso em segundos -->
+            <!-- desde o inicio da animação. -->
+            <!-- Os keyframes devem ser declarados por -->
+            <!-- ordem crescente do tempo. -->
+                <keyframe instant="0">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="2">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+        </animation>
+    </animations>
+
     <nodes>
         <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
             <!-- next two lines are mandatory -->
@@ -96,6 +193,8 @@
             <transformations>
                 <translation x="2" y="0.0" z="2.0" />
             </transformations>
+
+            <animationref id="animation" />
 
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->

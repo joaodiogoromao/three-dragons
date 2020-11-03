@@ -1,38 +1,36 @@
 /**
  * @class KeyframeAnimation
  */
-class KeyframeAnimation extends Animation{
+class KeyframeAnimation extends MyAnimation{
 
     constructor(keyframeArray) {
+        if (keyframeArray.length < 2) throw new Error("KeyframeAnimation needs at least 2 keyframes.");
+        super(keyframeArray[0], keyframeArray[1]);
         this.keyframeArray = keyframeArray;
-        this.currentState = keyframeArray;
+        console.log("Hello from the other side.")
     }
 
     update(currentTime) {
-        if (!this.active)
-            return;
-
-        //Calculate elapsed time
-        this.elapsedTime = currentTime - this.startTime;
-        this.deltaTime = currentTime - this.lastTime;
-        this.lastTime = currentTime;
-
+        console.log("KeyframeAnimation update");
         //Get previous and next frame
-        this.previousFrame = this.getPreviousFrame();
-        this.nextFrame = this.getNextFrame();
-
+        console.log(this.endTime, currentTime);
+        if (this.endTime < currentTime) {
+            const previousFrame = { instant: this.endTime, transf: this.endTrans };
+            const nextFrame = this.getNextFrame(currentTime);
+            console.log("Next frame: ", nextFrame);
+            if (nextFrame == null) return;
+            console.log("Setting animation variables!!");
+            super.setAnimationVariables(previousFrame, nextFrame);
+            console.log("New vars: " + this.startTime, this.endTime);
+        }
+        super.update(currentTime);
     }
 
-    apply() {
-
+    getNextFrame(currentTime) {
+        for (let i = 0; i < this.keyframeArray.length; i++){
+            if (this.keyframeArray[i].instant > currentTime)
+                return this.keyframeArray[i];
+        }
+        return null;
     }
-
-    getPreviousFrame() {
-
-    }
-
-    getNextFrame() {
-
-    }
-    
 }
