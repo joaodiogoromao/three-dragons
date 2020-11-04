@@ -26,6 +26,10 @@ class KeyframeAnimation extends MyAnimation{
         super.update(currentTime);
     }
 
+    copy() {
+        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    }
+    
     getNextFrame(currentTime) {
         for (let i = 0; i < this.keyframeArray.length; i++){
             if (this.keyframeArray[i].instant > currentTime)

@@ -47,8 +47,11 @@ class XMLscene extends CGFscene {
 
         this.animations = [];
 
-        this.defaultAppearance=new CGFappearance(this);
+        this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.spritesheetAppearance = new CGFappearance(this);
+
         this.tStarted = null;
     }
 
@@ -210,10 +213,11 @@ class XMLscene extends CGFscene {
             return;
         }
         const timeSinceProgramStarted = (t - this.tStarted)/1000;
-        for (const i in this.animations) { 
-            console.log("supposed:");
-            this.animations[i].update(timeSinceProgramStarted);
+        console.log(this.graph.nodes);
+        for (const node of this.graph.nodes) {
+            node.update(timeSinceProgramStarted);
         }
+
     } 
 
     /**

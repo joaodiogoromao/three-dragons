@@ -22,12 +22,14 @@ function getRectanglePrimitive(sceneGraph, node, parent) {
  * @return the primitive object if args are valid; null otherwise
  */
 function getTorusPrimitive(sceneGraph, node) {
-    const params = ['inner', 'outer', 'slices', 'loops'];
+    const floatParams = ['inner', 'outer'];
+    const intParams = ['slices', 'loops'];
 
-    const res = sceneGraph.getFloatParameters(node, params, parent);
+    const floatRes = sceneGraph.getFloatParameters(node, floatParams, parent);
+    const intRes = sceneGraph.getIntParameters(node, intParams, parent);
 
-    if (isNotNull(res))
-        return new MyTorus(sceneGraph.scene, res.inner, res.outer, res.slices, res.loops);
+    if (isNotNull(floatRes) && isNotNull(intRes))
+        return new MyTorus(sceneGraph.scene, floatRes.inner, floatRes.outer, intRes.slices, intRes.loops);
     return null;
 }
 
@@ -38,12 +40,14 @@ function getTorusPrimitive(sceneGraph, node) {
  * @return the primitive object if args are valid; null otherwise
  */
 function getCylinderPrimitive(sceneGraph, node) {
-    const params = ['height', 'topRadius', 'bottomRadius', 'stacks', 'slices'];
+    const floatParams = ['height', 'topRadius', 'bottomRadius'];
+    const intParams = ['stacks', 'slices'];
 
-    const res = sceneGraph.getFloatParameters(node, params, parent);
+    const floatRes = sceneGraph.getFloatParameters(node, floatParams, parent);
+    const intRes = sceneGraph.getIntParameters(node, intParams, parent);
     
-    if (isNotNull(res))
-        return new MyCylinder(sceneGraph.scene, res.height, res.topRadius, res.bottomRadius, res.stacks, res.slices);
+    if (isNotNull(floatRes) && isNotNull(intRes))
+        return new MyCylinder(sceneGraph.scene, floatRes.height, floatRes.topRadius, floatRes.bottomRadius, intRes.stacks, intRes.slices);
     return null;
 }
 
@@ -70,12 +74,14 @@ function getTrianglePrimitive(sceneGraph, node, parent) {
  * @return the primitive object if args are valid; null otherwise
  */
 function getSpherePrimitive(sceneGraph, node) {
-    const params = ['radius', 'slices', 'stacks'];
+    const floatParams = ['radius'];
+    const intParams = ['slices', 'stacks'];
 
-    const res = sceneGraph.getFloatParameters(node, params, parent);
+    const floatRes = sceneGraph.getFloatParameters(node, floatParams, parent);
+    const intRes = sceneGraph.getIntParameters(node, intParams, parent);
     
-    if (isNotNull(res))
-        return new MySphere(sceneGraph.scene, res.radius, res.slices, res.stacks);
+    if (isNotNull(floatRes) && isNotNull(intRes))
+        return new MySphere(sceneGraph.scene, floatRes.radius, intRes.slices, intRes.stacks);
     return null;
 }
 

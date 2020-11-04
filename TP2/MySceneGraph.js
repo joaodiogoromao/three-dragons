@@ -6,9 +6,10 @@ var VIEWS_INDEX = 1;
 var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var ANIMATIONS_INDEX = 6;
-var NODES_INDEX = 7;
+var SPRITESHEETS_INDEX = 5;
+var MATERIALS_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
+var NODES_INDEX = 8;
 
 const isNotNull = (v) => v != null;
 const isNull = (v) => v === null;
@@ -179,6 +180,18 @@ class MySceneGraph {
 
             //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
+                return error;
+        }
+
+        // <spritesheets>
+        if ((index = nodeNames.indexOf("spritesheets")) == -1)
+            return "tag <spritesheets> missing";
+        else {
+            if (index != SPRITESHEETS_INDEX)
+                this.onXMLMinorError("tag <spritesheets> out of order");
+
+            //Parse spritesheets block
+            if ((error = this.parseSpritesheets(nodes[index])) != null)
                 return error;
         }
 
@@ -556,6 +569,49 @@ class MySceneGraph {
     }
 
     /**
+     * Parses the <spritesheets> block. 
+     * @param {spirtesheets block element} spritesheetsNode
+     */
+    parseSpritesheets(spritesheetsNode) {
+        var children = spritesheetsNode.children;
+
+        for (const sprite of children) {
+
+            if (sprite.nodeName != "spritesheet") {
+                this.onXMLMinorError("unknown tag <" + sprite.nodeName + "> inside 'spritesheets' block.");
+                continue;
+            }
+
+            // Get id of the current material.
+            var spriteID = this.getNodeID(sprite);
+            if (spriteID == null) continue;
+
+            // Checks for repeated IDs.
+            if (isNotNull(this.sprites[spriteID])) {
+                this.onXMLMinorError("ID must be unique for each spritesheet (conflict: ID = " + spriteID + "). Discarding the repeated");
+                continue;
+            } 
+
+            //Continue here
+            var path = this.reader.getString(tex, 'path');
+            if (path == null) {
+                this.onXMLMinorError(`No path defined for spritesheet with id '${spriteID}'.`);
+            }
+
+            const params = ['sizeM', 'sizeN'];
+            const res = sceneGraph.getIntParameters(node, params);
+            
+            const texture = new CGFtexture(this.scene, path);
+            const spritesheet = new MySpriteSheet(this.scene, texture, res.sizeM, res.sizeN);
+            this.spritesheets[spriteID] = spritesheet;
+
+
+        }
+        this.log("Parsed textures");
+        return null;
+    }
+
+    /**
      * Parses the <materials> node.
      * @param {materials block element} materialsNode
      */
@@ -681,14 +737,12 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.animations[animationID] != null) {
-                this.onXMLMinorError("ID must be unique for each animation (conflict: ID = " + materialID + "). Ignoring animations with repeated ids.");
+                this.onXMLMinorError("ID must be unique for each animation (conflict: ID = " + animationID + "). Ignoring animations with repeated ids.");
                 continue;
             }
             // Parse keyframes
             this.animations[animationID] = new KeyframeAnimation(this.parseKeyframes(children[i].children));
         }
-
-        this.scene.animations = this.animations;
 
         this.log("Parsed animations");
         return null;
@@ -842,7 +896,7 @@ class MySceneGraph {
         var animationID = this.reader.getString(animationNode, 'id');
 
         if (this.animations[animationID] != undefined) {
-            node.setAnimation(this.animations[animationID]);
+            node.setAnimation(this.animations[animationID].copy());
         }
 
 
@@ -1022,6 +1076,44 @@ class MySceneGraph {
         return value;
     }
 
+    /**
+     * Gets a int parameter from node
+     * @param {block element} node the node to get the parameter from
+     * @param {string} parameter the parameter's name
+     */
+    getIntegerParameter(node, parameter) {
+        const value = this.reader.getInteger(node, parameter);
+        if (!isNotNull(value)) {
+            //this.onXMLMinorError('no ' + parameter + ' defined for ' + node.nodeName);
+            return null;
+        } else if (isNaN(value)) {
+            //this.onXMLMinorError('parameter ' + parameter + ' of ' + node.nodeName + ' is not a valid float');
+            return null;
+        }
+        return value;
+    }
+
+    /**
+     * Gets int parameters with names specified by 'parameters' from the specified 'node'.
+     * @param {block element} node the node to get the parameters from
+     * @param {array} parameters array with parameter names
+     * @param {Node} parent parent obj. if != null, the parent id is used in error message
+     * @return returns null if at least one of the parameters is invalid; array with indexed values otherwise
+     */
+    getIntParameters(node, parameters, parent = null, min = null, max = null) {
+        const res = [];
+        for (const p of parameters) {
+            res[p] = this.getIntegerParameter(node, p);
+            if (isNull(res[p]) || isNaN(res[p])) {
+                this.onXMLMinorError(`Node with name '${node.nodeName}'${this.getIDErrorMessage(node)}${parent != null ? ` child of node with id '${parent.id}'` : ""} doesn't have a valid '${p}' parameter.`);
+                return null;
+            } else if((isNotNull(min) && res[p] < min) || (isNotNull(max) && res[p] > max)) {
+                this.onXMLMinorError(`Node with name '${node.nodeName}'${this.getIDErrorMessage(node)}${parent != null ? ` child of node with id '${parent.id}'` : ""} doesn't have a valid '${p}' parameter (exceeds limits).`);
+                return null;
+            }
+        }
+        return res;
+    }
 
     /**
      * Gets a float parameter from node

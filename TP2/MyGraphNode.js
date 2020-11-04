@@ -92,6 +92,10 @@ class Node extends CGFobject {
         return res;
     }
 
+    update(timeSinceProgramStarted) {
+        if (this.animation != null) this.animation.update(timeSinceProgramStarted);
+    }
+
     /**
      * Draws the node and all its descendants
      */
@@ -110,9 +114,11 @@ class Node extends CGFobject {
         }
         if (this.transformationMatrix != null)  // applies transformations if they exist
             this.scene.multMatrix(this.transformationMatrix);
+        
         let go = true;
         if (this.animation != null)  //applies animations if it is defined
             go = this.animation.apply(this.scene);
+        
         if (go) {
             // DRAWS THE DESCENDANTS
             for (const desc of this.descendantObjs) {

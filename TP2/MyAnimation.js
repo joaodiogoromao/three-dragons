@@ -1,12 +1,12 @@
 /**
- * Abstract Class Animation.
+ * Abstract Class MyAnimation.
  *
- * @class Animation
+ * @class MyAnimation
  */
 class MyAnimation {
 
     constructor(start, end) {
-      if (this.constructor == Animation) {
+      if (this.constructor == MyAnimation) {
         throw new Error("Abstract classes can't be instantiated.");
       }
       this.axisCoords = [];
