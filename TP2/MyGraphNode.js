@@ -110,12 +110,14 @@ class Node extends CGFobject {
         }
         if (this.transformationMatrix != null)  // applies transformations if they exist
             this.scene.multMatrix(this.transformationMatrix);
+        let go = true;
         if (this.animation != null)  //applies animations if it is defined
-            this.animation.apply(this.scene);
-        
-        // DRAWS THE DESCENDANTS
-        for (const desc of this.descendantObjs) {
-            desc.display(this.scaleFactors);
+            go = this.animation.apply(this.scene);
+        if (go) {
+            // DRAWS THE DESCENDANTS
+            for (const desc of this.descendantObjs) {
+                desc.display(this.scaleFactors);
+            }
         }
 
         

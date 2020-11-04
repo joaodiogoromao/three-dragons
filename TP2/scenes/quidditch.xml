@@ -161,7 +161,7 @@
             <!-- desde o inicio da animação. -->
             <!-- Os keyframes devem ser declarados por -->
             <!-- ordem crescente do tempo. -->
-                <keyframe instant="0">
+                <keyframe instant="5">
 
                     <!-- translate, rotate e scale representam as -->
                     <!-- quantidades das transformações -->
@@ -196,7 +196,7 @@
                 </keyframe>
 
 
-                <keyframe instant="20">
+                <keyframe instant="15">
 
                     <!-- translate, rotate e scale representam as -->
                     <!-- quantidades das transformações -->

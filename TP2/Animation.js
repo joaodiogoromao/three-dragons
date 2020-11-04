@@ -76,7 +76,9 @@ class MyAnimation {
     }
 
     apply(scene) {
-      if (this.transfMx != null) scene.multMatrix(this.transfMx);
+      if (this.transfMx == null) return false;
+      else scene.multMatrix(this.transfMx);
+      return true;
     }
 
 
