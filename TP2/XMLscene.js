@@ -213,9 +213,9 @@ class XMLscene extends CGFscene {
             return;
         }
         const timeSinceProgramStarted = (t - this.tStarted)/1000;
-        console.log(this.graph.nodes);
-        for (const node of this.graph.nodes) {
-            node.update(timeSinceProgramStarted);
+        for (const i in this.graph.nodes) {
+            console.log(this.graph.nodes[i]);
+            this.graph.nodes[i].update(timeSinceProgramStarted);
         }
 
     } 
