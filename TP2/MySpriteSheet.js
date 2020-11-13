@@ -9,13 +9,13 @@ class MySpriteSheet {
         this.sizeN = sizeN;
         this.size = sizeM*sizeN;
         
-        this.spriteShader = new CGFshader(this.gl, "shaders/sprite.vert", "shaders/sprite.frag");
+        this.spriteShader = new CGFshader(scene.gl, "shaders/sprite.vert", "shaders/sprite.frag");
         this.spriteShader.setUniformsValues({ sizeM: sizeM, sizeN: sizeN });
         this.spriteTexture = new CGFtexture(scene, texture);
     }
     
     activateCellMN(m, n) {
-        this.spriteShader.setUniformsValues({ viewingM: m, viewingN: n });
+        this.spriteShader.setUniformsValues({ currentM: m, currentN: n });
         this.scene.setActiveShader(this.spriteShader);
         this.scene.spritesheetAppearance.setTexture(this.spriteTexture);
         this.scene.spritesheetAppearance.apply();
@@ -23,8 +23,8 @@ class MySpriteSheet {
     }
 
     activateCellP(p){
-        let m = p % this.m;
-        let n = math.floor(p/this.size * this.n);
+        let m = p % this.sizeM;
+        let n = Math.floor(p/this.sizeN);
         this.activateCellMN(m, n);
     }
 }

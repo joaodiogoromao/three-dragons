@@ -6,10 +6,10 @@ uniform mat4 uMVMatrix;
 uniform mat4 uPMatrix;
 uniform mat4 uNMatrix;
 
-uniform int sizeM;
-uniform int sizeN;
-uniform int currentM;
-uniform int currentN;
+uniform float sizeM;
+uniform float sizeN;
+uniform float currentM;
+uniform float currentN;
 
 varying vec2 ST;
 
@@ -19,6 +19,5 @@ void main() {
     float horizontalRatio = 1. / sizeM;
     float verticalRatio = 1. / sizeN;
 
-
-	ST = vec2(vec2(currentM*horizontalRatio, (currentM+1)*horiontalRatio), vec2(currentN*verticalRatio, (currentM+1)*verticalRatio));
+    ST = vec2(aTextureCoord.s*horizontalRatio + horizontalRatio*currentM, aTextureCoord.t*verticalRatio + verticalRatio*currentN);
 }

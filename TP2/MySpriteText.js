@@ -1,33 +1,33 @@
 
 class MySpriteText {
-    MySpriteText(scene, text) {
+    constructor(scene, text) {
         this.scene = scene;
         this.text = text;
 
-        const charWidth = 1;
-        const charHeight = 2;
+        this.charWidth = 1;
+        this.charHeight = 1;
 
-        this.geometry = new MyRectangle(scene, 0, 0, charWidth, charHeight);
-        this.spriteSheet = new MySpriteSheet();
+        this.geometry = new MyRectangle(scene, 0, 0, this.charWidth, this.charHeight);
+        this.spriteSheet = new MySpriteSheet(scene, './scenes/images/oolite-font.png', 16, 16);
     }
 
     getCharacterPosition(character) {
-        return null;
+        return character.charCodeAt(0);
     }
 
     display() {
         // apply appearance
         this.scene.pushMatrix();
-        for (const i in text) {
-            const char = text[i];
+        for (const i in this.text) {
+            const char = this.text[i];
             let cellPos;
             if ((cellPos = this.getCharacterPosition(char)) == null) {
                 console.error("Invalid character in string sent to MySpriteText!");
                 continue;
             }
-            this.spriteSheet.activateCellMN(cellPos.m, cellPos.n);
+            this.spriteSheet.activateCellP(cellPos);
 
-            this.scene.translate((i == 0 ? 0 : 1)*charWidth, 0, 0);
+            this.scene.translate((i == 0 ? 0 : 1)*this.charWidth, 0, 0);
             this.geometry.display();
 
         }

@@ -599,7 +599,7 @@ class MySceneGraph {
             }
 
             const params = ['sizeM', 'sizeN'];
-            const res = sceneGraph.getIntParameters(node, params);
+            const res = sceneGraph.getIntegerParameters(node, params);
             
             const texture = new CGFtexture(this.scene, path);
             const spritesheet = new MySpriteSheet(this.scene, texture, res.sizeM, res.sizeN);
@@ -760,7 +760,6 @@ class MySceneGraph {
             }
             keyframeArray.push({instant: instant.instant, transf: transformationObj});
         }
-        console.log(keyframeArray);
         return keyframeArray;
     }
     
@@ -892,13 +891,14 @@ class MySceneGraph {
         }
 
         // Animation
-        const animationNode = nodeChildren[animationIndex];
-        var animationID = this.reader.getString(animationNode, 'id');
+        if (animationIndex != -1){
+            const animationNode = nodeChildren[animationIndex];
+            var animationID = this.reader.getString(animationNode, 'id');
 
-        if (this.animations[animationID] != undefined) {
-            node.setAnimation(this.animations[animationID].copy());
+            if (this.animations[animationID] != undefined) {
+                node.setAnimation(this.animations[animationID].copy());
+            }
         }
-
 
         // Descendants
         const descendantsNode = nodeChildren[descendantsIndex];
@@ -1100,7 +1100,7 @@ class MySceneGraph {
      * @param {Node} parent parent obj. if != null, the parent id is used in error message
      * @return returns null if at least one of the parameters is invalid; array with indexed values otherwise
      */
-    getIntParameters(node, parameters, parent = null, min = null, max = null) {
+    getIntegerParameters(node, parameters, parent = null, min = null, max = null) {
         const res = [];
         for (const p of parameters) {
             res[p] = this.getIntegerParameter(node, p);

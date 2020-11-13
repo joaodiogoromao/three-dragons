@@ -52,6 +52,11 @@ class XMLscene extends CGFscene {
 
         this.spritesheetAppearance = new CGFappearance(this);
 
+        this.bonequinho = new MySpriteSheet(this, './scenes/images/explosion.png', 4, 4);
+        this.bonequinhoRect = new MyRectangle(this, -1, -1, 1, 1);
+
+        this.textSprite = new MySpriteText(this, "Hello World!");
+
         this.tStarted = null;
     }
 
@@ -214,7 +219,6 @@ class XMLscene extends CGFscene {
         }
         const timeSinceProgramStarted = (t - this.tStarted)/1000;
         for (const i in this.graph.nodes) {
-            console.log(this.graph.nodes[i]);
             this.graph.nodes[i].update(timeSinceProgramStarted);
         }
 
@@ -253,6 +257,10 @@ class XMLscene extends CGFscene {
             this.currentMaterial = this.defaultAppearance;
 
             // Displays the scene (MySceneGraph function).
+            /*this.bonequinho.activateCellMN(3, 0);
+            this.bonequinhoRect.display();*/
+            
+            //this.textSprite.display();
             this.graph.displayScene();
         }
         else

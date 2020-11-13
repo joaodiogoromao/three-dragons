@@ -7,21 +7,21 @@ class KeyframeAnimation extends MyAnimation{
         if (keyframeArray.length < 2) throw new Error("KeyframeAnimation needs at least 2 keyframes.");
         super(keyframeArray[0], keyframeArray[1]);
         this.keyframeArray = keyframeArray;
-        console.log("Hello from the other side.")
+        //console.log("Hello from the other side.")
     }
 
     update(currentTime) {
-        console.log("KeyframeAnimation update");
+        //console.log("KeyframeAnimation update");
         //Get previous and next frame
-        console.log(this.endTime, currentTime);
+        //console.log(this.endTime, currentTime);
         if (this.endTime < currentTime) {
             const previousFrame = { instant: this.endTime, transf: this.endTrans };
             const nextFrame = this.getNextFrame(currentTime);
-            console.log("Next frame: ", nextFrame);
+            //console.log("Next frame: ", nextFrame);
             if (nextFrame == null) return;
-            console.log("Setting animation variables!!");
+            //console.log("Setting animation variables!!");
             super.setAnimationVariables(previousFrame, nextFrame);
-            console.log("New vars: " + this.startTime, this.endTime);
+            //console.log("New vars: " + this.startTime, this.endTime);
         }
         super.update(currentTime);
     }

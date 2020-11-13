@@ -23,15 +23,15 @@ class MyAnimation {
       this.endTime = end.instant;
       this.startTrans = start.transf;
       this.endTrans = end.transf;
-      console.log("Setting animation variables!!!");
+      //console.log("Setting animation variables!!!");
     }
 
     update(currentTime) {
-      console.log("Animation update");
+      //console.log("Animation update");
       if (currentTime < this.startTime) return; // animation hasn't started yet
       if (currentTime > this.endTime) return; // animation has finished
       const elapsedTime = currentTime-this.startTime;
-      console.log("Elapsed time: " + elapsedTime + ", start time: " + this.startTime + ", end time: " + this.endTime)
+      //console.log("Elapsed time: " + elapsedTime + ", start time: " + this.startTime + ", end time: " + this.endTime)
       this.transfMx = mat4.create();
 
       const interpolationAmount = (function () {
@@ -45,7 +45,7 @@ class MyAnimation {
       const calculateCurrentAngle = function(rotationObjStart, rotationObjEnd) {
         const startAngle = rotationObjStart.angle;
         const endAngle = rotationObjEnd.angle;
-        console.log("Start angle: " + startAngle + ", end Angle: " + endAngle);
+        //console.log("Start angle: " + startAngle + ", end Angle: " + endAngle);
         return interpolateValues(startAngle, endAngle);
       }
 
@@ -56,7 +56,7 @@ class MyAnimation {
       }
       if (this.startTrans.rotationX != undefined && this.endTrans.rotationX != undefined) {
         const currentAngle = calculateCurrentAngle(this.startTrans.rotationX, this.endTrans.rotationX);
-        console.log("Current Angle: "+currentAngle);
+        //console.log("Current Angle: "+currentAngle);
         mat4.rotate(this.transfMx, this.transfMx, currentAngle*DEGREE_TO_RAD, this.axisCoords[this.startTrans.rotationX.axis]);
       }
       if (this.startTrans.rotationY != undefined && this.endTrans.rotationY != undefined) {

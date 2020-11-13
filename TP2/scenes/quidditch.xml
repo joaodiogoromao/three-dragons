@@ -103,11 +103,7 @@
     <!-- imediatamente após o bloco "textures" -->
 
     <spritesheets>
-
-            <!-- Semelhante à declaração de textura, mas inclui a definição do nº de colunas e linhas -->
-
-            <!--<spritesheet id=”ss” path=”ss” sizeM=”ii” sizeN=”ii” />-->
-
+        <!--<spritesheet id="spritesheet" path="" sizeM="" sizeN="" /-->
     </spritesheets>
 
 
@@ -220,6 +216,7 @@
                 <noderef id="groundSurface" />
                 <noderef id="scalingFactorDemonstration" />
                 <noderef id="cylinderRadiusDemo" />
+                <leaf type="spritetext" text="Awesome quidditch field!"/>
             </descendants>
         </node>
         <node id="groundSurface">

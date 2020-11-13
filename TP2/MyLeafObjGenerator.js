@@ -26,7 +26,7 @@ function getTorusPrimitive(sceneGraph, node) {
     const intParams = ['slices', 'loops'];
 
     const floatRes = sceneGraph.getFloatParameters(node, floatParams, parent);
-    const intRes = sceneGraph.getIntParameters(node, intParams, parent);
+    const intRes = sceneGraph.getIntegerParameters(node, intParams, parent);
 
     if (isNotNull(floatRes) && isNotNull(intRes))
         return new MyTorus(sceneGraph.scene, floatRes.inner, floatRes.outer, intRes.slices, intRes.loops);
@@ -44,7 +44,7 @@ function getCylinderPrimitive(sceneGraph, node) {
     const intParams = ['stacks', 'slices'];
 
     const floatRes = sceneGraph.getFloatParameters(node, floatParams, parent);
-    const intRes = sceneGraph.getIntParameters(node, intParams, parent);
+    const intRes = sceneGraph.getIntegerParameters(node, intParams, parent);
     
     if (isNotNull(floatRes) && isNotNull(intRes))
         return new MyCylinder(sceneGraph.scene, floatRes.height, floatRes.topRadius, floatRes.bottomRadius, intRes.stacks, intRes.slices);
@@ -78,11 +78,21 @@ function getSpherePrimitive(sceneGraph, node) {
     const intParams = ['slices', 'stacks'];
 
     const floatRes = sceneGraph.getFloatParameters(node, floatParams, parent);
-    const intRes = sceneGraph.getIntParameters(node, intParams, parent);
+    const intRes = sceneGraph.getIntegerParameters(node, intParams, parent);
     
     if (isNotNull(floatRes) && isNotNull(intRes))
         return new MySphere(sceneGraph.scene, floatRes.radius, intRes.slices, intRes.stacks);
     return null;
+}
+
+
+function getSpriteTextPrimitive(sceneGraph, node) {
+    const text = sceneGraph.reader.getString(node, 'text'); //TODO fazer getStringParameter (error checks)
+
+    if (isNotNull(text))
+        return new MySpriteText(sceneGraph.scene, text);
+    return null;
+    
 }
 
 
@@ -93,5 +103,6 @@ const leafObjGenerator = {
     torus: getTorusPrimitive,
     cylinder: getCylinderPrimitive,
     triangle: getTrianglePrimitive,
-    sphere: getSpherePrimitive
+    sphere: getSpherePrimitive,
+    spritetext: getSpriteTextPrimitive
 }
