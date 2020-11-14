@@ -216,6 +216,23 @@
                 <noderef id="groundSurface" />
                 <noderef id="scalingFactorDemonstration" />
                 <noderef id="cylinderRadiusDemo" />
+                <noderef id="spritetext" />
+                <!--leaf type="spritetext" text="Awesome quidditch field!"/-->
+            </descendants>
+        </node>
+        <node id="spritetext">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="12.5" y="0" z="25"/>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
                 <leaf type="spritetext" text="Awesome quidditch field!"/>
             </descendants>
         </node>

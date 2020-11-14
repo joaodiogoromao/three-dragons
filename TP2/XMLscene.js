@@ -20,6 +20,8 @@ class XMLscene extends CGFscene {
         this.currentTexture = null;
 
         this.displayAxis = false;
+
+        this.defaultShader = super.activeShader;
     }
 
     /**

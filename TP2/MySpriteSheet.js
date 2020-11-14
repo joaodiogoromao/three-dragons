@@ -19,7 +19,6 @@ class MySpriteSheet {
         this.scene.setActiveShader(this.spriteShader);
         this.scene.spritesheetAppearance.setTexture(this.spriteTexture);
         this.scene.spritesheetAppearance.apply();
-
     }
 
     activateCellP(p){
