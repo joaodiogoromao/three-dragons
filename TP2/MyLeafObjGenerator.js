@@ -21,7 +21,7 @@ function getRectanglePrimitive(sceneGraph, node, parent) {
  * @param {Node | object with 'id' parameter} parent 
  * @return the primitive object if args are valid; null otherwise
  */
-function getTorusPrimitive(sceneGraph, node) {
+function getTorusPrimitive(sceneGraph, node, parent) {
     const floatParams = ['inner', 'outer'];
     const intParams = ['slices', 'loops'];
 
@@ -39,7 +39,7 @@ function getTorusPrimitive(sceneGraph, node) {
  * @param {Node | object with 'id' parameter} parent 
  * @return the primitive object if args are valid; null otherwise
  */
-function getCylinderPrimitive(sceneGraph, node) {
+function getCylinderPrimitive(sceneGraph, node, parent) {
     const floatParams = ['height', 'topRadius', 'bottomRadius'];
     const intParams = ['stacks', 'slices'];
 
@@ -73,7 +73,7 @@ function getTrianglePrimitive(sceneGraph, node, parent) {
  * @param {Node | object with 'id' parameter} parent 
  * @return the primitive object if args are valid; null otherwise
  */
-function getSpherePrimitive(sceneGraph, node) {
+function getSpherePrimitive(sceneGraph, node, parent) {
     const floatParams = ['radius'];
     const intParams = ['slices', 'stacks'];
 
@@ -86,13 +86,38 @@ function getSpherePrimitive(sceneGraph, node) {
 }
 
 
-function getSpriteTextPrimitive(sceneGraph, node) {
+function getSpriteTextPrimitive(sceneGraph, node, parent) {
     const text = sceneGraph.reader.getString(node, 'text'); //TODO fazer getStringParameter (error checks)
+    if (isNull(text)) {
+        sceneGraph.onXMLMinorError(`Leaf spritetext, descendant of node with id '${parent.id}' hasn't got a text parameter.`);
+        return;
+    }
 
     if (isNotNull(text))
         return new MySpriteText(sceneGraph.scene, text);
     return null;
     
+}
+
+function getSpriteAnimationPrimitive(sceneGraph, node, parent, spritesheets) {
+    const ssid = sceneGraph.reader.getString(node, 'ssid');
+    if (isNull(ssid)) {
+        sceneGraph.onXMLMinorError(`Leaf spriteanim, descendant of node with id '${parent.id}' hasn't got a spritesheet id.`);
+        return;
+    }
+    
+    if (spritesheets[ssid] === undefined || isNull(spritesheets[ssid])) {
+        sceneGraph.onXMLMinorError(`Leaf spriteanim, descendant of node with id '${parent.id}' has a reference to undefined spritesheet with id '${ssid}'.`);
+        return;
+    }
+
+    const duration = sceneGraph.getFloatParameters(node, ['duration'], parent);
+    const startEnd = sceneGraph.getIntegerParameters(node, ['startCell', 'endCell'], parent);
+
+    if (isNotNull(duration) && isNotNull(startEnd)) {
+        return new MySpriteAnimation(sceneGraph.scene, spritesheets[ssid], duration.duration, startEnd.startCell, startEnd.endCell);
+    }
+    return null;
 }
 
 
@@ -104,5 +129,6 @@ const leafObjGenerator = {
     cylinder: getCylinderPrimitive,
     triangle: getTrianglePrimitive,
     sphere: getSpherePrimitive,
-    spritetext: getSpriteTextPrimitive
+    spritetext: getSpriteTextPrimitive,
+    spriteanim: getSpriteAnimationPrimitive
 }

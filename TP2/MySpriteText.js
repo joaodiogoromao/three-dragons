@@ -18,6 +18,8 @@ class MySpriteText {
     display() {
         // apply appearance
         this.scene.pushMatrix();
+        this.scene.pushMaterial();
+        
         for (const i in this.text) {
             const char = this.text[i];
             let cellPos;
@@ -31,6 +33,8 @@ class MySpriteText {
             this.geometry.display();
 
         }
+
+        this.scene.popMaterial();
         this.scene.popMatrix();
         this.scene.setActiveShader(this.scene.defaultShader);
     }

@@ -35,6 +35,7 @@ class MySceneGraph {
         this.materials = [];
         this.textures = [];
         this.cameras = [];
+        this.spritesheets = [];
 
         this.idRoot = null; // The id of the root element.
         this.objRoot = null;
@@ -587,27 +588,24 @@ class MySceneGraph {
             if (spriteID == null) continue;
 
             // Checks for repeated IDs.
-            if (isNotNull(this.sprites[spriteID])) {
+            if (isNotNull(this.spritesheets[spriteID])) {
                 this.onXMLMinorError("ID must be unique for each spritesheet (conflict: ID = " + spriteID + "). Discarding the repeated");
                 continue;
             } 
 
             //Continue here
-            var path = this.reader.getString(tex, 'path');
+            var path = this.reader.getString(sprite, 'path');
             if (path == null) {
                 this.onXMLMinorError(`No path defined for spritesheet with id '${spriteID}'.`);
             }
 
             const params = ['sizeM', 'sizeN'];
-            const res = sceneGraph.getIntegerParameters(node, params);
+            const res = this.getIntegerParameters(sprite, params);
             
-            const texture = new CGFtexture(this.scene, path);
-            const spritesheet = new MySpriteSheet(this.scene, texture, res.sizeM, res.sizeN);
+            const spritesheet = new MySpriteSheet(this.scene, path, res.sizeM, res.sizeN);
             this.spritesheets[spriteID] = spritesheet;
-
-
         }
-        this.log("Parsed textures");
+        this.log("Parsed spritesheets");
         return null;
     }
 
@@ -1033,7 +1031,7 @@ class MySceneGraph {
             return null;
         }
 
-        return generatePrimitive(this, node, parent);
+        return generatePrimitive(this, node, parent, this.spritesheets);
     }
 
     /**

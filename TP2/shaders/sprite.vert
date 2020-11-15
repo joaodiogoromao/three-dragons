@@ -11,7 +11,7 @@ uniform float sizeN;
 uniform float currentM;
 uniform float currentN;
 
-varying vec2 ST;
+varying vec2 vTextureCoord;
 
 void main() {
 
@@ -19,5 +19,5 @@ void main() {
     float horizontalRatio = 1. / sizeM;
     float verticalRatio = 1. / sizeN;
 
-    ST = vec2(aTextureCoord.s*horizontalRatio + horizontalRatio*currentM, aTextureCoord.t*verticalRatio + verticalRatio*currentN);
+    vTextureCoord = vec2(aTextureCoord.s*horizontalRatio + horizontalRatio*currentM, aTextureCoord.t*verticalRatio + verticalRatio*currentN);
 }

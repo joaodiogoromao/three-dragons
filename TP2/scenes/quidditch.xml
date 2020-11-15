@@ -103,7 +103,8 @@
     <!-- imediatamente após o bloco "textures" -->
 
     <spritesheets>
-        <!--<spritesheet id="spritesheet" path="" sizeM="" sizeN="" /-->
+        <spritesheet id="bonequinho" path="./scenes/images/bonequinho.png" sizeM="8" sizeN="8"/>
+        <spritesheet id="explosion" path="./scenes/images/explosion.png" sizeM="4" sizeN="4"/>
     </spritesheets>
 
 
@@ -218,6 +219,7 @@
                 <noderef id="cylinderRadiusDemo" />
                 <noderef id="spritetext" />
                 <!--leaf type="spritetext" text="Awesome quidditch field!"/-->
+                <leaf type="spriteanim" ssid="explosion" duration="1" startCell="0" endCell="15"/>
             </descendants>
         </node>
         <node id="spritetext">

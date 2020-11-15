@@ -94,6 +94,9 @@ class Node extends CGFobject {
 
     update(timeSinceProgramStarted) {
         if (this.animation != null) this.animation.update(timeSinceProgramStarted);
+        for(const desc of this.descendantObjs) {
+            if (desc.obj instanceof MySpriteAnimation) desc.obj.update(timeSinceProgramStarted);
+        }
     }
 
     /**
