@@ -219,7 +219,7 @@
                 <noderef id="cylinderRadiusDemo" />
                 <noderef id="spritetext" />
                 <!--leaf type="spritetext" text="Awesome quidditch field!"/-->
-                <leaf type="spriteanim" ssid="explosion" duration="1" startCell="0" endCell="15"/>
+                <leaf type="spriteanim" ssid="bonequinho" duration="1" startCell="0" endCell="56"/>
             </descendants>
         </node>
         <node id="spritetext">

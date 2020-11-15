@@ -23,7 +23,7 @@ class MySpriteSheet {
 
     activateCellP(p){
         let m = p % this.sizeM;
-        let n = Math.floor(p/this.sizeN);
+        let n = Math.floor(p/this.sizeN) % this.sizeN;
         this.activateCellMN(m, n);
     }
 }
