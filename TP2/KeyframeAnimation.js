@@ -14,7 +14,7 @@ class KeyframeAnimation extends MyAnimation{
         //console.log("KeyframeAnimation update");
         //Get previous and next frame
         //console.log(this.endTime, currentTime);
-        if (this.endTime < currentTime) {
+        if (super.update(currentTime)) {
             const previousFrame = { instant: this.endTime, transf: this.endTrans };
             const nextFrame = this.getNextFrame(currentTime);
             //console.log("Next frame: ", nextFrame);
@@ -23,7 +23,6 @@ class KeyframeAnimation extends MyAnimation{
             super.setAnimationVariables(previousFrame, nextFrame);
             //console.log("New vars: " + this.startTime, this.endTime);
         }
-        super.update(currentTime);
     }
 
     copy() {

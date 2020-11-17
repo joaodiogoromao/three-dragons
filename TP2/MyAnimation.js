@@ -16,6 +16,8 @@ class MyAnimation {
 
 		this.setAnimationVariables(start, end);
 		this.transfMx = null;
+
+		this.endedAnimation = false;
 	}
 
 	setAnimationVariables(start, end) {
@@ -23,23 +25,30 @@ class MyAnimation {
 		this.endTime = end.instant;
 		this.startTrans = start.transf;
 		this.endTrans = end.transf;
+		this.endedAnimation = false; 
 		//console.log("Setting animation variables!!!");
 	}
 
 	update(currentTime) {
 		//console.log("Animation update");
 		if (currentTime < this.startTime) return; // animation hasn't started yet
-		if (currentTime > this.endTime) return; // animation has finished
+
 		const elapsedTime = currentTime - this.startTime;
+		let interpolationAmount = elapsedTime / (this.endTime - this.startTime);
+
+		if (currentTime > this.endTime && !this.endedAnimation) {
+			interpolationAmount = 1;
+		} else if (currentTime > this.endTime) return;
+
 		//console.log("Elapsed time: " + elapsedTime + ", start time: " + this.startTime + ", end time: " + this.endTime)
 		this.transfMx = mat4.create();
 
-		const interpolationAmount = (function () {
-			return elapsedTime / (this.endTime - this.startTime);
-		}).bind(this);
+
+		if (interpolationAmount == 1) this.endedAnimation = true;
+
 
 		const interpolateValues = function (start, end) {
-			return start + ((end - start) * (interpolationAmount()));
+			return start + ((end - start) * interpolationAmount);
 		}
 
 		const calculateCurrentAngle = function (rotationObjStart, rotationObjEnd) {
@@ -51,7 +60,7 @@ class MyAnimation {
 
 		if (this.startTrans.translation != undefined && this.endTrans.translation != undefined) {
 			let out = vec3.create();
-			vec3.lerp(out, [this.startTrans.translation.x, this.startTrans.translation.y, this.startTrans.translation.x], [this.endTrans.translation.x, this.endTrans.translation.y, this.endTrans.translation.z], interpolationAmount());
+			vec3.lerp(out, [this.startTrans.translation.x, this.startTrans.translation.y, this.startTrans.translation.x], [this.endTrans.translation.x, this.endTrans.translation.y, this.endTrans.translation.z], interpolationAmount);
 			mat4.translate(this.transfMx, this.transfMx, out);
 		}
 		if (this.startTrans.rotationX != undefined && this.endTrans.rotationX != undefined) {
@@ -69,10 +78,11 @@ class MyAnimation {
 		}
 		if (this.startTrans.scale != undefined && this.endTrans.scale != undefined) {
 			let out = vec3.create();
-			vec3.lerp(out, [this.startTrans.scale.sx, this.startTrans.scale.sy, this.startTrans.scale.sx], [this.endTrans.scale.sx, this.endTrans.scale.sy, this.endTrans.scale.sz], interpolationAmount());
+			vec3.lerp(out, [this.startTrans.scale.sx, this.startTrans.scale.sy, this.startTrans.scale.sx], [this.endTrans.scale.sx, this.endTrans.scale.sy, this.endTrans.scale.sz], interpolationAmount);
 			mat4.scale(this.transfMx, this.transfMx, out);
 		}
 
+		if (this.endedAnimation) return true;
 	}
 
 	apply(scene) {
