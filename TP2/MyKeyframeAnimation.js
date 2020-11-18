@@ -1,7 +1,7 @@
 /**
  * @class KeyframeAnimation
  */
-class KeyframeAnimation extends MyAnimation{
+class MyKeyframeAnimation extends MyAnimation{
 
     constructor(keyframeArray) {
         if (keyframeArray.length < 2) throw new Error("KeyframeAnimation needs at least 2 keyframes.");

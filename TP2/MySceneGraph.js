@@ -739,7 +739,7 @@ class MySceneGraph {
                 continue;
             }
             // Parse keyframes
-            this.animations[animationID] = new KeyframeAnimation(this.parseKeyframes(children[i].children));
+            this.animations[animationID] = new MyKeyframeAnimation(this.parseKeyframes(children[i].children));
         }
 
         this.log("Parsed animations");

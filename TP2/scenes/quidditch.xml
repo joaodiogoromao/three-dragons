@@ -97,9 +97,7 @@
 
 
     <!-- spritesheets -->
-
     <!-- o bloco "spritesheets" deve ser declarado -->
-
     <!-- imediatamente após o bloco "textures" -->
 
     <spritesheets>
@@ -219,6 +217,13 @@
                 <noderef id="cylinderRadiusDemo" />
                 <noderef id="spritetext" />
                 <noderef id="spriteanim" />
+                <!-- Nova primitiva: plano, gerado por NURBS -->
+                <!-- ex: <plane npartsU=“5” npartsU=“8” -->
+                <!-- um plano de dimensões 1 x 1 unidades assente -->
+                <!-- em XZ, centrado na origem -->
+                <!-- e com a face visível apontando para +Y -->
+                <!-- com divisão em cinco partes por oito partes -->
+                <leaf type="plane" npartsU="1" npartsV="1" />
             </descendants>
         </node>
         <node id="spriteanim">

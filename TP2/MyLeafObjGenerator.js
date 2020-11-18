@@ -85,7 +85,12 @@ function getSpherePrimitive(sceneGraph, node, parent) {
     return null;
 }
 
-
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @return the primitive object if args are valid; null otherwise
+ */
 function getSpriteTextPrimitive(sceneGraph, node, parent) {
     const text = sceneGraph.reader.getString(node, 'text'); //TODO fazer getStringParameter (error checks)
     if (isNull(text)) {
@@ -99,6 +104,13 @@ function getSpriteTextPrimitive(sceneGraph, node, parent) {
     
 }
 
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @param {List<MySpritesheet>} spritesheets tha list of available spritesheets, indexed by id
+ * @return the primitive object if args are valid; null otherwise
+ */
 function getSpriteAnimationPrimitive(sceneGraph, node, parent, spritesheets) {
     const ssid = sceneGraph.reader.getString(node, 'ssid');
     if (isNull(ssid)) {
@@ -120,6 +132,59 @@ function getSpriteAnimationPrimitive(sceneGraph, node, parent, spritesheets) {
     return null;
 }
 
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @return the primitive object if args are valid; null otherwise
+ */
+function getPlanePrimitive(sceneGraph, node, parent) {
+    const nparts = sceneGraph.getIntegerParameters(node, ['npartsU', 'npartsV'], parent);
+
+    if (isNotNull(npartes))
+        return new MyPlane(sceneGraph.scene, nparts.npartsU, nparts.npartsV);
+    return null;
+}
+
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @return the primitive object if args are valid; null otherwise
+ */
+function getPatchPrimitive(sceneGraph, node, parent) {
+    const params = sceneGraph.getIntegerParameters(node, ['npartsU', 'npartsV', 'npointsU', 'npointsV'], parent);
+    const children = node.children;
+    const controlPoints = [];
+    for (const controlPointNode of children) {
+        if (controlPointNode.nodeName != "controlpoint") {
+            sceneGraph.onXMLMinorError(`Invalid node name '${controlPointNode.nodeName}' inside descendant primitive 'patch' of node with id '${parent.id}'`);
+            continue;
+        }
+        const cpParams = sceneGraph.getFloatParameters(controlPointNode, ['xx', 'yy', 'zz'], parent);
+        if (isNotNull(cpParams)) controlPoints.push(controlPointNode);
+    }
+    if (controlPoints.length != params.npointsU*params.npointsV)
+        sceneGraph.onXMLMinorError(`The number of control points inside descendant primitive 'patch' of node with id '${parent.id}' is ${controlPoints.length}, but it should be ${params.npointsU*params.npointsV} (npointsU*npointsV)`);
+    else if (isNotNull(params))
+        return MyPatch(sceneGraph.scene, params, controlPoints);
+    return null;
+}
+
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @return the primitive object if args are valid; null otherwise
+ */
+function getBarrelPrimitive(sceneGraph, node, parent) {
+    const fParams = sceneGraph.getFloatParameters(node, ['base', 'middle', 'height'], parent);
+    const iParams = sceneGraph.getFloatParameters(node, ['slices', 'stacks'], parent);
+    if (isNotNull(fParams) && isNotNull(iParams))
+        return MyDefBarrel(sceneGraph.scene, fParams.base, fParams.middle, fParams.height, iParams.slices, iParams.stacks);
+    return null;
+}
+
 
 // Establishes correspondence between a leaf's type 
 // and the function that creates its primitive
@@ -130,5 +195,8 @@ const leafObjGenerator = {
     triangle: getTrianglePrimitive,
     sphere: getSpherePrimitive,
     spritetext: getSpriteTextPrimitive,
-    spriteanim: getSpriteAnimationPrimitive
+    spriteanim: getSpriteAnimationPrimitive,
+    place: getPlanePrimitive,
+    defbarrel: getBarrelPrimitive,
+    patch: getPatchPrimitive
 }
