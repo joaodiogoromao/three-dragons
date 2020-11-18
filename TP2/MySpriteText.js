@@ -19,6 +19,8 @@ class MySpriteText {
         // apply appearance
         this.scene.pushMatrix();
         this.scene.pushMaterial();
+
+        this.spriteSheet.activateShader();
         
         for (const i in this.text) {
             const char = this.text[i];
@@ -27,13 +29,13 @@ class MySpriteText {
                 console.error("Invalid character in string sent to MySpriteText!");
                 continue;
             }
-            this.spriteSheet.activateCellP(cellPos);
+            this.spriteSheet.activateCellP(cellPos, false);
 
             this.scene.translate((i == 0 ? 0 : 1)*this.charWidth, 0, 0);
             this.geometry.display();
 
         }
-
+        
         this.scene.popMaterial();
         this.scene.popMatrix();
         this.scene.setActiveShader(this.scene.defaultShader);

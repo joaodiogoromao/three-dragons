@@ -13,17 +13,21 @@ class MySpriteSheet {
         this.spriteShader.setUniformsValues({ sizeM: sizeM, sizeN: sizeN });
         this.spriteTexture = new CGFtexture(scene, texture);
     }
-    
-    activateCellMN(m, n) {
-        this.spriteShader.setUniformsValues({ currentM: m, currentN: n });
+
+    activateShader() {
         this.scene.setActiveShader(this.spriteShader);
+    }
+    
+    activateCellMN(m, n, activateShader = true) {
+        this.spriteShader.setUniformsValues({ currentM: m, currentN: n });
+        if (activateShader) this.activateShader();
         this.scene.spritesheetAppearance.setTexture(this.spriteTexture);
         this.scene.spritesheetAppearance.apply();
     }
 
-    activateCellP(p){
+    activateCellP(p, activateShader = true){
         let m = p % this.sizeM;
         let n = Math.floor(p/this.sizeN) % this.sizeN;
-        this.activateCellMN(m, n);
+        this.activateCellMN(m, n, activateShader);
     }
 }
