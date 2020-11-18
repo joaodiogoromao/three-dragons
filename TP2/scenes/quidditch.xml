@@ -218,8 +218,24 @@
                 <noderef id="scalingFactorDemonstration" />
                 <noderef id="cylinderRadiusDemo" />
                 <noderef id="spritetext" />
-                <!--leaf type="spritetext" text="Awesome quidditch field!"/-->
-                <leaf type="spriteanim" ssid="bonequinho" duration="1" startCell="0" endCell="56"/>
+                <noderef id="spriteanim" />
+            </descendants>
+        </node>
+        <node id="spriteanim">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="25" y="0" z="25"/>
+                <rotation axis="y" angle="45" />
+                <scale sx="5" sy="5" sz="5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="explosion" duration="1" startCell="0" endCell="16"/>
             </descendants>
         </node>
         <node id="spritetext">
