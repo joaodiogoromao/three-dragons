@@ -217,6 +217,16 @@
                 <noderef id="cylinderRadiusDemo" />
                 <noderef id="spritetext" />
                 <noderef id="spriteanim" />
+
+
+                <!--leaf type="patch" npartsU="20" npartsV="20" npointsU="3" npointsV="2">
+                    <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+                    <controlpoint xx="0.0" yy="-1.5" zz="3.0" />
+                    <controlpoint xx="0.0" yy="1.5" zz="3.0" />
+                    <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
+                </leaf-->
             </descendants>
         </node>
         <node id="spriteanim">
@@ -988,7 +998,7 @@
 
             <transformations>
             </transformations>
-            
+
             <descendants>
                 <noderef id="towerCeiling" />
                 <noderef id="towerCabin" />

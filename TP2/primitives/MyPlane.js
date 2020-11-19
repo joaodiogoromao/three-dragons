@@ -12,9 +12,6 @@ class MyPlane extends CGFobject {
         this.npartsU = npartsU;
         this.npartsV = npartsV;
 
-        this.xPatchLength = 1.0 / npartsU;
-        this.yPatchLength = 1.0 / npartsV;
-
         this.makeSurface([
                             [
                                 [ 0.5, 0.0, -0.5, 1 ],

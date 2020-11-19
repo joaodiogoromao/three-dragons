@@ -162,12 +162,12 @@ function getPatchPrimitive(sceneGraph, node, parent) {
             continue;
         }
         const cpParams = sceneGraph.getFloatParameters(controlPointNode, ['xx', 'yy', 'zz'], parent);
-        if (isNotNull(cpParams)) controlPoints.push(controlPointNode);
+        if (isNotNull(cpParams)) controlPoints.push(cpParams);
     }
     if (controlPoints.length != params.npointsU*params.npointsV)
         sceneGraph.onXMLMinorError(`The number of control points inside descendant primitive 'patch' of node with id '${parent.id}' is ${controlPoints.length}, but it should be ${params.npointsU*params.npointsV} (npointsU*npointsV)`);
     else if (isNotNull(params))
-        return MyPatch(sceneGraph.scene, params, controlPoints);
+        return new MyPatch(sceneGraph.scene, params.npartsU, params.npartsV, params.npointsU, params.npointsV, controlPoints);
     return null;
 }
 
@@ -181,7 +181,7 @@ function getBarrelPrimitive(sceneGraph, node, parent) {
     const fParams = sceneGraph.getFloatParameters(node, ['base', 'middle', 'height'], parent);
     const iParams = sceneGraph.getFloatParameters(node, ['slices', 'stacks'], parent);
     if (isNotNull(fParams) && isNotNull(iParams))
-        return MyDefBarrel(sceneGraph.scene, fParams.base, fParams.middle, fParams.height, iParams.slices, iParams.stacks);
+        return new MyDefBarrel(sceneGraph.scene, fParams.base, fParams.middle, fParams.height, iParams.slices, iParams.stacks);
     return null;
 }
 

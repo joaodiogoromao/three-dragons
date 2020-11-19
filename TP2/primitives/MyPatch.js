@@ -4,60 +4,45 @@
  * @param {CGFscene} scene - Reference to the scene object
  * @param {Number} npartsU - number of divisions on U direction
  * @param {Number} npartsV - number of divisions on V direction
- * @param
+ * @param {Number} npointsU - number of U control points
+ * @param {Number} npointsV - number of V control points
+ * @param {Array<Object>} controlPoints Array of objects with xx, yy and zz attributes
  */
 class MyPatch extends CGFobject {
     constructor(scene, npartsU, npartsV, npointsU, npointsV, controlPoints) {
         super(scene);
 
         this.npartsU = npartsU;
-        this.npartsV = npartsV;
+		this.npartsV = npartsV;
+		this.npointsU = npointsU;
+		this.npointsV = npointsV;
         this.nrDivs = this.npartsU * this.npartsV;
 
-        this.xPatchLength = 1.0 / npartsU;
-        this.yPatchLength = 1.0 / npartsV;
-
+		this.makeSurface(npointsU-1, npointsV-1, controlPoints);
+		
         this.initBuffers();
-
-        this.makeSurface(/* ?? tenho que ver isto melhor */);
     }
 
-    
+    makeSurface(degreeU, degreeV, controlPoints) {
+		const cp = [];
+		for (const i in controlPoints) {
+			if (i % this.npointsV === 0) cp.push([]);
+			cp[cp.length - 1].push([...Object.values(controlPoints[i]), 1]);
+		}
 
-    /*makeSurface(degree1, degree2, controlvertexes, translation) {
-			
-		var nurbsSurface = new CGFnurbsSurface(degree1, degree2, controlvertexes);
+		console.log(cp);
 
-		var obj = new CGFnurbsObject(this, 20, 20, nurbsSurface ); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)
+		let nurbsSurface = new CGFnurbsSurface(degreeU, degreeV, cp);
+
+		this.obj = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface);
 		
-	}*/
+	}
 
-    /**
-	 * @method updateTexCoords
-	 * Updates the list of texture coordinates of the rectangle
-	 * @param {Array} coords - Array of texture coordinates
-	 */
-	/*updateTexCoords(coords) {
-		const dX = this.x2 - this.x1;
-		const dY = this.y2 - this.y1;
-		if (coords == undefined || typeof coords.afs != 'number' || typeof coords.aft != 'number') {
-			console.warn("RECEIVED INVALID AFS & AFT");
-			return;
-        }
+	initBuffers() {
+		this.obj.initBuffers();
+	}
 
-        this.texCoords = [];
-        for (let j = 0; j <= this.nrDivs; j++) {
-            for (let i = 0; i <= this.nrDivs; i++) {
-                this.texCoords.push(i / this.nrDivs, j / this.nrDivs);
-            }
-        }
-
-		this.texCoords = [
-			0, dY/coords.aft,
-			dX/coords.afs, dY/coords.aft,
-			0, 0,
-			dX/coords.afs, 0
-		]
-		this.updateTexCoordsGLBuffers();
-	}*/
+	display() {
+		this.obj.display();
+	}
 }
