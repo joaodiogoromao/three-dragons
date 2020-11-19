@@ -141,7 +141,7 @@ function getSpriteAnimationPrimitive(sceneGraph, node, parent, spritesheets) {
 function getPlanePrimitive(sceneGraph, node, parent) {
     const nparts = sceneGraph.getIntegerParameters(node, ['npartsU', 'npartsV'], parent);
 
-    if (isNotNull(npartes))
+    if (isNotNull(nparts))
         return new MyPlane(sceneGraph.scene, nparts.npartsU, nparts.npartsV);
     return null;
 }
@@ -196,7 +196,7 @@ const leafObjGenerator = {
     sphere: getSpherePrimitive,
     spritetext: getSpriteTextPrimitive,
     spriteanim: getSpriteAnimationPrimitive,
-    place: getPlanePrimitive,
+    plane: getPlanePrimitive,
     defbarrel: getBarrelPrimitive,
     patch: getPatchPrimitive
 }

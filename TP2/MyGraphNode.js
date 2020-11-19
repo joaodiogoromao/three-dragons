@@ -149,7 +149,7 @@ class LeafNode extends CGFobject {
     }
 
     display(scaleFactors) {
-        if (this.obj instanceof MyRectangle || this.obj instanceof MyTriangle) {
+        if (this.obj instanceof MyRectangle || this.obj instanceof MyTriangle || this.obj instanceof MyPlane) {
             this.obj.updateTexCoords(scaleFactors);
         }
         this.obj.display();

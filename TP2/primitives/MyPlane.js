@@ -50,8 +50,8 @@ class MyPlane extends CGFobject {
 	 */
 	updateTexCoords(coords) {
 		// NEED TO UPDATE THIS
-		/*const dX = this.x2 - this.x1;
-		const dY = this.y2 - this.y1;
+		const dX = 1 / this.npartsU;
+		const dY = 1 / this.npartsV;
 		if (coords == undefined || typeof coords.afs != 'number' || typeof coords.aft != 'number') {
 			console.warn("RECEIVED INVALID AFS & AFT");
 			return;
@@ -60,16 +60,9 @@ class MyPlane extends CGFobject {
         this.obj.texCoords = [];
         for (let j = 0; j <= this.npartsV; j++) {
             for (let i = 0; i <= this.npartsU; i++) {
-                this.obj.texCoords.push(i / this.npartsU, j / this.npartsV);
+                this.obj.texCoords.push(i *dX/coords.afs, j *dY/coords.aft);
             }
         }
-
-		this.obj.texCoords = [
-			0, dY/coords.aft,
-			dX/coords.afs, dY/coords.aft,
-			0, 0,
-			dX/coords.afs, 0
-		]
-		this.updateTexCoordsGLBuffers();*/
+		this.obj.updateTexCoordsGLBuffers();
 	}
 }
