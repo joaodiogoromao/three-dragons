@@ -210,13 +210,13 @@
             </transformations>
 
             <descendants>
-                <noderef id="quidditchField" />
+                <!--noderef id="quidditchField" />
                 <noderef id="tent" />
                 <noderef id="groundSurface" />
                 <noderef id="scalingFactorDemonstration" />
                 <noderef id="cylinderRadiusDemo" />
                 <noderef id="spritetext" />
-                <noderef id="spriteanim" />
+                <noderef id="spriteanim" /-->
 
 
                 <!--leaf type="patch" npartsU="20" npartsV="20" npointsU="3" npointsV="2">
@@ -227,6 +227,8 @@
                     <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
                     <controlpoint xx="1.5" yy="1.5" zz="0.0" />
                 </leaf-->
+
+                <leaf type="defbarrel" base="10" middle="15" height="20" slices="20" stacks="20" />
             </descendants>
         </node>
         <node id="spriteanim">

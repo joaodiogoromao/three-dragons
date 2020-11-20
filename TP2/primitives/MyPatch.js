@@ -30,12 +30,8 @@ class MyPatch extends CGFobject {
 			cp[cp.length - 1].push([...Object.values(controlPoints[i]), 1]);
 		}
 
-		console.log(cp);
-
 		let nurbsSurface = new CGFnurbsSurface(degreeU, degreeV, cp);
-
 		this.obj = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface);
-		
 	}
 
 	initBuffers() {
