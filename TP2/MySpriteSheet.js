@@ -15,7 +15,7 @@ class MySpriteSheet {
     }
 
     activateShader() {
-        this.scene.setActiveShader(this.spriteShader);
+        this.scene.setActiveShaderSimple(this.spriteShader);
     }
     
     activateCellMN(m, n, activateShader = true) {

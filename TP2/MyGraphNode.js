@@ -122,7 +122,7 @@ class Node extends CGFobject {
         if (this.animation != null)  //applies animations if it is defined
             go = this.animation.apply(this.scene);
         
-        if (go) {
+        if (go) { // if the animation hasn't started yet, the object doesn't appear
             // DRAWS THE DESCENDANTS
             for (const desc of this.descendantObjs) {
                 desc.display(this.scaleFactors);

@@ -36,7 +36,7 @@ class MySpriteText {
 
         }
         
-        this.scene.setActiveShader(this.scene.defaultShader);
+        this.scene.setActiveShaderSimple(this.scene.defaultShader);
 
         this.scene.popMaterial();
         this.scene.popMatrix();

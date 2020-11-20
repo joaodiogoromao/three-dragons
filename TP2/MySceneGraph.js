@@ -826,7 +826,9 @@ class MySceneGraph {
         var animationIndex = nodeChildrenNames.indexOf("animationref");
         var descendantsIndex = nodeChildrenNames.indexOf("descendants");
 
-        const node = new Node(this.getNodeID(nodeBlock, false), this.scene); // already checked if node id existed
+        const nodeId = this.getNodeID(nodeBlock, false);
+
+        const node = new Node(nodeId, this.scene); // already checked if node id existed
 
         // Transformations
         if (transformationsIndex != -1) {
@@ -894,7 +896,9 @@ class MySceneGraph {
             var animationID = this.reader.getString(animationNode, 'id');
 
             if (this.animations[animationID] != undefined) {
-                node.setAnimation(this.animations[animationID].copy());
+                node.setAnimation(this.animations[animationID].copy());   // copies the animation to the node
+            } else {
+                this.onXMLMinorError(`Referenced animation in node with id '${nodeId}' doesn't exist`);
             }
         }
 
