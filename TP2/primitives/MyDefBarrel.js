@@ -19,22 +19,32 @@ class MyDefBarrel extends CGFobject {
         this.initBuffers();
     }
 
-    createControlPoints(surfaceNum) {
-        const ret = [];
-
+    createControlPoints(surfaceNumber) {
         const H = (4/3)*(this.middle-this.base);
+        const h = (4/3)*this.base;
         const alpha = 30*Math.PI/180;
 
-        for (let i = 0; i < 4; i++){
-            let angle = i * Math.PI/3.0;
-            ret.push([this.base * Math.cos(angle) * surfaceNum, this.base * Math.sin(angle) * surfaceNum, 0]);
-            ret.push([(this.base + H) * Math.cos(angle) * surfaceNum, (this.base + H) * Math.sin(angle) * surfaceNum, this.height/3]);
-            ret.push([(this.base + H) * Math.cos(angle) * surfaceNum, (this.base + H) * Math.sin(angle) * surfaceNum, 2*this.height/3]);
-            ret.push([this.base * Math.cos(angle) * surfaceNum, this.base * Math.sin(angle) * surfaceNum, this.height]);
-        }
+        return [
+            [this.base * surfaceNumber, 0, 0],
+            [(this.base + H) * surfaceNumber, 0, H/Math.tan(alpha)],
+            [(this.base + H) * surfaceNumber, 0, this.height - (H/Math.tan(alpha))],
+            [this.base * surfaceNumber, 0, this.height],
 
-        console.log(ret);
-        return ret;
+            [this.base * surfaceNumber, h * surfaceNumber, 0],
+            [(this.base + H) * surfaceNumber, (h + H) * surfaceNumber, H/Math.tan(alpha)],
+            [(this.base + H) * surfaceNumber, (h + H) * surfaceNumber, this.height - (H/Math.tan(alpha))],
+            [this.base * surfaceNumber, h * surfaceNumber, this.height],
+
+            [-this.base * surfaceNumber, h * surfaceNumber, 0],
+            [(-this.base - H) * surfaceNumber, (h + H) * surfaceNumber, H/Math.tan(alpha)],
+            [(-this.base - H) * surfaceNumber, (h + H) * surfaceNumber, this.height - (H/Math.tan(alpha))],
+            [-this.base * surfaceNumber, h * surfaceNumber, this.height],
+
+            [-this.base * surfaceNumber, 0, 0],
+            [(-this.base - H) * surfaceNumber, 0, H/Math.tan(alpha)],
+            [(-this.base - H) * surfaceNumber, 0, this.height - (H/Math.tan(alpha))],
+            [-this.base * surfaceNumber, 0, this.height]
+        ];
     }
 
 	initBuffers() {

@@ -93,6 +93,7 @@
         <texture id="genericWood" path="./scenes/images/genericWood.jpeg" />
         <texture id="tentTissue" path="./scenes/images/tentTissue2.jpeg" />
         <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
+        <texture id="test" path="./scenes/images/test.jpg" />
     </textures>
 
 
@@ -227,8 +228,21 @@
                     <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
                     <controlpoint xx="1.5" yy="1.5" zz="0.0" />
                 </leaf-->
+                <noderef id="barrel" />
+            </descendants>
+        </node>
+        <node id="barrel">
+            <material id="null" />
 
-                <leaf type="defbarrel" base="5" middle="5" height="30" slices="20" stacks="20" />
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="5" middle="7" height="20" slices="200" stacks="200" />
             </descendants>
         </node>
         <node id="spriteanim">
