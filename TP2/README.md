@@ -10,7 +10,7 @@
 ----
 ## Project information
 
-- (items describing main strong points)
+- Plane com fatores de escala implementados
 - Scene
   - (Brief description of the created scene)
   - (relative link to the scene)

@@ -21,10 +21,35 @@ class MyDefBarrel extends CGFobject {
 
     createControlPoints(surfaceNumber) {
         const H = (4/3)*(this.middle-this.base);
-        const h = (4/3)*this.base;
+        let h = (4/3)*this.base;
         const alpha = 30*Math.PI/180;
+        
+        const ret = [];
+        let baseH = this.base + H;
+        let base = this.base;
+        let hH = null;
+        for (let i = 0; i < 4; i++){
+            if (i > 1 && baseH > 0 && this.base > 0) {
+                baseH *= -1;
+                base *= -1;
+            }
+            if (i == 0 || i == 3){
+                h = 0;
+                hH = 0;
+            }else{
+                h = (4/3)*this.base;
+                hH = h + H;
+            }
+            ret.push([base * surfaceNumber, h * surfaceNumber, 0]);
+            ret.push([baseH * surfaceNumber, hH * surfaceNumber, H/Math.tan(alpha)]);
+            ret.push([baseH * surfaceNumber, hH * surfaceNumber, this.height - (H/Math.tan(alpha))]);
+            ret.push([base * surfaceNumber, h * surfaceNumber, this.height]);
+        }
 
-        return [
+        /*
+        console.log(ret);
+
+        let right = [
             [this.base * surfaceNumber, 0, 0],
             [(this.base + H) * surfaceNumber, 0, H/Math.tan(alpha)],
             [(this.base + H) * surfaceNumber, 0, this.height - (H/Math.tan(alpha))],
@@ -45,11 +70,15 @@ class MyDefBarrel extends CGFobject {
             [(-this.base - H) * surfaceNumber, 0, this.height - (H/Math.tan(alpha))],
             [-this.base * surfaceNumber, 0, this.height]
         ];
+
+        console.log(right);*/
+
+        return ret;
     }
 
 	initBuffers() {
-        this.surface1 = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, this.createControlPoints(1));
-        this.surface2 = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, this.createControlPoints(-1));
+        this.surface1 = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, this.createControlPoints(-1));
+        this.surface2 = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, this.createControlPoints(1));
 	}
 
 	display() {
