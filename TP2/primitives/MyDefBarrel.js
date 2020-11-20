@@ -8,29 +8,29 @@ class MyDefBarrel extends CGFobject {
         this.slices = slices;
         this.stacks = stacks;
 
-        const H = (4/3)*(this.middle-this.base);
+        /*const H = (4/3)*(this.middle-this.base);
         const alpha = 30*Math.DEGREES_TO_RAD;
 
         this.q1 = [this.base, 0, 0];
         this.q2 = [this.base + H, 0, H/Math.tan(alpha)];
         this.q3 = [this.base + H, 0, height - (H/Math.tan(alpha))];
-        this.q4 = [this.base, 0, height];
+        this.q4 = [this.base, 0, height];*/
 
         this.initBuffers();
     }
 
-    createControlPoints() {
+    createControlPoints(surfaceNum) {
         const ret = [];
 
         const H = (4/3)*(this.middle-this.base);
         const alpha = 30*Math.PI/180;
 
         for (let i = 0; i < 4; i++){
-            let angle = i * Math.PI/2.0; 
-            ret.push([this.base * Math.cos(angle), this.base * Math.sin(angle), 0]);
-            ret.push([(this.base + H) * Math.cos(angle), (this.base + H) * Math.sin(angle), this.height - (H/Math.tan(alpha))]);
-            ret.push([(this.base + H) * Math.cos(angle), (this.base + H) * Math.sin(angle), H/Math.tan(alpha)]);
-            ret.push([this.base * Math.cos(angle), this.base * Math.sin(angle), this.height]);
+            let angle = i * Math.PI/3.0;
+            ret.push([this.base * Math.cos(angle) * surfaceNum, this.base * Math.sin(angle) * surfaceNum, 0]);
+            ret.push([(this.base + H) * Math.cos(angle) * surfaceNum, (this.base + H) * Math.sin(angle) * surfaceNum, this.height/3]);
+            ret.push([(this.base + H) * Math.cos(angle) * surfaceNum, (this.base + H) * Math.sin(angle) * surfaceNum, 2*this.height/3]);
+            ret.push([this.base * Math.cos(angle) * surfaceNum, this.base * Math.sin(angle) * surfaceNum, this.height]);
         }
 
         console.log(ret);
@@ -38,10 +38,12 @@ class MyDefBarrel extends CGFobject {
     }
 
 	initBuffers() {
-        this.obj = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, this.createControlPoints());
+        this.surface1 = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, this.createControlPoints(1));
+        this.surface2 = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, this.createControlPoints(-1));
 	}
 
 	display() {
-        this.obj.display();
+        this.surface1.display();
+        this.surface2.display();
 	}
 }

@@ -228,7 +228,7 @@
                     <controlpoint xx="1.5" yy="1.5" zz="0.0" />
                 </leaf-->
 
-                <leaf type="defbarrel" base="10" middle="15" height="20" slices="20" stacks="20" />
+                <leaf type="defbarrel" base="5" middle="5" height="30" slices="20" stacks="20" />
             </descendants>
         </node>
         <node id="spriteanim">
