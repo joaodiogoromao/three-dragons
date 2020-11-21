@@ -56,7 +56,7 @@ class MyPlane extends CGFobject {
 
         this.obj.texCoords = [];
         for (let j = 0; j <= this.npartsV; j++) {
-            for (let i = 0; i <= this.npartsU; i++) {
+            for (let i = this.npartsU; i >= 0; i--) {
                 this.obj.texCoords.push(i *dX/coords.afs, j *dY/coords.aft);
             }
         }

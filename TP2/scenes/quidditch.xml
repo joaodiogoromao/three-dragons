@@ -21,7 +21,7 @@
             <to x="100" y="0" z="140" />
         </perspective>
         <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
-            <from x="140" y="5" z="150" />
+            <from x="140" y="5" z="160" />
             <to x="140" y="0" z="140" />
         </perspective>
         <perspective id="flagDetail" near="0.1" far="500" angle="60">
@@ -283,15 +283,16 @@
             <material id="groundMaterial" />
 
             <texture id="groundTexture">
-                <amplification afs="60" aft="60" />
+                <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90" />
+                <scale sx="60" sy="60" sz="60" />
             </transformations>
  
             <descendants>               
-                <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+                <leaf type="plane" npartsU="60" npartsV="60" />
+                
             </descendants>
         </node>
         <node id="cylinderRadiusDemo">
@@ -338,8 +339,26 @@
             </transformations>
  
             <descendants>
+                <noderef id="sfdemoTR1Plane" />
                 <leaf type="rectangle" x1="-10" y1="0" x2="-6" y2="4" />
                 <leaf type="triangle" x1="-5" y1="0" x2="-1" y2="0" x3="-3" y3="4" />
+            </descendants>
+        </node>
+        <node id="sfdemoTR1Plane">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="0.5" />
+            </texture>
+
+            <transformations>
+                <translation x="-13" y="2" z="0" />
+                <rotation axis="x" angle="90" />
+                <scale sx="4" sy="4" sz="4" />
+            </transformations>
+ 
+            <descendants>
+                <leaf type="plane" npartsU="20" npartsV="20" />
             </descendants>
         </node>
         <node id="sfdemoTR2">
@@ -353,8 +372,26 @@
             </transformations>
  
             <descendants>
+                <noderef id="sfdemoTR2Plane" />
                 <leaf type="rectangle" x1="1" y1="0" x2="5" y2="4" />
                 <leaf type="triangle" x1="6" y1="0" x2="10" y2="0" x3="8" y3="4" />
+            </descendants>
+        </node>
+        <node id="sfdemoTR2Plane">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.125" aft="0.0625" />
+            </texture>
+
+            <transformations>
+                <translation x="13" y="2" z="0" />
+                <rotation axis="x" angle="90" />
+                <scale sx="4" sy="4" sz="4" />
+            </transformations>
+ 
+            <descendants>
+                <leaf type="plane" npartsU="20" npartsV="20" />
             </descendants>
         </node>
         <!--
@@ -525,14 +562,17 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="15" aft="15" />
+                <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
+                <translation x="10" y="2.5" z="0" />
+                <rotation axis="x" angle="90" />
+                <scale sx="14" sy="1" sz="5" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="3" y1="0" x2="17" y2="5" />
+                <leaf type="plane" npartsU="30" npartsV="30" />
             </descendants>
         </node>
         <node id="tentWalls">
@@ -620,14 +660,17 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="8" aft="8" />
+                <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
+                <translation x="4" y="2.5" z="0" />
+                <scale sx="8" sy="5" sz="1" />
+                <rotation axis="x" angle="90" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0" y1="0" x2="8" y2="5" />
+                <leaf type="plane" npartsU="30" npartsV="30" />
             </descendants>
         </node>
 
@@ -1254,7 +1297,24 @@
 
             <descendants>
                 <noderef id="bannerTriangle" />
-                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="0.3" />
+                <noderef id="bannerRectangle" />
+            </descendants>
+        </node>
+        <node id="bannerRectangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.4" aft="0.6666" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0.15" z="0" />
+                <scale sx="1" sy="0.3" sz="1" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="10" npartsV="10" />
             </descendants>
         </node>
         <node id="bannerTriangle">
@@ -1355,14 +1415,17 @@
             <material id="null" />
 
             <texture id="null">
-                <amplification afs="4" aft="2" />
+                <amplification afs="1" aft="0.166667" />
             </texture>
 
             <transformations>
+                <translation x="0" y="6" z="0" />
+                <rotation axis="x" angle="90" />
+                <scale sx="4" sy="1" sz="12" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-2" y1="0" x2="2" y2="12" />
+                <leaf type="plane" npartsU="20" npartsV="20" />
             </descendants>
         </node>
         <node id="towerCabin">
@@ -1603,8 +1666,38 @@
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
-                <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" />
+                <noderef id="standsRectangle1" />
+                <noderef id="standsRectangle2" />
+            </descendants>
+        </node>
+        <node id="standsRectangle1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification aft="0.5" afs="1"/>
+            </texture>
+
+            <transformations>
+                <rotation angle="90" axis="x" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="20" npartsV="20" />
+            </descendants>
+        </node>
+        <node id="standsRectangle2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification aft="0.5" afs="1"/>
+            </texture>
+
+            <transformations>
+                <rotation angle="-90" axis="x" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="20" npartsV="20" />
             </descendants>
         </node>
         <!--
