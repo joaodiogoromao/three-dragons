@@ -6,11 +6,27 @@
         <!-- identifier of root node of the scene graph; this node -->
         <!-- must be defined in one of the following NODE declarations -->
     </initials>
-    <views default="defaultCamera">
+    <views default="harryAnimation1">
         <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="defaultCamera" near="0.1" far="500" angle="60">
+        <perspective id="globalCamera" near="0.1" far="500" angle="60">
             <from x="50" y="40" z="10" />
             <to x="0" y="0" z="0" />
+        </perspective>
+        <perspective id="harryAnimation1" near="0.1" far="500" angle="60">
+            <from x="17" y="11" z="11" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+        <perspective id="harryAnimation2" near="0.1" far="500" angle="60">
+            <from x="0" y="12" z="18" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+        <perspective id="entrance" near="0.1" far="500" angle="60">
+            <from x="0" y="35" z="60" />
+            <to x="0" y="0" z="15" />
+        </perspective>
+        <perspective id="entranceTunnel" near="0.1" far="500" angle="60">
+            <from x="15" y="12" z="20" />
+            <to x="0" y="0" z="17" />
         </perspective>
         <perspective id="birdsEye" near="0.1" far="500" angle="60">
             <from x="1" y="70" z="0" />
@@ -19,6 +35,10 @@
         <perspective id="cylinderRadiusDemo" near="0.1" far="500" angle="60">
             <from x="100" y="15" z="160" />
             <to x="100" y="0" z="140" />
+        </perspective>
+        <perspective id="barrelRadiusDemo" near="0.1" far="500" angle="60">
+            <from x="180" y="15" z="160" />
+            <to x="180" y="0" z="140" />
         </perspective>
         <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
             <from x="140" y="5" z="160" />
@@ -56,6 +76,14 @@
             <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </light>
+
+        <light id="entrance-light">
+            <enable value="true" />
+            <position x="0" y="15" z="40" w="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />
+            <specular r="0.9" g="0.9" b="0.9" a="0.9" />
         </light>
 
         <light id="red-light"> 
@@ -173,14 +201,135 @@
     </materials>
 
     <animations>
-        <animation id="tempAnimation">
-            <replay value="0" />
+        <animation id="crazyBanner1" replay="1">
+            <keyframe instant="0">
+                <rotation axis="y" angle="90" />
+            </keyframe>
+            <keyframe instant="0.4">
+                <translation x="0" y="-5" z="0" />
+                <rotation axis="y" angle="140" />
+            </keyframe>
+            <keyframe instant="1.3">
+                <translation x="0" y="-3" z="0" />
+                <rotation axis="y" angle="280" />
+            </keyframe>
+            <keyframe instant="1.6">
+                <translation x="0" y="-4" z="0" />
+                <rotation axis="y" angle="140" />
+            </keyframe>
+            <keyframe instant="2">
+                <translation x="0" y="-1" z="0" />
+                <rotation axis="y" angle="340" />
+            </keyframe>
+            <keyframe instant="2.3">
+                <translation x="0" y="-6" z="0" />
+                <rotation axis="y" angle="400" />
+            </keyframe>
             <keyframe instant="2.9">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="y" angle="450" />
+            </keyframe>
+        </animation>
+
+        <animation id="crazyBanner2" replay="1">
+            <keyframe instant="0">
+                <translation x="0" y="-2" z="0" />
+                <rotation axis="y" angle="23" />
+            </keyframe>
+            <keyframe instant="0.3">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="y" angle="600" />
+                <scale sx="1.3" sy="1.3" sz="1.3" />
+            </keyframe>
+            <keyframe instant="1.4">
+                <translation x="0" y="-4.2" z="0" />
+                <rotation axis="y" angle="136" />
+            </keyframe>
+            <keyframe instant="1.7">
+                <translation x="0" y="-2" z="0" />
+                <rotation axis="y" angle="379" />
+            </keyframe>
+            <keyframe instant="1.9">
+                <translation x="0" y="-6" z="0" />
+                <rotation axis="y" angle="90" />
+                <scale sx="0.8" sy="0.8" sz="0.8" />
+            </keyframe>
+            <keyframe instant="2.4">
+                <translation x="0" y="-4" z="0" />
+                <rotation axis="y" angle="500" />
+            </keyframe>
+            <keyframe instant="2.8">
+                <translation x="0" y="-2" z="0" />
+                <rotation axis="y" angle="23" />
+            </keyframe>
+        </animation>
+        
+        <animation id="crazyBanner3" replay="1">
+            <keyframe instant="0">
+            </keyframe>
+            <keyframe instant="1">
+                <translation x="0" y="-5" z="0" />
+            </keyframe>
+            <keyframe instant="2">
+                <scale sx="2" sy="2" sz="2"/>
+            </keyframe>
+            <keyframe instant="2.5">
+                <rotation axis="y" angle="180" />
+            </keyframe>
+            <keyframe instant="3">
+                <rotation axis="y" angle="360" />
+                <scale sx="1" sy="1" sz="1" />
+            </keyframe>
+            <keyframe instant="3.5">
                 <translation x="0" y="0" z="0" />
             </keyframe>
         </animation>
-        <animation id="spellAnimation">
-            <replay value="1" />
+
+        <animation id="crazyBanner4" replay="1">
+            <keyframe instant="0">
+            </keyframe>
+            <keyframe instant="0.25">
+                <translation x="0" y="-1" z="0" />
+                <rotation axis="y" angle="72" />
+            </keyframe>
+            <keyframe instant="0.5">
+                <translation x="0" y="-2" z="0" />
+                <rotation axis="y" angle="144" />
+            </keyframe>
+            <keyframe instant="0.75">
+                <translation x="0" y="-3" z="0" />
+                <rotation axis="y" angle="216" />
+            </keyframe>
+            <keyframe instant="1">
+                <translation x="0" y="-4" z="0" />
+                <rotation axis="y" angle="288" />
+            </keyframe>
+            <keyframe instant="1.25">
+                <translation x="0" y="-5" z="0" />
+                <rotation axis="y" angle="360" />
+            </keyframe>
+
+            <keyframe instant="1.5">
+                <translation x="0" y="-4" z="0" />
+                <rotation axis="y" angle="288" />
+            </keyframe>
+            <keyframe instant="1.75">
+                <translation x="0" y="-3" z="0" />
+                <rotation axis="y" angle="216" />
+            </keyframe>
+            <keyframe instant="2">
+                <translation x="0" y="-2" z="0" />
+                <rotation axis="y" angle="144" />
+            </keyframe>
+            <keyframe instant="2.25">
+                <translation x="0" y="-1" z="0" />
+                <rotation axis="y" angle="72" />
+            </keyframe>
+            <keyframe instant="2.5">
+            </keyframe>
+        </animation>
+        
+        <animation id="spellAnimation" replay="1">
             <keyframe instant="2.9">
                 <translation x="0" y="0" z="0" />
             </keyframe>
@@ -196,14 +345,6 @@
             <keyframe instant="5">
                 <translation x="5" y="0" z="0" />
             </keyframe>
-
-            <!--keyframe instant="5">
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="90" />
-                <rotation axis="y" angle="90" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.5" sy="1.5" sz="1.5" />
-            </keyframe-->
         </animation>
     </animations>
 
@@ -226,6 +367,7 @@
                 <noderef id="groundSurface" />
                 <noderef id="scalingFactorDemonstration" />
                 <noderef id="cylinderRadiusDemo" />
+                <noderef id="barrelRadiusDemo" />
                 <noderef id="harryAnimation" />
                 <noderef id="skullAnimation" />
                 <noderef id="tunnel" />
@@ -234,7 +376,7 @@
         <node id="tunnel">
             <material id="null" />
 
-            <texture id="genericWood">
+            <texture id="groundBarrierTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -331,6 +473,53 @@
  
             <descendants>               
                 <leaf type="cylinder" height="6" topRadius="4" bottomRadius="2" stacks="5" slices="30"/>
+            </descendants>
+        </node>
+        <node id="barrelRadiusDemo">
+            <material id="groundMaterial" />
+
+            <texture id="groundTexture">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+            </transformations>
+ 
+            <descendants>
+                <noderef id="barrelRadiusDemo1" />
+                <noderef id="barrelRadiusDemo2" />
+            </descendants>
+        </node>
+        <node id="barrelRadiusDemo1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="170" y="6" z="140" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="defbarrel" base="3" middle="4" height="10" slices="200" stacks="200" />
+            </descendants>
+        </node>
+        <node id="barrelRadiusDemo2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="190" y="6" z="140" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="defbarrel" base="3" middle="6" height="10" slices="200" stacks="200" />
             </descendants>
         </node>
         <node id="scalingFactorDemonstration">
@@ -463,16 +652,17 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="9" z="6"/>
+                <translation x="0" y="9" z="3"/>
                 <rotation axis="y" angle="-90" />
             </transformations>
 
             <descendants>
-                <noderef id="welcomeMessageFront" />
+                <noderef id="welcomeMessageFront1" />
+                <noderef id="welcomeMessageFront2" />
                 <noderef id="welcomeMessageBack" />
             </descendants>
         </node>
-        <node id="welcomeMessageFront">
+        <node id="welcomeMessageFront1">
             <material id="null" />
 
             <texture id="null">
@@ -483,36 +673,52 @@
             </transformations>
 
             <descendants>
-                <leaf type="spritetext" text="Welcome!"/>
+                <leaf type="spritetext" text="  Triwizard   "/>
+            </descendants>
+        </node>
+        <node id="welcomeMessageFront2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-1" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="  Tournament  "/>
             </descendants>
         </node>
         <node id="welcomeMessageBack">
-            <material id="blackMaterial" />
+            <material id="metalMaterial" />
 
-            <texture id="null">
-                <amplification afs="1" aft="1" />
+            <texture id="metalTexture">
+                <amplification afs="14" aft="14" />
             </texture>
 
             <transformations>
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="8" y1="0" x2="0" y2="1"/>
+                <leaf type="rectangle" x1="14" y1="0" x2="0" y2="2"/>
             </descendants>
         </node>
         <node id="flagPole1">
-            <material id="null" />
+            <material id="metalMaterial" />
 
-            <texture id="null">
+            <texture id="metalTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="5.5"/>
+                <translation x="0" y="0" z="3"/>
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <noderef id="hoopPole" />
+                <leaf type="cylinder" height="11" topRadius="0" bottomRadius="0.5" stacks="5" slices="20" />
             </descendants>
         </node>
         <node id="flagPole2">
@@ -523,11 +729,11 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="14.5"/>
+                <translation x="0" y="0" z="14"/>
             </transformations>
 
             <descendants>
-                <noderef id="hoopPole" />
+                <noderef id="flagPole1" />
             </descendants>
         </node>
         <node id="tentRoof">
@@ -686,7 +892,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="plane" npartsU="30" npartsV="30" />
+                <leaf type="plane" npartsU="60" npartsV="60" />
             </descendants>
         </node>
         <node id="tentWalls">
@@ -1113,6 +1319,7 @@
 
             <descendants>
                 <noderef id="tower" />
+                <noderef id="towerCeiling1" />
             </descendants>
         </node>
         <node id="tower2">
@@ -1129,6 +1336,7 @@
 
             <descendants>
                 <noderef id="tower" />
+                <noderef id="towerCeiling2" />
             </descendants>
         </node>
         <node id="tower3">
@@ -1145,6 +1353,7 @@
 
             <descendants>
                 <noderef id="tower" />
+                <noderef id="towerCeiling3" />
             </descendants>
         </node>
         <node id="tower4">
@@ -1161,6 +1370,7 @@
 
             <descendants>
                 <noderef id="tower" />
+                <noderef id="towerCeiling4" />
             </descendants>
         </node>
         <node id="tower">
@@ -1174,12 +1384,11 @@
             </transformations>
 
             <descendants>
-                <noderef id="towerCeiling" />
                 <noderef id="towerCabin" />
                 <noderef id="towerBody" />
             </descendants>
         </node>
-        <node id="towerCeiling">
+        <node id="towerCeiling1">
             <material id="null" />
 
             <texture id="null">
@@ -1195,7 +1404,64 @@
                 <noderef id="towerCeilingTriangle2" />
                 <noderef id="towerCeilingTriangle3" />
                 <noderef id="towerCeilingTriangle4" />
-                <noderef id="towerCeilingFlag" />
+                <noderef id="towerCeilingFlag1" />
+            </descendants>
+        </node>
+        <node id="towerCeiling2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle1" />
+                <noderef id="towerCeilingTriangle2" />
+                <noderef id="towerCeilingTriangle3" />
+                <noderef id="towerCeilingTriangle4" />
+                <noderef id="towerCeilingFlag2" />
+            </descendants>
+        </node>
+        <node id="towerCeiling3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle1" />
+                <noderef id="towerCeilingTriangle2" />
+                <noderef id="towerCeilingTriangle3" />
+                <noderef id="towerCeilingTriangle4" />
+                <noderef id="towerCeilingFlag3" />
+            </descendants>
+        </node>
+        <node id="towerCeiling4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="20" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle1" />
+                <noderef id="towerCeilingTriangle2" />
+                <noderef id="towerCeilingTriangle3" />
+                <noderef id="towerCeilingTriangle4" />
+                <noderef id="towerCeilingFlag4" />
             </descendants>
         </node>
         <node id="towerCeilingTriangle1">
@@ -1273,7 +1539,7 @@
                 <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="2" y3="4.4721" />  <!-- y3 = sqrt(20) -->
             </descendants>
         </node>
-        <node id="towerCeilingFlag">
+        <node id="towerCeilingFlag1">
             <material id="null" />
 
             <texture id="null">
@@ -1286,7 +1552,58 @@
 
             <descendants>
                 <noderef id="towerCeilingPole" />
-                <noderef id="towerCeilingBanner" />
+                <noderef id="towerCeilingBanner1" />
+                <noderef id="flagSphere" />
+            </descendants>
+        </node>
+        <node id="towerCeilingFlag2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="3" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingPole" />
+                <noderef id="towerCeilingBanner2" />
+                <noderef id="flagSphere" />
+            </descendants>
+        </node>
+        <node id="towerCeilingFlag3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="3" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingPole" />
+                <noderef id="towerCeilingBanner3" />
+                <noderef id="flagSphere" />
+            </descendants>
+        </node>
+        <node id="towerCeilingFlag4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="3" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingPole" />
+                <noderef id="towerCeilingBanner4" />
                 <noderef id="flagSphere" />
             </descendants>
         </node>
@@ -1321,7 +1638,7 @@
                 <leaf type="cylinder" height="7" topRadius="0.1" bottomRadius="0.1" stacks="5" slices="10"/>
             </descendants>
         </node>
-        <node id="towerCeilingBanner">
+        <node id="towerCeilingBanner1">
             <material id="null" />
 
             <texture id="null">
@@ -1331,6 +1648,68 @@
             <transformations>
                 <translation x="0" y="6.4" z="0" />
             </transformations>
+
+            <animationref id="crazyBanner1" />
+
+            <descendants>
+                <noderef id="banner1" />
+                <noderef id="banner1back" />
+                <noderef id="banner2" />
+                <noderef id="banner2back" />
+            </descendants>
+        </node>
+        <node id="towerCeilingBanner2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="6.4" z="0" />
+            </transformations>
+
+            <animationref id="crazyBanner2" />
+
+            <descendants>
+                <noderef id="banner1" />
+                <noderef id="banner1back" />
+                <noderef id="banner2" />
+                <noderef id="banner2back" />
+            </descendants>
+        </node>
+        <node id="towerCeilingBanner3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="6.4" z="0" />
+            </transformations>
+
+            <animationref id="crazyBanner3" />
+
+            <descendants>
+                <noderef id="banner1" />
+                <noderef id="banner1back" />
+                <noderef id="banner2" />
+                <noderef id="banner2back" />
+            </descendants>
+        </node>
+        <node id="towerCeilingBanner4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="6.4" z="0" />
+            </transformations>
+
+            <animationref id="crazyBanner4" />
 
             <descendants>
                 <noderef id="banner1" />

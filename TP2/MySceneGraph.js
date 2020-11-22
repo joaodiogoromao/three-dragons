@@ -740,16 +740,13 @@ class MySceneGraph {
             }
 
             // Parse animation replay
-            let replayTag = false;
             let replay = false;
-            if (children[i].children[0].nodeName == "replay"){
-                replayTag = true;
-                replay = this.parseBoolean(children[i].children[0], "value");
-                console.log("Got replay with value " + replay);
+            if (children[i].attributes.replay != undefined){
+                replay = this.parseBoolean(children[i], "replay");
             }
 
             // Parse keyframes
-            this.animations[animationID] = new MyKeyframeAnimation(this.parseKeyframes(children[i].children, replayTag), replay);
+            this.animations[animationID] = new MyKeyframeAnimation(this.parseKeyframes(children[i].children), replay);
         }
 
         this.log("Parsed animations");
@@ -764,11 +761,9 @@ class MySceneGraph {
         transformationObj['rotationZ'] = { angle: 0, axis: 'z' };
     }
 
-    parseKeyframes(keyframeNode, replayTag) {
+    parseKeyframes(keyframeNode) {
         let keyframeArray = [];
         for (let keyframe of keyframeNode){
-            if (keyframe.nodeName == "replay") continue;
-            
             const instant = this.getFloatParameters(keyframe, ['instant']);
             let transformationObj = {};
 

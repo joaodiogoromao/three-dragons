@@ -56,7 +56,7 @@ class MyKeyframeAnimation extends MyAnimation{
         //Get previous and next frame
         //console.log(this.endTime, currentTime);
         let currentTime = this.currentTime(timeSinceProgramStarted);
-        if (Math.floor(currentTime) > this.finalKeyframeInstant) {  // this may happen if the tab becomes inactive (the loop is inactive)
+        if (Math.floor(currentTime) > this.finalKeyframeInstant && this.infiniteReplay) {  // this may happen if the tab becomes inactive (the loop is inactive)
             this.replayCount += Math.floor(currentTime/this.finalKeyframeInstant);
             currentTime = this.currentTime(timeSinceProgramStarted);
         }
