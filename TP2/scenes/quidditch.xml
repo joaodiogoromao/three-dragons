@@ -37,8 +37,8 @@
             <to x="100" y="0" z="140" />
         </perspective>
         <perspective id="barrelRadiusDemo" near="0.1" far="500" angle="60">
-            <from x="180" y="15" z="160" />
-            <to x="180" y="0" z="140" />
+            <from x="190" y="15" z="165" />
+            <to x="190" y="0" z="140" />
         </perspective>
         <perspective id="patchDemo" near="0.1" far="500" angle="60">
             <from x="240" y="15" z="160" />
@@ -266,7 +266,7 @@
             </keyframe>
         </animation>
         
-        <animation id="crazyBanner3" replay="1">
+        <animation id="crazyBanner3" replay="0">
             <keyframe instant="0">
             </keyframe>
             <keyframe instant="1">
@@ -493,6 +493,7 @@
             <descendants>
                 <noderef id="barrelRadiusDemo1" />
                 <noderef id="barrelRadiusDemo2" />
+                <noderef id="barrelRadiusDemo3" />
             </descendants>
         </node>
         <node id="barrelRadiusDemo1">
@@ -525,6 +526,22 @@
  
             <descendants>               
                 <leaf type="defbarrel" base="3" middle="6" height="10" slices="200" stacks="200" />
+            </descendants>
+        </node>
+        <node id="barrelRadiusDemo3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="210" y="6" z="140" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="defbarrel" base="6" middle="3" height="10" slices="200" stacks="200" />
             </descendants>
         </node>
         <node id="patchDemo">

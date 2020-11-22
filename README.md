@@ -27,9 +27,16 @@
 
 -----
 
-### [TP2 - ...](TP2)
-- (items briefly describing main strong points)
+### [TP2 - Sprites, Animations and Surfaces](TP2)
 
+- All features implemented and working well
+- Implemented plane using NURBS, with scaling factors
+- Transparent spritesheets
+- Keyframe animations have the option to be repeated indefinitely
+- All the features from the previous project apply, like the ability to draw the scene despite most errors
+- Scene
+  - The created scene represents a Quidditch field from the Harry Potter saga. Includes a battle animation made with keyframes and sprites, crazy tower flags made with keyframes and a tunnel made with the new barrel primitive. In addition, there are multiple perspectives available, including some that allow the viewing of demos of other functionalities.
+  - [scene link](scenes/quidditch.xml)
 ----
 
 ### [TP3 - ...](TP3)
