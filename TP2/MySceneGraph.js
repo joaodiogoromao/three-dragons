@@ -738,19 +738,41 @@ class MySceneGraph {
                 this.onXMLMinorError("ID must be unique for each animation (conflict: ID = " + animationID + "). Ignoring animations with repeated ids.");
                 continue;
             }
+
+            // Parse animation replay
+            let replayTag = false;
+            let replay = false;
+            if (children[i].children[0].nodeName == "replay"){
+                replayTag = true;
+                replay = this.parseBoolean(children[i].children[0], "value");
+                console.log("Got replay with value " + replay);
+            }
+
             // Parse keyframes
-            this.animations[animationID] = new MyKeyframeAnimation(this.parseKeyframes(children[i].children));
+            this.animations[animationID] = new MyKeyframeAnimation(this.parseKeyframes(children[i].children, replayTag), replay);
         }
 
         this.log("Parsed animations");
         return null;
     }
 
-    parseKeyframes(keyframeNode) {
+    initTransformationObj(transformationObj) {
+        transformationObj['scale'] = { sx: 1, sy: 1, sz: 1 };
+        transformationObj['translation'] = { x: 0, y: 0, z: 0 };
+        transformationObj['rotationX'] = { angle: 0, axis: 'x' };
+        transformationObj['rotationY'] = { angle: 0, axis: 'y' };
+        transformationObj['rotationZ'] = { angle: 0, axis: 'z' };
+    }
+
+    parseKeyframes(keyframeNode, replayTag) {
         let keyframeArray = [];
         for (let keyframe of keyframeNode){
+            if (keyframe.nodeName == "replay") continue;
+            
             const instant = this.getFloatParameters(keyframe, ['instant']);
             let transformationObj = {};
+
+            this.initTransformationObj(transformationObj);  // this inits the object with default values so that keyframes without a certain transformation can also interpolate with next keyframe if it uses that transformation
 
             for (let transformation of keyframe.children){
                 const transf = this.parseTransformation(transformation);

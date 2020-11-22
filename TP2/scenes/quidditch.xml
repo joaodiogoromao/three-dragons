@@ -105,6 +105,9 @@
         <spritesheet id="bonequinho" path="./scenes/images/bonequinho.png" sizeM="8" sizeN="8"/>
         <spritesheet id="explosion" path="./scenes/images/explosion.png" sizeM="4" sizeN="4"/>
         <spritesheet id="explosion1" path="./scenes/images/download.png" sizeM="5" sizeN="5"/>
+        <spritesheet id="purpleSkullSmoke" path="./scenes/images/skull_smoke_purple.png" sizeM="19" sizeN="2"/>
+        <spritesheet id="fireballBlue" path="./scenes/images/fireball_blue.png" sizeM="4" sizeN="10"/>
+        <spritesheet id="harry" path="./scenes/images/harry.png" sizeM="11" sizeN="2"/>
     </spritesheets>
 
 
@@ -160,41 +163,47 @@
             <specular r="0.2" g="0.2" b="0.2" a="1.0" />
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
+        <material id="blackMaterial">
+            <shininess value="0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0" g="0" b="0" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
     </materials>
 
     <animations>
-        <animation id="animation" >
-                <keyframe instant="5">
-                    <translation x="0" y="0" z="0" />
-                    <rotation axis="x" angle="0" />
-                    <rotation axis="y" angle="0" />
-                    <rotation axis="z" angle="0" />
-                    <scale sx="1" sy="1" sz="1" />
-                </keyframe>
+        <animation id="tempAnimation">
+            <replay value="0" />
+            <keyframe instant="2.9">
+                <translation x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
+        <animation id="spellAnimation">
+            <replay value="1" />
+            <keyframe instant="2.9">
+                <translation x="0" y="0" z="0" />
+            </keyframe>
 
-                <keyframe instant="10">
-                    <translation x="0" y="0" z="0" />
-                    <rotation axis="x" angle="0" />
-                    <rotation axis="y" angle="90" />
-                    <rotation axis="z" angle="0" />
-                    <scale sx="1.5" sy="1.5" sz="1.5" />
-                </keyframe>
+            <keyframe instant="3.5">
+                <translation x="1.2" y="0" z="0" />
+            </keyframe>
 
-                <keyframe instant="15">
-                    <translation x="10" y="0" z="0" />
-                    <rotation axis="x" angle="90" />
-                    <rotation axis="y" angle="90" />
-                    <rotation axis="z" angle="0" />
-                    <scale sx="1.5" sy="1.5" sz="1.5" />
-                </keyframe>
+            <keyframe instant="4.1">
+                <translation x="2.5" y="0" z="0" />
+            </keyframe>
 
-                <keyframe instant="18">
-                    <translation x="10" y="0" z="0" />
-                    <rotation axis="x" angle="90" />
-                    <rotation axis="y" angle="90" />
-                    <rotation axis="z" angle="360" />
-                    <scale sx="1.5" sy="1.5" sz="1.5" />
-                </keyframe>
+            <keyframe instant="5">
+                <translation x="5" y="0" z="0" />
+            </keyframe>
+
+            <!--keyframe instant="5">
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="90" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.5" sy="1.5" sz="1.5" />
+            </keyframe-->
         </animation>
     </animations>
 
@@ -217,36 +226,27 @@
                 <noderef id="groundSurface" />
                 <noderef id="scalingFactorDemonstration" />
                 <noderef id="cylinderRadiusDemo" />
-                <noderef id="spritetext" />
-                <noderef id="spriteanim" />
-
-
-                <!--leaf type="patch" npartsU="20" npartsV="20" npointsU="3" npointsV="2">
-                    <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
-                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
-                    <controlpoint xx="0.0" yy="-1.5" zz="3.0" />
-                    <controlpoint xx="0.0" yy="1.5" zz="3.0" />
-                    <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
-                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
-                </leaf-->
-                <noderef id="barrel" />
+                <noderef id="harryAnimation" />
+                <noderef id="skullAnimation" />
+                <noderef id="tunnel" />
             </descendants>
         </node>
-        <node id="barrel">
+        <node id="tunnel">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="genericWood">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
+                <translation x="0" y="0" z="15"/>
             </transformations>
 
             <descendants>
-                <leaf type="defbarrel" base="5" middle="7" height="20" slices="200" stacks="200" />
+                <leaf type="defbarrel" base="3" middle="4" height="5" slices="200" stacks="200" />
             </descendants>
         </node>
-        <node id="spriteanim">
+        <node id="skullAnimation">
             <material id="null" />
 
             <texture id="null">
@@ -254,16 +254,35 @@
             </texture>
 
             <transformations>
-                <translation x="25" y="0" z="25"/>
-                <rotation axis="y" angle="45" />
+                <translation x="-10" y="1" z="0"/>
+                <scale sx="5" sy="5" sz="5" />
+                <rotation axis="y" angle="90" />
+                <translation x="-0.5" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="purpleSkullSmoke" duration="5" startCell="0" endCell="37"/>
+            </descendants>
+
+        </node>
+        <node id="harryAnimation">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="10" y="0" z="0"/>
                 <scale sx="5" sy="5" sz="5" />
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="explosion1" duration="1" startCell="0" endCell="16"/>
+                <leaf type="spriteanim" ssid="harry" duration="5" startCell="0" endCell="20"/>
+                <noderef id="spellAnimation" />
             </descendants>
         </node>
-        <node id="spritetext">
+        <node id="spellAnimation">
             <material id="null" />
 
             <texture id="null">
@@ -271,12 +290,15 @@
             </texture>
 
             <transformations>
-                <translation x="12.5" y="0" z="25"/>
-                <rotation axis="y" angle="45" />
+                <translation x="0" y ="1.25" z="-0.1"/>
+                <rotation axis="x" angle="180" />
+                <scale sx="-1" sy="1" sz="1" />
             </transformations>
 
+            <animationref id="spellAnimation" />
+
             <descendants>
-                <leaf type="spritetext" text="Awesome quidditch field!"/>
+                <leaf type="spriteanim" ssid="fireballBlue" duration="5" startCell="0" endCell="39"/>
             </descendants>
         </node>
         <node id="groundSurface">
@@ -407,6 +429,7 @@
             </texture>
 
             <descendants>
+                <noderef id="tentWelcome" />
                 <noderef id="tentRoof" />
                 <noderef id="tentWalls" />
             </descendants>
@@ -415,6 +438,97 @@
                 <translation x="-10" y="0" z="27" />
                 <rotation axis="y" angle="90" />
             </transformations>
+        </node>
+        <node id="tentWelcome">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="flagPole1" />
+                <noderef id="flagPole2" />
+                <noderef id="welcomeMessage" />
+            </descendants>
+        </node>
+        <node id="welcomeMessage">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="9" z="6"/>
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="welcomeMessageFront" />
+                <noderef id="welcomeMessageBack" />
+            </descendants>
+        </node>
+        <node id="welcomeMessageFront">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="Welcome!"/>
+            </descendants>
+        </node>
+        <node id="welcomeMessageBack">
+            <material id="blackMaterial" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="8" y1="0" x2="0" y2="1"/>
+            </descendants>
+        </node>
+        <node id="flagPole1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="5.5"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole" />
+            </descendants>
+        </node>
+        <node id="flagPole2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="14.5"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole" />
+            </descendants>
         </node>
         <node id="tentRoof">
             <material id="null" />

@@ -22,8 +22,8 @@ class MyDefBarrel extends CGFobject {
     createControlPoints(surfaceNumber) {
         const H = (4/3)*(this.middle-this.base);
         let h = (4/3)*this.base;
-        let alpha = 30*Math.PI/180;
-        if (H < 0 && this.height > 0) alpha *= -1;
+        //let alpha = 30*Math.PI/180;
+        //if (H < 0 && this.height > 0) alpha *= -1;
         
         const ret = [];
         let baseH = this.base + H;
@@ -42,8 +42,8 @@ class MyDefBarrel extends CGFobject {
                 hH = h + H;
             }
             ret.push([base * surfaceNumber, h * surfaceNumber, 0]);
-            ret.push([baseH * surfaceNumber, hH * surfaceNumber, H/Math.tan(alpha) /*this.height / 3*/]);
-        ret.push([baseH * surfaceNumber, hH * surfaceNumber, this.height - (H/Math.tan(alpha)) /* 2 * this.height / 3*/]);
+            ret.push([baseH * surfaceNumber, hH * surfaceNumber, /*H/Math.tan(alpha)*/ this.height / 3]);   // not using the default angle because the barrel wouldn't look like a barrel for some values
+            ret.push([baseH * surfaceNumber, hH * surfaceNumber, /*this.height - (H/Math.tan(alpha))*/ 2 * this.height / 3]);
             ret.push([base * surfaceNumber, h * surfaceNumber, this.height]);
         }
 

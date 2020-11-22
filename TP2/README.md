@@ -12,6 +12,7 @@
 
 - Plane com fatores de escala implementados
 - Spritesheets com transparência
+- Animações têm a opção de serem repetidas infinitamente
 - Scene
   - (Brief description of the created scene)
   - (relative link to the scene)

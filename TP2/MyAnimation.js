@@ -22,16 +22,27 @@ class MyAnimation {
 
 	setAnimationVariables(start, end) {
 		this.startTime = start.instant;
-		this.endTime = end.instant;
 		this.startTrans = start.transf;
+
+		this.endTime = end.instant;
 		this.endTrans = end.transf;
-		this.endedAnimation = false; 
+
+		this.endedAnimation = false;
 		//console.log("Setting animation variables!!!");
 	}
 
 	update(currentTime) {
-		//console.log("Animation update");
-		if (currentTime < this.startTime) return; // animation hasn't started yet
+		//console.log(this.endedAnimation);
+
+		if (currentTime < this.startTime) {
+			this.transfMx = null;
+			return; // animation hasn't started yet
+		}
+		
+		/*if (this.endedAnimation) {
+			console.log("Started but 1 keyframe");
+			return true;
+		}*/
 
 		const elapsedTime = currentTime - this.startTime;
 		let interpolationAmount = elapsedTime / (this.endTime - this.startTime);
@@ -60,7 +71,7 @@ class MyAnimation {
 
 		if (this.startTrans.translation != undefined && this.endTrans.translation != undefined) {
 			let out = vec3.create();
-			vec3.lerp(out, [this.startTrans.translation.x, this.startTrans.translation.y, this.startTrans.translation.x], [this.endTrans.translation.x, this.endTrans.translation.y, this.endTrans.translation.z], interpolationAmount);
+			vec3.lerp(out, [this.startTrans.translation.x, this.startTrans.translation.y, this.startTrans.translation.z], [this.endTrans.translation.x, this.endTrans.translation.y, this.endTrans.translation.z], interpolationAmount);
 			mat4.translate(this.transfMx, this.transfMx, out);
 		}
 		if (this.startTrans.rotationX != undefined && this.endTrans.rotationX != undefined) {

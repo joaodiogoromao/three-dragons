@@ -27,7 +27,7 @@ class MySpriteSheet {
 
     activateCellP(p, activateShader = true){
         let m = p % this.sizeM;
-        let n = Math.floor(p/this.sizeN) % this.sizeN;
+        let n = Math.floor(p/this.sizeM) % this.sizeN;
         this.activateCellMN(m, n, activateShader);
     }
 }
