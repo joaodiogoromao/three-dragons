@@ -40,6 +40,10 @@
             <from x="180" y="15" z="160" />
             <to x="180" y="0" z="140" />
         </perspective>
+        <perspective id="patchDemo" near="0.1" far="500" angle="60">
+            <from x="240" y="15" z="160" />
+            <to x="240" y="0" z="140" />
+        </perspective>
         <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
             <from x="140" y="5" z="160" />
             <to x="140" y="0" z="140" />
@@ -130,12 +134,10 @@
     <!-- imediatamente após o bloco "textures" -->
 
     <spritesheets>
-        <spritesheet id="bonequinho" path="./scenes/images/bonequinho.png" sizeM="8" sizeN="8"/>
-        <spritesheet id="explosion" path="./scenes/images/explosion.png" sizeM="4" sizeN="4"/>
-        <spritesheet id="explosion1" path="./scenes/images/download.png" sizeM="5" sizeN="5"/>
         <spritesheet id="purpleSkullSmoke" path="./scenes/images/skull_smoke_purple.png" sizeM="19" sizeN="2"/>
         <spritesheet id="fireballBlue" path="./scenes/images/fireball_blue.png" sizeM="4" sizeN="10"/>
         <spritesheet id="harry" path="./scenes/images/harry.png" sizeM="11" sizeN="2"/>
+        <spritesheet id="door" path="./scenes/images/door.png" sizeM="3" sizeN="4"/>
     </spritesheets>
 
 
@@ -368,6 +370,7 @@
                 <noderef id="scalingFactorDemonstration" />
                 <noderef id="cylinderRadiusDemo" />
                 <noderef id="barrelRadiusDemo" />
+                <noderef id="patchDemo" />
                 <noderef id="harryAnimation" />
                 <noderef id="skullAnimation" />
                 <noderef id="tunnel" />
@@ -399,7 +402,7 @@
                 <translation x="-10" y="1" z="0"/>
                 <scale sx="5" sy="5" sz="5" />
                 <rotation axis="y" angle="90" />
-                <translation x="-0.5" y="0" z="0" />
+                <translation x="0" y="0.5" z="0" />
             </transformations>
 
             <descendants>
@@ -417,6 +420,7 @@
             <transformations>
                 <translation x="10" y="0" z="0"/>
                 <scale sx="5" sy="5" sz="5" />
+                <translation x="0.5" y="0.5" z="0"/>
             </transformations>
 
             <descendants>
@@ -435,6 +439,7 @@
                 <translation x="0" y ="1.25" z="-0.1"/>
                 <rotation axis="x" angle="180" />
                 <scale sx="-1" sy="1" sz="1" />
+                <translation x="0.5" y="1" z="0"/>
             </transformations>
 
             <animationref id="spellAnimation" />
@@ -520,6 +525,107 @@
  
             <descendants>               
                 <leaf type="defbarrel" base="3" middle="6" height="10" slices="200" stacks="200" />
+            </descendants>
+        </node>
+        <node id="patchDemo">
+            <material id="null" />
+
+            <texture id="test">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+            </transformations>
+ 
+            <descendants>
+                <noderef id="patchDemo1" />
+                <noderef id="patchDemo2" />
+                <noderef id="patchDemo3" />
+            </descendants>
+        </node>
+        <node id="patchDemo1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="230" y="6" z="140" />
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="patch" npartsU="20" npartsV="20" npointsU="3" npointsV="2">
+                    <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+                    <controlpoint xx="0.0" yy="-1.5" zz="3.0" />
+                    <controlpoint xx="0.0" yy="1.5" zz="3.0" />
+                    <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
+                </leaf>
+            </descendants>
+        </node>
+        <node id="patchDemo2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="240" y="6" z="140" />
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="patch" npartsU="20" npartsV="20" npointsU="3" npointsV="4">
+                    <controlpoint xx="-1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="-2.0" yy="-2.0" zz="2.0" />
+                    <controlpoint xx="-2.0" yy="2.0" zz="2.0" />
+                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+
+                    <controlpoint xx="0" yy="0.0" zz="3.0" />
+                    <controlpoint xx="0" yy="-2.0" zz="3.0" />
+                    <controlpoint xx="0" yy="2.0" zz="3.0" />
+                    <controlpoint xx="0" yy="0.0" zz="3.0" />
+
+                    <controlpoint xx="1.5" yy="-1.5" zz="0.0" />
+                    <controlpoint xx="2.0" yy="-2.0" zz="2.0" />
+                    <controlpoint xx="2.0" yy="2.0" zz="2.0" />
+                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
+                </leaf>
+            </descendants>
+        </node>
+        <node id="patchDemo3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="250" y="6" z="140" />
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="patch" npartsU="20" npartsV="20" npointsU="3" npointsV="4">
+                    <controlpoint xx="-2.0" yy="-2.0" zz="1.0" />
+                    <controlpoint xx="-2.0" yy="-1.0" zz="-2.0" />
+                    <controlpoint xx="-2.0" yy="1.0" zz="5.0" />
+                    <controlpoint xx="-2.0" yy="2.0" zz="-1.0" />
+
+                    <controlpoint xx="0.0" yy="-2.0" zz="0.0" />
+                    <controlpoint xx="0.0" yy="-1.0" zz="-1.0" />
+                    <controlpoint xx="0.0" yy="1.0" zz="1.5" />
+                    <controlpoint xx="0.0" yy="2.0" zz="0.0" />
+
+                    <controlpoint xx="2.0" yy="-2.0" zz="-1.0" />
+                    <controlpoint xx="2.0" yy="-1.0" zz="2.0" />
+                    <controlpoint xx="2.0" yy="1.0" zz="-5.0" />
+                    <controlpoint xx="2.0" yy="2.0" zz="1.0" />
+                </leaf>
             </descendants>
         </node>
         <node id="scalingFactorDemonstration">
@@ -621,12 +727,31 @@
                 <noderef id="tentWelcome" />
                 <noderef id="tentRoof" />
                 <noderef id="tentWalls" />
+                <noderef id="tentDoor" />
             </descendants>
 
             <transformations>
                 <translation x="-10" y="0" z="27" />
                 <rotation axis="y" angle="90" />
             </transformations>
+        </node>
+        <node id="tentDoor">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.01" y="0" z="10"/>
+                <scale sx="5" sy="5" sz="5"/>
+                <rotation axis="y" angle="-90" />
+                <translation x="0" y="0.5" z="0"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="spriteanim" ssid="door" duration="1" startCell="0" endCell="11" />
+            </descendants>
         </node>
         <node id="tentWelcome">
             <material id="null" />
@@ -652,7 +777,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="9" z="3"/>
+                <translation x="0" y="9.5" z="10"/>
                 <rotation axis="y" angle="-90" />
             </transformations>
 
@@ -702,7 +827,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="14" y1="0" x2="0" y2="2"/>
+                <leaf type="rectangle" x1="-7" y1="0.5" x2="7" y2="-1.5"/>
             </descendants>
         </node>
         <node id="flagPole1">

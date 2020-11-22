@@ -10,9 +10,9 @@
 ----
 ## Project information
 
-- Plane com fatores de escala implementados
-- Spritesheets com transparência
-- Animações têm a opção de serem repetidas infinitamente
+- Plane with scaling factors implemented
+- Transparent spritesheets
+- Keyframe animations have the option to be repeated indefinitely
 - Scene
   - (Brief description of the created scene)
   - (relative link to the scene)

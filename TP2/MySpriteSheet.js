@@ -1,5 +1,10 @@
 /**
  * @class MySpriteSheet
+ * @constructor
+ * @param {CGFscene} scene - Reference to the scene object
+ * @param {String} texture - Spritesheet texture image path
+ * @param {Number} sizeM - Number of columns of the spritesheet
+ * @param {Number} sizeN - Number of rows of the spritesheet
  */
 class MySpriteSheet {
     constructor(scene, texture, sizeM, sizeN){
@@ -14,10 +19,21 @@ class MySpriteSheet {
         this.spriteTexture = new CGFtexture(scene, texture);
     }
 
+    /**
+     * @method activateShader
+     * Activates the spritesheet shader calling 'setActivateShaderSimple'
+     */
     activateShader() {
         this.scene.setActiveShaderSimple(this.spriteShader);
     }
     
+    /**
+     * @method activateCellMN
+     * Activates a cell in position (m, n) in the spritesheet
+     * @param {Number} m - column of the cell to be activated
+     * @param {Number} n - row of the the cell to be activated
+     * @param {Boolean} activateShader - if True shader is activated. False when called by MySpriteText as shader does not need to be initialized for every character.
+     */
     activateCellMN(m, n, activateShader = true) {
         this.spriteShader.setUniformsValues({ currentM: m, currentN: n });
         if (activateShader) this.activateShader();
@@ -25,6 +41,13 @@ class MySpriteSheet {
         this.scene.spritesheetAppearance.apply();
     }
 
+    /**
+     * @method activateCellP
+     * Activates the nth (represented by p) cell in the spritesheet.
+     * Calculates value of m and n based on p, and calls activateCellMN().
+     * @param {Number} p - position of the cell to be activated
+     * @param {Boolean} activateShader - if True shader is activated. False when called by MySpriteText as shader does not need to be initialized for every character.
+     */
     activateCellP(p, activateShader = true){
         let m = p % this.sizeM;
         let n = Math.floor(p/this.sizeM) % this.sizeN;

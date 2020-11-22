@@ -23,6 +23,14 @@ class MyPatch extends CGFobject {
         this.initBuffers();
     }
 
+	/**
+	 * @method makeSurface
+	 * Manipulates the array of control points given as parameter so that it has the right structure in order to call the function CGFnubsSurface.
+	 * Creates an auxiliar object that represents the patch.
+	 * @param {Number} degreeU number of divisions of the patch in the U direction.
+	 * @param {Number} degreeV number of divisions of the patch in the U direction.
+	 * @param {Array<Number>} controlPoints 
+	 */
     makeSurface(degreeU, degreeV, controlPoints) {
 		const cp = [];
 		for (const i in controlPoints) {
@@ -34,10 +42,18 @@ class MyPatch extends CGFobject {
 		this.obj = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface);
 	}
 
+	/**
+     * @method initBuffers
+     * Calls initBuffer() function of auxiliar object that represents MyPatch
+     */
 	initBuffers() {
 		this.obj.initBuffers();
 	}
 
+	/**
+     * @method display
+     * Calls display() function of auxiliar object that represents MyPatch
+     */
 	display() {
 		this.obj.display();
 	}

@@ -92,9 +92,15 @@ class Node extends CGFobject {
         return res;
     }
 
+    /**
+     * @method update
+     * Calls method update of every node that has an animation.
+     * Calls method update for every MySpriteAnimation object.
+     * @param {Number} timeSinceProgramStarted 
+     */
     update(timeSinceProgramStarted) {
-        if (this.animation != null) this.animation.update(timeSinceProgramStarted);
-        for(const desc of this.descendantObjs) {
+        if (this.animation != null) this.animation.update(timeSinceProgramStarted); // updates the node's animation if it exists
+        for(const desc of this.descendantObjs) { // updates each of node's children
             if (desc.obj instanceof MySpriteAnimation) desc.obj.update(timeSinceProgramStarted);
         }
     }
@@ -148,6 +154,11 @@ class LeafNode extends CGFobject {
         this.obj = obj;
     }
 
+    /**
+     * @method display
+     * Displays the LeafNode, calling @method updateTextCoord if object is an instance of MyRectangle, MyTriangle or MyPlane in order to represent associated textures with correct scale factors.
+     * @param {Object} scaleFactors - object containing scale factors properties.
+     */
     display(scaleFactors) {
         if (this.obj instanceof MyRectangle || this.obj instanceof MyTriangle || this.obj instanceof MyPlane) {
             this.obj.updateTexCoords(scaleFactors);

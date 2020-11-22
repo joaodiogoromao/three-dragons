@@ -209,6 +209,10 @@ class XMLscene extends CGFscene {
         this.setTexture(txt[0]);
     }
 
+    /**
+     * Updates the scene
+     * @param t timestamp in miliseconds
+     */
     update(t) {
         if (this.tStarted == null) {
             this.tStarted = t;

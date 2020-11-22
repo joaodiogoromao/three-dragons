@@ -25,28 +25,38 @@ class MyPlane extends CGFobject {
         this.initBuffers();
     }
 
-    
-
+    /**
+     * @method makeSurface
+     * Creates an auxiliar object that represents MyPlane with the help of the functions CGFnurbsSurface and CGFnurbsObject.
+     * @param {Array<Array<Array<Number>>>} controlvertexes tridimensional array containing the control vertexes of the plane surface.
+     */
     makeSurface(controlvertexes) {
 		let nurbsSurface = new CGFnurbsSurface(1, 1, controlvertexes);
 		this.obj = new CGFnurbsObject(this.scene, this.npartsU, this.npartsV, nurbsSurface);
     }
     
+    /**
+     * @method initBuffers
+     * Calls initBuffer() function of auxiliar object that represents MyPlane
+     */
     initBuffers() {
         this.obj.initBuffers();
     }
 
+    /**
+     * @method display
+     * Calls display() function of auxiliar object that represents MyPlane
+     */
     display() {
         this.obj.display();
     }
 
     /**
 	 * @method updateTexCoords
-	 * Updates the list of texture coordinates of the rectangle
+	 * Updates the list of texture coordinates of the patch
 	 * @param {Array} coords - Array of texture coordinates
 	 */
 	updateTexCoords(coords) {
-		// NEED TO UPDATE THIS
 		const dX = 1 / this.npartsU;
 		const dY = 1 / this.npartsV;
 		if (coords == undefined || typeof coords.afs != 'number' || typeof coords.aft != 'number') {

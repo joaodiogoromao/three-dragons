@@ -77,7 +77,7 @@ class MySceneGraph {
         this.scene.onGraphLoaded();
     }
 
-    /*
+    /**
      * Callback to be executed on any read error, showing an error on the console.
      * @param {string} message
      */
@@ -302,7 +302,7 @@ class MySceneGraph {
 
             const cameraId = this.getNodeID(child);
             if (isNull(cameraId)) continue;
-            //console.log(cameraId);
+
             if (isNotNull(this.cameras[cameraId])) {
                 this.onXMLMinorError("ID must be unique for each camera (conflict: ID = " + cameraId + "). Ignoring repeated ids.");
             }
@@ -593,7 +593,7 @@ class MySceneGraph {
                 continue;
             } 
 
-            //Continue here
+            // Gets path to spritesheet
             var path = this.reader.getString(sprite, 'path');
             if (path == null) {
                 this.onXMLMinorError(`No path defined for spritesheet with id '${spriteID}'.`);
@@ -652,6 +652,7 @@ class MySceneGraph {
             const childNodes = ["shininess", "ambient", "diffuse", "specular", "emissive"];
             for (const a of childNodes) checkList[a] = false;
 
+            // Parses every rgba component of the material
             for (let child of grandChildren) {
                 if (child.nodeName === "shininess") {
                     const res = this.getFloatParameters(child, ['value'], parentObj);
@@ -753,6 +754,11 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * @method initTransformationObj
+     * Populates an array given as parameter with objects containing the default values for each transformation associated with a keyframe
+     * @param {Array<Object>} transformationObj 
+     */
     initTransformationObj(transformationObj) {
         transformationObj['scale'] = { sx: 1, sy: 1, sz: 1 };
         transformationObj['translation'] = { x: 0, y: 0, z: 0 };
@@ -761,6 +767,12 @@ class MySceneGraph {
         transformationObj['rotationZ'] = { angle: 0, axis: 'z' };
     }
 
+    /**
+     * Parses the <keyframe> block.
+     * Creates an array of Keyframe's, creating each keyframe with the associated instant and transformationObj, created with the @method initTransformationObj .
+     * @param {keyframe block element} keyframeNode
+     * @return {Array<Keyframe>} - array of Keyframe objects.
+     */
     parseKeyframes(keyframeNode) {
         let keyframeArray = [];
         for (let keyframe of keyframeNode){
@@ -769,11 +781,12 @@ class MySceneGraph {
 
             this.initTransformationObj(transformationObj);  // this inits the object with default values so that keyframes without a certain transformation can also interpolate with next keyframe if it uses that transformation
 
+            // parse each transformation in the keyframe block
             for (let transformation of keyframe.children){
                 const transf = this.parseTransformation(transformation);
                 transformationObj[transf.type] = transf.params;
             }
-            keyframeArray.push({instant: instant.instant, transf: transformationObj});
+            keyframeArray.push(new Keyframe(instant.instant, transformationObj));
         }
         return keyframeArray;
     }
@@ -960,7 +973,15 @@ class MySceneGraph {
         return descendantCount;
     }
 
+    /**
+     * @method parseTransformation
+     * Parses the <transformation> node.
+     * @param {transformation node block} transformation 
+     * @return Object with properties: type (transformation type) and params (transformation values).
+     */
     parseTransformation(transformation) {
+
+        // Scale tranformation
         if (transformation.nodeName === "scale") {
             const params = ['sx', 'sy', 'sz'];
 
@@ -969,7 +990,10 @@ class MySceneGraph {
             if (isNotNull(res)) {
                 return { type: "scale", params: res };
             }
-        } else if (transformation.nodeName === "translation") {
+        } 
+        
+        // Translation transformation
+        else if (transformation.nodeName === "translation") {
             const params = ['x', 'y', 'z'];
 
             const res = this.getFloatParameters(transformation, params);
@@ -977,7 +1001,10 @@ class MySceneGraph {
             if (isNotNull(res)) {
                 return { type: "translation", params: res };
             }
-        } else if (transformation.nodeName === "rotation") {  
+        } 
+        
+        // Rotation transformation
+        else if (transformation.nodeName === "rotation") {  
             const angle = this.getFloatParameters(transformation, ['angle']);
             const axis = this.getCharParameter(transformation, 'axis');
 
@@ -999,6 +1026,7 @@ class MySceneGraph {
         let transfMx = mat4.create();
         let hadTransformation = false;
         for (let child of transformations) {
+            // Scale transformation
             if (child.nodeName === "scale") {
                 const params = ['sx', 'sy', 'sz'];
 
@@ -1008,7 +1036,9 @@ class MySceneGraph {
                     mat4.scale(transfMx, transfMx, [res.sx, res.sy, res.sz]);
                     hadTransformation = true;
                 }
-            } else if (child.nodeName === "translation") {
+            } 
+            // Translation transformation
+            else if (child.nodeName === "translation") {
                 const params = ['x', 'y', 'z'];
     
                 const res = this.getFloatParameters(child, params, parent);
@@ -1017,7 +1047,9 @@ class MySceneGraph {
                     mat4.translate(transfMx, transfMx, [res.x, res.y, res.z]);
                     hadTransformation = true;
                 }
-            } else if (child.nodeName === "rotation") {    
+            } 
+            // Rotation transformation
+            else if (child.nodeName === "rotation") {    
                 const angle = this.getFloatParameters(child, ['angle'], parent);
                 const axis = this.getCharParameter(child, 'axis');
 
@@ -1027,7 +1059,9 @@ class MySceneGraph {
                     mat4.rotate(transfMx, transfMx, angle.angle*DEGREE_TO_RAD, this.axisCoords[axis]);
                     hadTransformation = true;
                 }
-            } else {
+            } 
+            // No valid transformation
+            else {
                 this.onXMLMinorError(`Child of 'transformations' node of node with id '${parent.id}' has got an invalid nodeName ('${child.nodeName}').`);
             }
         }
@@ -1275,6 +1309,7 @@ class MySceneGraph {
     }
 
     /**
+     * @method displayScene
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {

@@ -1,38 +1,53 @@
 /**
- * @class KeyframeAnimation
+ * @class Keyframe
+ * Holds the keyframe instant and the corresponding transformation matrix
+ */
+class Keyframe {
+    /**
+     * @constructor
+     * @param {Number} instant the instant when the keyframe's transformation matrix must be active
+     * @param {Object} transf the transformation object
+     */
+    constructor(instant, transf) { this.instant = instant; this.transf = transf };
+}
+
+/**
+ * @class MyKeyframeAnimation
+ * @extends MyAnimation
+ * Receices an array of Keyframe objects, and manages them in order to update the MyAnimation parent with the current animation
  */
 class MyKeyframeAnimation extends MyAnimation{
-
+    /**
+     * @constructor
+     * Constructs the parent object with the first two keyframes and stores values in the current class state
+     * @param {Array<Keyframe>} keyframeArray the array with Keyframe objects, doesn't need to be ordered
+     * @param {Boolean} infiniteReplay true if the animation loops, false otherwise
+     */
     constructor(keyframeArray, infiniteReplay = false) {
         if (keyframeArray.length === 0) throw new Error("KeyframeAnimation needs at least 1 keyframe.");
-        else if (keyframeArray.length === 1) {
+        else if (keyframeArray.length === 1) {   // only 1 keyframe
             super(keyframeArray[0], keyframeArray[0]);
         } else {
-            let first = keyframeArray[0], second = keyframeArray[1];
-            for (const kf of keyframeArray) {
-                if (kf.instant < first) {
-                    if (first < second) second = first;
-                    first = kf;
-                } else if (kf.instant < second.instant) {
-                    second = kf;
-                }
-            }
+            keyframeArray.sort((a, b) => a.instant - b.instant); // sorts array by keyframe instant in ascending order
             
-            super(first, second);
+            super(keyframeArray[0], keyframeArray[1]);
         }
         
         this.keyframeArray = keyframeArray;
         this.infiniteReplay = infiniteReplay;
 
-        this.finalKeyframeInstant = this.getAnimationFinalInstant();
-        this.replayCount = 0;
-        //console.log("Hello from the other side.")
+        // how long until the final animation state is reached
+        this.finalKeyframeInstant = this.keyframeArray[this.keyframeArray.length -1].instant;  // array is ordered by instant
+
+        this.replayCount = 0; // the number of times that the animation was repeated (used in case infiniteReplay == false)
     }
 
-    getAnimationFinalInstant() {
-        return this.keyframeArray.reduce((accumulator, current) => current.instant > accumulator.instant ? current : accumulator).instant;
-    }
-
+    /**
+     * @method getPrevNextFrame
+     * Gets the previous and the next keyframe in the animation
+     * @param {Number} currentTime time since animation started in seconds
+     * @return null if next frame is not found, object with 'prev' and 'next' attributes otherwise
+     */
     getPrevNextFrame(currentTime) {
         const previousFrame = this.getPrevFrame(currentTime);
         const nextFrame = this.getNextFrame(currentTime);
@@ -40,43 +55,76 @@ class MyKeyframeAnimation extends MyAnimation{
         return nextFrame === null ? null : {prev: previousFrame, next: nextFrame};
     }
 
+    /**
+     * @method restartAnimation
+     * Restarts the animation. Returns the previous and the next keyframes. Used case 'this.infiniteReplay' is true.
+     * @param {Number} currentTime time since animation started in seconds
+     * @return null if next frame is not found, object with 'prev' and 'next' attributes otherwise
+     */
     restartAnimation(currentTime) {
         this.replayCount++;
-        currentTime -= this.finalKeyframeInstant;
+        currentTime -= this.finalKeyframeInstant;   // updates the current time, taking out the time that the animation took
         return this.getPrevNextFrame(currentTime);
     }
 
+    /**
+     * @method currentTime
+     * Obtains the currentTime (time since animation started) from the time since the program started, taking into account the amount of times that the animation was repeated
+     * @param {Number} timeSinceProgramStarted time since the program started in seconds
+     * @return time since animation started in seconds
+     */
     currentTime(timeSinceProgramStarted) {
-        //console.log("Calculating current time. timeSinceProgramStarted: " + timeSinceProgramStarted + ", replayCount: " + this.replayCount + ", finalKeyFrameInstant: ", this.finalKeyframeInstant)
         return timeSinceProgramStarted - (this.replayCount*this.finalKeyframeInstant);
     }
 
+    /**
+     * @method update
+     * Updates the keyframe animation. Calls super.update, and if the current animation in super is ended, 
+     * reconfigures the super's animation variables to accomodate the next two keyframes in the animation
+     * @param {Number} timeSinceProgramStarted time since the program started in seconds
+     */
     update(timeSinceProgramStarted) {
-        //console.log("KeyframeAnimation update");
-        //Get previous and next frame
-        //console.log(this.endTime, currentTime);
         let currentTime = this.currentTime(timeSinceProgramStarted);
+
+        // resets the currentTime in case this.infiniteReplay is true and there are any inconsistensies
         if (Math.floor(currentTime) > this.finalKeyframeInstant && this.infiniteReplay) {  // this may happen if the tab becomes inactive (the loop is inactive)
             this.replayCount += Math.floor(currentTime/this.finalKeyframeInstant);
             currentTime = this.currentTime(timeSinceProgramStarted);
         }
+
+        // Updates the super's animation variables, if the current super animation is over (Changes to the next two keyframes)
         if (super.update(currentTime)) {
-            //console.log("Next frame: ", nextFrame);
+
+            // in case the previous two keyframes finished interpolating
+            // gets the next two
             let animationVars = this.getPrevNextFrame(currentTime);
+
+            /* if animationVars are null, the keyframe animation is over. If infinite replay is ON, restarts the animation*/
             if (animationVars == null && this.infiniteReplay) animationVars = this.restartAnimation(currentTime);
             if (animationVars == null) return;
 
-            //console.log("Setting animation variables!!");
-            super.setAnimationVariables(animationVars.prev, animationVars.next);
-            //console.log("New vars: " + this.startTime, this.endTime);
+
+            super.setAnimationVariables(animationVars.prev, animationVars.next);   // updates the super's animations
         }
     }
 
+    /**
+     * @method copy
+     * Copies the object
+     * @return the copy
+     */
     copy() {
         return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     }
 
+    /**
+     * @method getPrevFrame
+     * Gets the previous frame in the animation
+     * @param {Number} currentTime time since animation started in seconds
+     * @return the previous frame
+     */
     getPrevFrame(currentTime) {
+        // gets the frame that is closest to the current time, taking preference over frames that are before the current time
         return this.keyframeArray.reduce((accumulator, current) => {
             const accumVar = accumulator.instant - currentTime;
             const currentVar = current.instant - currentTime;
@@ -92,8 +140,14 @@ class MyKeyframeAnimation extends MyAnimation{
         });
     }
     
+    /**
+     * @method getNextFrame
+     * Gets the next frame in the animation
+     * @param {Number} currentTime time since animation started in seconds
+     * @return the next frame
+     */
     getNextFrame(currentTime) {
-        //console.log('getNextFrame current time: ' + currentTime)
+        // the next frame is the first frame in the array that has 'instant' greater than the 'currentTime', because the array is ordered
         for (let i = 0; i < this.keyframeArray.length; i++){
             if (this.keyframeArray[i].instant > currentTime)
                 return this.keyframeArray[i];
