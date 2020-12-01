@@ -1,0 +1,1342 @@
+<lsf>
+    <initials>
+        <reference length="20" />
+        <!-- axis length; "0" means no axis displayed -->
+        <root id="ground" />
+        <!-- identifier of root node of the scene graph; this node -->
+        <!-- must be defined in one of the following NODE declarations -->
+    </initials>
+    <views default="defaultCamera">
+        <!-- at least one of the following type of cameras must be declared -->
+        <perspective id="defaultCamera" near="0.1" far="500" angle="60">
+            <from x="50" y="40" z="10" />
+            <to x="0" y="0" z="0" />
+        </perspective>
+        <perspective id="cylinderRadiusDemo" near="0.1" far="500" angle="60">
+            <from x="100" y="15" z="160" />
+            <to x="100" y="0" z="140" />
+        </perspective>
+        <perspective id="scalingFactorDemo" near="0.1" far="500" angle="60">
+            <from x="140" y="5" z="150" />
+            <to x="140" y="0" z="140" />
+        </perspective>
+        <perspective id="flagDetail" near="0.1" far="500" angle="60">
+            <from x="10.416" y="31" z="17.26" />
+            <to x="7.416" y="28" z="14.26" />
+        </perspective>
+        <perspective id="insideCabin" near="0.1" far="500" angle="60">
+            <from x="0.416" y="17" z="-4.26" />
+            <to x="-7.416" y="16" z="-14.26" />
+        </perspective>
+
+        <perspective id="hoops" near="0.1" far="500" angle="60">
+            <from x="25" y="15" z="0" />
+            <to x="15" y="10" z="0" />
+        </perspective>
+        <ortho id="orthoView"  near="0.1" far="500" left="-50" right="50" top="50" bottom="-50" >
+            <from x="30" y="30" z="30" />
+            <to x="0" y="0" z="0" />
+            <up x="0" y="1" z="0" /> <!-- optional, default 0,1,0 -->
+        </ortho>
+    </views>
+
+    <illumination>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />           <!-- global ambient -->
+        <background r="0" g="0" b="0" a="1.0" />        <!-- background color -->
+    </illumination>
+
+
+    <lights>
+        <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
+        <light id="default-light">            <!-- light identifier -->
+            <enable value="true" />
+            <!-- enable/disable -->
+            <position x="0" y="15" z="0" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />                   <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+        </light>
+
+        <light id="red-light"> 
+            <enable value="false" />
+            <position x="0" y="15" z="0" w="1.0" />
+            <ambient r=".5" g=".5" b=".5" a="1.0" />
+            <diffuse r="1.0" g="0" b="0" a="1.0" />
+            <specular r="1.0" g="0" b="0" a="1.0" />
+        </light>
+
+        <light id="green-light"> 
+            <enable value="false" />
+            <position x="0" y="15" z="0" w="1.0" />
+            <ambient r=".5" g=".5" b=".5" a="1.0" />
+            <diffuse r="0" g="1.0" b="0" a="1.0" />
+            <specular r="0" g="1.0" b="0" a="1.0" />
+        </light>
+
+        <light id="directional-light"> 
+            <enable value="false" />
+            <position x="10" y="10" z="10" w="0" />
+            <ambient r="1" g="1" b="1" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </light>
+    </lights>
+
+    <textures>
+    </textures>
+
+
+    <materials>
+        <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
+         requires a distinct "id". At least one material should be present. -->
+        <material id="defaultMaterial">
+            <shininess value="0" />
+            <ambient r="0.6" g="0" b="0.6" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="metalMaterial">
+            <shininess value="0" />
+            <ambient r="0.4" g="0.8" b="0.4" a="1.0" />
+            <diffuse r="0.01" g="0.01" b="0.01" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+    </materials>
+
+    <nodes>
+        <!-- ** SOME OF NODES THAT ARE REFERENCED HAVE NOT YET BEEN DEFINED ** -->
+        <node id="ground">
+            <!-- next two lines are mandatory -->
+            <material id="defaultMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="1.0" aft="1.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="quidditchField" />
+                <noderef id="tent" />
+                <noderef id="groundSurface" />
+                <noderef id="scalingFactorDemonstration" />
+                <noderef id="cylinderRadiusDemo" />
+            </descendants>
+        </node>
+        <node id="groundSurface">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="rectangle" x1="-30" y1="-30" x2="30" y2="30" />
+            </descendants>
+        </node>
+        <node id="cylinderRadiusDemo">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="60" aft="60" />
+            </texture>
+
+            <transformations>
+                <translation x="100" y="6" z="140" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="cylinder" height="6" topRadius="4" bottomRadius="2" stacks="5" slices="30"/>
+            </descendants>
+        </node>
+        <node id="scalingFactorDemonstration">
+            <material id="null" />
+
+            <texture id="null">
+            </texture>
+
+            <transformations>
+                <translation x="140" y="0" z="140" />
+                <scale sx="0.9" sy="0.9" sz="0.9" />
+            </transformations>
+ 
+            <descendants>
+                <noderef id="sfdemoTR1" />
+                <noderef id="sfdemoTR2" />
+            </descendants>
+        </node>
+        <node id="sfdemoTR1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="4" aft="2" />
+            </texture>
+
+            <transformations>
+            </transformations>
+ 
+            <descendants>
+                <leaf type="rectangle" x1="-10" y1="0" x2="-6" y2="4" />
+                <leaf type="triangle" x1="-5" y1="0" x2="-1" y2="0" x3="-3" y3="4" />
+            </descendants>
+        </node>
+        <node id="sfdemoTR2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.5" aft="0.25" />
+            </texture>
+
+            <transformations>
+            </transformations>
+ 
+            <descendants>
+                <leaf type="rectangle" x1="1" y1="0" x2="5" y2="4" />
+                <leaf type="triangle" x1="6" y1="0" x2="10" y2="0" x3="8" y3="4" />
+            </descendants>
+        </node>
+        <!--
+            **********************************
+            ********** OUTSIDE TENT **********
+            **********************************
+        -->
+        <node id="tent">
+            <material id="tentMaterial" />
+
+            <texture id="null"/>
+
+            <descendants>
+                <noderef id="tentRoof" />
+                <noderef id="tentWalls" />
+            </descendants>
+
+            <transformations>
+                <translation x="-10" y="0" z="27" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+        </node>
+        <node id="tentRoof">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tentTriangle1" />
+                <noderef id="tentTriangle2" />
+                <noderef id="tentParallelogram1" />
+                <noderef id="tentParallelogram2" />
+            </descendants>
+        </node>
+        <node id="tentTriangle1">
+            <material id="null" />
+
+            <texture id="null" />
+            
+            <transformations>
+                <translation x="4" y="5" z="0" />
+                <rotation axis="x" angle="45" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentTriangle" />
+            </descendants>
+        </node>
+        <node id="tentTriangle2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="4" y="5" z="20" />
+                <rotation axis="x" angle="-45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentTriangle" />
+            </descendants>
+        </node>
+        <node id="tentTriangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="-4" y1="0" x2="4" y2="0" x3="0" y3="4.2426" /> <!-- sqrt(18) => sqrt(34)**2 = 4**2 + x**2-->
+            </descendants>
+        </node>
+        <node id="tentParallelogram1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="8" y="5" z="20" />
+                <rotation axis="z" angle="53.13" /> <!-- 90 - arctan(3/4) -->
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentParallelogram" />
+            </descendants>
+        </node>
+        <node id="tentParallelogram2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="5" z="0" />
+                <rotation axis="z" angle="-53.13" /> <!-- 90 - arctan(3/4) -->
+                <rotation axis="y" angle="270" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentParallelogram" />
+            </descendants>
+        </node>
+        <node id="tentParallelogram">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="parallelogramTriangle1" />
+                <noderef id="parallelogramTriangle2" />
+                <noderef id="parallelogramRectangle" />
+            </descendants>
+        </node>
+        <node id="parallelogramTriangle1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="0" y1="0" x2="3" y2="0" x3="3" y3="5" />
+            </descendants>
+        </node>
+        <node id="parallelogramTriangle2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="17" y1="0" x2="20" y2="0" x3="17" y3="5" />
+            </descendants>
+        </node>
+        <node id="parallelogramRectangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="15" aft="15" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="3" y1="0" x2="17" y2="5" />
+            </descendants>
+        </node>
+        <node id="tentWalls">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tentWall1" />
+                <noderef id="tentWall2" />
+                <noderef id="tentWall3" />
+                <noderef id="tentWall4" />
+            </descendants>
+        </node>
+        <node id="tentWall1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="20" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentWall" />
+            </descendants>
+        </node>
+        <node id="tentWall2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="8" y="0" z="20" />
+                <scale sx="1" sy="1" sz="2.5" />
+                <rotation axis="y" angle="-270" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentWall" />
+            </descendants>
+        </node>
+        <node id="tentWall3">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="8" y="0" z="0" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentWall" />
+            </descendants>
+        </node>
+        <node id="tentWall4">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <scale sx="1" sy="1" sz="2.5" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tentWall" />
+            </descendants>
+        </node>
+        <node id="tentWall">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="8" aft="8" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0" y1="0" x2="8" y2="5" />
+            </descendants>
+        </node>
+
+        <!--
+            *************************************
+            ********** QUIDDITCH FIELD **********
+            *************************************
+        -->
+        <node id="quidditchField">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="fieldPlayingArea" />
+                <noderef id="fieldDelimiters" />
+            </descendants>
+        </node>
+        <node id="fieldPlayingArea">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopSetL" />
+                <noderef id="hoopSetR" />
+            </descendants>
+        </node>
+        <node id="fieldDelimiters">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="fieldGroundBarrier" />
+                <noderef id="towerSetT" />
+                <noderef id="towerSetD" />
+            </descendants>
+        </node>
+        <node id="fieldGroundBarrier">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <scale sx="1.6" sy="3" sz="1" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="1.45" outer="15" slices="4" loops="128" /> 
+            </descendants>
+        </node>
+        <!--
+            ********** QUIDDITCH HOOPS **********
+        -->
+        <node id="hoopSetL">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="-15" y="0" z="0" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoop1" />
+                <noderef id="hoop2" />
+                <noderef id="hoop3" />
+            </descendants>
+        </node>
+
+        <node id="hoopSetR">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="15" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoop1" />
+                <noderef id="hoop2" />
+                <noderef id="hoop3" />
+            </descendants>
+        </node>
+        <node id="hoop1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole1" />
+                <noderef id="hoopHole1" />
+            </descendants>
+        </node>
+        <node id="hoopHole1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="11" z="0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopHole" />
+            </descendants>
+        </node>
+        <node id="hoopPole1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <scale sx="0.3" sy="1" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole" />
+            </descendants>
+        </node>
+        <node id="hoop2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="3.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole2" />
+                <noderef id="hoopHole2" />
+            </descendants>
+        </node>
+        <node id="hoopHole2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="9" z="0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopHole" />
+            </descendants>
+        </node>
+        <node id="hoopPole2">
+            <material id="null" />
+
+            <texture id="null" />
+ 
+            <transformations>
+                <scale sx="0.3" sy="0.8" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole" />
+            </descendants>
+        </node>
+        <node id="hoop3">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="-3.5" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole3" />
+                <noderef id="hoopHole3" />
+            </descendants>
+        </node>
+        <node id="hoopHole3">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="7" z="0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopHole" />
+            </descendants>
+        </node>
+        <node id="hoopPole3">
+            <material id="null" />
+
+            <texture id="null" />
+ 
+            <transformations>
+                <scale sx="0.3" sy="0.6" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="hoopPole" />
+            </descendants>
+        </node>
+
+        <node id="hoopPole">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="10" topRadius="0.5" bottomRadius="0.5" stacks="5" slices="20"/>
+            </descendants>
+        </node>
+        <node id="hoopHole">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner=".15" outer="1" slices="16" loops="64" />
+            </descendants>
+        </node>
+        <!--
+            ********** QUIDDITCH TOWERS **********
+        -->
+        <node id="towerSetT">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tower1" />
+                <noderef id="tower2" />
+                <noderef id="tower3" />
+                <noderef id="tower4" />
+            </descendants>
+        </node>
+        <node id="towerSetD">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerSetT" />
+            </descendants>
+        </node>
+        <node id="tower1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="-19.416" y="0" z="-8.816" />
+                <rotation axis="y" angle="43.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tower" />
+            </descendants>
+        </node>
+        <node id="tower2">
+            <material id="metalMaterial" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="-7.74" y="0" z="-14.6" />
+                <rotation axis="y" angle="13" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tower" />
+            </descendants>
+        </node>
+        <node id="tower3">
+            <material id="null" />
+
+            <texture id="null" >
+            </texture>
+
+            <transformations>
+                <translation x="7.74" y="0" z="-14.6" />
+                <rotation axis="y" angle="-13" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tower" />
+            </descendants>
+        </node>
+        <node id="tower4">
+            <material id="metalMaterial" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="19.416" y="0" z="-8.816" />
+                <rotation axis="y" angle="-43.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tower" />
+            </descendants>
+        </node>
+        <node id="tower">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeiling" />
+                <noderef id="towerCabin" />
+                <noderef id="towerBody" />
+            </descendants>
+        </node>
+        <node id="towerCeiling">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="20" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle1" />
+                <noderef id="towerCeilingTriangle2" />
+                <noderef id="towerCeilingTriangle3" />
+                <noderef id="towerCeilingTriangle4" />
+                <noderef id="towerCeilingFlag" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTriangle1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTriangle2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTriangle3">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTriangle4">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="y" angle="270" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingTriangle" />
+            </descendants>
+        </node>
+        <node id="towerCeilingTriangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="4" aft="2" />
+            </texture>
+
+            <transformations>
+                <translation x="-2" y="0" z="-2" />
+                <rotation axis="x" angle="26.56" /><!-- 90 - arctan(4/2) -->
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="2" y3="4.4721" />  <!-- y3 = sqrt(20) -->
+            </descendants>
+        </node>
+        <node id="towerCeilingFlag">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="3" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCeilingPole" />
+                <noderef id="towerCeilingBanner" />
+                <noderef id="flagSphere" />
+            </descendants>
+        </node>
+        <node id="flagSphere">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="6.95" z="0" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.2" slices="15" stacks="15" />
+            </descendants>
+        </node>
+        <node id="towerCeilingPole">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="7" topRadius="0.1" bottomRadius="0.1" stacks="5" slices="10"/>
+            </descendants>
+        </node>
+        <node id="towerCeilingBanner">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="6.4" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="banner1" />
+                <noderef id="banner1back" />
+                <noderef id="banner2" />
+                <noderef id="banner2back" />
+            </descendants>
+        </node>
+        <node id="banner1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="-0.3" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="banner" />
+            </descendants>
+        </node>
+        <node id="banner1back">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="x" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="banner" />
+            </descendants>
+        </node>
+        <node id="banner2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="banner" />
+            </descendants>
+        </node>
+        <node id="banner2back">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0.3" z="0" />
+                <rotation axis="x" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="banner" />
+            </descendants>
+        </node>
+        <node id="banner">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.4" aft="0.2" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="bannerTriangle" />
+                <leaf type="rectangle" x1="0" y1="0" x2="1" y2="0.3" />
+            </descendants>
+        </node>
+        <node id="bannerTriangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="0.4" aft="0.2" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="1" y1="0.3" x2="1" y2="0" x3="1.6" y3="0.15" />
+            </descendants>
+        </node>
+        <node id="towerBody">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="towerBodyWall1" />
+                <noderef id="towerBodyWall2" />
+                <noderef id="towerBodyWall3" />
+                <noderef id="towerBodyWall4" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="2" y="0" z="0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall3">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="-2" y="0" z="0" />
+                <rotation axis="y" angle="270" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall4">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="-2" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerBodyWall" />
+            </descendants>
+        </node>
+        <node id="towerBodyWall">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="4" aft="2" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-2" y1="0" x2="2" y2="12" />
+            </descendants>
+        </node>
+        <node id="towerCabin">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="12" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="towerCabinRoof" /> <!-- One needs to be turned upside down -->
+                <noderef id="towerCabinStands" />
+            </descendants>
+        </node>
+        <node id="towerCabinRoof">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="8" z="0" />
+                <scale sx="-1" sy="1" sz="-1" />
+                <rotation axis="x" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cabinStructure" />
+            </descendants>
+        </node>
+        <node id="towerCabinStands">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="cabinStructure" />
+                <noderef id="cabinStands" />
+            </descendants>
+        </node>
+        <node id="cabinStructure">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="cabinWall1" />
+                <noderef id="cabinWall2" />
+                <noderef id="cabinBackWall" />
+                <noderef id="cabinFloor" />
+            </descendants>
+        </node>
+        <node id="cabinFloor">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+                <scale sx="4" sy="4" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="standsRectangle" />
+            </descendants>
+        </node>
+        <node id="cabinWall1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="-2" y="0" z="-2" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wallTriangle" />
+            </descendants>
+        </node>
+        <node id="cabinWall2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="2" y="0" z="-2" />
+                <scale sx="1" sy="1" sz="-1" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wallTriangle" />
+            </descendants>
+        </node>
+        <node id="cabinStands">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="cabinStandStep1" />
+                <noderef id="cabinStandStep2" />
+            </descendants>
+        </node>
+        <node id="cabinStandStep2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="1" z="-2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cabinStandStepRect1" />
+                <noderef id="cabinStandStepRect2" />
+            </descendants>
+        </node>
+        <node id="cabinStandStep1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0" z="-1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cabinStandStepRect1" />
+                <noderef id="cabinStandStepRect2" />
+            </descendants>
+        </node>
+        <node id="cabinStandStepRect1">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="0.5" z="1" />
+                <scale sx="4" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="standsRectangle" />
+            </descendants>
+        </node>
+
+        <node id="cabinStandStepRect2">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="1" z="0.5" />
+                <rotation axis="x" angle="-90" />
+                <scale sx="4" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="standsRectangle" />
+            </descendants>
+        </node>
+        <node id="cabinBackWall">
+            <material id="null" />
+
+            <texture id="null" />
+
+            <transformations>
+                <translation x="0" y="2" z="-2" />
+                <rotation axis="y" angle="180" />
+                <scale sx="4" sy="4" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="standsRectangle" />
+            </descendants>
+        </node>
+        <node id="wallTriangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="4" aft="2" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="0" y1="0" x2="4" y2="0" x3="0" y3="4" />
+                <leaf type="triangle" x1="4" y1="0" x2="0" y2="0" x3="0" y3="4" />
+            </descendants>
+        </node>
+        <node id="standsRectangle">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification aft="0.5" afs="1"/>
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+                <leaf type="rectangle" x1="-0.5" y1="0.5" x2="0.5" y2="-0.5" />
+            </descendants>
+        </node>
+        <!--
+            ******* NEW NODE TEMPLATE *******
+            <node id="">
+                <material id="null" />
+
+                <texture id="null" />
+
+                <descendants>
+
+                </descendants>
+            </node>
+        -->
+        <!--
+            ******* Transformations *******
+            <translation x="ff" y="ff" z="ff" />
+            <rotation axis="cc" angle="ff" />
+            <scale sx="ff" sy="ff" sz="ff" />
+        -->
+    </nodes>
+</lsf>
