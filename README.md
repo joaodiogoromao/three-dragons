@@ -39,6 +39,6 @@
   - [scene link](scenes/quidditch.xml)
 ----
 
-### [TP3 - ...](TP3)
+### [TP3 - 3D Game Interfaces](TP3)
 - (items briefly describing main strong points)
 
