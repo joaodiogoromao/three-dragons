@@ -1,0 +1,8 @@
+
+ground
+    board
+
+board
+    plane (textura dos quadrados)
+    relevo que sustenta a board
+
