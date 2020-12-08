@@ -23,7 +23,7 @@ class MyBoard extends CGFobject {
         for (let row = 0; row < this.nRows; row++) {
             this.scene.pushMatrix();
             for (let col = 0; col < this.nCols; col++) {
-                if (col+row % 2 == 0)
+                if ((col+row) % 2 == 0)
                     this.whiteTileObj.display();
                 else
                     this.blackTileObj.display();

@@ -35,6 +35,8 @@
     <textures>
         <texture id="gameBoard" path="./scenes/images/board.jpg" />
         <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
+        <texture id="whiteTileTexture" path="./scenes/images/whiteTile.jpg" />
+        <texture id="blackTileTexture" path="./scenes/images/blackTile.jpg" />
     </textures>
 
     <spritesheets/>
@@ -155,7 +157,7 @@
         <node id="whiteTile">
             <material id="woodMaterial" />
 
-            <texture id="clear">
+            <texture id="whiteTileTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -170,7 +172,7 @@
         <node id="blackTile">
             <material id="woodMaterial" />
 
-            <texture id="clear">
+            <texture id="blackTileTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
