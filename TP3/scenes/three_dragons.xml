@@ -152,20 +152,49 @@
                 <noderef id="gameBoardSupportStructure" />
             </descendants>
         </node>
-        <node id="gameBoardSurface">
-            <material id="null" />
+        <node id="whiteTile">
+            <material id="woodMaterial" />
 
-            <texture id="gameBoard">
+            <texture id="clear">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <scale sx="9" sy="1" sz="9" />
-                <translation x="0" y="0.3" z="0" />
+                <translation x="0.5" y="0" z="0.5" />
             </transformations>
 
             <descendants>
                 <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        <node id="blackTile">
+            <material id="woodMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        <node id="gameBoardSurface">       
+            <material id="woodMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.3" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="board" whiteTile="whiteTile" blackTile="blackTile" width="9" height="9" />
             </descendants>
         </node>
         <node id="gameBoardSupportStructure">

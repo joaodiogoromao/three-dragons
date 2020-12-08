@@ -186,6 +186,21 @@ function getBarrelPrimitive(sceneGraph, node, parent) {
 }
 
 
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @return the primitive object if args are valid; null otherwise
+ */
+function getBoardPrimitive(sceneGraph, node, parent) {
+    const whiteTile = sceneGraph.reader.getString(node, 'whiteTile');
+    const blackTile = sceneGraph.reader.getString(node, 'blackTile');
+    
+    const dimensions = sceneGraph.getIntegerParameters(node, ['width', 'height'], parent);
+    return new MyBoard(sceneGraph.scene, whiteTile, blackTile, dimensions.width, dimensions.height);
+}
+
+
 // Establishes correspondence between a leaf's type 
 // and the function that creates its primitive
 const leafObjGenerator = {
@@ -198,5 +213,6 @@ const leafObjGenerator = {
     spriteanim: getSpriteAnimationPrimitive,
     plane: getPlanePrimitive,
     defbarrel: getBarrelPrimitive,
-    patch: getPatchPrimitive
+    patch: getPatchPrimitive,
+    board: getBoardPrimitive
 }

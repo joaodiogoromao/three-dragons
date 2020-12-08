@@ -80,6 +80,12 @@ class Node extends CGFobject {
      * @param {array} array that maps ids to objects
      */
     correspondIdsToObjects(objMap) {
+        for (let obj of this.descendantObjs) {
+            if (obj instanceof LeafNode && obj.obj instanceof MyBoard) {
+                obj.obj.correspondIdsToObjects(objMap);
+            }
+        }
+
         let res = [];
         for (let id of this.descendantIds) {
             const obj = objMap[id];

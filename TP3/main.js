@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }	 
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'parser/MySceneGraph.js', 'MyInterface.js', 'primitives/MyRectangle.js', 'parser/MyGraphNode.js', 'parser/MyLeafObjGenerator.js', 'primitives/MyTorus.js', 'primitives/MyCylinder.js', 'primitives/MyTriangle.js', 'primitives/MySphere.js', 'animation/MyAnimation.js', 'animation/MyKeyframeAnimation.js', 'sprites/MySpriteSheet.js', 'sprites/MySpriteText.js', 'animation/MySpriteAnimation.js', 'primitives/MyPlane.js', 'primitives/MyPatch.js', 'primitives/MyDefBarrel.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'parser/MySceneGraph.js', 'MyInterface.js', 'primitives/MyRectangle.js', 'parser/MyGraphNode.js', 'parser/MyLeafObjGenerator.js', 'primitives/MyTorus.js', 'primitives/MyCylinder.js', 'primitives/MyTriangle.js', 'primitives/MySphere.js', 'primitives/MyBoard.js', 'animation/MyAnimation.js', 'animation/MyKeyframeAnimation.js', 'sprites/MySpriteSheet.js', 'sprites/MySpriteText.js', 'animation/MySpriteAnimation.js', 'primitives/MyPlane.js', 'primitives/MyPatch.js', 'primitives/MyDefBarrel.js',
 
 main=function()
 {
