@@ -138,5 +138,9 @@ class MyAnimation {
 		return true;
 	}
 
+	getMatrix() {
+		return this.transfMx;
+	}
+
 
 }
