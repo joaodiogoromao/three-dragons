@@ -35,8 +35,27 @@
     <textures>
         <texture id="gameBoard" path="./scenes/images/board.jpg" />
         <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
-        <texture id="whiteTileTexture" path="./scenes/images/whiteTile.jpg" />
-        <texture id="blackTileTexture" path="./scenes/images/blackTile.jpg" />
+        <texture id="lightTileTexture" path="./scenes/images/whiteTile.jpg" />
+        <texture id="darkTileTexture" path="./scenes/images/blackTile.jpg" />
+
+        <texture id="blackTexture" path="./scenes/images/blackTexture.jpg" />
+        <texture id="whitishTexture" path="./scenes/images/whitishTexture.jpg" />
+
+        <!-- black dice -->
+        <texture id="blackDice1" path="./scenes/images/dice/blackDice1.jpg" />
+        <texture id="blackDice2" path="./scenes/images/dice/blackDice2.jpg" />
+        <texture id="blackDice3" path="./scenes/images/dice/blackDice3.jpg" />
+        <texture id="blackDice4" path="./scenes/images/dice/blackDice4.jpg" />
+        <texture id="blackDice5" path="./scenes/images/dice/blackDice5.jpg" />
+        <texture id="blackDice6" path="./scenes/images/dice/blackDice6.jpg" />
+
+        <!-- white dice -->
+        <texture id="whiteDice1" path="./scenes/images/dice/whiteDice1.jpg" />
+        <texture id="whiteDice2" path="./scenes/images/dice/whiteDice2.jpg" />
+        <texture id="whiteDice3" path="./scenes/images/dice/whiteDice3.jpg" />
+        <texture id="whiteDice4" path="./scenes/images/dice/whiteDice4.jpg" />
+        <texture id="whiteDice5" path="./scenes/images/dice/whiteDice5.jpg" />
+        <texture id="whiteDice6" path="./scenes/images/dice/whiteDice6.jpg" />
     </textures>
 
     <spritesheets/>
@@ -121,7 +140,6 @@
             <descendants>
                 <noderef id="gameBoard" />
                 <noderef id="groundSurface" />
-                <noderef id="dice" />
             </descendants>
         </node>
         <node id="groundSurface">       
@@ -157,12 +175,12 @@
         <node id="whiteTile">
             <material id="woodMaterial" />
 
-            <texture id="whiteTileTexture">
+            <texture id="lightTileTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <translation x="0.5" y="0" z="0.5" />
+                <translation x="0.5" y="0" z="0.5" /> 
             </transformations>
 
             <descendants>
@@ -172,7 +190,7 @@
         <node id="blackTile">
             <material id="woodMaterial" />
 
-            <texture id="blackTileTexture">
+            <texture id="darkTileTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -196,7 +214,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="board" whiteTile="whiteTile" blackTile="blackTile" width="9" height="9" />
+                <leaf type="board" whiteTile="whiteTile" blackTile="blackTile" whiteDice="whiteDice" blackDice="blackDice" width="9" height="9" />
             </descendants>
         </node>
         <node id="gameBoardSupportStructure">
@@ -341,7 +359,7 @@
             </descendants>
         </node>
 
-        <node id="dice">
+        <node id="blackDice">
             <material id="defaultMaterial" />
 
             <texture id="null">
@@ -349,21 +367,41 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.66" z="0" />
                 <scale sx="0.6" sy="0.6" sz="0.6" />
             </transformations>
 
             <descendants>
-                <noderef id="topFace" />
-                <noderef id="bottomFace" />
-                <noderef id="diceSideFace1" />
-                <noderef id="diceSideFace2" />
-                <noderef id="diceSideFace3" />
-                <noderef id="diceSideFace4" />
+                <noderef id="topFaceBlack" />
+                <noderef id="bottomFaceBlack" />
+                <noderef id="diceSideFace1Black" />
+                <noderef id="diceSideFace2Black" />
+                <noderef id="diceSideFace3Black" />
+                <noderef id="diceSideFace4Black" />
             </descendants>
         </node>
 
-        <node id="topFace">
+        <node id="whiteDice">
+            <material id="defaultMaterial" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <scale sx="0.6" sy="0.6" sz="0.6" />
+            </transformations>
+
+            <descendants>
+                <noderef id="topFaceWhite" />
+                <noderef id="bottomFaceWhite" />
+                <noderef id="diceSideFace1White" />
+                <noderef id="diceSideFace2White" />
+                <noderef id="diceSideFace3White" />
+                <noderef id="diceSideFace4White" />
+            </descendants>
+        </node>
+
+        <node id="horizontalFaceBlack">
             <material id="null" />
 
             <texture id="null">
@@ -375,16 +413,63 @@
 
             <descendants>
                 <noderef id="topFaceRectangle" />
-                <noderef id="scFace1" />
-                <noderef id="scFace2" />
-                <noderef id="scFace3" />
-                <noderef id="scFace4" />
+                <noderef id="scFace1Black" />
+                <noderef id="scFace2Black" />
+                <noderef id="scFace3Black" />
+                <noderef id="scFace4Black" />
             </descendants>
         </node>
-        <node id="diceSideFace4">
+        <node id="horizontalFaceWhite">
             <material id="null" />
 
             <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="topFaceRectangle" />
+                <noderef id="scFace1White" />
+                <noderef id="scFace2White" />
+                <noderef id="scFace3White" />
+                <noderef id="scFace4White" />
+            </descendants>
+        </node>
+        <node id="topFaceBlack">
+            <material id="null" />
+
+            <texture id="blackDice1">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="horizontalFaceBlack" />
+            </descendants>
+        </node>
+        <node id="bottomFaceBlack">
+            <material id="null" />
+
+            <texture id="blackDice6">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="horizontalFaceBlack" />
+            </descendants>
+        </node>
+        <node id="diceSideFace4Black">
+            <material id="null" />
+
+            <texture id="blackDice5">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -394,14 +479,13 @@
             </transformations>
 
             <descendants>
-                <noderef id="sideCylinder" />
-                <noderef id="topFaceRectangle" />
+                <noderef id="diceSideFaceBlack" />
             </descendants>
         </node>
-        <node id="diceSideFace3">
+        <node id="diceSideFace3Black">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="blackDice3">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -411,14 +495,13 @@
             </transformations>
 
             <descendants>
-                <noderef id="sideCylinder" />
-                <noderef id="topFaceRectangle" />
+                <noderef id="diceSideFaceBlack" />
             </descendants>
         </node>
-        <node id="diceSideFace2">
+        <node id="diceSideFace2Black">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="blackDice2">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -428,14 +511,13 @@
             </transformations>
 
             <descendants>
-                <noderef id="sideCylinder" />
-                <noderef id="topFaceRectangle" />
+                <noderef id="diceSideFaceBlack" />
             </descendants>
         </node>
-        <node id="diceSideFace1">
+        <node id="diceSideFace1Black">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="blackDice4">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -444,11 +526,102 @@
             </transformations>
 
             <descendants>
-                <noderef id="sideCylinder" />
-                <noderef id="topFaceRectangle" />
+                <noderef id="diceSideFaceBlack" />
             </descendants>
         </node>
-        <node id="diceSideFace">
+        <node id="topFaceWhite">
+            <material id="null" />
+
+            <texture id="whiteDice1">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="horizontalFaceWhite" />
+            </descendants>
+        </node>
+        <node id="bottomFaceWhite">
+            <material id="null" />
+
+            <texture id="whiteDice6">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="horizontalFaceWhite" />
+            </descendants>
+        </node>
+        <node id="diceSideFace4White">
+            <material id="null" />
+
+            <texture id="whiteDice5">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="270" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="diceSideFaceWhite" />
+            </descendants>
+        </node>
+        <node id="diceSideFace3White">
+            <material id="null" />
+
+            <texture id="whiteDice3">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="diceSideFaceWhite" />
+            </descendants>
+        </node>
+        <node id="diceSideFace2White">
+            <material id="null" />
+
+            <texture id="whiteDice2">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="diceSideFaceWhite" />
+            </descendants>
+        </node>
+        <node id="diceSideFace1White">
+            <material id="null" />
+
+            <texture id="whiteDice4">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="diceSideFaceWhite" />
+            </descendants>
+        </node>
+        <node id="diceSideFaceBlack">
             <material id="null" />
 
             <texture id="null">
@@ -458,7 +631,21 @@
             <transformations/>
 
             <descendants>
-                <noderef id="sideCylinder" />
+                <noderef id="sideCylinderBlack" />
+                <noderef id="topFaceRectangle" />
+            </descendants>
+        </node>
+        <node id="diceSideFaceWhite">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations/>
+
+            <descendants>
+                <noderef id="sideCylinderWhite" />
                 <noderef id="topFaceRectangle" />
             </descendants>
         </node>
@@ -477,7 +664,7 @@
                 <leaf type="plane" npartsU="50" npartsV="50" />
             </descendants>
         </node>
-        <node id="scFace1">
+        <node id="scFace1Black">
             <material id="null" />
 
             <texture id="null">
@@ -489,10 +676,25 @@
             </transformations>
 
             <descendants>
-                <noderef id="sphereCylinderDiceFace" />
+                <noderef id="sphereCylinderDiceFaceBlack" />
             </descendants>
         </node>
-        <node id="scFace2">
+        <node id="scFace1White">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="270" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sphereCylinderDiceFaceWhite" />
+            </descendants>
+        </node>
+        <node id="scFace2Black">
             <material id="null" />
 
             <texture id="null">
@@ -504,10 +706,25 @@
             </transformations>
 
             <descendants>
-                <noderef id="sphereCylinderDiceFace" />
+                <noderef id="sphereCylinderDiceFaceBlack" />
             </descendants>
         </node>
-        <node id="scFace3">
+        <node id="scFace2White">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sphereCylinderDiceFaceWhite" />
+            </descendants>
+        </node>
+        <node id="scFace3Black">
             <material id="null" />
 
             <texture id="null">
@@ -519,10 +736,25 @@
             </transformations>
 
             <descendants>
-                <noderef id="sphereCylinderDiceFace" />
+                <noderef id="sphereCylinderDiceFaceBlack" />
             </descendants>
         </node>
-        <node id="scFace4">
+        <node id="scFace3White">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="sphereCylinderDiceFaceWhite" />
+            </descendants>
+        </node>
+        <node id="scFace4Black">
             <material id="null" />
 
             <texture id="null">
@@ -532,10 +764,23 @@
             <transformations/>
 
             <descendants>
-                <noderef id="sphereCylinderDiceFace" />
+                <noderef id="sphereCylinderDiceFaceBlack" />
             </descendants>
         </node>
-        <node id="sphereCylinderDiceFace">
+        <node id="scFace4White">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations/>
+
+            <descendants>
+                <noderef id="sphereCylinderDiceFaceWhite" />
+            </descendants>
+        </node>
+        <node id="sphereCylinderDiceFaceBlack">
             <material id="null" />
 
             <texture id="null">
@@ -546,14 +791,29 @@
             </transformations>
 
             <descendants>
-                <noderef id="cornerSphere" />
-                <noderef id="sideCylinder" />
+                <noderef id="cornerSphereBlack" />
+                <noderef id="sideCylinderBlack" />
             </descendants>
         </node>
-        <node id="cornerSphere">
+        <node id="sphereCylinderDiceFaceWhite">
             <material id="null" />
 
             <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="cornerSphereWhite" />
+                <noderef id="sideCylinderWhite" />
+            </descendants>
+        </node>
+        <node id="cornerSphereBlack">
+            <material id="null" />
+
+            <texture id="blackTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -565,10 +825,10 @@
                 <leaf type="sphere" radius="0.1" slices="40" stacks="40" />
             </descendants>
         </node>
-        <node id="sideCylinder">
+        <node id="sideCylinderBlack">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="blackTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -580,19 +840,34 @@
                 <leaf type="cylinder" height="1" topRadius="0.1" bottomRadius="0.1" stacks="5" slices="20" />
             </descendants>
         </node>
-        <node id="bottomFace">
+        <node id="cornerSphereWhite">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="whitishTexture">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="180" />
+                <translation x="0.5" y="0.5" z="-0.5" />
             </transformations>
 
             <descendants>
-                <noderef id="topFace" />
+                <leaf type="sphere" radius="0.1" slices="40" stacks="40" />
+            </descendants>
+        </node>
+        <node id="sideCylinderWhite">
+            <material id="null" />
+
+            <texture id="whitishTexture">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0.5" y="0.5" z="-0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1" topRadius="0.1" bottomRadius="0.1" stacks="5" slices="20" />
             </descendants>
         </node>
         

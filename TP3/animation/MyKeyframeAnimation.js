@@ -32,6 +32,7 @@ class MyKeyframeAnimation extends MyAnimation{
             
             super(keyframeArray[0], keyframeArray[1]);
         }
+        console.log(keyframeArray)
         
         this.keyframeArray = keyframeArray;
         this.infiniteReplay = infiniteReplay;

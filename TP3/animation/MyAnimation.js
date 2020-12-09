@@ -54,6 +54,7 @@ class MyAnimation {
 		// if the 'start' instant hasn't been reached yet
 		// OBJECT DOESN'T APPEAR
 		if (currentTime < this.startTime) {
+			//console.log("Not started yet");
 			this.transfMx = null;
 			return;
 		}
@@ -67,7 +68,7 @@ class MyAnimation {
 		} else if (currentTime > this.endTime) return;   // if the end instant has been surpassed and the end frame was drawn; 
 														 // it means that the animation is over and it maintain its current transformation matrix
 
-
+		//console.log("Continuing...");
 		/* Starting calculation of current transformation matrix */
 		this.transfMx = mat4.create();
 

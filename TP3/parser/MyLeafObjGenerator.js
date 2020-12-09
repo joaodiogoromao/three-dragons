@@ -194,10 +194,28 @@ function getBarrelPrimitive(sceneGraph, node, parent) {
  */
 function getBoardPrimitive(sceneGraph, node, parent) {
     const whiteTile = sceneGraph.reader.getString(node, 'whiteTile');
+    if (isNull(whiteTile)) {
+        sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a whiteTile id.`);
+        return;
+    }
     const blackTile = sceneGraph.reader.getString(node, 'blackTile');
+    if (isNull(blackTile)) {
+        sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a blackTile id.`);
+        return;
+    }
+    const whiteDice = sceneGraph.reader.getString(node, 'whiteDice');
+    if (isNull(whiteDice)) {
+        sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a whiteDice id.`);
+        return;
+    }
+    const blackDice = sceneGraph.reader.getString(node, 'blackDice');
+    if (isNull(blackDice)) {
+        sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a blackDice id.`);
+        return;
+    }
     
     const dimensions = sceneGraph.getIntegerParameters(node, ['width', 'height'], parent);
-    return new MyBoard(sceneGraph.scene, whiteTile, blackTile, dimensions.width, dimensions.height);
+    return new MyBoard(sceneGraph.scene, whiteTile, blackTile, whiteDice, blackDice, dimensions.width, dimensions.height);
 }
 
 

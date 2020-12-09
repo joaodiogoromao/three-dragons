@@ -39,6 +39,7 @@ class MySceneGraph {
 
         this.idRoot = null; // The id of the root element.
         this.objRoot = null;
+        this.board = null;
 
         this.axisCoords = [];
         this.axisCoords['x'] = [1, 0, 0];
@@ -961,6 +962,14 @@ class MySceneGraph {
             } else if (child.nodeName === "leaf") {
                 const leafObj = this.parseLeafNode(child, node);
                 if (leafObj == null) continue;
+                
+                if (leafObj instanceof MyBoard) {
+                    if (this.board != null) {
+                        this.onXMLMinorError("It is only possible to have 1 board.");
+                        continue;
+                    }
+                    this.board = leafObj;
+                }
 
                 node.addDescendantObj(new LeafNode(this.scene, leafObj));
 
