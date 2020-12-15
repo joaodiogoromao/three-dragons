@@ -18,8 +18,9 @@ class MyStatePiecePicked extends MyState {
                         const endPos = { x: ((id-1)%9)+1, z: Math.floor((id-1)/9)+1 };
 
                         if (isNaN(endPos.x) || isNaN(endPos.z)) continue;
-                        const animation = new MyLinearAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, this.pickedPiece, 2, 20);
+                        const animation = new MyLinearAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, this.pickedPiece, 2, 60);
                         this.piece.animation = animation;
+                        animation.update(timeSinceProgramStarted);
                         this.piece.position = endPos;
                         this.piece = null;
                         this.game.setState(new MyStateMoving(this.scene, this.game, animation));
