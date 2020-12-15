@@ -102,7 +102,7 @@ class MyKeyframeAnimation extends MyAnimation{
 
             /* if animationVars are null, the keyframe animation is over. If infinite replay is ON, restarts the animation*/
             if (animationVars == null && this.infiniteReplay) animationVars = this.restartAnimation(currentTime);
-            if (animationVars == null) return;
+            if (animationVars == null) return true;
 
 
             super.setAnimationVariables(animationVars.prev, animationVars.next);   // updates the super's animations

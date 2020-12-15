@@ -1,9 +1,9 @@
 
 
 class MyGame {
-    constructor(board, state) {
+    constructor(board, scene) {
         this.board = board;
-        this.setState(state);
+        this.setState(new MyStateWaiting(scene, this));
     }
 
     setState(state) {
