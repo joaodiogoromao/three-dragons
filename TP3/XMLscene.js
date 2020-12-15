@@ -111,7 +111,7 @@ class XMLscene extends CGFscene {
 
         this.interface.createInterface();
 
-        this.game = new MyGame(this, this.graph.board);
+        this.game = new MyGame(this.graph.board, this);
 
         this.sceneInited = true;
         this.setUpdatePeriod(30);

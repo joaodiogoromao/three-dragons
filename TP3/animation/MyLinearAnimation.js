@@ -12,17 +12,13 @@ class MyLinearAnimation extends MyKeyframeAnimation {
      * @param {Number} duration the duration of the animation
      */
     constructor(scene, currentTime, xOffset, zOffset, object, duration, frameNum) {
-        const initTransformationObj = function(translation) {
+        const initTransformationObj = function (translation) {
             let transformationObj = {}
-            transformationObj['scale'] = { sx: 1, sy: 1, sz: 1 };
-            transformationObj['translation'] = {...translation};
-            transformationObj['rotationX'] = { angle: 0, axis: 'x' };
-            transformationObj['rotationY'] = { angle: 0, axis: 'y' };
-            transformationObj['rotationZ'] = { angle: 0, axis: 'z' };
+            transformationObj['translation'] = { ...translation };
             return transformationObj;
         }
         console.log(xOffset, zOffset);
-        const calculateKeyframeArray = function() {
+        const calculateKeyframeArray = function () {
             let xOffsetDelta = 0, zOffsetDelta = 0;
             let keyframes = [];
             let initialTime = currentTime;
@@ -30,18 +26,27 @@ class MyLinearAnimation extends MyKeyframeAnimation {
             let timeOffset = (finalTime - initialTime) / frameNum;
             let time = initialTime;
 
+            let radius = Math.sqrt(xOffset * xOffset + zOffset * zOffset) / 2;
+
             zOffsetDelta = (zOffset) / frameNum;
             xOffsetDelta = (xOffset) / frameNum;
 
             for (let i = 0; i < frameNum; i++) {
-                let translation = {x: 0, y: 0, z: 0};
-                translation.x = i*xOffsetDelta;
-                translation.z = i*zOffsetDelta;
-                /*let value = currentValues.z == 0 ? currentValues.x : currentValues.z;
-                currentValues.y = Math.sqrt(radius*radius - value*value);*/
-                time = i*timeOffset + initialTime;
+                let translation = { x: 0, y: 0, z: 0 };
+                translation.x = i * xOffsetDelta - xOffset;
+                translation.z = i * zOffsetDelta - zOffset;
+
+                let currentDistance = Math.sqrt(translation.x * translation.x + translation.z * translation.z) / 2;
+                console.log(radius * radius - currentDistance * currentDistance);
+                console.log(radius, currentDistance);
+                translation.y = Math.sqrt(radius * radius - currentDistance * currentDistance);
+
+                time = i * timeOffset + initialTime;
                 keyframes.push(new Keyframe(time, initTransformationObj(translation)));
             }
+            keyframes.push(new Keyframe(finalTime, initTransformationObj({ x: 0, y: 0, z: 0 })));
+
+            //console.log(keyframes);
             return keyframes;
         }
 
@@ -70,7 +75,7 @@ class MyLinearAnimation extends MyKeyframeAnimation {
 
     buildKeyframes() {
         let radius, xOffsetDelta, zOffsetDelta;
-        let currentValues = {x: 0, y: 0, z: 0};
+        let currentValues = { x: 0, y: 0, z: 0 };
         let keyframes = [];
         let initialTime = performance.now() + 0.3;
         let finalTime = initialTime + this.duration;
@@ -92,7 +97,7 @@ class MyLinearAnimation extends MyKeyframeAnimation {
             currentValues.x += xOffsetDelta;
             currentValues.z += zOffsetDelta;
             let value = currentValues.z == 0 ? currentValues.x : currentValues.z;
-            currentValues.y = Math.sqrt(radius*radius - value*value);
+            currentValues.y = Math.sqrt(radius * radius - value * value);
             keyframes.push(new Keyframe(time, currentValues));
             time += timeOffset;
         }

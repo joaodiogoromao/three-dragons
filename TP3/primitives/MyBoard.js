@@ -121,11 +121,11 @@ class MyBoard extends CGFobject {
             this.scene.registerForPick(81+count/*(piece.position.z-1)*this.nCols + piece.position.x /* - 1 + 1 */, piece);
 
             this.scene.pushMatrix();
-
+            if (piece.animation != null && !piece.animation.endedAnimation) piece.animation.apply(this.scene);
             this.scene.translate(piece.position.x-0.5, 0.36 /*need to change in order not to have this*/ , piece.position.z-0.5);
-            //this.showDiceFace(piece.value);
-            if (piece.animation != null) piece.animation.apply(this.scene);
+            this.showDiceFace(piece.value);
 
+        
             piece.display();
             this.scene.popMatrix();
 

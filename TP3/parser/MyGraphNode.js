@@ -131,7 +131,7 @@ class Node extends CGFobject {
             this.scene.multMatrix(this.transformationMatrix);
         
         let go = true;
-        if (this.animation != null)  //applies animations if it is defined
+        if (this.animation != null && this.position == undefined /* if it is a dice, TODO IMPROVE */)  //applies animations if it is defined
             go = this.animation.apply(this.scene);
         
         if (go) { // if the animation hasn't started yet, the object doesn't appear
