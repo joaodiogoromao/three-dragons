@@ -28,13 +28,13 @@ server :-
 server_loop(Socket) :-
 	repeat,
 	socket_server_accept(Socket, _Client, Stream, [type(text)]),
-		% write('Accepted connection'), nl,
+		write('Accepted connection'), nl,
 	    % Parse Request
 		catch((
 			read_request(Stream, Request),
 			read_header(Stream)
 		),_Exception,(
-			% write('Error parsing request.'),nl,
+			write('Error parsing request.'),nl,
 			close_stream(Stream),
 			fail
 		)),
@@ -50,7 +50,7 @@ server_loop(Socket) :-
 		format(Stream, 'Content-Type: text/plain~n~n', []),
 		format(Stream, '~p', [MyReply]),
 
-		% write('Finnished Connection'),nl,nl,
+		write('Finnished Connection'),nl,nl,
 		close_stream(Stream),
 	(Request = quit), !.
 
@@ -102,9 +102,98 @@ print_header_line(_).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Require your Prolog Files here
+:- consult('game.pl').
+
+
+atom_from_number_chars([ListH|ListT], Out) :-
+	atom_from_number_chars(ListT, IntermediateOut),
+	atom_concat(ListH, IntermediateOut, Out).
+
+atom_from_number_chars([], '').
+
+json_atom(Atom, Out) :-
+	atom_concat('"', Atom, Intermediate),
+	atom_concat(Intermediate, '"', Out).
+
+json_list([ListH|ListT], [OutH|OutT]) :-
+	compound(ListH), is_list(ListH), !,
+	json_list(ListH, OutH),
+	json_list(ListT, OutT).
+
+json_list([ListH|ListT], [OutH|OutT]) :-
+	compound(ListH), \+ is_list(ListH), !,
+	ListH =.. L,
+	json_list(L, OutH),
+	json_list(ListT, OutT).
+
+json_list([ListH|ListT], [OutH|OutT]) :-
+	\+ compound(ListH), number(ListH), !,
+	number_chars(ListH, NumberChars),
+	atom_from_number_chars(NumberChars, OutH),
+	json_list(ListT, OutT).
+
+json_list([ListH|ListT], [OutH|OutT]) :-
+	\+ compound(ListH), \+ number(ListH), !,
+	json_atom(ListH, OutH),
+	json_list(ListT, OutT).
+
+json_list([], []).
+
+move_array_to_arrays([move(position(X1, Y1), position(X2, Y2), Piece)|MovesT], [OutH|OutT]) :-
+	OutH = [X1, Y1, X2, Y2, Piece],
+	move_array_to_arrays(MovesT, OutT).
+move_array_to_arrays([], []).
+
+% gets the initial game state
+parse_input(initial, Reply) :-
+	initial(game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard)),
+	json_list(GameBoard, GameBoardJSON),
+	json_atom(Player, PlayerJSON),
+
+	Reply = {
+		'"player"': PlayerJSON,
+		'"npieces"': [NPiecesWhite, NPiecesBlack],
+		'"gameboard"': GameBoardJSON
+	}.
+
+% get all possible moves
+parse_input(moves/[Player, [NPiecesWhite, NPiecesBlack], GameBoard], Reply) :-
+	valid_moves(game_state(_Player, _NPieces, GameBoard), Player, ValidMoves),
+	move_array_to_arrays(ValidMoves, Moves),
+	Reply = {
+		'"moves"': Moves
+	}.
+
+% regular move
+parse_input(move/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/[MoveX1, MoveY1, MoveX2, MoveY2, Piece], Reply) :-
+	Move = move(position(MoveX1, MoveY1), position(MoveX2, MoveY2), Piece),
+	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
+	move(GameState, Move, game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard)),
+	json_list(NewGameBoard, NewGameBoardJSON),
+	json_atom(NewPlayer, NewPlayerJSON),
+
+	Reply = {
+		'"player"': NewPlayerJSON,
+		'"npieces"': [NewNPiecesWhite, NewNPiecesBlack],
+		'"gameboard"': NewGameBoardJSON
+	}.
+
+parse_input(move/bot/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/Level, Reply) :-
+	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
+	choose_move(GameState, Player, Difficulty, BotMove),
+	move(GameState, BotMove, game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard)),
+	json_list(NewGameBoard, NewGameBoardJSON),
+	json_atom(NewPlayer, NewPlayerJSON),
+
+	Reply = {
+		'"player"': NewPlayerJSON,
+		'"npieces"': [NewNPiecesWhite, NewNPiecesBlack],
+		'"gameboard"': NewGameBoardJSON
+	}.
+
+
 
 parse_input(handshake, handshake).
-parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(quit, goodbye).
 
 test(_,[],N) :- N =< 0.
