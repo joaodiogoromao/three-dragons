@@ -178,14 +178,12 @@ parse_input(moves/[Player, [NPiecesWhite, NPiecesBlack], GameBoard], Reply) :-
 
 % regular move
 parse_input(move/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/[MoveX1, MoveY1, MoveX2, MoveY2, Piece], Reply) :-
-	write("hello world!"), nl,
 	Move = move(position(MoveX1, MoveY1), position(MoveX2, MoveY2), Piece),
 	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
 	move(GameState, Move, game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard)),
 	json_list(NewGameBoard, NewGameBoardJSON),
 	json_atom(NewPlayer, NewPlayerJSON),
-	write(NewPlayerJSON), nl,
-	write(NewGameBoardJSON), nl,
+	
 	Reply = {
 		'"player"': NewPlayerJSON,
 		'"npieces"': [NewNPiecesWhite, NewNPiecesBlack],

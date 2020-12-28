@@ -1,12 +1,16 @@
 class MyStateWaiting extends MyState {
-    constructor(scene, game) {
+    constructor(scene, game, possibleMoves) {
         super(scene, game);
         this.game = game;
         this.initComplete = false;
-        this.game.connection.getPossibleMoves(this.game.prologGameState, function(res) {
+        if (possibleMoves) {
+            this.possibleMoves = possibleMoves;
             this.initComplete = true;
-            this.possibleMoves = res.moves;
-        }.bind(this));
+        } else if (game.stateUpToDate) {
+            this.init();
+        } else {
+            this.game.setOnStateUpToDate(this.init.bind(this));
+        }
 
         /*this.pickedPiece = null;
         this.currentAnimation = null;*/
@@ -21,12 +25,19 @@ class MyStateWaiting extends MyState {
         return canMove;
     }
 
+    init() {
+        this.game.connection.getPossibleMoves(this.game.prologGameState, function(res) {
+            this.initComplete = true;
+            this.possibleMoves = res.moves;
+        }.bind(this));
+    }
+
     pickPiece(obj) {
         const canMove = this.canMovePiece(obj);
         if (canMove.length) {
             console.log("Picked piece");
             this.game.board.setPossibleMoves(canMove);
-            this.game.setState(new MyStatePiecePicked(this.scene, this.game, obj, canMove));
+            this.game.setState(new MyStatePiecePicked(this.scene, this.game, obj, this.possibleMoves));
             return true;
         }
         return false;

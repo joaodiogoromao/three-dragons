@@ -21,6 +21,10 @@ class MyStatePiecePicked extends MyState {
                             this.scene.discardPickResults();
                             return;
                         }
+                    } else {
+                        this.game.setState(new MyStateWaiting(this.scene, this.game, this.possibleMoves));
+                        this.resetPossibleMoves();
+                        return;
                     }
                 }
                 this.scene.discardPickResults();

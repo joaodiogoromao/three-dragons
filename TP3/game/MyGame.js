@@ -27,13 +27,27 @@ class MyGame {
     }
 
     makeWaitingForStateUpdate() {
-        if (this.stateUpToDate === false) console.error("Trying to make game wait for state update, but already waiting.");
+        if (this.stateUpToDate === false) throw new Error("Trying to make game wait for state update, but already waiting.");
         this.stateUpToDate = false;
     }
 
     stopWaitingForStateUpdate() {
-        if (this.stateUpToDate === true) console.error("Trying to make game stop waiting for state update, but wasn't waiting.");
+        if (this.stateUpToDate === true) throw new Error("Trying to make game stop waiting for state update, but wasn't waiting.");
+        if (this.onStateUpToDate) {
+            this.onStateUpToDate();
+            this.unsetOnStateUpToDate();
+        }
         this.stateUpToDate = true;
+    }
+
+    setOnStateUpToDate(fn) {
+        if (this.onStateUpToDate) throw new Error("Trying to set game onStateUpToDate, but already set."); 
+        this.onStateUpToDate = fn;
+    }
+
+    unsetOnStateUpToDate() {
+        if (this.onStateUpToDate == undefined) throw new Error("Trying to unset game onStateUpToDate, but not set."); 
+        this.onStateUpToDate = undefined;
     }
 
     setState(state) {
