@@ -3,6 +3,8 @@ class MyBoard extends CGFobject {
     constructor(scene, whiteTileId, blackTileId, whiteDiceId, blackDiceId, nRows, nCols) {
         super(scene);
 
+        this.possibleMoves = null;
+
         this.whiteTileId = whiteTileId;
         this.blackTileId = blackTileId;
 
@@ -20,6 +22,12 @@ class MyBoard extends CGFobject {
 
         this.tiles = [];
         this.pieces = [];
+
+        this.possibleMovesShader = new CGFshader(scene.gl, "shaders/possibleMoves.vert", "shaders/possibleMoves.frag");
+    }
+
+    setPossibleMoves(possibleMoves) {
+        this.possibleMoves = possibleMoves;
     }
 
     correspondIdsToObjects(objMap) {
@@ -106,7 +114,14 @@ class MyBoard extends CGFobject {
             for (let col = 0; col < this.nCols; col++) {
                 let currentTile = this.tiles[row * this.nCols + col];
                 this.scene.registerForPick(row * this.nCols + col + 1, currentTile);
+
+                if (this.possibleMoves != null && this.isValidMovePosition(row, col))
+                    this.scene.setActiveShaderSimple(this.possibleMovesShader);
+
                 currentTile.display();
+
+                if (this.possibleMoves != null)
+                    this.scene.setActiveShaderSimple(this.scene.defaultShader);
 
                 this.scene.translate(1, 0, 0);
             }
@@ -134,5 +149,15 @@ class MyBoard extends CGFobject {
         this.scene.clearPickRegistration();
 
         this.scene.popMatrix();
+    }
+
+    isValidMovePosition(row, col) {
+        if (this.possibleMoves == null) return false;
+
+        const findMove = this.possibleMoves.find(move => {
+            const final = MyGame.prologCoordsToJSCoords(move.final);
+            return final.x == col+1 && final.z == row+1;
+        });
+        return findMove != null;
     }
 }

@@ -243,7 +243,11 @@ class XMLscene extends CGFscene {
 				this.pickResults.splice(0, this.pickResults.length);
 			}
 		}
-	}
+    }
+    
+    discardPickResults() {
+        if (this.pickResults != null && this.pickResults.length > 0) this.pickResults.splice(0, this.pickResults.length);
+    }
 
     /**
      * Displays the scene.
