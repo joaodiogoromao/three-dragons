@@ -5,6 +5,8 @@ class MyBoard extends CGFobject {
 
         this.possibleMoves = null;
 
+        this.gameBoard = null;
+
         this.whiteTileId = whiteTileId;
         this.blackTileId = blackTileId;
 
@@ -30,9 +32,72 @@ class MyBoard extends CGFobject {
         this.possibleMoves = possibleMoves;
     }
 
+    setGameBoard(newGameBoard) {
+        this.updatePieces(newGameBoard);
+        this.gameBoard = newGameBoard;
+    }
+
+    updatePieces(newGameBoard) {
+        const added = [], removed = [];
+        for (const i in this.gameBoard) {
+            const prevLine = this.gameBoard[i];
+            const currLine = newGameBoard[i];
+            const z = parseInt(i)+1;
+            for (const j in prevLine) {
+                const prevEl = prevLine[j];
+                const currEl = currLine[j];
+                const x = parseInt(j)+1;
+
+                // piece stayed in the same position
+                if (JSON.stringify(prevEl) === JSON.stringify(currEl)) {
+                    continue;
+                }
+
+                // piece has been changed 
+                if (prevEl instanceof Array && prevEl.length == 3) { // piece moved from the current position
+                    removed.push({ x: x, z: z, player: prevEl[1], value: prevEl[2] });
+                } else if (prevEl instanceof Array && prevEl.length == 2) { // dragon was invoked
+                    console.log("invoked", prevEl, currEl);
+                    added.push({ x: x, z: z, player: currEl[1], value: currEl[2] });
+                } else if (prevEl === "empty") { // piece moved to the the current position
+                    added.push({ x: x, z: z, player: currEl[1], value: currEl[2] });
+                }
+            }
+        }
+
+        console.log(added, removed);
+
+        for (const piece of this.pieces) {
+            if (piece.position == null) continue;   // TODO for pieces that have been removed
+
+            const rem = removed.find((el) => 
+                el.x == piece.position.x && el.z == piece.position.z 
+                && el.player == piece.player);
+
+            if (!rem) continue;
+
+            const add = added.find(el => el.player == piece.player);
+
+            if (!add) { // Remove piece
+                piece.position = null;
+            } else { // Move piece
+                piece.position.x = add.x;
+                piece.position.z = add.z;
+                piece.value = add.value;
+                added.splice(added.indexOf(add), 1);
+            }
+            removed.splice(removed.indexOf(rem), 1);
+        }
+
+        // invoke dragons
+        for (const add of added) {
+            this.pieces.push(this.createDice(add.player, add.value, { x: add.x, z: add.z }));
+        }
+    }
+
     correspondIdsToObjects(objMap) {
         const ids = new Map([['whiteTile', this.whiteTileId], ['blackTile', this.blackTileId], ['whiteDice', this.whiteDiceId], ['blackDice', this.blackDiceId]]);
-        for (let [key, id] of ids) {
+        for (const [key, id] of ids) {
             if (objMap[id] == undefined) {
                 throw new Error(`The id '${id}' given to leaf 'board' has no match.`);
             }
@@ -62,25 +127,26 @@ class MyBoard extends CGFobject {
         const dice = color == 'white' ? this.copy(this.whiteDiceObj) : this.copy(this.blackDiceObj);
         dice.value = value;
         dice.position = position;
+        dice.player = color;
         return dice;
     }
 
     createPieces() {
         let pieces = [];
-        pieces.push(this.createDice('white', 3, {x: 2, z: 1}));
+        pieces.push(this.createDice('black', 3, {x: 2, z: 1}));
         for (let i = 3; i <= 7; i++) {
-            pieces.push(this.createDice('white', 2, {x: i, z: 1}));
+            pieces.push(this.createDice('black', 2, {x: i, z: 1}));
         }
-        pieces.push(this.createDice('white', 3, {x: 8, z: 1}));
-        pieces.push(this.createDice('white', 4, {x: 5, z: 2}));
+        pieces.push(this.createDice('black', 3, {x: 8, z: 1}));
+        pieces.push(this.createDice('black', 4, {x: 5, z: 2}));
 
 
-        pieces.push(this.createDice('black', 3, {x: 2, z: 9}));
+        pieces.push(this.createDice('white', 3, {x: 2, z: 9}));
         for (let i = 3; i <= 7; i++) {
-            pieces.push(this.createDice('black', 2, {x: i, z: 9}));
+            pieces.push(this.createDice('white', 2, {x: i, z: 9}));
         }
-        pieces.push(this.createDice('black', 3, {x: 8, z: 9}));
-        pieces.push(this.createDice('black', 4, {x: 5, z: 8}));
+        pieces.push(this.createDice('white', 3, {x: 8, z: 9}));
+        pieces.push(this.createDice('white', 4, {x: 5, z: 8}));
         return pieces;
     }
 
@@ -133,6 +199,8 @@ class MyBoard extends CGFobject {
 
         let count = 1;
         for (const piece of this.pieces) {
+            if (piece.position == null) continue;   // TODO for pieces that have been removed
+
             this.scene.registerForPick(81+count/*(piece.position.z-1)*this.nCols + piece.position.x /* - 1 + 1 */, piece);
 
             this.scene.pushMatrix();
@@ -155,7 +223,7 @@ class MyBoard extends CGFobject {
         if (this.possibleMoves == null) return false;
 
         const findMove = this.possibleMoves.find(move => {
-            const final = MyGame.prologCoordsToJSCoords(move.final);
+            const final = move.final;
             return final.x == col+1 && final.z == row+1;
         });
         return findMove != null;

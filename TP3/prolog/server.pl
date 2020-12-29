@@ -139,21 +139,21 @@ json_list([ListH|ListT], [OutH|OutT]) :-
 
 json_list([], []).
 
-move_array_to_arrays([move(position(X1, Y1), position(X2, Y2), Piece)|MovesT], [OutH|OutT]) :-
+json_moves([move(position(X1, Y1), position(X2, Y2), Piece)|MovesT], [OutH|OutT]) :-
 	json_list([Piece], [PieceJSON]),
 	OutH = {
 		'"initial"': {
 			'"x"': X1, 
-			'"y"': Y1
+			'"z"': Y1
 		},
 		'"final"': { 
 			'"x"': X2, 
-			'"y"': Y2 
+			'"z"': Y2 
 		},		
 		'"piece"': PieceJSON
 	},
-	move_array_to_arrays(MovesT, OutT).
-move_array_to_arrays([], []).
+	json_moves(MovesT, OutT).
+json_moves([], []).
 
 % gets the initial game state
 parse_input(initial, Reply) :-
@@ -164,22 +164,31 @@ parse_input(initial, Reply) :-
 	Reply = {
 		'"player"': PlayerJSON,
 		'"npieces"': [NPiecesWhite, NPiecesBlack],
-		'"gameboard"': GameBoardJSON
+		'"gameBoard"': GameBoardJSON
 	}.
 
 % get all possible moves
 parse_input(moves/[Player, [NPiecesWhite, NPiecesBlack], GameBoard], Reply) :-
 	valid_moves(game_state(_Player, _NPieces, GameBoard), Player, ValidMoves),
-	move_array_to_arrays(ValidMoves, Moves),
-	write(ValidMoves),
+	json_moves(ValidMoves, Moves),
 	Reply = {
 		'"moves"': Moves
 	}.
+
 
 % regular move
 parse_input(move/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/[MoveX1, MoveY1, MoveX2, MoveY2, Piece], Reply) :-
 	Move = move(position(MoveX1, MoveY1), position(MoveX2, MoveY2), Piece),
 	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
+	execute_move(GameState, Move, Reply).
+
+parse_input(move/bot/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/Level, Reply) :-
+	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
+	choose_move(GameState, Player, Difficulty, BotMove),
+	execute_move(GameState, BotMove, Reply).
+
+
+execute_move(GameState, Move, Reply) :-
 	move(GameState, Move, game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard)),
 	json_list(NewGameBoard, NewGameBoardJSON),
 	json_atom(NewPlayer, NewPlayerJSON),
@@ -187,26 +196,8 @@ parse_input(move/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/[MoveX1, Move
 	Reply = {
 		'"player"': NewPlayerJSON,
 		'"npieces"': [NewNPiecesWhite, NewNPiecesBlack],
-		'"gameboard"': NewGameBoardJSON
+		'"gameBoard"': NewGameBoardJSON
 	}.
-
-parse_input(move/bot/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/Level, Reply) :-
-	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
-	choose_move(GameState, Player, Difficulty, BotMove),
-	move(GameState, BotMove, game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard)),
-	json_list(NewGameBoard, NewGameBoardJSON),
-	json_atom(NewPlayer, NewPlayerJSON),
-
-	Reply = {
-		'"player"': NewPlayerJSON,
-		'"npieces"': [NewNPiecesWhite, NewNPiecesBlack],
-		'"gameboard"': NewGameBoardJSON
-	}.
-
-
 
 parse_input(handshake, handshake).
 parse_input(quit, goodbye).
-
-test(_,[],N) :- N =< 0.
-test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).

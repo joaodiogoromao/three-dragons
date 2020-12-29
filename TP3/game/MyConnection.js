@@ -49,15 +49,15 @@ class MyConnection {
     }
 
     gameStateToUrlFomat(gameState) {
-        return `[${gameState.player},[${gameState.npieces[0]},${gameState.npieces[1]}],${this.gameBoardToUrlFormat(gameState.gameboard)}]`;
+        return `[${gameState.player},[${gameState.npieces[0]},${gameState.npieces[1]}],${this.gameBoardToUrlFormat(gameState.gameBoard)}]`;
     }
 
     moveToUrlFormat(move) {
-        return `[${move.initial.x},${move.initial.y},${move.final.x},${move.final.y},${this.predicateCompoundToUrlFormat(move.piece)}]`;
+        return `[${move.initial.x},${move.initial.z},${move.final.x},${move.final.z},${this.predicateCompoundToUrlFormat(move.piece)}]`;
     }
     
     init(action) {
-        this.sendRequest(`initial`, action);
+        this.sendRequest('initial', action);
     }
 
     // moves/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]

@@ -17,7 +17,7 @@ class MyStatePiecePicked extends MyState {
 
                     // verify if picked object is a tile
                     if (id <= 81) {
-                        if (this.pickTile(obj, id, timeSinceProgramStarted)) {
+                        if (this.pickTile(id, timeSinceProgramStarted)) {
                             this.scene.discardPickResults();
                             return;
                         }
@@ -36,7 +36,7 @@ class MyStatePiecePicked extends MyState {
         this.game.board.setPossibleMoves(null);
     }
 
-    pickTile(obj, id, timeSinceProgramStarted) {
+    pickTile(id, timeSinceProgramStarted) {
         const startPos = this.piece.position;
         const endPos = { x: ((id-1)%9)+1, z: Math.floor((id-1)/9)+1 };
 
@@ -50,8 +50,8 @@ class MyStatePiecePicked extends MyState {
 
         animation.update(timeSinceProgramStarted);
 
-        this.piece.position = endPos;
-        this.piece = null;
+        //this.piece.position = endPos;
+        //this.piece = null;
 
         // send server request (move)
         this.game.makeWaitingForStateUpdate();
@@ -69,8 +69,8 @@ class MyStatePiecePicked extends MyState {
     isValidMove(startPos, endPos, piece) {
         console.log(piece.id);
         return this.possibleMoves.find(function(move) {
-            const initial = MyGame.prologCoordsToJSCoords(move.initial);
-            const final = MyGame.prologCoordsToJSCoords(move.final);
+            const initial = move.initial;
+            const final = move.final;
 
             return initial.x == startPos.x && initial.z == startPos.z &&
                 final.x == endPos.x && final.z == endPos.z;

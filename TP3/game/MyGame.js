@@ -17,15 +17,6 @@ class MyGame {
         this.makeWaitingForStateUpdate();
     }
 
-    static prologCoordsToJSCoords(position) {
-        const x = position.x;
-        const y = position.y;
-        return {
-            x: x,
-            z: 10-y
-        }
-    }
-
     makeWaitingForStateUpdate() {
         if (this.stateUpToDate === false) throw new Error("Trying to make game wait for state update, but already waiting.");
         this.stateUpToDate = false;
@@ -33,11 +24,11 @@ class MyGame {
 
     stopWaitingForStateUpdate() {
         if (this.stateUpToDate === true) throw new Error("Trying to make game stop waiting for state update, but wasn't waiting.");
+        this.stateUpToDate = true;
         if (this.onStateUpToDate) {
             this.onStateUpToDate();
             this.unsetOnStateUpToDate();
         }
-        this.stateUpToDate = true;
     }
 
     setOnStateUpToDate(fn) {
@@ -50,6 +41,16 @@ class MyGame {
         this.onStateUpToDate = undefined;
     }
 
+    updateBoard() {
+        if (this.stateUpToDate) {
+            this.board.setGameBoard(this.prologGameState.gameBoard);
+        } else {
+            this.setOnStateUpToDate(function() {
+                this.board.setGameBoard(this.prologGameState.gameBoard);
+            }.bind(this));
+        }
+    }
+
     setState(state) {
         if (!(state instanceof MyState)) throw new Error("The state of the game may only be an extension of MyGameState.");
         this.state = state;
@@ -57,7 +58,7 @@ class MyGame {
 
     update(timeSinceProgramStarted) {
         if (!this.initComplete) return;
-        if (!(this.state instanceof MyStateMoving) && !this.stateUpToDate) return; 
+        if (!(this.state instanceof MyStateMoving) && !this.stateUpToDate) return;  // if the state is not an animation, all server requests must have been fulfilled 
         this.state.update(timeSinceProgramStarted);
     }
 

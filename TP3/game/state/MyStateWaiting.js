@@ -6,26 +6,25 @@ class MyStateWaiting extends MyState {
         if (possibleMoves) {
             this.possibleMoves = possibleMoves;
             this.initComplete = true;
+            this.game.updateBoard();
         } else if (game.stateUpToDate) {
             this.init();
         } else {
             this.game.setOnStateUpToDate(this.init.bind(this));
         }
-
-        /*this.pickedPiece = null;
-        this.currentAnimation = null;*/
     }
 
     canMovePiece(obj) {
         const position = obj.position;
         const canMove = this.possibleMoves.filter(function(move) {
-            const initial = MyGame.prologCoordsToJSCoords(move.initial);
+            const initial = move.initial;
             return initial.x == position.x && initial.z == position.z;
         });
         return canMove;
     }
 
     init() {
+        this.game.updateBoard();
         this.game.connection.getPossibleMoves(this.game.prologGameState, function(res) {
             this.initComplete = true;
             this.possibleMoves = res.moves;
