@@ -22,7 +22,7 @@ class MyStatePiecePicked extends MyState {
                             return;
                         }
                     } else {
-                        this.game.setState(new MyStateWaiting(this.scene, this.game, this.possibleMoves));
+                        this.game.nextMoveStrategy.apply(this.possibleMoves);
                         this.resetPossibleMoves();
                         return;
                     }
@@ -56,7 +56,7 @@ class MyStatePiecePicked extends MyState {
         // send server request (move)
         this.game.makeWaitingForStateUpdate();
         this.game.connection.applyMove(this.game.prologGameState, move, function(res) {
-            this.game.prologGameState = res;
+            this.game.prologGameState = { player: res.player, npieces: res.npieces, gameBoard: res.gameBoard, gameOver: res.gameOver };
             this.game.stopWaitingForStateUpdate();
         }.bind(this));
 

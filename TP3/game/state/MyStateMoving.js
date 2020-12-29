@@ -8,7 +8,7 @@ class MyStateMoving extends MyState {
     update(timeSinceProgramStarted) { 
         console.log('moving');       
         if (this.currentAnimation != null && this.currentAnimation.update(timeSinceProgramStarted) === true) {
-            this.game.setState(new MyStateWaiting(this.scene, this.game));
+            this.game.nextMoveStrategy.apply();
         }
         
     }

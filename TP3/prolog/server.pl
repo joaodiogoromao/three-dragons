@@ -180,24 +180,51 @@ parse_input(moves/[Player, [NPiecesWhite, NPiecesBlack], GameBoard], Reply) :-
 parse_input(move/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/[MoveX1, MoveY1, MoveX2, MoveY2, Piece], Reply) :-
 	Move = move(position(MoveX1, MoveY1), position(MoveX2, MoveY2), Piece),
 	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
-	execute_move(GameState, Move, Reply).
-
-parse_input(move/bot/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/Level, Reply) :-
-	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
-	choose_move(GameState, Player, Difficulty, BotMove),
-	execute_move(GameState, BotMove, Reply).
-
-
-execute_move(GameState, Move, Reply) :-
 	move(GameState, Move, game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard)),
+	(game_over(game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard), Winner) -> 
+		(json_atom(Winner, WinnerJSON), GameOver = WinnerJSON) ; GameOver = 0),
 	json_list(NewGameBoard, NewGameBoardJSON),
 	json_atom(NewPlayer, NewPlayerJSON),
+	
 	
 	Reply = {
 		'"player"': NewPlayerJSON,
 		'"npieces"': [NewNPiecesWhite, NewNPiecesBlack],
-		'"gameBoard"': NewGameBoardJSON
+		'"gameBoard"': NewGameBoardJSON,
+		'"gameOver"': GameOver
 	}.
+
+% bot move
+parse_input(move/bot/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/Level, Reply) :-
+	GameState = game_state(Player, npieces(NPiecesWhite, NPiecesBlack), GameBoard),
+	choose_move(GameState, Player, Level, move(position(X1, Y1), position(X2, Y2), MovePiece)),
+	move(GameState, move(position(X1, Y1), position(X2, Y2), MovePiece), game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard)),
+	(game_over(game_state(NewPlayer, npieces(NewNPiecesWhite, NewNPiecesBlack), NewGameBoard), Winner) -> 
+		(json_atom(Winner, WinnerJSON), GameOver = WinnerJSON) ; GameOver = 0),
+	json_list(NewGameBoard, NewGameBoardJSON),
+	json_atom(NewPlayer, NewPlayerJSON),
+	json_list([MovePiece], [MovePieceJSON]),
+
+	MoveJSON = {
+		'"initial"': {
+			'"x"': X1, 
+			'"z"': Y1
+		},
+		'"final"': { 
+			'"x"': X2, 
+			'"z"': Y2 
+		},		
+		'"piece"': MovePieceJSON
+	},
+	
+	Reply = {
+		'"player"': NewPlayerJSON,
+		'"npieces"': [NewNPiecesWhite, NewNPiecesBlack],
+		'"gameBoard"': NewGameBoardJSON,
+		'"move"': MoveJSON,
+		'"gameOver"': GameOver
+	}.
+
 
 parse_input(handshake, handshake).
 parse_input(quit, goodbye).

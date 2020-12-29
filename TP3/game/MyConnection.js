@@ -69,5 +69,10 @@ class MyConnection {
     applyMove(gameState, move, action) {
         this.sendRequest(`move/${this.gameStateToUrlFomat(gameState)}/${this.moveToUrlFormat(move)}`, action);
     }
+
+    // move/bot/[Player, [NPiecesWhite, NPiecesBlack], GameBoard]/Level
+    applyBotMove(gameState, level, action) {
+        this.sendRequest(`move/bot/${this.gameStateToUrlFomat(gameState)}/${level}`, action);
+    }
 }
 

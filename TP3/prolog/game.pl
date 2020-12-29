@@ -204,11 +204,9 @@ update_player_piece_count(PiecesToRemove, game_state(black, npieces(WhiteCount, 
 % game_over(+GameState, -Winner)
 % Interprets game state and verifies if game is over
 % Game ends when one of the players has only one piece on the board
-game_over(GameState, Winner) :-
-	GameState =.. [_PredName, _Player, npieces(WhiteCount, BlackCount), _Board],
+game_over(game_state(_Player, npieces(WhiteCount, BlackCount), _Board), Winner) :-
 	((WhiteCount =:= 1 -> Winner = black ; false);
-	(BlackCount =:= 1 -> Winner = white ; false)),
-	display_game(GameState, -1).
+	(BlackCount =:= 1 -> Winner = white ; false)).
 
 % value(+GameState, +Player, -Value)
 % Evaluation of the state of the game.

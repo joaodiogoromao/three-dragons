@@ -63,6 +63,6 @@ class MyStateWaiting extends MyState {
 				}
 				this.scene.discardPickResults();
 			}
-        }        
+        }
     }
 }
