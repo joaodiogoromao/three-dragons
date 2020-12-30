@@ -6,4 +6,8 @@ class MyStatePauseMenu extends MyState{
     display() {
         
     }
+
+    update() {
+
+    }
 }

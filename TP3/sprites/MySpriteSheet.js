@@ -14,7 +14,7 @@ class MySpriteSheet {
         this.sizeN = sizeN;
         this.size = sizeM*sizeN;
         
-        this.spriteShader = new CGFshader(scene.gl, "shaders/sprite.vert", "shaders/sprite.frag");
+        this.spriteShader = new CGFshader(scene.gl, "./shaders/sprite.vert", "./shaders/sprite.frag");
         this.spriteShader.setUniformsValues({ sizeM: sizeM, sizeN: sizeN });
         this.spriteTexture = new CGFtexture(scene, texture);
     }

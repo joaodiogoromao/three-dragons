@@ -22,6 +22,8 @@ class XMLscene extends CGFscene {
         this.displayAxis = false;
 
         this.defaultShader = super.activeShader;
+
+        
     }
 
     /**
@@ -56,6 +58,7 @@ class XMLscene extends CGFscene {
         this.spritesheetAppearance = new CGFappearance(this);
 
         this.tStarted = null;
+
     }
 
     /**
@@ -124,6 +127,10 @@ class XMLscene extends CGFscene {
 
             this.sceneInited = true;
             this.setUpdatePeriod(30);
+
+            // TEST STUFF (REMOVE IN FUTURE)
+            this.text = new MySpriteText(this, "WOOOOO");
+            this.button = new MyButton(this, this, { row: { start: 1, end: 5 }, col: { start: 1, end: 3 } }, "Something bigger");
         }
     }
 
@@ -294,7 +301,8 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
             this.currentMaterial = this.defaultAppearance;
 
-            this.game.display();
+            this.button.display();
+            //this.game.display();
         }
         else
         {

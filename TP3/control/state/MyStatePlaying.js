@@ -1,9 +1,13 @@
-class MyStateGameEnding extends MyState{
+class MyStatePlaying {
     constructor(scene, gameOrchestrator) {
         super(scene, gameOrchestrator);
     }
 
     display() {
         
+    }
+
+    update() {
+
     }
 }

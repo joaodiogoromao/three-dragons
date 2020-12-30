@@ -1,6 +1,6 @@
 class MyGameOrchestrator {
     constructor(scene) {
-        this.state = MyStateMainMenu(scene, this);
+        this.state = new MyStateMainMenu(scene, this);
         this.scene = scene;
     }
 

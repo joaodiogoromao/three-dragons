@@ -6,4 +6,8 @@ class MyStateMainMenu extends MyState{
     display() {
         
     }
+
+    update() {
+
+    }
 }

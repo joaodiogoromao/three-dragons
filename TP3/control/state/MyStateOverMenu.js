@@ -1,7 +1,6 @@
-class MyStateLoading extends MyState{
+class MyStateOverMenu extends MyState{
     constructor(scene, gameOrchestrator) {
         super(scene, gameOrchestrator);
-        this.game = new MyGame(scene);
     }
 
     display() {
