@@ -1,4 +1,4 @@
-class MyStateGameOver extends MyState {
+class MyStateGameOver extends MyGameState {
     constructor(scene, game) {
         super(scene, game);
     }

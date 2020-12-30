@@ -1,9 +1,9 @@
 
 
 class MyGame {
-    constructor(board, scene) {
-        this.board = board;
-        this.nextMoveStrategy = new MyMvMStrategy(this, scene);
+    constructor(scene) {
+        this.board = scene.graph.board;
+        this.nextMoveStrategy = new MyHvHStrategy(this, scene);
         this.connection = new MyConnection('http://localhost:8081/');
         this.connection.init(function(res) {
             this.prologGameState = res;
@@ -50,8 +50,12 @@ class MyGame {
     }
 
     setState(state) {
-        if (!(state instanceof MyState)) throw new Error("The state of the game may only be an extension of MyGameState.");
+        if (!(state instanceof MyGameState)) throw new Error("The state of the game may only be an extension of MyGameState.");
         this.state = state;
+    }
+
+    display() {
+        this.scene.graph.displayScene();
     }
 
     update(timeSinceProgramStarted) {

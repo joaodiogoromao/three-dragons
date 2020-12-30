@@ -1,4 +1,4 @@
-class MyStatePiecePicked extends MyState {
+class MyStatePiecePicked extends MyGameState {
     constructor(scene, game, piece, possibleMoves) {
         super(scene, game);
         this.piece = piece;
@@ -21,7 +21,9 @@ class MyStatePiecePicked extends MyState {
                             this.scene.discardPickResults();
                             return;
                         }
-                    } else {
+                    }
+                    // reset piece selection otherwise 
+                    else {
                         this.game.nextMoveStrategy.apply(this.possibleMoves);
                         this.resetPossibleMoves();
                         return;

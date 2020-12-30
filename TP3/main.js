@@ -16,9 +16,9 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'parser/MySceneGraph.js', 'MyInte
 main=function()
 {
 	// Standard application, scene and interface setup
-    var app = new CGFapplication(document.body);
-    var myInterface = new MyInterface();
-    var myScene = new XMLscene(myInterface);
+    const app = new CGFapplication(document.body);
+    const myInterface = new MyInterface();
+    const myScene = new XMLscene(myInterface);
 
     app.init();
 
@@ -30,11 +30,16 @@ main=function()
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 	
-    var filename=getUrlVars()['file'] || "three_dragons.xml";
+    const filename=getUrlVars()['file'] || "three_dragons.xml";
 
 	// create and load graph, and associate it to scene. 
-	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
+    // Check console for loading errors
+    const files = [
+        { name: "menus.xml", type: MySceneGraph.types.MODULE },
+        { name: "three_dragons.xml", type: MySceneGraph.types.SCENE }
+    ];
+
+    files.forEach((file) => new MySceneGraph(file.name, myScene, file.type));
 	
 	// start
     app.run();

@@ -1,13 +1,11 @@
-class MyStateMachine extends MyState {
+class MyStateMachine extends MyGameState {
     constructor(scene, game) {
         super(scene, game);
         this.game = game;
         this.initComplete = false;
         // request move to perform machine play (get move as a server answer)
-        console.log("Constructing mystate machine");
         this.game.updateBoard();
         this.game.connection.applyBotMove(this.game.prologGameState, "hard", function(res) {
-            console.log("Received the response", res)
             this.game.prologGameState = { player: res.player, npieces: res.npieces, gameBoard: res.gameBoard, gameOver: res.gameOver };
             this.move = res.move;
             this.initComplete = true;

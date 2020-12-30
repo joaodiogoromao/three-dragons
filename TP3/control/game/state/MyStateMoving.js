@@ -1,4 +1,4 @@
-class MyStateMoving extends MyState {
+class MyStateMoving extends MyGameState {
     constructor(scene, game, currentAnimation) {
         super(scene, game);
         this.game = game;

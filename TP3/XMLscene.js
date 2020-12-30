@@ -100,21 +100,31 @@ class XMLscene extends CGFscene {
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
-    onGraphLoaded() {
-        this.axis = new CGFaxis(this, this.graph.referenceLength);
+    onGraphLoaded(type, data) {
+        if (type == MySceneGraph.types.SCENE) {
 
-        this.gl.clearColor(...this.graph.background);
+            this.graph = data;
 
-        this.setGlobalAmbientLight(...this.graph.ambient);
+            this.axis = new CGFaxis(this, this.graph.referenceLength);
 
-        this.initLights();
+            this.gl.clearColor(...this.graph.background);
 
-        this.interface.createInterface();
+            this.setGlobalAmbientLight(...this.graph.ambient);
 
-        this.game = new MyGame(this.graph.board, this);
+            this.initLights();
 
-        this.sceneInited = true;
-        this.setUpdatePeriod(30);
+            this.interface.createInterface();
+
+        } else if (type == MySceneGraph.types.MODULE) {
+            this.menus = data;
+        }
+
+        if (this.menus && this.graph) {
+            this.game = new MyGameOrchestrator(this);
+
+            this.sceneInited = true;
+            this.setUpdatePeriod(30);
+        }
     }
 
     /**
@@ -284,7 +294,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
             this.currentMaterial = this.defaultAppearance;
 
-            this.graph.displayScene();
+            this.game.display();
         }
         else
         {
