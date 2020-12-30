@@ -1,41 +1,41 @@
-function pauseGame() {
+function pauseGame(state) {
+    console.log("paused game!");
+}
+
+function setEasyDifficulty(state) {
+    console.log("easy!");
+}
+
+function setMediumDifficulty(state) {
+    console.log("medium!");
+}
+
+function setHardDifficulty(state) {
+    console.log("hard!");
+}
+
+function setHvHMode(state) {
 
 }
 
-function setEasyDifficulty() {
+function setHvMMode(state) {
 
 }
 
-function setMediumDifficulty() {
+function setMvMMode(state) {
 
 }
 
-function setHardDifficulty() {
+function exitGame(state) {
 
 }
 
-function setHvHMode() {
-
+function undoMove(state) {
+    console.log("undo!");
 }
 
-function setHvMMode() {
-
-}
-
-function setMvMMode() {
-
-}
-
-function exitGame() {
-
-}
-
-function undoMove() {
-
-}
-
-function seeGameMovie() {
-
+function seeGameMovie(state) {
+    console.log("movie!");
 }
 
 const actionGenerator = {

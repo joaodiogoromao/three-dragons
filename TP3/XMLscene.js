@@ -131,12 +131,12 @@ class XMLscene extends CGFscene {
             // TEST STUFF (REMOVE IN FUTURE)
             this.text = new MySpriteText(this, "WOOOOO");
             this.menu = new MyMenu(this, [
-                new MyButton(this, this, { row: { start: 1, end: 5 }, col: { start: 1, end: 3 } }, "Test"),
-                new MyButton(this, this, { row: { start: 1, end: 5 }, col: { start: 3, end: 17 } }, "aaaaa"),
-                new MyButton(this, this, { row: { start: 5, end: 6 }, col: { start: 1, end: 2 } }, "on"),
-                new MyButton(this, this, { row: { start: 5, end: 6 }, col: { start: 2, end: 7 } }, "quit"),
-                new MyButton(this, this, { row: { start: 5, end: 8 }, col: { start: 7, end: 17 } }, "asdkajsd"),
-                new MyButton(this, this, { row: { start: 8, end: 10 }, col: { start: 5, end: 10 } }, "asdasd")
+                new MyButton(this, "pause", { row: { start: 1, end: 5 }, col: { start: 1, end: 3 } }, "Test"),
+                new MyButton(this, "undo", { row: { start: 1, end: 5 }, col: { start: 3, end: 17 } }, "aaaaa"),
+                new MyButton(this, "easy", { row: { start: 5, end: 6 }, col: { start: 1, end: 2 } }, "on"),
+                new MyButton(this, "medium", { row: { start: 5, end: 6 }, col: { start: 2, end: 7 } }, "quit"),
+                new MyButton(this, "hard", { row: { start: 5, end: 8 }, col: { start: 7, end: 17 } }, "asdkajsd"),
+                new MyButton(this, "movie", { row: { start: 8, end: 10 }, col: { start: 5, end: 10 } }, "asdasd")
             ], "Test MENU", {
                 aspectRatio: 16/9.,
                 gridGap: 1,
@@ -258,7 +258,6 @@ class XMLscene extends CGFscene {
         }
 
         this.game.update(timeSinceProgramStarted);
-
     }
 
     logPicking() {
@@ -268,7 +267,7 @@ class XMLscene extends CGFscene {
 					var obj = this.pickResults[i][0];
 					if (obj) {
 						var customId = this.pickResults[i][1];
-						console.log("Picked object: " + obj + ", with pick id " + customId);						
+						console.log("Picked object: ", obj, ", with pick id " + customId);						
 					}
 				}
 				this.pickResults.splice(0, this.pickResults.length);

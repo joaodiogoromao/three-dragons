@@ -14,6 +14,6 @@ class MyGameOrchestrator {
     }
 
     update() {
-        this.state.display();
+        this.state.update();
     }
 }

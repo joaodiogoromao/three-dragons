@@ -72,6 +72,7 @@ class MyMenu extends CGFobject {
     }
 
     displayButtons() {
+        let count = 1;
         for (const button of this.buttons) {
             this.scene.pushMatrix();
 
@@ -81,13 +82,16 @@ class MyMenu extends CGFobject {
             const zPos = this.grid.top + ((buttonPos.row.start-1)*(this.grid.cell + this.grid.gap));
 
             this.scene.translate(xPos, 0, zPos);
-
             this.scene.scale(this.grid.cell, 1, this.grid.cell);
+
+            this.scene.registerForPick(count, button);
 
             button.display();
 
             this.scene.popMatrix();
+            count++;
         }
+        this.scene.clearPickRegistration();
     }
 
     displayTitle() {
