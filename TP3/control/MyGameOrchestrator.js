@@ -28,7 +28,7 @@ class MyGameOrchestrator {
         this.state.display();
     }
 
-    update() {
-        this.state.update();
+    update(timeSinceProgramStarted) {
+        this.state.update(timeSinceProgramStarted);
     }
 }

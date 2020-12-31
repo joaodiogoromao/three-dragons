@@ -3,7 +3,11 @@
 class MyGame {
     constructor(scene, strategy) {
         this.board = scene.graph.board;
+        this.scene = scene;
+
         this.nextMoveStrategy = strategy;
+        this.nextMoveStrategy.setGame(this);
+
         this.connection = new MyConnection('http://localhost:8081/');
         this.connection.init(function(res) {
             this.prologGameState = res;
@@ -11,6 +15,7 @@ class MyGame {
             this.stopWaitingForStateUpdate();
             this.nextMoveStrategy.apply();
         }.bind(this));
+
         this.initComplete = false;
         this.makeWaitingForStateUpdate();
     }

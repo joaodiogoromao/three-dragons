@@ -3,6 +3,7 @@ class MyStateWaiting extends MyGameState {
         super(scene, game);
         this.game = game;
         this.initComplete = false;
+        console.log("PossibleMoves: ", possibleMoves);
         if (possibleMoves) {
             this.possibleMoves = possibleMoves;
             this.initComplete = true;
