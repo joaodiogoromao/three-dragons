@@ -1,25 +1,58 @@
-class MyStateMainMenu extends MyState{
+class MyStateMainMenu extends MyState {
     constructor(scene, gameOrchestrator) {
         super(scene, gameOrchestrator);
+        this.menuController = new MyMenuController(scene, this);
+
+        const mainMenuNode = scene.menus["mainMenu"];
+        this.menus = {
+            main: mainMenuNode.getLeafNode("main"),
+            difficulty: mainMenuNode.getLeafNode("difficulty"),
+            choosePlayer: mainMenuNode.getLeafNode("choosePlayer")
+        };
+        this.gameMode = null;
+        this.chosePlayer = null;
     }
 
-
-
     display() {
-        
+        console.log(this.chosePlayer, this.gameMode);
+        if (this.chosePlayer) this.menus.difficulty.display();
+        else if (this.gameMode) this.menus.choosePlayer.display();
+        else this.menus.main.display();
     }
 
     update() {
-        if (this.scene.pickMode == false) {
-			if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-				for (let i = 0; i < this.scene.pickResults.length; i++) {
-					const obj = this.scene.pickResults[i][0];
-					const id = this.scene.pickResults[i][1];
-                    
-                    if (id) actionGenerator[obj.action](this);
-				}
-				this.scene.discardPickResults();
-			}
+        this.menuController.update();
+    }
+
+    /* ACTIONS */
+
+    goBack() {
+        if (this.chosePlayer) {
+            this.setPlayerColor(null);
+            this.chosePlayer = null;
         }
+        else if (this.gameMode) {
+            this.setGameStrategy(null);
+            this.gameMode = null;
+        } 
+    }
+
+    advance(difficulty) {
+        // HvM and MvM
+        if (difficulty)
+            this.gameOrchestrator.setStrategyDifficulty(difficulty);
+            
+        this.gameOrchestrator.setState(new MyStateLoading(this.scene, this.gameOrchestrator));
+    }
+
+    setPlayerColor(color) {
+        this.gameOrchestrator.setPlayerColor(color);
+        this.chosePlayer = true;
+    }
+
+    setGameStrategy(strategy) {
+        this.gameOrchestrator.setPlayingStrategy(strategy);
+        this.gameMode = true;
+        if (strategy instanceof MyMvMStrategy) this.chosePlayer = true;
     }
 }

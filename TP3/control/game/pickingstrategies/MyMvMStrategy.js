@@ -1,9 +1,13 @@
 class MyMvMStrategy extends MyStrategy {
-    constructor(game, scene) {
-        super(game, scene);
+    constructor(scene) {
+        super(scene);
     }
 
     apply() {
-        this.game.setState(new MyStateMachine(this.scene, this.game));
+        this.game.setState(new MyStateMachine(this.scene, this.game, this.difficulty));
+    }
+
+    setMachineDifficulty(difficulty) {
+        this.difficulty = difficulty;
     }
 }

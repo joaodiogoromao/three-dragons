@@ -1,7 +1,8 @@
 class MyMenu extends CGFobject {
-    constructor(scene, buttons, title, appearance) {
+    constructor(scene, buttons, name, title, appearance) {
         super(scene);
-
+        
+        this.name = name;
         this.title = title ? new MySpriteText(scene, title) : null;
 
         this.appearance = appearance;

@@ -1,8 +1,10 @@
 class MyStateMachine extends MyGameState {
-    constructor(scene, game) {
+    constructor(scene, game, difficulty) {
         super(scene, game);
         this.game = game;
         this.initComplete = false;
+        this.difficulty = difficulty;
+
         // request move to perform machine play (get move as a server answer)
         this.game.updateBoard();
         this.game.connection.applyBotMove(this.game.prologGameState, "hard", function(res) {

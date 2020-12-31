@@ -1,9 +1,9 @@
 
 
 class MyGame {
-    constructor(scene) {
+    constructor(scene, strategy) {
         this.board = scene.graph.board;
-        this.nextMoveStrategy = new MyHvHStrategy(this, scene);
+        this.nextMoveStrategy = strategy;
         this.connection = new MyConnection('http://localhost:8081/');
         this.connection.init(function(res) {
             this.prologGameState = res;

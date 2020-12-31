@@ -127,24 +127,6 @@ class XMLscene extends CGFscene {
 
             this.sceneInited = true;
             this.setUpdatePeriod(30);
-
-            // TEST STUFF (REMOVE IN FUTURE)
-            this.text = new MySpriteText(this, "WOOOOO");
-            this.menu = new MyMenu(this, [
-                new MyButton(this, "pause", { row: { start: 1, end: 5 }, col: { start: 1, end: 3 } }, "Test"),
-                new MyButton(this, "undo", { row: { start: 1, end: 5 }, col: { start: 3, end: 17 } }, "aaaaa"),
-                new MyButton(this, "easy", { row: { start: 5, end: 6 }, col: { start: 1, end: 2 } }, "on"),
-                new MyButton(this, "medium", { row: { start: 5, end: 6 }, col: { start: 2, end: 7 } }, "quit"),
-                new MyButton(this, "hard", { row: { start: 5, end: 8 }, col: { start: 7, end: 17 } }, "asdkajsd"),
-                new MyButton(this, "movie", { row: { start: 8, end: 10 }, col: { start: 5, end: 10 } }, "asdasd")
-            ], "Test MENU", {
-                aspectRatio: 16/9.,
-                gridGap: 1,
-                rows: 9,
-                cols: 16,
-                horizontalPadding: 5,
-                verticalPadding: 5
-            });
         }
     }
 
@@ -314,8 +296,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
             this.currentMaterial = this.defaultAppearance;
 
-            this.menu.display();
-            //this.game.display();
+            this.game.display();
         }
         else
         {

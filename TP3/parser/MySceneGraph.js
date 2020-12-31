@@ -137,19 +137,20 @@ class MySceneGraph {
 
 
         let index;
-        if ((index = nodeNames.indexOf("initials")) == -1)
-            return "tag <initials> missing";
-        else {
-            if (index != INITIALS_INDEX)
-                this.onXMLMinorError("tag <initials> out of order " + index);
-
-            //Parse initials block
-            if ((error = this.parseInitials(nodes[index])) != null)
-                return error;
-        }
 
         // graph only needs views, illumination and lights if it's a scene
         if (this.type == MySceneGraph.types.SCENE) {
+            if ((index = nodeNames.indexOf("initials")) == -1)
+                return "tag <initials> missing";
+            else {
+                if (index != INITIALS_INDEX)
+                    this.onXMLMinorError("tag <initials> out of order " + index);
+    
+                //Parse initials block
+                if ((error = this.parseInitials(nodes[index])) != null)
+                    return error;
+            }
+            
             // <views>
             if ((index = nodeNames.indexOf("views")) == -1)
                 return "tag <views> missing";

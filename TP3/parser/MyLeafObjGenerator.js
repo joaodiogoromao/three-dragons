@@ -231,7 +231,7 @@ function getButtonPrimitive(sceneGraph, node, parent) {
         return;
     }
     const text = sceneGraph.reader.getString(node, 'text');
-    if (isNull(blackDice)) {
+    if (isNull(text)) {
         sceneGraph.onXMLMinorError(`Leaf 'button', descendant of node with id '${parent.id}' hasn't got a text field.`);
         return;
     }
@@ -250,28 +250,26 @@ function getButtonPrimitive(sceneGraph, node, parent) {
 function getMenuPrimitive(sceneGraph, node, parent) {
     const titleValue = sceneGraph.reader.getString(node, 'title');
     const title = titleValue ? titleValue : "";
+    const nameValue = sceneGraph.reader.getString(node, 'name');
+    const name = nameValue ? nameValue : "";
 
     const iParams = sceneGraph.getIntegerParameters(node, ['rows', 'cols'], parent);
     const fParams = sceneGraph.getFloatParameters(node, ['horizontalPadding', 'verticalPadding', 'gridGap', 'aspectRatio'], parent);
 
+
     const buttons = [];
     const children = node.children;
     for (const buttonNode of children) {
-        if (controlPointNode.nodeName != "leaf") {
-            sceneGraph.onXMLMinorError(`Invalid node name '${controlPointNode.nodeName}' inside descendant primitive 'menu' of node with id '${parent.id}'`);
-            continue;
-        }
-        const type = sceneGraph.reader.getString(node, 'title');
-        if (isNull(type) || type != "button") {
-            sceneGraph.onXMLMinorError(`Invalid node '${controlPointNode.nodeName}' inside descendant primitive 'menu' of node with id '${parent.id}'`);
+        if (buttonNode.nodeName != "button") {
+            sceneGraph.onXMLMinorError(`Invalid node name '${buttonNode.nodeName}' inside descendant primitive 'menu' of node with id '${parent.id}'`);
             continue;
         }
         const button = getButtonPrimitive(sceneGraph, buttonNode, parent);
-        if (button != null) buttons.push(button);
+        if (button) buttons.push(button);
     }
 
     if (isNotNull(iParams) && isNotNull(fParams))
-        return new MyMenu(sceneGraph.scene, buttons, title, { aspectRatio: fParams.aspectRatio, gridGap: fParams.gridGap, rows: iParams.rows, cols: iParams.cols, horizontalPadding: fParams.horizontalPadding, verticalPadding: fParams.verticalPadding });
+        return new MyMenu(sceneGraph.scene, buttons, name, title, { aspectRatio: fParams.aspectRatio, gridGap: fParams.gridGap, rows: iParams.rows, cols: iParams.cols, horizontalPadding: fParams.horizontalPadding, verticalPadding: fParams.verticalPadding });
     return null;
 }
 

@@ -1,6 +1,6 @@
 class MyHvHStrategy extends MyStrategy {
-    constructor(game, scene) {
-        super(game, scene);
+    constructor(scene) {
+        super(scene);
     }
 
     apply(possibleMoves) {

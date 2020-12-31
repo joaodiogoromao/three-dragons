@@ -2,7 +2,7 @@ class MyConnection {
     constructor(server) {
         this.server = server;
 
-        sendRequest("handshake", function(res) {
+        this.sendRequest("handshake", function(res) {
             if (res == "handshake") return;
             throw new Error("Couldn't connect to server " + this.server);
         }, false);
