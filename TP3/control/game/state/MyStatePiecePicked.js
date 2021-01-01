@@ -47,13 +47,7 @@ class MyStatePiecePicked extends MyGameState {
         const move = this.isValidMove(startPos, endPos, this.piece);
         if (!move) return false;
 
-        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, this.pickedPiece, 5, 60);
-        this.piece.animation = animation;
-
-        animation.update(timeSinceProgramStarted);
-
-        //this.piece.position = endPos;
-        //this.piece = null;
+        const pieceMovement = MyStateMoving.createPieceMovingState(this.scene, this.game, this.piece, timeSinceProgramStarted, startPos, endPos);
 
         // send server request (move)
         this.game.makeWaitingForStateUpdate();
@@ -62,7 +56,7 @@ class MyStatePiecePicked extends MyGameState {
             this.game.stopWaitingForStateUpdate();
         }.bind(this));
 
-        this.game.setState(new MyStateMoving(this.scene, this.game, animation));
+        this.game.setState(pieceMovement);
         this.resetPossibleMoves();
 
         return true;

@@ -32,7 +32,8 @@ class MyKeyframeAnimation extends MyAnimation{
             
             super(keyframeArray[0], keyframeArray[1]);
         }
-        console.log(keyframeArray);
+
+        this.currentStartKeyframe = 0;
         
         this.keyframeArray = keyframeArray;
         this.infiniteReplay = infiniteReplay;
@@ -46,14 +47,13 @@ class MyKeyframeAnimation extends MyAnimation{
     /**
      * @method getPrevNextFrame
      * Gets the previous and the next keyframe in the animation
-     * @param {Number} currentTime time since animation started in seconds
      * @return null if next frame is not found, object with 'prev' and 'next' attributes otherwise
      */
-    getPrevNextFrame(currentTime) {
-        const previousFrame = this.getPrevFrame(currentTime);
-        const nextFrame = this.getNextFrame(currentTime);
+    getPrevNextFrame() {
+        this.currentStartKeyframe = this.currentStartKeyframe + 1;
+        if (this.keyframeArray.length < this.currentStartKeyframe + 2) return null;
         
-        return nextFrame === null ? null : {prev: previousFrame, next: nextFrame};
+        return { prev: this.keyframeArray[this.currentStartKeyframe], next: this.keyframeArray[this.currentStartKeyframe+1] };
     }
 
     /**
@@ -63,8 +63,7 @@ class MyKeyframeAnimation extends MyAnimation{
      * @return null if next frame is not found, object with 'prev' and 'next' attributes otherwise
      */
     restartAnimation(currentTime) {
-        this.replayCount++;
-        currentTime -= this.finalKeyframeInstant;   // updates the current time, taking out the time that the animation took
+        this.currentStartKeyframe = -1;
         return this.getPrevNextFrame(currentTime);
     }
 
@@ -98,8 +97,9 @@ class MyKeyframeAnimation extends MyAnimation{
 
             // in case the previous two keyframes finished interpolating
             // gets the next two
-            let animationVars = this.getPrevNextFrame(currentTime);
+            const animationVars = this.getPrevNextFrame(currentTime);
 
+            //console.log("NextKeyframes:", animationVars);
             /* if animationVars are null, the keyframe animation is over. If infinite replay is ON, restarts the animation*/
             if (animationVars == null && this.infiniteReplay) animationVars = this.restartAnimation(currentTime);
             if (animationVars == null) return true;
@@ -116,43 +116,5 @@ class MyKeyframeAnimation extends MyAnimation{
      */
     copy() {
         return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
-    }
-
-    /**
-     * @method getPrevFrame
-     * Gets the previous frame in the animation
-     * @param {Number} currentTime time since animation started in seconds
-     * @return the previous frame
-     */
-    getPrevFrame(currentTime) {
-        // gets the frame that is closest to the current time, taking preference over frames that are before the current time
-        return this.keyframeArray.reduce((accumulator, current) => {
-            const accumVar = accumulator.instant - currentTime;
-            const currentVar = current.instant - currentTime;
-            if (Math.abs(currentVar) < Math.abs(accumVar)) {
-                if (currentVar < 0) return current;
-                if (accumVar < 0) return accumulator;
-                return current;
-            } else {
-                if (accumVar < 0) return accumulator;
-                if (currentVar < 0) return current;
-                return accumulator;
-            }    
-        });
-    }
-    
-    /**
-     * @method getNextFrame
-     * Gets the next frame in the animation
-     * @param {Number} currentTime time since animation started in seconds
-     * @return the next frame
-     */
-    getNextFrame(currentTime) {
-        // the next frame is the first frame in the array that has 'instant' greater than the 'currentTime', because the array is ordered
-        for (let i = 0; i < this.keyframeArray.length; i++){
-            if (this.keyframeArray[i].instant > currentTime)
-                return this.keyframeArray[i];
-        }
-        return null;
     }
 }

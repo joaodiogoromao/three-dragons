@@ -18,9 +18,12 @@ class MyMenuController {
             "back": this.goBack.bind(this),
             "next": this.goForward.bind(this),
             "white": this.selectWhitePieces.bind(this),
-            "black": this.selectBlackPieces.bind(this)
+            "black": this.selectBlackPieces.bind(this),
+            "nothing": this.doNothing
         }
     }
+
+    doNothing(){}
 
     selectWhitePieces() {
         if (typeof this.state.setPlayerColor == 'function')

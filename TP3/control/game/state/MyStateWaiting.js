@@ -7,7 +7,7 @@ class MyStateWaiting extends MyGameState {
         if (possibleMoves) {
             this.possibleMoves = possibleMoves;
             this.initComplete = true;
-            this.game.updateBoard();
+            //this.game.updateBoard();
         } else if (game.stateUpToDate) {
             this.init();
         } else {
@@ -25,7 +25,7 @@ class MyStateWaiting extends MyGameState {
     }
 
     init() {
-        this.game.updateBoard();
+        //this.game.updateBoard();
         this.game.connection.getPossibleMoves(this.game.prologGameState, function(res) {
             this.initComplete = true;
             this.possibleMoves = res.moves;

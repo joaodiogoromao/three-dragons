@@ -51,6 +51,8 @@ class MyAnimation {
 	 */
 	update(currentTime) {
 
+		//console.log("Updating animation, current time: ", currentTime)
+
 		// if the 'start' instant hasn't been reached yet
 		// OBJECT DOESN'T APPEAR
 		if (currentTime < this.startTime) {
@@ -65,6 +67,7 @@ class MyAnimation {
 		// If the end instant has been reached but the end frame wasn't drawn
 		if (currentTime > this.endTime && !this.endedAnimation) {
 			interpolationAmount = 1;// forces the end instant to be drawn
+			//console.log("Current time, endTime", currentTime, this.endTime)
 		} else if (currentTime > this.endTime) return;   // if the end instant has been surpassed and the end frame was drawn; 
 														 // it means that the animation is over and it maintain its current transformation matrix
 

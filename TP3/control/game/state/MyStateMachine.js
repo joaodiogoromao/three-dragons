@@ -2,33 +2,30 @@ class MyStateMachine extends MyGameState {
     constructor(scene, game, difficulty) {
         super(scene, game);
         this.game = game;
-        this.initComplete = false;
         this.difficulty = difficulty;
 
         // request move to perform machine play (get move as a server answer)
-        this.game.updateBoard();
-        this.game.connection.applyBotMove(this.game.prologGameState, "hard", function(res) {
+        //this.game.updateBoard();
+
+        console.log(this.game.prologGameState);
+        
+        this.game.makeWaitingForStateUpdate();
+        this.game.connection.applyBotMove(this.game.prologGameState, difficulty, function(res) {
             this.game.prologGameState = { player: res.player, npieces: res.npieces, gameBoard: res.gameBoard, gameOver: res.gameOver };
             this.move = res.move;
-            this.initComplete = true;
+            this.game.stopWaitingForStateUpdate();
         }.bind(this));
     }
 
     update(timeSinceProgramStarted) {
         console.log('machine picking');
-        if (!this.initComplete) return;
-
         const endPos = this.move.final;
         const startPos = this.move.initial;
  
         const pickedPiece = this.getPickedPiece(startPos);
+        const pieceMovement = MyStateMoving.createPieceMovingState(this.scene, this.game, pickedPiece, timeSinceProgramStarted, startPos, endPos);
 
-        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, pickedPiece, 5, 60);
-        pickedPiece.animation = animation;
-
-        animation.update(timeSinceProgramStarted);
-
-        this.game.setState(new MyStateMoving(this.scene, this.game, animation));
+        this.game.setState(pieceMovement);
     }
 
     getPickedPiece(position) {

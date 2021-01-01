@@ -33,11 +33,13 @@ class MyBoard extends CGFobject {
     }
 
     setGameBoard(newGameBoard) {
+        console.log("Updating game board with", newGameBoard);
         this.updatePieces(newGameBoard);
         this.gameBoard = newGameBoard;
     }
 
     updatePieces(newGameBoard) {
+        console.log("old: ", this.gameBoard, " new: ", newGameBoard);
         const added = [], removed = [];
         for (const i in this.gameBoard) {
             const prevLine = this.gameBoard[i];
@@ -64,6 +66,8 @@ class MyBoard extends CGFobject {
                 }
             }
         }
+
+        console.log("Piece diff", added, removed);
 
         for (const piece of this.pieces) {
             if (piece.position == null) continue;   // TODO for pieces that have been removed
@@ -202,7 +206,10 @@ class MyBoard extends CGFobject {
             this.scene.registerForPick(81+count/*(piece.position.z-1)*this.nCols + piece.position.x /* - 1 + 1 */, piece);
 
             this.scene.pushMatrix();
-            if (piece.animation && !piece.animation.finishedMovingState) piece.animation.apply(this.scene);
+            if (piece.animation && !piece.animation.finishedMovingState) {
+                //console.log("Applying piece animation");
+                piece.animation.apply(this.scene);
+            }
             else if (piece.animation) {
                 piece.animation.finishedMovingState = false;
                 piece.animation = null;

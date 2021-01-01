@@ -135,6 +135,8 @@
             <descendants>
                 <noderef id="gameBoard" />
                 <noderef id="groundSurface" />
+                <noderef id="configBlacks" />
+                <noderef id="configWhites" />
             </descendants>
         </node>
         <node id="groundSurface">       
@@ -866,5 +868,71 @@
             </descendants>
         </node>
         
+        <!-- PLAYER CONFIG MENUS -->
+
+        <node id="configWhites">
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <material id="null"/>
+
+            <transformations>
+                <scale sx="0.1" sy="0.1" sz="0.1" />
+                <translation x="0" y="0" z="100" />
+                <rotation axis="x" angle="-45" />
+                <translation x="0" y="30" z="0" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <leaf type="menu" name="configWhites" title="Whites" aspectRatio="1.778" gridGap="3" rows="3" cols="5" horizontalPadding="5" verticalPadding="5">
+                    <button action="nothing" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="2" />
+                    <button action="nothing" text="0" rowStart="1" rowEnd="2" colStart="2" colEnd="3" />
+                    <button action="nothing" text=":" rowStart="1" rowEnd="2" colStart="3" colEnd="4" />
+                    <button action="nothing" text="0" rowStart="1" rowEnd="2" colStart="4" colEnd="5" />
+                    <button action="nothing" text="Blacks" rowStart="1" rowEnd="2" colStart="5" colEnd="6" />
+
+                    <button action="nothing" text="Time:" rowStart="2" rowEnd="3" colStart="2" colEnd="3" />
+                    <button action="nothing" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="4" />
+
+                    <button action="theme1" text="Theme 1" rowStart="3" rowEnd="4" colStart="2" colEnd="3" />
+                    <button action="theme2" text="Theme 2" rowStart="3" rowEnd="4" colStart="3" colEnd="4" />
+                    <button action="theme3" text="Theme 3" rowStart="3" rowEnd="4" colStart="4" colEnd="5" />
+                </leaf>
+            </descendants>
+        </node>
+
+        <node id="configBlacks">
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <material id="null"/>
+
+            <transformations>
+                <scale sx="0.1" sy="0.1" sz="0.1" />
+                <translation x="0" y="0" z="-100" />
+                <rotation axis="x" angle="45" />
+                <translation x="0" y="30" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="menu" name="configBlacks" title="Blacks" aspectRatio="1.778" gridGap="3" rows="3" cols="5" horizontalPadding="5" verticalPadding="5">
+                    <button action="nothing" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="2" />
+                    <button action="nothing" text="0" rowStart="1" rowEnd="2" colStart="2" colEnd="3" />
+                    <button action="nothing" text=":" rowStart="1" rowEnd="2" colStart="3" colEnd="4" />
+                    <button action="nothing" text="0" rowStart="1" rowEnd="2" colStart="4" colEnd="5" />
+                    <button action="nothing" text="Blacks" rowStart="1" rowEnd="2" colStart="5" colEnd="6" />
+
+                    <button action="nothing" text="Time:" rowStart="2" rowEnd="3" colStart="2" colEnd="3" />
+                    <button action="nothing" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="4" />
+
+                    <button action="theme1" text="Theme 1" rowStart="3" rowEnd="4" colStart="2" colEnd="3" />
+                    <button action="theme2" text="Theme 2" rowStart="3" rowEnd="4" colStart="3" colEnd="4" />
+                    <button action="theme3" text="Theme 3" rowStart="3" rowEnd="4" colStart="4" colEnd="5" />
+                </leaf>
+            </descendants>
+        </node>
     </nodes>
 </lsf>

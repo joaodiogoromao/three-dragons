@@ -12,6 +12,7 @@ class MyGame {
         this.connection.init(function(res) {
             this.prologGameState = res;
             this.stopWaitingForStateUpdate();
+            this.board.gameBoard = this.prologGameState.gameBoard;
             console.log("stopped waiting");
             this.nextMoveStrategy.apply(function() {
                 this.initComplete = true;
@@ -47,13 +48,24 @@ class MyGame {
         this.onStateUpToDate = undefined;
     }
 
-    updateBoard() {
-        if (this.stateUpToDate) {
+    updateBoard(onStateChange) {
+        console.log("Update board called with", onStateChange, this.prologGameState);
+        const fn = function() {
             this.board.setGameBoard(this.prologGameState.gameBoard);
+            // this will return the removed pieces animations in order to create a new my state moving state and animate their exit
+            // if animate then set animation state
+            // else, animate camera:
+            const cameraAnimation = new MyCameraAnimation(this.scene, this.timeSinceProgramStarted, 2);
+            this.setState(new MyStateMoving(this.scene, this.game, [[cameraAnimation]], function() {
+                this.nextMoveStrategy.apply();
+            }.bind(this)));
+            if (onStateChange) onStateChange();
+        }.bind(this);
+
+        if (this.stateUpToDate) {
+            fn();
         } else {
-            this.setOnStateUpToDate(function() {
-                this.board.setGameBoard(this.prologGameState.gameBoard);
-            }.bind(this));
+            this.setOnStateUpToDate(fn);
         }
     }
 
@@ -67,6 +79,7 @@ class MyGame {
     }
 
     update(timeSinceProgramStarted) {
+        this.timeSinceProgramStarted = timeSinceProgramStarted;
         if (!this.initComplete) return;
         if (!(this.state instanceof MyStateMoving) && !this.stateUpToDate) return;  // if the state is not an animation, all server requests must have been fulfilled 
         this.state.update(timeSinceProgramStarted);
