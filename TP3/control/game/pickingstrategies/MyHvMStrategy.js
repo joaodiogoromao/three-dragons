@@ -20,7 +20,7 @@ class MyHvMStrategy extends MyStrategy {
     }
 
     setPlayerColor(humanPiece) {
-        if (humanPiece != "white" && humanPiece != "black") {
+        if (humanPiece != "white" && humanPiece != "black" && humanPiece != null) {
             throw new Error("Invalid human player's piece given to MyHvMStrategy.");
         }
         this.humanPiece = humanPiece;

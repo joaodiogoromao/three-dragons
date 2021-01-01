@@ -10,12 +10,12 @@ class MyGameOrchestrator {
     }
 
     setPlayingStrategy(strategy) {
-        if (!(strategy instanceof MyStrategy)) throw new Error("The game strategy may only be an extension of MyStrategy.");
+        if (!(strategy instanceof MyStrategy) && strategy != null) throw new Error("The game strategy may only be an extension of MyStrategy.");
         this.strategy = strategy;
     }
 
     setPlayerColor(color) {
-        if (!(this.strategy instanceof MyHvMStrategy)) throw new Error("Trying to set player color of a strategy that's not HvM.");
+        if (!(this.strategy instanceof MyHvMStrategy) && color != null) throw new Error("Trying to set player color of a strategy that's not HvM.");
         this.strategy.setPlayerColor(color);
     }
 

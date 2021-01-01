@@ -27,7 +27,10 @@ class MyStateMainMenu extends MyState {
 
     goBack() {
         if (this.chosePlayer) {
-            this.setPlayerColor(null);
+            if (this.gameOrchestrator.strategy instanceof MyMvMStrategy)
+                this.gameMode = null;
+            else
+                this.setPlayerColor(null);
             this.chosePlayer = null;
         }
         else if (this.gameMode) {
