@@ -10,6 +10,8 @@ class MyStateLoading extends MyState{
     }
 
     update(timeSinceProgramStarted) {
-        this.game.update(timeSinceProgramStarted);
+        if (this.game.update(timeSinceProgramStarted)) {
+            this.gameOrchestrator.setState(new MyStateOverMenu(this.scene, this.gameOrchestrator, this.game.prologGameState.gameOver));
+        }
     }
 }

@@ -71,7 +71,7 @@ class MyGame {
         if (!(this.state instanceof MyStateMoving) && !this.stateUpToDate) return;  // if the state is not an animation, all server requests must have been fulfilled 
         this.state.update(timeSinceProgramStarted);
         if (!(this.state instanceof MyStateMoving)) {
-            if (this.prologGameState.gameOver) this.setState(new MyStateGameOver(this.scene, this));
+            if (this.prologGameState.gameOver) return true;
         }
     }
 
