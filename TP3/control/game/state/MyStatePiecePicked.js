@@ -24,7 +24,7 @@ class MyStatePiecePicked extends MyGameState {
                     }
                     // reset piece selection otherwise 
                     else {
-                        this.game.nextMoveStrategy.apply(this.possibleMoves);
+                        this.game.setState(new MyStateWaiting(this.scene, this.game, this.possibleMoves));
                         this.resetPossibleMoves();
                         return;
                     }

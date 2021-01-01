@@ -15,7 +15,7 @@ class MyStateMachine extends MyGameState {
     }
 
     update(timeSinceProgramStarted) {
-        console.log('machine picking', this.initComplete);
+        console.log('machine picking');
         if (!this.initComplete) return;
 
         const endPos = this.move.final;

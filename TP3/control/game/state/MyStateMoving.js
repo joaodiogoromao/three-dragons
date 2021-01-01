@@ -6,9 +6,11 @@ class MyStateMoving extends MyGameState {
     }
 
     update(timeSinceProgramStarted) { 
-        console.log('moving');       
+        console.log('moving');   
         if (this.currentAnimation != null && this.currentAnimation.update(timeSinceProgramStarted) === true) {
-            this.game.nextMoveStrategy.apply();
+            this.game.nextMoveStrategy.apply(function() {
+                this.currentAnimation.finishedMovingState = true;
+            }.bind(this));
         }
         
     }

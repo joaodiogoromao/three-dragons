@@ -18,7 +18,7 @@ class MyLinearAnimation extends MyKeyframeAnimation {
             transformationObj['translation'] = { ...translation };
             return transformationObj;
         }
-        console.log('Offset', xOffset, zOffset);
+        //console.log('Offset', xOffset, zOffset);
         const calculateKeyframeArray = function () {
             let xOffsetDelta = 0, zOffsetDelta = 0;
             let keyframes = [];
@@ -45,7 +45,6 @@ class MyLinearAnimation extends MyKeyframeAnimation {
                 translation.y = Math.sqrt(radius * radius - distanceFromCenter * distanceFromCenter);
 
                 time = i * timeOffset + initialTime;
-                console.log(translation);
                 keyframes.push(new Keyframe(time, initTransformationObj(translation)));
             }
 

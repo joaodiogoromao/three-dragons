@@ -3,7 +3,10 @@ class MyHvHStrategy extends MyStrategy {
         super(scene);
     }
 
-    apply(possibleMoves) {
-        this.game.setState(new MyStateWaiting(this.scene, this.game, possibleMoves));
+    apply(extender) {
+        const fn = function() {
+            this.game.setState(new MyStateWaiting(this.scene, this.game));
+        }.bind(this);
+        super.apply(fn, extender);
     }
 }

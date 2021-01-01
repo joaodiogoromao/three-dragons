@@ -3,8 +3,11 @@ class MyMvMStrategy extends MyStrategy {
         super(scene);
     }
 
-    apply() {
-        this.game.setState(new MyStateMachine(this.scene, this.game, this.difficulty));
+    apply(extender) {
+        const fn = function() {
+            this.game.setState(new MyStateMachine(this.scene, this.game, this.difficulty));
+        }.bind(this);
+        super.apply(fn, extender);
     }
 
     setMachineDifficulty(difficulty) {

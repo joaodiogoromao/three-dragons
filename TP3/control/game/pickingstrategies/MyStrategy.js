@@ -6,7 +6,17 @@ class MyStrategy {
         this.scene = scene;
     }
 
-    apply() {}
+    apply(fn, extender) {
+        const exec = function() {
+            fn();
+            if (extender) extender();
+        };
+        if (!this.game.stateUpToDate) {
+            console.log("State was not up to date in strategy apply!")
+            this.game.setOnStateUpToDate(exec);
+        } 
+        else exec();
+    }
 
     setGame(game) {
         if (!(game instanceof MyGame)) throw new Error("The game of the game strategy may only be an extension of MyGame.");

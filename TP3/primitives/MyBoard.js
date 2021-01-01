@@ -65,8 +65,6 @@ class MyBoard extends CGFobject {
             }
         }
 
-        console.log(added, removed);
-
         for (const piece of this.pieces) {
             if (piece.position == null) continue;   // TODO for pieces that have been removed
 
@@ -204,7 +202,11 @@ class MyBoard extends CGFobject {
             this.scene.registerForPick(81+count/*(piece.position.z-1)*this.nCols + piece.position.x /* - 1 + 1 */, piece);
 
             this.scene.pushMatrix();
-            if (piece.animation != null && !piece.animation.endedAnimation) piece.animation.apply(this.scene);
+            if (piece.animation && !piece.animation.finishedMovingState) piece.animation.apply(this.scene);
+            else if (piece.animation) {
+                piece.animation.finishedMovingState = false;
+                piece.animation = null;
+            }
             this.scene.translate(piece.position.x-0.5, 0.36 /*need to change in order not to have this*/ , piece.position.z-0.5);
             this.showDiceFace(piece.value);
 

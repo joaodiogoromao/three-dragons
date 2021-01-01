@@ -11,9 +11,12 @@ class MyGame {
         this.connection = new MyConnection('http://localhost:8081/');
         this.connection.init(function(res) {
             this.prologGameState = res;
-            this.initComplete = true;
             this.stopWaitingForStateUpdate();
-            this.nextMoveStrategy.apply();
+            console.log("stopped waiting");
+            this.nextMoveStrategy.apply(function() {
+                this.initComplete = true;
+            }.bind(this));
+            console.log("applied");
         }.bind(this));
 
         this.initComplete = false;

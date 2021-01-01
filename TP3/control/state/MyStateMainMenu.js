@@ -14,7 +14,6 @@ class MyStateMainMenu extends MyState {
     }
 
     display() {
-        console.log(this.chosePlayer, this.gameMode);
         if (this.chosePlayer) this.menus.difficulty.display();
         else if (this.gameMode) this.menus.choosePlayer.display();
         else this.menus.main.display();
