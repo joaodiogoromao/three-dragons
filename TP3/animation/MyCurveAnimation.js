@@ -1,9 +1,9 @@
 /**
- * @class MyLinearAnimation
+ * @class MyCurveAnimation
  * Piece movement animation
  */
 // TODO REMOVE OBJECT
-class MyLinearAnimation extends MyKeyframeAnimation {
+class MyCurveAnimation extends MyKeyframeAnimation {
     /**
      * @constructor
      * @param {CGFscene} scene the scene object
@@ -18,13 +18,13 @@ class MyLinearAnimation extends MyKeyframeAnimation {
             transformationObj['translation'] = { ...translation };
             return transformationObj;
         }
-        //console.log('Offset', xOffset, zOffset);
+        
         const calculateKeyframeArray = function () {
             let xOffsetDelta = 0, zOffsetDelta = 0;
             let keyframes = [];
 
             let radius = Math.sqrt(xOffset * xOffset + zOffset * zOffset) / 2;
-            let duration = ((Math.PI * radius * radius) / 2) / speed;
+            let duration = (Math.PI * radius) / speed;
 
             let initialTime = currentTime;
             let finalTime = initialTime + duration;

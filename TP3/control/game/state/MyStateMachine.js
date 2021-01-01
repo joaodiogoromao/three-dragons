@@ -23,7 +23,7 @@ class MyStateMachine extends MyGameState {
  
         const pickedPiece = this.getPickedPiece(startPos);
 
-        const animation = new MyLinearAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, pickedPiece, 2, 60);
+        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, pickedPiece, 5, 60);
         pickedPiece.animation = animation;
 
         animation.update(timeSinceProgramStarted);

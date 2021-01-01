@@ -47,7 +47,7 @@ class MyStatePiecePicked extends MyGameState {
         const move = this.isValidMove(startPos, endPos, this.piece);
         if (!move) return false;
 
-        const animation = new MyLinearAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, this.pickedPiece, 2, 60);
+        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, this.pickedPiece, 5, 60);
         this.piece.animation = animation;
 
         animation.update(timeSinceProgramStarted);
