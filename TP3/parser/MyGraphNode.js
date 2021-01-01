@@ -75,6 +75,10 @@ class Node extends CGFobject {
         this.descendantObjs.push(obj);
     }
 
+    getLeafNode(name) {
+        return this.descendantObjs.find((node) => node.obj.name && node.obj.name == name);
+    }
+
     /**
      * Corresponds the ids in descendantIds to real objects
      * @param {array} array that maps ids to objects
@@ -141,7 +145,6 @@ class Node extends CGFobject {
             }
         }
 
-        
         this.scene.popMaterial();
         this.scene.popTexture();
         this.scene.popMatrix();

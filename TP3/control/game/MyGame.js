@@ -1,16 +1,24 @@
 
 
 class MyGame {
-    constructor(board, scene) {
-        this.board = board;
-        this.nextMoveStrategy = new MyMvMStrategy(this, scene);
+    constructor(scene, strategy) {
+        this.board = scene.graph.board;
+        this.scene = scene;
+
+        this.nextMoveStrategy = strategy;
+        this.nextMoveStrategy.setGame(this);
+
         this.connection = new MyConnection('http://localhost:8081/');
         this.connection.init(function(res) {
             this.prologGameState = res;
-            this.initComplete = true;
             this.stopWaitingForStateUpdate();
-            this.nextMoveStrategy.apply();
+            console.log("stopped waiting");
+            this.nextMoveStrategy.apply(function() {
+                this.initComplete = true;
+            }.bind(this));
+            console.log("applied");
         }.bind(this));
+
         this.initComplete = false;
         this.makeWaitingForStateUpdate();
     }
@@ -50,8 +58,12 @@ class MyGame {
     }
 
     setState(state) {
-        if (!(state instanceof MyState)) throw new Error("The state of the game may only be an extension of MyGameState.");
+        if (!(state instanceof MyGameState)) throw new Error("The state of the game may only be an extension of MyGameState.");
         this.state = state;
+    }
+
+    display() {
+        this.scene.graph.displayScene();
     }
 
     update(timeSinceProgramStarted) {
@@ -59,7 +71,7 @@ class MyGame {
         if (!(this.state instanceof MyStateMoving) && !this.stateUpToDate) return;  // if the state is not an animation, all server requests must have been fulfilled 
         this.state.update(timeSinceProgramStarted);
         if (!(this.state instanceof MyStateMoving)) {
-            if (this.prologGameState.gameOver) this.setState(new MyStateGameOver(this.scene, this));
+            if (this.prologGameState.gameOver) return true;
         }
     }
 

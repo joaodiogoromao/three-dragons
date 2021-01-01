@@ -1,4 +1,4 @@
-class MyStatePiecePicked extends MyState {
+class MyStatePiecePicked extends MyGameState {
     constructor(scene, game, piece, possibleMoves) {
         super(scene, game);
         this.piece = piece;
@@ -21,8 +21,10 @@ class MyStatePiecePicked extends MyState {
                             this.scene.discardPickResults();
                             return;
                         }
-                    } else {
-                        this.game.nextMoveStrategy.apply(this.possibleMoves);
+                    }
+                    // reset piece selection otherwise 
+                    else {
+                        this.game.setState(new MyStateWaiting(this.scene, this.game, this.possibleMoves));
                         this.resetPossibleMoves();
                         return;
                     }
@@ -45,7 +47,7 @@ class MyStatePiecePicked extends MyState {
         const move = this.isValidMove(startPos, endPos, this.piece);
         if (!move) return false;
 
-        const animation = new MyLinearAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, this.pickedPiece, 2, 60);
+        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, this.pickedPiece, 5, 60);
         this.piece.animation = animation;
 
         animation.update(timeSinceProgramStarted);

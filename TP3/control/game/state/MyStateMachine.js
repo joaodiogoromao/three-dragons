@@ -1,13 +1,13 @@
-class MyStateMachine extends MyState {
-    constructor(scene, game) {
+class MyStateMachine extends MyGameState {
+    constructor(scene, game, difficulty) {
         super(scene, game);
         this.game = game;
         this.initComplete = false;
+        this.difficulty = difficulty;
+
         // request move to perform machine play (get move as a server answer)
-        console.log("Constructing mystate machine");
         this.game.updateBoard();
         this.game.connection.applyBotMove(this.game.prologGameState, "hard", function(res) {
-            console.log("Received the response", res)
             this.game.prologGameState = { player: res.player, npieces: res.npieces, gameBoard: res.gameBoard, gameOver: res.gameOver };
             this.move = res.move;
             this.initComplete = true;
@@ -15,7 +15,7 @@ class MyStateMachine extends MyState {
     }
 
     update(timeSinceProgramStarted) {
-        console.log('machine picking', this.initComplete);
+        console.log('machine picking');
         if (!this.initComplete) return;
 
         const endPos = this.move.final;
@@ -23,7 +23,7 @@ class MyStateMachine extends MyState {
  
         const pickedPiece = this.getPickedPiece(startPos);
 
-        const animation = new MyLinearAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, pickedPiece, 2, 60);
+        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, pickedPiece, 5, 60);
         pickedPiece.animation = animation;
 
         animation.update(timeSinceProgramStarted);

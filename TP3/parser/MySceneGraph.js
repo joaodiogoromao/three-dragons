@@ -18,18 +18,21 @@ const isNull = (v) => v === null;
  * MySceneGraph class, representing the scene graph.
  */
 class MySceneGraph {
+    static types = {
+        MODULE: 0,
+        SCENE: 1
+    };
+
     /**
      * Constructor for MySceneGraph class.
      * Initializes necessary variables and starts the XML file reading process.
      * @param {string} filename - File that defines the 3D scene
      * @param {XMLScene} scene
      */
-    constructor(filename, scene) {
+    constructor(filename, scene, type) {
         this.loadedOk = null;
 
-        // Establish bidirectional references between scene and graph.
         this.scene = scene;
-        scene.graph = this;
 
         this.nodes = [];
         this.materials = [];
@@ -55,6 +58,9 @@ class MySceneGraph {
          * If any error occurs, the reader calls onXMLError on this object, with an error message
          */
         this.reader.open('scenes/' + filename, this);
+
+        // Scene type (to distinguish if only object nodes need to be parsed)
+        this.type = type;
     }
 
     /*
@@ -62,20 +68,25 @@ class MySceneGraph {
      */
     onXMLReady() {
         this.log("XML Loading finished.");
-        var rootElement = this.reader.xmlDoc.documentElement;
+        const rootElement = this.reader.xmlDoc.documentElement;
 
         // Here should go the calls for different functions to parse the various blocks
-        var error = this.parseXMLFile(rootElement);
+        const error = this.parseXMLFile(rootElement);
 
         if (error != null) {
             this.onXMLError(error);
             return;
         }
+        
+        // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
+
+        if (this.type == MySceneGraph.types.SCENE) {
+            this.scene.onGraphLoaded(this.type, this);
+        } else if (this.type == MySceneGraph.types.MODULE) {
+            this.scene.onGraphLoaded(this.type, this.nodes);
+        }
 
         this.loadedOk = true;
-
-        // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-        this.scene.onGraphLoaded();
     }
 
     /**
@@ -111,12 +122,12 @@ class MySceneGraph {
         if (rootElement.nodeName != "lsf")
             return "root tag <lsf> missing";
 
-        var nodes = rootElement.children;
+        const nodes = rootElement.children;
 
         // Reads the names of the nodes to an auxiliary buffer.
-        var nodeNames = [];
+        const nodeNames = [];
 
-        for (var i = 0; i < nodes.length; i++) {
+        for (let i = 0; i < nodes.length; i++) {
             nodeNames.push(nodes[i].nodeName);
         }
 
@@ -124,53 +135,57 @@ class MySceneGraph {
 
         // Processes each node, verifying errors.
 
-        // <initials>
-        var index;
-        if ((index = nodeNames.indexOf("initials")) == -1)
-            return "tag <initials> missing";
-        else {
-            if (index != INITIALS_INDEX)
-                this.onXMLMinorError("tag <initials> out of order " + index);
 
-            //Parse initials block
-            if ((error = this.parseInitials(nodes[index])) != null)
-                return error;
-        }
+        let index;
 
-        // <views>
-        if ((index = nodeNames.indexOf("views")) == -1)
-            return "tag <views> missing";
-        else {
-            if (index != VIEWS_INDEX)
-                this.onXMLMinorError("tag <views> out of order");
+        // graph only needs views, illumination and lights if it's a scene
+        if (this.type == MySceneGraph.types.SCENE) {
+            if ((index = nodeNames.indexOf("initials")) == -1)
+                return "tag <initials> missing";
+            else {
+                if (index != INITIALS_INDEX)
+                    this.onXMLMinorError("tag <initials> out of order " + index);
+    
+                //Parse initials block
+                if ((error = this.parseInitials(nodes[index])) != null)
+                    return error;
+            }
+            
+            // <views>
+            if ((index = nodeNames.indexOf("views")) == -1)
+                return "tag <views> missing";
+            else {
+                if (index != VIEWS_INDEX)
+                    this.onXMLMinorError("tag <views> out of order");
 
-            //Parse views block
-            if ((error = this.parseViews(nodes[index])) != null)
-                return error;
-        }
+                //Parse views block
+                if ((error = this.parseViews(nodes[index])) != null)
+                    return error;
+            }
 
-        // <illumination>
-        if ((index = nodeNames.indexOf("illumination")) == -1)
-            return "tag <illumination> missing";
-        else {
-            if (index != ILLUMINATION_INDEX)
-                this.onXMLMinorError("tag <illumination> out of order");
+            // <illumination>
+            if ((index = nodeNames.indexOf("illumination")) == -1)
+                return "tag <illumination> missing";
+            else {
+                if (index != ILLUMINATION_INDEX)
+                    this.onXMLMinorError("tag <illumination> out of order");
 
-            //Parse illumination block
-            if ((error = this.parseIllumination(nodes[index])) != null)
-                return error;
-        }
+                //Parse illumination block
+                if ((error = this.parseIllumination(nodes[index])) != null)
+                    return error;
+            }
 
-        // <lights>
-        if ((index = nodeNames.indexOf("lights")) == -1)
-            return "tag <lights> missing";
-        else {
-            if (index != LIGHTS_INDEX)
-                this.onXMLMinorError("tag <lights> out of order");
+            // <lights>
+            if ((index = nodeNames.indexOf("lights")) == -1)
+                return "tag <lights> missing";
+            else {
+                if (index != LIGHTS_INDEX)
+                    this.onXMLMinorError("tag <lights> out of order");
 
-            //Parse lights block
-            if ((error = this.parseLights(nodes[index])) != null)
-                return error;
+                //Parse lights block
+                if ((error = this.parseLights(nodes[index])) != null)
+                    return error;
+            }
         }
 
         // <textures>

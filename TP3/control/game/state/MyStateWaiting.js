@@ -1,8 +1,9 @@
-class MyStateWaiting extends MyState {
+class MyStateWaiting extends MyGameState {
     constructor(scene, game, possibleMoves) {
         super(scene, game);
         this.game = game;
         this.initComplete = false;
+        console.log("PossibleMoves: ", possibleMoves);
         if (possibleMoves) {
             this.possibleMoves = possibleMoves;
             this.initComplete = true;

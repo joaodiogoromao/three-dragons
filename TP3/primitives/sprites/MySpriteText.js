@@ -25,6 +25,22 @@ class MySpriteText {
     }
 
     /**
+     * @method getWidth
+     * Gets the total width of the text
+     */
+    getWidth() {
+        return this.charWidth * this.text.length;
+    }
+
+    /**
+     * @method getHeight
+     * Gets the total height of the text
+     */
+    getHeight() {
+        return this.charHeight;
+    }
+
+    /**
      * @method display
      * Displays the text spritesheet.
      * Activates the shader.

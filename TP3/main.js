@@ -11,14 +11,54 @@ function getUrlVars() {
     return vars;
 }	 
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'parser/MySceneGraph.js', 'MyInterface.js', 'primitives/MyRectangle.js', 'parser/MyGraphNode.js', 'parser/MyLeafObjGenerator.js', 'primitives/MyTorus.js', 'primitives/MyCylinder.js', 'primitives/MyTriangle.js', 'primitives/MySphere.js', 'primitives/MyBoard.js', 'animation/MyAnimation.js', 'animation/MyKeyframeAnimation.js', 'sprites/MySpriteSheet.js', 'sprites/MySpriteText.js', 'animation/MySpriteAnimation.js', 'primitives/MyPlane.js', 'primitives/MyPatch.js', 'primitives/MyDefBarrel.js', 'game/MyGame.js', 'animation/MyLinearAnimation.js', 'game/state/MyState.js', 'game/state/MyStateMoving.js', 'game/state/MyStateWaiting.js', 'game/state/MyStatePiecePicked.js', 'game/MyConnection.js', 'game/pickingstrategies/MyStrategy.js', 'game/pickingstrategies/MyHvMStrategy.js', 'game/pickingstrategies/MyMvMStrategy.js', 'game/pickingstrategies/MyHvHStrategy.js', 'game/state/MyStateMachine.js', 'game/state/MyStateGameOver.js',
+serialInclude(['../lib/CGF.js', 
+    'XMLscene.js', 
+    'parser/MySceneGraph.js', 
+    'MyInterface.js', 
+    'primitives/MyRectangle.js', 
+    'parser/MyGraphNode.js', 
+    'parser/MyLeafObjGenerator.js', 
+    'primitives/MyTorus.js', 
+    'primitives/MyCylinder.js', 
+    'primitives/MyTriangle.js', 
+    'primitives/MySphere.js', 
+    'primitives/MyBoard.js', 
+    'primitives/MyPlane.js', 
+    'primitives/MyPatch.js', 
+    'primitives/MyDefBarrel.js', 
+    'primitives/MyButton.js', 
+    'primitives/MyMenu.js', 
+    'primitives/sprites/MySpriteAnimation.js',
+    'primitives/sprites/MySpriteText.js', 
+    'animation/MyAnimation.js', 
+    'animation/MyKeyframeAnimation.js',  
+    'animation/MyCurveAnimation.js', 
+    'sprites/MySpriteSheet.js',
+    'control/MyConnection.js', 
+    'control/MyGameOrchestrator.js', 
+    'control/MyMenuController.js', 
+    'control/state/MyState.js', 
+    'control/state/MyStateOverMenu.js', 
+    'control/state/MyStateMainMenu.js', 
+    'control/state/MyStatePauseMenu.js', 
+    'control/state/MyStateLoading.js',
+    'control/game/MyGame.js', 
+    'control/game/state/MyGameState.js', 
+    'control/game/state/MyStateMoving.js', 
+    'control/game/state/MyStateWaiting.js', 
+    'control/game/state/MyStatePiecePicked.js', 
+    'control/game/state/MyStateMachine.js',
+    'control/game/pickingstrategies/MyStrategy.js', 
+    'control/game/pickingstrategies/MyHvMStrategy.js', 
+    'control/game/pickingstrategies/MyMvMStrategy.js', 
+    'control/game/pickingstrategies/MyHvHStrategy.js', 
 
 main=function()
 {
 	// Standard application, scene and interface setup
-    var app = new CGFapplication(document.body);
-    var myInterface = new MyInterface();
-    var myScene = new XMLscene(myInterface);
+    const app = new CGFapplication(document.body);
+    const myInterface = new MyInterface();
+    const myScene = new XMLscene(myInterface);
 
     app.init();
 
@@ -30,11 +70,16 @@ main=function()
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 	
-    var filename=getUrlVars()['file'] || "three_dragons.xml";
+    const filename=getUrlVars()['file'] || "three_dragons.xml";
 
 	// create and load graph, and associate it to scene. 
-	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
+    // Check console for loading errors
+    const files = [
+        { name: "menus.xml", type: MySceneGraph.types.MODULE },
+        { name: "three_dragons.xml", type: MySceneGraph.types.SCENE }
+    ];
+
+    files.forEach((file) => new MySceneGraph(file.name, myScene, file.type));
 	
 	// start
     app.run();

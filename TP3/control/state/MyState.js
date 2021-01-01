@@ -1,12 +1,14 @@
 
 class MyState {
-    constructor(scene, game) {
+    constructor(scene, gameOrchestrator) {
 		if (this.constructor == MyState) {
 			throw new Error("MyState is an abstract class. Abstract classes can't be instantiated.");
         }
         this.scene = scene;
-        this.game = game;
+        this.gameOrchestrator = gameOrchestrator;
     }
+
+    display() {}
 
     update(timeSinceProgramStarted) {}
 }

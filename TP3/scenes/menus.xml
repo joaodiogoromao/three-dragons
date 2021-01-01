@@ -1,0 +1,85 @@
+<lsf>
+    <textures>
+        <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
+        <texture id="blackTexture" path="./scenes/images/blackTexture.jpg" />
+        <texture id="whitishTexture" path="./scenes/images/whitishTexture.jpg" />
+    </textures>
+
+    <spritesheets>
+    </spritesheets>
+
+    <materials>
+        <!-- <material id="defaultMaterial">
+            <shininess value="0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="woodMaterial">
+            <shininess value="0" />
+            <ambient r="0.65" g="0.65" b="0.65" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="metalMaterial">
+            <shininess value="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.01" g="0.01" b="0.01" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material> -->
+    </materials>
+
+    <animations>
+    </animations>
+
+    <nodes>
+        <node id="mainMenu">
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <material id="null"/>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="menu" name="main" title="Three Dragons" aspectRatio="1.778" gridGap="3" rows="1" cols="3" horizontalPadding="5" verticalPadding="5">
+                    <button action="hvh" text="H vs H" rowStart="1" rowEnd="2" colStart="1" colEnd="2" />
+                    <button action="hvm" text="H vs M" rowStart="1" rowEnd="2" colStart="2" colEnd="3" />
+                    <button action="mvm" text="M vs M" rowStart="1" rowEnd="2" colStart="3" colEnd="4" />
+                </leaf>
+                <leaf type="menu" name="difficulty" title="Select Difficulty" aspectRatio="1.778" gridGap="3" rows="3" cols="6" horizontalPadding="5" verticalPadding="5">
+                    <button action="easy" text="Easy" rowStart="1" rowEnd="3" colStart="1" colEnd="3" />
+                    <button action="medium" text="Medium" rowStart="1" rowEnd="3" colStart="3" colEnd="5" />
+                    <button action="hard" text="Hard" rowStart="1" rowEnd="3" colStart="5" colEnd="7" />
+                    <button action="back" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" />
+                </leaf>
+                <leaf type="menu" name="choosePlayer" title="Choose Player" aspectRatio="1.778" gridGap="3" rows="3" cols="6" horizontalPadding="5" verticalPadding="5">
+                    <button action="white" text="White" rowStart="1" rowEnd="3" colStart="1" colEnd="4" />
+                    <button action="black" text="Black" rowStart="1" rowEnd="3" colStart="4" colEnd="7" />
+                    <button action="back" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" />
+                </leaf>
+            </descendants>
+        </node>
+        <node id="gameOverMenu">
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <material id="null"/>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="menu" name="gameOver" title="Game Over" aspectRatio="1.778" gridGap="3" rows="3" cols="4" horizontalPadding="5" verticalPadding="5">
+                    <button action="back" text="Go to Main Menu" rowStart="2" rowEnd="3" colStart="2" colEnd="4" />
+                </leaf>
+            </descendants>
+        </node>
+    </nodes>
+</lsf>

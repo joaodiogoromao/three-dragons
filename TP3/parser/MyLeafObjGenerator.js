@@ -179,7 +179,7 @@ function getPatchPrimitive(sceneGraph, node, parent) {
  */
 function getBarrelPrimitive(sceneGraph, node, parent) {
     const fParams = sceneGraph.getFloatParameters(node, ['base', 'middle', 'height'], parent);
-    const iParams = sceneGraph.getFloatParameters(node, ['slices', 'stacks'], parent);
+    const iParams = sceneGraph.getIntegerParameters(node, ['slices', 'stacks'], parent);
     if (isNotNull(fParams) && isNotNull(iParams))
         return new MyDefBarrel(sceneGraph.scene, fParams.base, fParams.middle, fParams.height, iParams.slices, iParams.stacks);
     return null;
@@ -218,6 +218,62 @@ function getBoardPrimitive(sceneGraph, node, parent) {
     return new MyBoard(sceneGraph.scene, whiteTile, blackTile, whiteDice, blackDice, dimensions.width, dimensions.height);
 }
 
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @return the primitive object if args are valid; null otherwise
+ */
+function getButtonPrimitive(sceneGraph, node, parent) {
+    const action = sceneGraph.reader.getString(node, 'action');
+    if (isNull(action)) {
+        sceneGraph.onXMLMinorError(`Leaf 'button', descendant of node with id '${parent.id}' hasn't got an action.`);
+        return;
+    }
+    const text = sceneGraph.reader.getString(node, 'text');
+    if (isNull(text)) {
+        sceneGraph.onXMLMinorError(`Leaf 'button', descendant of node with id '${parent.id}' hasn't got a text field.`);
+        return;
+    }
+    const iParams = sceneGraph.getIntegerParameters(node, ['rowStart', 'rowEnd', 'colStart', 'colEnd'], parent);
+    if (isNotNull(iParams))
+        return new MyButton(sceneGraph.scene, action, { row: { start: iParams.rowStart, end: iParams.rowEnd }, col: { start: iParams.colStart, end: iParams.colEnd } }, text);
+    return null;
+}
+
+/**
+ * @param {MySceneGraph} sceneGraph 
+ * @param {block element} node 
+ * @param {Node | object with 'id' parameter} parent 
+ * @return the primitive object if args are valid; null otherwise
+ */
+function getMenuPrimitive(sceneGraph, node, parent) {
+    const titleValue = sceneGraph.reader.getString(node, 'title');
+    const title = titleValue ? titleValue : "";
+    const nameValue = sceneGraph.reader.getString(node, 'name');
+    const name = nameValue ? nameValue : "";
+
+    const iParams = sceneGraph.getIntegerParameters(node, ['rows', 'cols'], parent);
+    const fParams = sceneGraph.getFloatParameters(node, ['horizontalPadding', 'verticalPadding', 'gridGap', 'aspectRatio'], parent);
+
+
+    const buttons = [];
+    const children = node.children;
+    for (const buttonNode of children) {
+        if (buttonNode.nodeName != "button") {
+            sceneGraph.onXMLMinorError(`Invalid node name '${buttonNode.nodeName}' inside descendant primitive 'menu' of node with id '${parent.id}'`);
+            continue;
+        }
+        const button = getButtonPrimitive(sceneGraph, buttonNode, parent);
+        if (button) buttons.push(button);
+    }
+
+    if (isNotNull(iParams) && isNotNull(fParams))
+        return new MyMenu(sceneGraph.scene, buttons, name, title, { aspectRatio: fParams.aspectRatio, gridGap: fParams.gridGap, rows: iParams.rows, cols: iParams.cols, horizontalPadding: fParams.horizontalPadding, verticalPadding: fParams.verticalPadding });
+    return null;
+}
+
+
 
 // Establishes correspondence between a leaf's type 
 // and the function that creates its primitive
@@ -232,5 +288,7 @@ const leafObjGenerator = {
     plane: getPlanePrimitive,
     defbarrel: getBarrelPrimitive,
     patch: getPatchPrimitive,
-    board: getBoardPrimitive
+    board: getBoardPrimitive,
+    button: getButtonPrimitive,
+    menu: getMenuPrimitive
 }

@@ -1,9 +1,14 @@
 class MyConnection {
     constructor(server) {
         this.server = server;
+
+        this.sendRequest("handshake", function(res) {
+            if (res == "handshake") return;
+            throw new Error("Couldn't connect to server " + this.server);
+        }, false);
     }
 
-    sendRequest(params, action) {
+    sendRequest(params, action, json = true) {
         const reqHeaders = new Headers();
         reqHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -13,7 +18,7 @@ class MyConnection {
         });
 
         fetch(request)
-            .then(response => response.json())
+            .then(response => json ? response.json() : response.text())
             .then(result => {
                 console.log("Response:", result);
                 action(result);
