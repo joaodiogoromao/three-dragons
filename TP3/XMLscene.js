@@ -65,7 +65,33 @@ class XMLscene extends CGFscene {
      * Initializes the scene cameras.
      */
     initCameras() {
+        this.menuCamera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 140, 0.01), vec3.fromValues(0, 0, 0));
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    }
+
+    /**
+     * Changes the current camera to the menu camera
+     */
+    setMenuCamera() {
+        this.setCamera(this.menuCamera);
+    }
+
+    /**
+     * Makes it impossible for the user to drag the camera
+     */
+    lockCamera() {
+        if (this.previousProcessMouseMove) throw new Error("Trying to lock camera, but previousProcessMouseMove is already set.")
+        this.previousProcessMouseMove = this.interface.processMouseMove;
+        this.interface.processMouseMove = () => {};
+    }
+
+    /**
+     * Makes it possible for the user to drag the camera
+     */
+    unlockCamera() {
+        if (!this.previousProcessMouseMove) throw new Error("Trying to unlock camera, but previousProcessMouseMove is not set.")
+        this.interface.processMouseMove = this.previousProcessMouseMove;
+        this.previousProcessMouseMove = null;
     }
 
     /**
@@ -153,6 +179,10 @@ class XMLscene extends CGFscene {
      */
     setSelectedCamera() {
         this.setCamera(this.cameras[this.selectedCamera]);
+    }
+
+    setDefaultCamera() {
+        this.setCamera(this.graph.defaultCamera);
     }
 
     /**

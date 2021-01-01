@@ -10,7 +10,8 @@ class MyCurveAnimation extends MyKeyframeAnimation {
      * @param {Number} xOffset
      * @param {Number} zOffset
      * @param {Object} object the animation object
-     * @param {Number} duration the duration of the animation
+     * @param {Number} speed the speed of the animation
+     * @param {Number} frameNum the number of frames of the animation
      */
     constructor(scene, currentTime, xOffset, zOffset, object, speed, frameNum) {        
         const initTransformationObj = function (translation) {

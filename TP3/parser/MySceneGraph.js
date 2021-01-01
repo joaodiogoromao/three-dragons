@@ -394,11 +394,13 @@ class MySceneGraph {
                 return null;
             }
             this.scene.selectedCamera = Object.keys(this.scene.cameras)[0];
+            this.defaultCamera = this.scene.cameras[0];
             this.scene.setSelectedCamera();
             return null;
         }
 
 
+        this.defaultCamera = this.scene.cameras[defaultCameraId];
         this.scene.selectedCamera = defaultCameraId;
         this.scene.setSelectedCamera();
         this.log("Parsed Views");

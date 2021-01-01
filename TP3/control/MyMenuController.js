@@ -1,4 +1,5 @@
 class MyMenuController {
+
     constructor(scene, state) {
         this.scene = scene;
         this.state = state;

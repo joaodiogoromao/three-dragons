@@ -1,6 +1,9 @@
 class MyStateMainMenu extends MyState {
     constructor(scene, gameOrchestrator) {
         super(scene, gameOrchestrator);
+
+        this.scene.setMenuCamera();
+
         this.menuController = new MyMenuController(scene, this);
 
         const mainMenuNode = scene.menus["mainMenu"];
@@ -9,6 +12,7 @@ class MyStateMainMenu extends MyState {
             difficulty: mainMenuNode.getLeafNode("difficulty"),
             choosePlayer: mainMenuNode.getLeafNode("choosePlayer")
         };
+        
         this.gameMode = null;
         this.chosePlayer = null;
     }
@@ -43,7 +47,8 @@ class MyStateMainMenu extends MyState {
         // HvM and MvM
         if (difficulty)
             this.gameOrchestrator.setStrategyDifficulty(difficulty);
-            
+        
+        this.scene.setDefaultCamera();
         this.gameOrchestrator.setState(new MyStateLoading(this.scene, this.gameOrchestrator));
     }
 

@@ -2,6 +2,7 @@ class MyGameOrchestrator {
     constructor(scene) {
         this.state = new MyStateMainMenu(scene, this);
         this.scene = scene;
+        this.scene.lockCamera();
     }
 
     setState(state) {

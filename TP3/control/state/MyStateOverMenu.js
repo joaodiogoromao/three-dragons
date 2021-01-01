@@ -2,7 +2,10 @@ class MyStateOverMenu extends MyState{
     constructor(scene, gameOrchestrator, winner) {
         super(scene, gameOrchestrator);
 
+        this.scene.setMenuCamera();
+
         this.menuController = new MyMenuController(scene, this);
+        
         this.winner = winner;
 
         const gameOverMenuNode = scene.menus["gameOverMenu"];
