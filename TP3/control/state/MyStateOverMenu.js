@@ -6,13 +6,16 @@ class MyStateOverMenu extends MyState{
 
         this.menuController = new MyMenuController(scene, this);
         
-        this.winner = winner;
+        this.winner = winner.charAt(0).toUpperCase() + winner.substring(1, winner.length - 1);
 
         const gameOverMenuNode = scene.menus["gameOverMenu"];
         this.menu = gameOverMenuNode.getLeafNode("gameOver");
+
+        this.menu.obj.setTitle(this.winner + " wins!");
     }
 
     goBack() {
+        this.scene.graph.board.reset();   
         this.gameOrchestrator.setState(new MyStateMainMenu(this.scene, this.gameOrchestrator));
     }
 
@@ -21,7 +24,6 @@ class MyStateOverMenu extends MyState{
     }
 
     update() {
-        console.log("winner:", this.winner);
         this.menuController.update();
     }
 }

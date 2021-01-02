@@ -25,7 +25,34 @@ class MyBoard extends CGFobject {
         this.tiles = [];
         this.pieces = [];
 
+        this.whiteRemovedCount = 0;
+        this.blackRemovedCount = 0;
+
         this.possibleMovesShader = new CGFshader(scene.gl, "shaders/possibleMoves.vert", "shaders/possibleMoves.frag");
+    }
+
+    reset() {
+        console.log("RESET BOARD");
+        this.pieces.splice(0, this.pieces.length);
+        this.createPieces().forEach((piece) => this.pieces.push(piece));
+        this.whiteRemovedCount = 0;
+        this.blackRemovedCount = 0;
+    }
+
+    getRemovedPiecePosition(color) {
+        if (color == "white") {
+            this.whiteRemovedCount++;
+            return {
+                x: -1 - ((this.whiteRemovedCount-1) % 2),
+                z: 1 + Math.floor((this.whiteRemovedCount-1) / 2)
+            }
+        } else if (color == "black") {
+            this.blackRemovedCount++;
+            return {
+                x: 11 + ((this.blackRemovedCount-1) % 2),
+                z: 9 - Math.floor((this.blackRemovedCount-1) / 2)
+            }
+        }
     }
 
     setPossibleMoves(possibleMoves) {
@@ -34,13 +61,15 @@ class MyBoard extends CGFobject {
 
     setGameBoard(newGameBoard) {
         console.log("Updating game board with", newGameBoard);
-        this.updatePieces(newGameBoard);
+        const piecesToRemove = this.updatePieces(newGameBoard);
         this.gameBoard = newGameBoard;
+        return piecesToRemove;
     }
 
     updatePieces(newGameBoard) {
         console.log("old: ", this.gameBoard, " new: ", newGameBoard);
         const added = [], removed = [];
+        const piecesToRemove = [];
         for (const i in this.gameBoard) {
             const prevLine = this.gameBoard[i];
             const currLine = newGameBoard[i];
@@ -70,7 +99,7 @@ class MyBoard extends CGFobject {
         console.log("Piece diff", added, removed);
 
         for (const piece of this.pieces) {
-            if (piece.position == null) continue;   // TODO for pieces that have been removed
+            if (piece.removed) continue;
 
             const rem = removed.find((el) => 
                 el.x == piece.position.x && el.z == piece.position.z 
@@ -81,7 +110,8 @@ class MyBoard extends CGFobject {
             const add = added.find(el => el.player == piece.player);
 
             if (!add) { // Remove piece
-                piece.position = null;
+                piece.removed = true;
+                piecesToRemove.push(piece);
             } else { // Move piece
                 piece.position.x = add.x;
                 piece.position.z = add.z;
@@ -95,6 +125,8 @@ class MyBoard extends CGFobject {
         for (const add of added) {
             this.pieces.push(this.createDice(add.player, add.value, { x: add.x, z: add.z }));
         }
+
+        return piecesToRemove;
     }
 
     correspondIdsToObjects(objMap) {
@@ -134,7 +166,7 @@ class MyBoard extends CGFobject {
     }
 
     createPieces() {
-        let pieces = [];
+        const pieces = [];
         pieces.push(this.createDice('black', 3, {x: 2, z: 1}));
         for (let i = 3; i <= 7; i++) {
             pieces.push(this.createDice('black', 2, {x: i, z: 1}));
@@ -201,8 +233,6 @@ class MyBoard extends CGFobject {
 
         let count = 1;
         for (const piece of this.pieces) {
-            if (piece.position == null) continue;   // TODO for pieces that have been removed
-
             this.scene.registerForPick(81+count/*(piece.position.z-1)*this.nCols + piece.position.x /* - 1 + 1 */, piece);
 
             this.scene.pushMatrix();

@@ -1,5 +1,5 @@
 class MyButton extends CGFobject {
-    constructor(scene, action, gridPosition, text, init = false) {
+    constructor(scene, action, gridPosition, text, init = false, name = null) {
         super(scene);
 
         this.action = action;
@@ -8,6 +8,7 @@ class MyButton extends CGFobject {
         this.depth = 1;
         this.width = gridPosition.col.end - gridPosition.col.start;
         this.height = gridPosition.row.end - gridPosition.row.start;
+        this.name = name;
 
         this.initComplete = false;
         if (init) this.init();

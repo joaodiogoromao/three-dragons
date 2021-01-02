@@ -19,11 +19,26 @@ class MyMenuController {
             "next": this.goForward.bind(this),
             "white": this.selectWhitePieces.bind(this),
             "black": this.selectBlackPieces.bind(this),
-            "nothing": this.doNothing
+            "nothing": this.doNothing,
+            "theme1": this.setTheme1,
+            "theme2": this.setTheme2,
+            "theme3": this.setTheme3,
         }
     }
 
     doNothing(){}
+
+    setTheme1() {
+        console.log("Theme 1");
+    }
+
+    setTheme2() {
+        console.log("Theme 2");
+    }
+
+    setTheme3() {
+        console.log("Theme 3");
+    }
 
     selectWhitePieces() {
         if (typeof this.state.setPlayerColor == 'function')
@@ -92,16 +107,22 @@ class MyMenuController {
         
     }
 
-    update() {
+    update(deleteAll = true) {
         if (this.scene.pickMode == false) {
             if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+                const deleteResults = [];
                 for (let i = 0; i < this.scene.pickResults.length; i++) {
                     const obj = this.scene.pickResults[i][0];
                     const id = this.scene.pickResults[i][1];
-                    console.log("picked", obj);
-                    if (id) this.actionGenerator[obj.action](this.state);
+                    if (id && obj.action && this.actionGenerator[obj.action]) {
+                        this.actionGenerator[obj.action](this.state);
+                        deleteResults.push(id);
+                    }
                 }
-                this.scene.discardPickResults();
+                if (deleteAll) this.scene.discardPickResults();
+                else {
+                    deleteResults.forEach((res) => this.scene.pickResults.splice(res, 1));
+                }
             }
         }
     }

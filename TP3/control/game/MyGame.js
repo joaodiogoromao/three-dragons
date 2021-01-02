@@ -1,9 +1,10 @@
 
 
 class MyGame {
-    constructor(scene, strategy) {
+    constructor(scene, strategy, updateScore) {
         this.board = scene.graph.board;
         this.scene = scene;
+        this.updateScore = updateScore;
 
         this.nextMoveStrategy = strategy;
         this.nextMoveStrategy.setGame(this);
@@ -48,17 +49,47 @@ class MyGame {
         this.onStateUpToDate = undefined;
     }
 
-    updateBoard(onStateChange) {
-        console.log("Update board called with", onStateChange, this.prologGameState);
-        const fn = function() {
-            this.board.setGameBoard(this.prologGameState.gameBoard);
-            // this will return the removed pieces animations in order to create a new my state moving state and animate their exit
-            // if animate then set animation state
-            // else, animate camera:
+    nextPlayer(moveCamera = true) {
+        if (moveCamera) {
             const cameraAnimation = new MyCameraAnimation(this.scene, this.timeSinceProgramStarted, 2);
             this.setState(new MyStateMoving(this.scene, this.game, [[cameraAnimation]], function() {
                 this.nextMoveStrategy.apply();
             }.bind(this)));
+        } else {
+            this.nextMoveStrategy.apply();
+        }
+    }
+
+    updateBoard(onStateChange) {
+        console.log("Update board called with", onStateChange, this.prologGameState);
+        const fn = function() {
+            const removedPieces = this.board.setGameBoard(this.prologGameState.gameBoard);
+            // this will return the removed pieces animations in order to create a new my state moving state and animate their exit
+            // if animate then set animation state
+            // else, animate camera:
+            if (removedPieces.length) {
+                const animations = [];
+                const scoreDiff = { whites: 0, blacks: 0 };
+                removedPieces.forEach((piece) => {
+                    scoreDiff[piece.player == "white" ? "blacks" : "whites"]++;
+                    piece.nextPosition = this.board.getRemovedPiecePosition(piece.player);
+                    animations.push([MyCurveAnimation.createPieceMovingAnimation(piece, this.timeSinceProgramStarted, piece.position, piece.nextPosition)]);
+                });
+                this.updateScore(scoreDiff);
+                const movingState = new MyStateMoving(this.scene, this.game, animations, function(onStateChange) {
+                    removedPieces.forEach((piece) => {
+                        piece.position = piece.nextPosition;
+                        piece.nextPosition = null;
+                    });
+                    this.nextPlayer();
+                    onStateChange();
+                    // run camera and toggle player
+                }.bind(this));
+                this.setState(movingState);
+            } else {
+                this.nextPlayer();
+            }
+
             if (onStateChange) onStateChange();
         }.bind(this);
 

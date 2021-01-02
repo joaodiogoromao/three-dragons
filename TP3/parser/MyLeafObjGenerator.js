@@ -235,9 +235,12 @@ function getButtonPrimitive(sceneGraph, node, parent) {
         sceneGraph.onXMLMinorError(`Leaf 'button', descendant of node with id '${parent.id}' hasn't got a text field.`);
         return;
     }
+
+    const name = sceneGraph.reader.getString(node, 'name');
+
     const iParams = sceneGraph.getIntegerParameters(node, ['rowStart', 'rowEnd', 'colStart', 'colEnd'], parent);
     if (isNotNull(iParams))
-        return new MyButton(sceneGraph.scene, action, { row: { start: iParams.rowStart, end: iParams.rowEnd }, col: { start: iParams.colStart, end: iParams.colEnd } }, text);
+        return new MyButton(sceneGraph.scene, action, { row: { start: iParams.rowStart, end: iParams.rowEnd }, col: { start: iParams.colStart, end: iParams.colEnd } }, text, false, name);
     return null;
 }
 

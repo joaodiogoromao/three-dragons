@@ -36,12 +36,6 @@ class MyStateMoving extends MyGameState {
 
 
         if (!this.animations.length) {
-            /* if (!this.cameraAnimation) this.cameraAnimation = new MyCameraAnimation(this.scene, timeSinceProgramStarted, 2);
-            
-            if (this.cameraAnimation.update(timeSinceProgramStarted)) {
-                this.game.nextMoveStrategy.apply();
-                this.e = true;
-            } */
             this.onAnimationsOver(function() {
                 this.finishedAnimations.forEach((animation) => animation.finishedMovingState = true);
             }.bind(this));

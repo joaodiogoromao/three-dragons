@@ -21,6 +21,13 @@ class MyMenu extends CGFobject {
         this.calculateGrid();
     }
 
+    setTitle(newTitle) {
+        if (!newTitle) return;
+        this.title = new MySpriteText(this.scene, newTitle);
+        this.calculateTitleSize();
+        this.calculateGrid();
+    }
+
     calculateTitleSize() {
         if (!this.title) return { height: 0, width: 0 };
 
@@ -122,5 +129,14 @@ class MyMenu extends CGFobject {
         this.background.display();
 
         this.scene.popMatrix();
+    }
+
+    setButtonValue(buttonName, text) {
+        if (buttonName === "" || buttonName == null) return;
+        for (const button of this.buttons) {
+            if (button.name == buttonName) {
+                button.text.text = text;
+            }
+        }
     }
 }
