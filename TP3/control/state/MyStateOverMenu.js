@@ -6,7 +6,7 @@ class MyStateOverMenu extends MyState{
 
         this.menuController = new MyMenuController(scene, this);
         
-        this.winner = winner.charAt(0).toUpperCase() + winner.substring(1, winner.length - 1);
+        this.winner = winner.charAt(0).toUpperCase() + winner.substring(1, winner.length);
 
         const gameOverMenuNode = scene.menus["gameOverMenu"];
         this.menu = gameOverMenuNode.getLeafNode("gameOver");

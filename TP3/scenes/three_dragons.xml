@@ -1,7 +1,7 @@
 <lsf>
     <initials>
         <reference length="10" />
-        <root id="ground" />
+        <root id="dragonAltar" />
     </initials>
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
@@ -122,6 +122,99 @@
     </animations>
 
     <nodes>
+        <node id="dragonAltarSteps">            
+            <material id="defaultMaterial" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="bottomStep" />
+                <noderef id="topStep" />
+            </descendants>
+        </node>
+        <node id="bottomStep">            
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.2" topRadius="0.8" bottomRadius="0.9" stacks="3" slices="20" />
+            </descendants>
+        </node>
+        <node id="topStep">            
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0.2" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.2" topRadius="0.4" bottomRadius="0.6" stacks="3" slices="20" />
+            </descendants>
+        </node>
+
+        <node id="dragonAltarShard">            
+            <material id="defaultMaterial" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="topShardHalf" />
+                <noderef id="bottomShardHalf" />
+            </descendants>
+        </node>
+
+        <node id="topShardHalf">         
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="1.1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.6" topRadius="0" bottomRadius="0.4" stacks="3" slices="20" />
+            </descendants>
+        </node>
+        <node id="bottomShardHalf">         
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="0.5" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.6" topRadius="0.4" bottomRadius="0" stacks="3" slices="20" />
+            </descendants>
+        </node>
+
+
         <node id="ground">            
             <material id="defaultMaterial" />
 
