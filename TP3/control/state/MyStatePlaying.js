@@ -40,12 +40,17 @@ class MyStatePlaying extends MyState {
 
     update(timeSinceProgramStarted) {
         if (!this.game.initComplete) return;
-        const player = this.getCurrentPlayer();
-        if (player != this.activeMenu.player) {
-            this.setActivePlayerMenu(player);
+
+        if (this.game.state instanceof MyStateMoving) { // stops the timer as soon as the player moves a piece
+            if (this.timeLeftInterval) clearInterval(this.timeLeftInterval);
+            this.timeLeftInterval = null;
+        } else {
+            const player = this.getCurrentPlayer();
+            if (player != this.activeMenu.player) {
+                this.setActivePlayerMenu(player);
+            }
+            this.menuController.update(false);
         }
-            
-        this.menuController.update(false);
         if (this.game.update(timeSinceProgramStarted)) {
             this.gameOrchestrator.setState(new MyStateOverMenu(this.scene, this.gameOrchestrator, this.game.prologGameState.gameOver));
         }
@@ -73,15 +78,13 @@ class MyStatePlaying extends MyState {
         if (this.playTimeLeft == -1) {
             this.game.nextPlayer();
             
-            
             const nextPlayer = this.activeMenu.player == "white" ? "black" : "white";
             this.game.prologGameState.player = nextPlayer;
-            this.setActivePlayerMenu(this.getCurrentPlayer());
         }
     }
 
     setActivePlayerMenu(player) {
-        if (this.timeLeftInterval) clearInterval(this.timeLeftInterval);
+        if (this.timeLeftInterval) throw new Error("Trying to set new interval when an interval was already set.");
         this.timeLeftInterval = setInterval(this.updateTimeLeft.bind(this), 1000);
         if (player === "white") {
             this.activeMenu = { player: player, menu: this.whitesMenu };
