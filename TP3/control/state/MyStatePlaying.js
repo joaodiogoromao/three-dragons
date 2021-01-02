@@ -4,6 +4,8 @@ class MyStatePlaying extends MyState {
         super(scene, gameOrchestrator);
         this.game = new MyGame(scene, gameOrchestrator.strategy, this.updateScore.bind(this));
 
+        this.sceneGraphIndex = 0;
+
         this.playTimeLeft = 30;
 
         this.score = {
@@ -25,7 +27,13 @@ class MyStatePlaying extends MyState {
     }
 
     display() {
+        // Display scene
+        this.scene.sceneGraphs[this.sceneGraphIndex].displayScene();
+
+        // Display game elements
         this.game.display();
+
+        // Display game menus
         if (!this.game.initComplete) return;
         if (this.getCurrentPlayer() == "white") this.whitesMenuNode.display();
         else if (this.getCurrentPlayer() == "black") this.blacksMenuNode.display();
@@ -58,6 +66,10 @@ class MyStatePlaying extends MyState {
 
     setButtonInAllMenus(buttonName, value) {
         this.menus.forEach((menu) => menu.setButtonValue(buttonName, String(value)));
+    }
+
+    setSceneGraphIndex(sceneGraphIndex) {
+        this.sceneGraphIndex = sceneGraphIndex;
     }
 
     updateScore(scoreDiff) {

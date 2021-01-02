@@ -20,24 +20,18 @@ class MyMenuController {
             "white": this.selectWhitePieces.bind(this),
             "black": this.selectBlackPieces.bind(this),
             "nothing": this.doNothing,
-            "theme1": this.setTheme1,
-            "theme2": this.setTheme2,
-            "theme3": this.setTheme3,
+            "theme1": (() => this.setTheme(0)).bind(this),
+            "theme2": (() => this.setTheme(1)).bind(this),
+            "theme3": (() => this.setTheme(2)).bind(this)
         }
     }
 
     doNothing(){}
 
-    setTheme1() {
-        console.log("Theme 1");
-    }
-
-    setTheme2() {
-        console.log("Theme 2");
-    }
-
-    setTheme3() {
-        console.log("Theme 3");
+    setTheme(sceneGraphIndex) {
+        this.scene.resetSceneGraph();
+        this.scene.initSceneGraph(sceneGraphIndex);
+        this.state.setSceneGraphIndex(sceneGraphIndex);
     }
 
     selectWhitePieces() {

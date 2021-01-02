@@ -1,4 +1,7 @@
 <lsf>
+    <initials>
+    </initials>
+
     <textures>
         <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
         <texture id="blackTexture" path="./scenes/images/blackTexture.jpg" />

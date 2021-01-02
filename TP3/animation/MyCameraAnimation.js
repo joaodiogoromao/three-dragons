@@ -35,7 +35,7 @@ class MyCameraAnimation {
 
         if (this.currentAngle > Math.PI) increment -= this.currentAngle - Math.PI;
 
-        const camera = this.scene.cameras.defaultCamera;
+        const camera = this.scene.camera;
         camera.orbit({X: (1, 0, 0), Y: (0, 1, 0), Z: (0, 0, 1)}, increment);
     }
 }

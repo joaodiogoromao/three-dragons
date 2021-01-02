@@ -1,6 +1,6 @@
 
 class MyBoard extends CGFobject {
-    constructor(scene, whiteTileId, blackTileId, whiteDiceId, blackDiceId, nRows, nCols) {
+    constructor(scene, whiteTileId, blackTileId, whiteDiceId, blackDiceId, nRows, nCols, dragonAltarStepsId, dragonAltarShardId) {
         super(scene);
 
         this.possibleMoves = null;
@@ -13,11 +13,17 @@ class MyBoard extends CGFobject {
         this.whiteDiceId = whiteDiceId;
         this.blackDiceId = blackDiceId;
 
+        this.dragonAltarStepsId = dragonAltarStepsId;
+        this.dragonAltarShardId = dragonAltarShardId;
+
         this.whiteTileObj = null;
         this.blackTileObj = null;
 
         this.whiteDiceObj = null;
         this.blackDiceObj = null;
+
+        this.dragonAltarStepsObj = null;
+        this.dragonAltarShardObj = null;
 
         this.nRows = nRows;
         this.nCols = nCols;
@@ -27,6 +33,12 @@ class MyBoard extends CGFobject {
 
         this.whiteRemovedCount = 0;
         this.blackRemovedCount = 0;
+
+        this.dragonCavePositions = [
+            { x: 1, z: 5 },
+            { x: 5, z: 5 },
+            { x: 9, z: 5 }
+        ];
 
         this.possibleMovesShader = new CGFshader(scene.gl, "shaders/possibleMoves.vert", "shaders/possibleMoves.frag");
     }
@@ -130,7 +142,13 @@ class MyBoard extends CGFobject {
     }
 
     correspondIdsToObjects(objMap) {
-        const ids = new Map([['whiteTile', this.whiteTileId], ['blackTile', this.blackTileId], ['whiteDice', this.whiteDiceId], ['blackDice', this.blackDiceId]]);
+        const ids = new Map([['whiteTile', this.whiteTileId], 
+            ['blackTile', this.blackTileId], 
+            ['whiteDice', this.whiteDiceId], 
+            ['blackDice', this.blackDiceId], 
+            ['dragonAltarSteps', this.dragonAltarStepsId], 
+            ['dragonAltarShard', this.dragonAltarShardId]]);
+        
         for (const [key, id] of ids) {
             if (objMap[id] == undefined) {
                 throw new Error(`The id '${id}' given to leaf 'board' has no match.`);
@@ -204,6 +222,10 @@ class MyBoard extends CGFobject {
         }
     }
 
+    translateToBoardPosition(position) {
+        this.scene.translate(position.x-0.5, 0.36 , position.z-0.5);
+    }
+
     display() {
         this.scene.pushMatrix();
         this.scene.translate(-this.nRows / 2, 0, -this.nCols / 2);
@@ -212,7 +234,7 @@ class MyBoard extends CGFobject {
         for (let row = 0; row < this.nRows; row++) {
             this.scene.pushMatrix();
             for (let col = 0; col < this.nCols; col++) {
-                let currentTile = this.tiles[row * this.nCols + col];
+                const currentTile = this.tiles[row * this.nCols + col];
                 this.scene.registerForPick(row * this.nCols + col + 1, currentTile);
 
                 if (this.possibleMoves != null && this.isValidMovePosition(row, col))
@@ -236,26 +258,43 @@ class MyBoard extends CGFobject {
             this.scene.registerForPick(81+count/*(piece.position.z-1)*this.nCols + piece.position.x /* - 1 + 1 */, piece);
 
             this.scene.pushMatrix();
+
             if (piece.animation && !piece.animation.finishedMovingState) {
                 //console.log("Applying piece animation");
                 piece.animation.apply(this.scene);
-            }
-            else if (piece.animation) {
+            } else if (piece.animation) {
                 piece.animation.finishedMovingState = false;
                 piece.animation = null;
             }
-            this.scene.translate(piece.position.x-0.5, 0.36 /*need to change in order not to have this*/ , piece.position.z-0.5);
+
+            if (this.isDragonCavePosition(piece.position)) this.scene.translate(0, 0.4, 0);
+            this.translateToBoardPosition(piece.position);
             this.showDiceFace(piece.value);
 
-        
             piece.display();
+
             this.scene.popMatrix();
 
             count++;
         }
         this.scene.clearPickRegistration();
 
+        for (const dragonCavePosition of this.dragonCavePositions) {
+            this.scene.pushMatrix();
+
+            this.translateToBoardPosition(dragonCavePosition);
+
+            this.dragonAltarStepsObj.display();
+            this.dragonAltarShardObj.display();
+
+            this.scene.popMatrix();
+        }
+
         this.scene.popMatrix();
+    }
+
+    isDragonCavePosition(position) {
+        return this.dragonCavePositions.find((pos) => pos.x == position.x && pos.z == position.z) ? true : false;
     }
 
     isValidMovePosition(row, col) {

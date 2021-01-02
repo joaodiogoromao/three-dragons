@@ -48,7 +48,7 @@ class MyStateMainMenu extends MyState {
         if (difficulty)
             this.gameOrchestrator.setStrategyDifficulty(difficulty);
         
-        this.scene.setDefaultCamera();
+        this.scene.setGameCamera();
         this.gameOrchestrator.setState(new MyStatePlaying(this.scene, this.gameOrchestrator));
     }
 

@@ -77,10 +77,13 @@ main=function()
     // Check console for loading errors
     const files = [
         { name: "menus.xml", type: MySceneGraph.types.MODULE },
-        { name: "three_dragons.xml", type: MySceneGraph.types.SCENE }
+        { name: "three_dragons.xml", type: MySceneGraph.types.GAME },
+        { name: "demo1.xml", type: MySceneGraph.types.SCENE },
+        { name: "demo2.xml", type: MySceneGraph.types.SCENE },
+        { name: "demo3.xml", type: MySceneGraph.types.SCENE }
     ];
 
-    files.forEach((file) => new MySceneGraph(file.name, myScene, file.type));
+    files.forEach((file, idx) => new MySceneGraph(file.name, myScene, file.type, files.length));
 	
 	// start
     app.run();

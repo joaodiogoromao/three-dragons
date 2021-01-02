@@ -213,9 +213,19 @@ function getBoardPrimitive(sceneGraph, node, parent) {
         sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a blackDice id.`);
         return;
     }
+    const dragonAltarSteps = sceneGraph.reader.getString(node, 'dragonAltarSteps');
+    if (isNull(dragonAltarSteps)) {
+        sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a dragonAltarSteps id.`);
+        return;
+    }
+    const dragonAltarShard = sceneGraph.reader.getString(node, 'dragonAltarShard');
+    if (isNull(dragonAltarShard)) {
+        sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a dragonAltarShard id.`);
+        return;
+    }
     
     const dimensions = sceneGraph.getIntegerParameters(node, ['width', 'height'], parent);
-    return new MyBoard(sceneGraph.scene, whiteTile, blackTile, whiteDice, blackDice, dimensions.width, dimensions.height);
+    return new MyBoard(sceneGraph.scene, whiteTile, blackTile, whiteDice, blackDice, dimensions.width, dimensions.height, dragonAltarSteps, dragonAltarShard);
 }
 
 /**

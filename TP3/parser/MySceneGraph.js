@@ -20,7 +20,8 @@ const isNull = (v) => v === null;
 class MySceneGraph {
     static types = {
         MODULE: 0,
-        SCENE: 1
+        SCENE: 1,
+        GAME: 2
     };
 
     /**
@@ -29,8 +30,9 @@ class MySceneGraph {
      * @param {string} filename - File that defines the 3D scene
      * @param {XMLScene} scene
      */
-    constructor(filename, scene, type) {
+    constructor(filename, scene, type, filesLength) {
         this.loadedOk = null;
+        this.filesLength = filesLength;
 
         this.scene = scene;
 
@@ -81,12 +83,36 @@ class MySceneGraph {
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
 
         if (this.type == MySceneGraph.types.SCENE) {
-            this.scene.onGraphLoaded(this.type, this);
+            this.scene.onGraphLoaded(this.type, this, this.filesLength);
         } else if (this.type == MySceneGraph.types.MODULE) {
-            this.scene.onGraphLoaded(this.type, this.nodes);
+            this.scene.onGraphLoaded(this.type, this.nodes, this.filesLength);
+        } else if (this.type == MySceneGraph.types.GAME) {
+            this.scene.onGraphLoaded(this.type, this, this.filesLength);
         }
 
         this.loadedOk = true;
+    }
+
+    initCameras() {
+        const rootElement = this.reader.xmlDoc.documentElement;
+        const nodes = rootElement.children;
+        const nodeNames = [];
+
+        for (let i = 0; i < nodes.length; i++) {
+            nodeNames.push(nodes[i].nodeName);
+        }
+
+        let index, error;
+        if ((index = nodeNames.indexOf("views")) == -1)
+            return "tag <views> missing";
+        else {
+            if (index != VIEWS_INDEX)
+                this.onXMLMinorError("tag <views> out of order");
+
+            //Parse views block
+            if ((error = this.parseViews(nodes[index])) != null)
+                return error;
+        }
     }
 
     /**
@@ -131,37 +157,21 @@ class MySceneGraph {
             nodeNames.push(nodes[i].nodeName);
         }
 
-        var error;
+        let error, index;
 
-        // Processes each node, verifying errors.
+        if ((index = nodeNames.indexOf("initials")) == -1)
+            return "tag <initials> missing";
+        else {
+            if (index != INITIALS_INDEX)
+                this.onXMLMinorError("tag <initials> out of order " + index);
 
-
-        let index;
+            //Parse initials block
+            if ((error = this.parseInitials(nodes[index])) != null)
+                return error;
+        }
 
         // graph only needs views, illumination and lights if it's a scene
         if (this.type == MySceneGraph.types.SCENE) {
-            if ((index = nodeNames.indexOf("initials")) == -1)
-                return "tag <initials> missing";
-            else {
-                if (index != INITIALS_INDEX)
-                    this.onXMLMinorError("tag <initials> out of order " + index);
-    
-                //Parse initials block
-                if ((error = this.parseInitials(nodes[index])) != null)
-                    return error;
-            }
-            
-            // <views>
-            if ((index = nodeNames.indexOf("views")) == -1)
-                return "tag <views> missing";
-            else {
-                if (index != VIEWS_INDEX)
-                    this.onXMLMinorError("tag <views> out of order");
-
-                //Parse views block
-                if ((error = this.parseViews(nodes[index])) != null)
-                    return error;
-            }
 
             // <illumination>
             if ((index = nodeNames.indexOf("illumination")) == -1)
@@ -267,7 +277,7 @@ class MySceneGraph {
         let id;
         // Get root of the scene.
         if(rootIndex != -1) {
-            var rootNode = children[rootIndex];
+            const rootNode = children[rootIndex];
             id = this.reader.getString(rootNode, 'id');
         }
         if (rootIndex == -1 || isNull(id)) {
@@ -393,16 +403,16 @@ class MySceneGraph {
                 this.onXMLMinorError("No cameras have been defined. Using a default.");
                 return null;
             }
-            this.scene.selectedCamera = Object.keys(this.scene.cameras)[0];
+            //this.scene.selectedCamera = Object.keys(this.scene.cameras)[0];
             this.defaultCamera = this.scene.cameras[0];
-            this.scene.setSelectedCamera();
+            //this.scene.setSelectedCamera();
             return null;
         }
 
 
         this.defaultCamera = this.scene.cameras[defaultCameraId];
-        this.scene.selectedCamera = defaultCameraId;
-        this.scene.setSelectedCamera();
+        //this.scene.selectedCamera = defaultCameraId;
+        //this.scene.setSelectedCamera();
         this.log("Parsed Views");
         return null;
     }

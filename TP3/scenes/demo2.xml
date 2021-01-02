@@ -24,16 +24,13 @@
         <background r="0.1" g="0.7" b="1.0" a="1.0" />        <!-- background color -->
     </illumination>
 
-
     <lights>
-        <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="demoLight">            <!-- light identifier -->
+        <light id="defaultLight">            
             <enable value="1" />
-            <!-- enable/disable -->
-            <position x="10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
-            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+            <position x="0" y="50" z="0" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />                   
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />            
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            
         </light>
     </lights>
 
@@ -43,12 +40,13 @@
         <texture id="demoTexture" path="./scenes/images/vidral.jpg" />
     </textures>
 
+    <spritesheets></spritesheets>
 
     <materials>
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
          requires a distinct "id". At least one material should be present. -->
         <material id="demoMaterial">
-            <shininess value="ff" />
+            <shininess value="1.0" />
             <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
             <specular r="0.6" g="0.0" b="0.0" a="1.0" />
@@ -199,7 +197,6 @@
             <!-- declaring descendants, at least one node or one leaf must be present
              descendants may be mixed, nodes and leafs -->
             <descendants>
-                <leaf type="triangle" x1="ff" y1="ff" x2="ff" y2="ff" x3="ff" y3="ff" />
                 <!-- x y z coordinates of each vertex -->
             </descendants>
         </node>

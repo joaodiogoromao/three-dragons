@@ -1,0 +1,205 @@
+<lsf>
+    <initials>
+        <reference length="2" />
+        <!-- axis length; "0" means no axis displayed -->
+        <root id="demoRoot" />
+        <!-- identifier of root node of the scene graph; this node -->
+        <!-- must be defined in one of the following NODE declarations -->
+    </initials>
+    <views default="defaultCamera">
+        <!-- at least one of the following type of cameras must be declared -->
+        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
+            <from x="30" y="15" z="30" />
+            <to x="0" y="-2" z="0" />
+        </perspective>
+        <ortho id="demoOrtho" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
+            <from x="5" y="0" z="10" />
+            <to x="5" y="0" z="0" />
+            <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
+        </ortho>
+    </views>
+
+    <illumination>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />           <!-- global ambient -->
+        <background r="0.1" g="0.7" b="0.1" a="1.0" />        <!-- background color -->
+    </illumination>
+
+
+    <lights>
+        <light id="defaultLight">            
+            <enable value="1" />
+            <position x="0" y="50" z="0" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />                   
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />            
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            
+        </light>
+    </lights>
+
+
+    <textures>
+        <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
+        <texture id="demoTexture" path="./scenes/images/vidral.jpg" />
+    </textures>
+
+    <spritesheets></spritesheets>
+
+    <materials>
+        <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
+         requires a distinct "id". At least one material should be present. -->
+        <material id="demoMaterial">
+            <shininess value="1.0" />
+            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+    </materials>
+
+    <!--informacao de animacao -->
+    <!-- o bloco "animations" é opcional, mas quando existir -->
+    <!-- deve ser declarado imediatamente antes do bloco  "nodes" -->
+    <animations>
+    <!-- O bloco animations pode ser vazio, isto é, pode -->
+    <!-- não ser declarada qualquer animação -->
+        <animation id="animation" >
+            <!-- A animação inicia-se no tempo da primeira keyframe, -->
+            <!-- sendo que o objeto em causa deve permanecer -->
+            <!-- invisível até esse momento -->
+
+            <!-- Deve existir pelo menos 1 elemento keyframe. -->
+            <!-- instant e’ o tempo expresso em segundos -->
+            <!-- desde o inicio da animação. -->
+            <!-- Os keyframes devem ser declarados por -->
+            <!-- ordem crescente do tempo. -->
+                <keyframe instant="0">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="2">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+        </animation>
+
+        <animation id="test" >
+            <!-- A animação inicia-se no tempo da primeira keyframe, -->
+            <!-- sendo que o objeto em causa deve permanecer -->
+            <!-- invisível até esse momento -->
+
+            <!-- Deve existir pelo menos 1 elemento keyframe. -->
+            <!-- instant e’ o tempo expresso em segundos -->
+            <!-- desde o inicio da animação. -->
+            <!-- Os keyframes devem ser declarados por -->
+            <!-- ordem crescente do tempo. -->
+                <keyframe instant="0">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+
+                <keyframe instant="2">
+
+                    <!-- translate, rotate e scale representam as -->
+                    <!-- quantidades das transformações -->
+                    <!-- correspondentes, medidas em relação à -->
+                    <!-- situação inicial (instante zero) -->
+                    <!-- Para uma mesma keyframe, os elementos -->
+                    <!-- translate, rotate e scale sao obrigatorios -->
+                    <!-- e fornecidos por esta ordem -->
+
+                    <translation x="1" y="1" z="1" />
+                    <rotation axis="x" angle="25" />
+                    <rotation axis="y" angle="0" />
+                    <rotation axis="z" angle="0" />
+                    <scale sx="1" sy="1" sz="1" />
+                </keyframe>
+        </animation>
+    </animations>
+
+    <nodes>
+        <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="0" y="1.0" z="1.0" />
+                <rotation axis="yy" angle="45" />
+                <scale sx="2" sy="1" sz="1" />
+            </transformations>
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <noderef id="demoChild" />
+                <!-- "ss" is the identifier of a node or of leaf; -->
+                <!-- may be repeated as necessary. It can refer an -->
+                <!-- identifier of another node, before or later defined in the file. -->
+                <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
+                <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" />
+                <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+            </descendants>
+        </node>
+        <node id="demoChild">            <!-- defines one intermediate node; may be repeated as necessary -->
+            <!-- next two lines are mandatory -->
+            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+
+            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
+                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+            </texture>
+
+            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
+            <transformations>
+                <translation x="2" y="0.0" z="2.0" />
+            </transformations>
+
+            <animationref id="animation" />
+
+            <!-- declaring descendants, at least one node or one leaf must be present
+             descendants may be mixed, nodes and leafs -->
+            <descendants>
+                <!-- x y z coordinates of each vertex -->
+            </descendants>
+        </node>
+    </nodes>
+</lsf>

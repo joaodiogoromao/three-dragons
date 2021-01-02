@@ -23,7 +23,7 @@ class XMLscene extends CGFscene {
 
         this.defaultShader = super.activeShader;
 
-        
+        this.sceneGraphs = [];   
     }
 
     /**
@@ -55,6 +55,8 @@ class XMLscene extends CGFscene {
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setTextureWrap('REPEAT', 'REPEAT');
 
+        this.defaultCamera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+
         this.spritesheetAppearance = new CGFappearance(this);
 
         this.tStarted = null;
@@ -66,7 +68,9 @@ class XMLscene extends CGFscene {
      */
     initCameras() {
         this.menuCamera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 140, 0.01), vec3.fromValues(0, 0, 0));
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.gameCamera = new CGFcamera(Math.PI/4, 0.1, 500, vec3.fromValues(0, 30, 9), vec3.fromValues(0, 0, 0));
+        
+        this.camera = this.defaultCamera;
     }
 
     /**
@@ -97,16 +101,16 @@ class XMLscene extends CGFscene {
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
-    initLights() {
-        var i = 0;
+    initLights(lights) {
+        let i = 0;
         // Lights index.
 
-        for (var key in this.graph.lights) {
+        for (const key in lights) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebCGF on default shaders.
 
-            if (this.graph.lights.hasOwnProperty(key)) {
-                var graphLight = this.graph.lights[key];
+            if (lights.hasOwnProperty(key)) {
+                const graphLight = lights[key];
 
                 this.lights[i].setPosition(...graphLight[1]);
                 this.lights[i].setAmbient(...graphLight[2]);
@@ -126,33 +130,66 @@ class XMLscene extends CGFscene {
         }
     }
 
+    resetSceneGraph() {
+        this.sceneInited = false;
+        this.setUpdatePeriod(0);
+
+        for (const light of this.lights) {
+            light.disable();
+            light.setVisible(false);
+        }
+        this.setCamera(this.gameCamera);
+
+        this.cameras.splice(0, this.lights.length);
+    }
+
+    initSceneGraph(sceneGraphIndex) {
+        const sceneGraph = this.sceneGraphs[sceneGraphIndex];
+
+        sceneGraph.initCameras();
+
+        this.gl.clearColor(...sceneGraph.background);
+
+        this.setGlobalAmbientLight(...sceneGraph.ambient);
+
+        this.initLights(sceneGraph.lights);
+
+        this.sceneInited = true;
+        this.setUpdatePeriod(30);
+    }
+
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
-    onGraphLoaded(type, data) {
+    onGraphLoaded(type, data, filesLength) {
+        console.log("ON GRAPH LOADED", type);
         if (type == MySceneGraph.types.SCENE) {
 
-            this.graph = data;
+            //this.graph = data;
 
-            this.axis = new CGFaxis(this, this.graph.referenceLength);
+            this.sceneGraphs.push(data);
 
-            this.gl.clearColor(...this.graph.background);
-
-            this.setGlobalAmbientLight(...this.graph.ambient);
-
-            this.initLights();
-
-            this.interface.createInterface();
+            //this.interface.createInterface();
 
         } else if (type == MySceneGraph.types.MODULE) {
+
             this.menus = data;
+
+        } else if (type == MySceneGraph.types.GAME) {
+            this.game = data;
+
+            this.axis = new CGFaxis(this, this.game.referenceLength);
+
+            this.interface.createInterface();
         }
-
-        if (this.menus && this.graph) {
-            this.game = new MyGameOrchestrator(this);
-
-            this.sceneInited = true;
-            this.setUpdatePeriod(30);
+        this.filesReceived = this.filesReceived ? this.filesReceived + 1 : 1;
+        if (this.filesReceived == filesLength) {
+            console.log("Orchestrator");
+            if (this.menus && this.game && this.sceneGraphs.length) {
+                this.gameOrchestrator = new MyGameOrchestrator(this);
+            } else {
+                throw new Error("Received last graph but not all required types (game, menus and scene) received.");
+            }
         }
     }
 
@@ -181,8 +218,11 @@ class XMLscene extends CGFscene {
         this.setCamera(this.cameras[this.selectedCamera]);
     }
 
-    setDefaultCamera() {
-        this.setCamera(this.graph.defaultCamera);
+    /**
+     * Sets the game camera
+     */
+    setGameCamera() {
+        this.setCamera(this.gameCamera);
     }
 
     /**
@@ -265,11 +305,11 @@ class XMLscene extends CGFscene {
             return;
         }
         const timeSinceProgramStarted = (t - this.tStarted)/1000;
-        for (const i in this.graph.nodes) {
+        /*for (const i in this.graph.nodes) {
             this.graph.nodes[i].update(timeSinceProgramStarted);
-        }
+        }*/
 
-        this.game.update(timeSinceProgramStarted);
+        this.gameOrchestrator.update(timeSinceProgramStarted);
     }
 
     logPicking() {
@@ -295,6 +335,7 @@ class XMLscene extends CGFscene {
      * Displays the scene.
      */
     display() {
+        if (!this.sceneInited) return;
         // ---- BEGIN Background, camera and axis setup
         //this.logPicking();
         this.clearPickRegistration();
@@ -326,7 +367,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
             this.currentMaterial = this.defaultAppearance;
 
-            this.game.display();
+            this.gameOrchestrator.display();
         }
         else
         {

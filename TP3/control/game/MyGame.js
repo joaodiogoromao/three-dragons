@@ -2,7 +2,7 @@
 
 class MyGame {
     constructor(scene, strategy, updateScore) {
-        this.board = scene.graph.board;
+        this.board = scene.game.board;
         this.scene = scene;
         this.updateScore = updateScore;
 
@@ -106,7 +106,7 @@ class MyGame {
     }
 
     display() {
-        this.scene.graph.displayScene();
+        this.scene.game.displayScene();
     }
 
     update(timeSinceProgramStarted) {
