@@ -23,7 +23,7 @@ class XMLscene extends CGFscene {
 
         this.defaultShader = super.activeShader;
 
-        this.sceneGraphs = [];   
+        this.sceneGraphs = []; 
     }
 
     /**
@@ -37,6 +37,7 @@ class XMLscene extends CGFscene {
         this.sceneInited = false;
 
         this.initCameras();
+        this.lockCamera();
 
         this.enableTextures(true);
 
@@ -60,7 +61,6 @@ class XMLscene extends CGFscene {
         this.spritesheetAppearance = new CGFappearance(this);
 
         this.tStarted = null;
-
     }
 
     /**
@@ -80,11 +80,24 @@ class XMLscene extends CGFscene {
         this.setCamera(this.menuCamera);
     }
 
+    updateCameraLock() {
+        console.log("Update camera lock", this.cameraLocked);
+        if (this.cameraLocked) this.lockCamera();
+        else this.unlockCamera();
+    }
+
     /**
      * Makes it impossible for the user to drag the camera
      */
     lockCamera() {
-        if (this.previousProcessMouseMove) throw new Error("Trying to lock camera, but previousProcessMouseMove is already set.")
+        if (this.previousProcessMouseMove) throw new Error("Trying to lock camera, but previousProcessMouseMove is already set.");
+        this.cameraLocked = true;
+
+        if (this.previousCamera) {
+            this.setCamera(this.previousCamera);
+            this.previousCamera = null;
+        }
+        
         this.previousProcessMouseMove = this.interface.processMouseMove;
         this.interface.processMouseMove = () => {};
     }
@@ -93,7 +106,11 @@ class XMLscene extends CGFscene {
      * Makes it possible for the user to drag the camera
      */
     unlockCamera() {
-        if (!this.previousProcessMouseMove) throw new Error("Trying to unlock camera, but previousProcessMouseMove is not set.")
+        if (!this.previousProcessMouseMove) throw new Error("Trying to unlock camera, but previousProcessMouseMove is not set.");
+        this.cameraLocked = false;
+
+        this.setCamera(this.camera);
+
         this.interface.processMouseMove = this.previousProcessMouseMove;
         this.previousProcessMouseMove = null;
     }
@@ -222,8 +239,13 @@ class XMLscene extends CGFscene {
      * @param {CGFcamera} camera 
      */
     setCamera(camera) {
-        this.camera = camera;
-        this.interface.setActiveCamera(camera);
+        if (!this.cameraLocked) {
+            this.previousCamera = camera;        
+            this.camera = new CGFcamera(this.previousCamera.fov, this.previousCamera.near, this.previousCamera.far, this.previousCamera.position, this.previousCamera.target);
+        } else {
+            this.camera = camera;
+        }
+        this.interface.setActiveCamera(this.camera);
     }
     
     /**

@@ -3,7 +3,6 @@ class MyStatePlaying extends MyState {
         console.log("playing");
         super(scene, gameOrchestrator);
         this.game = new MyGame(scene, gameOrchestrator.strategy, this.updateScore.bind(this), new MyHistory(), false);
-        this.addUndoButton();
 
         this.sceneGraphIndex = 0;
         this.scene.initSceneGraph(this.sceneGraphIndex);
@@ -54,7 +53,11 @@ class MyStatePlaying extends MyState {
         if (this.game.state instanceof MyStateMoving) { // stops the timer as soon as the player moves a piece
             if (this.timeLeftInterval) clearInterval(this.timeLeftInterval);
             this.timeLeftInterval = null;
+            if (this.undoButton) this.removeUndoButton();
         } else {
+            if (this.game.history.history.length < 2 && this.undoButton) this.removeUndoButton();
+            else if (this.game.history.history.length >= 2 && !this.undoButton) this.addUndoButton();
+
             const player = this.getCurrentPlayer();
             if (player != this.activeMenu.player) {
                 this.setActivePlayerMenu(player);
@@ -116,6 +119,9 @@ class MyStatePlaying extends MyState {
     }
 
     removeUndoButton() {
-        if (this.undoButton) this.scene.removeInterfaceField(this.undoButton);
+        if (this.undoButton) {
+            this.scene.removeInterfaceField(this.undoButton);
+            this.undoButton = null;
+        }
     }
 }

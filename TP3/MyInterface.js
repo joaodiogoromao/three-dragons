@@ -30,6 +30,8 @@ class MyInterface extends CGFinterface {
         console.log(game);
         // add a group of controls (and open/expand by defult)
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
+
+        this.gui.add(this.scene, 'cameraLocked').name('Camera Locked').onChange(this.scene.updateCameraLock.bind(this.scene));
         //this.gui.add(game, 'undo').name('Undo');
 
         //this.gui.add(this.scene, 'selectedCamera', Object.keys(this.scene.cameras)).name('Camera').onChange(this.scene.setSelectedCamera.bind(this.scene));
