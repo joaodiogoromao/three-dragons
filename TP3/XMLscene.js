@@ -182,6 +182,7 @@ class XMLscene extends CGFscene {
 
             this.interface.createInterface();
         }
+
         this.filesReceived = this.filesReceived ? this.filesReceived + 1 : 1;
         if (this.filesReceived == filesLength) {
             console.log("Orchestrator");
@@ -191,6 +192,14 @@ class XMLscene extends CGFscene {
                 throw new Error("Received last graph but not all required types (game, menus and scene) received.");
             }
         }
+    }
+
+    addInterfaceField(object, property, name) {
+        return this.interface.gui.add(object, property).name(name);
+    }
+
+    removeInterfaceField(field) {
+        this.interface.gui.remove(field);
     }
 
     /**

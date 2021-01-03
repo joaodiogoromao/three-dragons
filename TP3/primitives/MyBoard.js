@@ -1,6 +1,6 @@
 
 class MyBoard extends CGFobject {
-    constructor(scene, whiteTileId, blackTileId, whiteDiceId, blackDiceId, nRows, nCols, dragonAltarStepsId, dragonAltarShardId) {
+    constructor(scene, whiteTileId, blackTileId, whiteDiceId, blackDiceId, nRows, nCols, dragonAltarStepsId, dragonAltarShardId, dragonAltarAppearAnimId, mountainId) {
         super(scene);
 
         this.possibleMoves = null;
@@ -16,6 +16,10 @@ class MyBoard extends CGFobject {
         this.dragonAltarStepsId = dragonAltarStepsId;
         this.dragonAltarShardId = dragonAltarShardId;
 
+        this.dragonAltarAppearAnimId = dragonAltarAppearAnimId;
+
+        this.mountainId = mountainId;
+
         this.whiteTileObj = null;
         this.blackTileObj = null;
 
@@ -24,6 +28,8 @@ class MyBoard extends CGFobject {
 
         this.dragonAltarStepsObj = null;
         this.dragonAltarShardObj = null;
+
+        this.mountainObj = null;
 
         this.nRows = nRows;
         this.nCols = nCols;
@@ -40,6 +46,13 @@ class MyBoard extends CGFobject {
             { x: 9, z: 5 }
         ];
 
+        this.mountainPositions = [
+            { x: 1, z: 1 },
+            { x: 1, z: 9 },
+            { x: 9, z: 1 },
+            { x: 9, z: 9 },
+        ];
+
         this.possibleMovesShader = new CGFshader(scene.gl, "shaders/possibleMoves.vert", "shaders/possibleMoves.frag");
     }
 
@@ -47,6 +60,7 @@ class MyBoard extends CGFobject {
         console.log("RESET BOARD");
         this.pieces.splice(0, this.pieces.length);
         this.createPieces().forEach((piece) => this.pieces.push(piece));
+        this.dragonCavePositions.forEach((dragonCave) => { dragonCave.invoked = null; dragonCave.animation = null });
         this.whiteRemovedCount = 0;
         this.blackRemovedCount = 0;
     }
@@ -71,17 +85,16 @@ class MyBoard extends CGFobject {
         this.possibleMoves = possibleMoves;
     }
 
-    setGameBoard(newGameBoard) {
+    setGameBoard(newGameBoard, undo = false) {
         console.log("Updating game board with", newGameBoard);
-        const piecesToRemove = this.updatePieces(newGameBoard);
+        const res = this.updatePieces(newGameBoard, undo);
         this.gameBoard = newGameBoard;
-        return piecesToRemove;
+        return res;
     }
 
-    updatePieces(newGameBoard) {
-        console.log("old: ", this.gameBoard, " new: ", newGameBoard);
+    getPiecesDiff(newGameBoard) {
         const added = [], removed = [];
-        const piecesToRemove = [];
+
         for (const i in this.gameBoard) {
             const prevLine = this.gameBoard[i];
             const currLine = newGameBoard[i];
@@ -92,15 +105,12 @@ class MyBoard extends CGFobject {
                 const x = parseInt(j)+1;
 
                 // piece stayed in the same position
-                if (JSON.stringify(prevEl) === JSON.stringify(currEl)) {
-                    continue;
-                }
+                if (JSON.stringify(prevEl) === JSON.stringify(currEl)) continue;
 
                 // piece has been changed 
                 if (prevEl instanceof Array && prevEl.length == 3) { // piece moved from the current position
                     removed.push({ x: x, z: z, player: prevEl[1], value: prevEl[2] });
                 } else if (prevEl instanceof Array && prevEl.length == 2) { // dragon was invoked
-                    console.log("invoked", prevEl, currEl);
                     added.push({ x: x, z: z, player: currEl[1], value: currEl[2] });
                 } else if (prevEl === "empty") { // piece moved to the the current position
                     added.push({ x: x, z: z, player: currEl[1], value: currEl[2] });
@@ -108,55 +118,100 @@ class MyBoard extends CGFobject {
             }
         }
 
-        console.log("Piece diff", added, removed);
+        return [ added, removed ];
+    }
+
+    getMove(newGameBoard) {
+        const [added, removed] = this.getPiecesDiff(newGameBoard);
 
         for (const piece of this.pieces) {
             if (piece.removed) continue;
 
             const rem = removed.find((el) => 
                 el.x == piece.position.x && el.z == piece.position.z 
-                && el.player == piece.player);
+                && el.player == piece.player && el.value == piece.value);
 
             if (!rem) continue;
 
-            const add = added.find(el => el.player == piece.player);
+            const add = added.find(el => el.player == piece.player && !this.isDragonCavePosition(el));
+
+            if (add) return {startPos: piece.position, endPos: {x: add.x, z: add.z}, piece: piece};
+        }
+    }
+
+    updatePieces(newGameBoard, undo = false) {
+        const res = {
+            removedPieces: [],
+            movedPieces: [],
+            addedPieces: []
+        };
+
+        const [ added, removed ] = this.getPiecesDiff(newGameBoard);
+
+        console.log("Added, removed: ", added, removed);
+
+        for (const piece of this.pieces) {
+            if (piece.removed) continue;
+
+            const rem = removed.find((el) => 
+                el.x == piece.position.x && el.z == piece.position.z 
+                && el.player == piece.player && el.value == piece.value);
+
+            if (!rem) continue;
+
+            const add = added.find(el => el.player == piece.player && !this.isDragonCavePosition(el));
 
             if (!add) { // Remove piece
                 piece.removed = true;
-                piecesToRemove.push(piece);
+                res.removedPieces.push(piece); // if undo, the dragon is reversed. If not undo, the piece is removed to the auxiliary board
             } else { // Move piece
-                piece.position.x = add.x;
-                piece.position.z = add.z;
-                piece.value = add.value;
+                if (undo) { // the piece is unmoved
+                    add.piece = piece;
+                    res.movedPieces.push(add);
+                } else {
+                    piece.position.x = add.x;
+                    piece.position.z = add.z;
+                    piece.value = add.value;
+                }
                 added.splice(added.indexOf(add), 1);
             }
             removed.splice(removed.indexOf(rem), 1);
         }
 
-        // invoke dragons
         for (const add of added) {
-            this.pieces.push(this.createDice(add.player, add.value, { x: add.x, z: add.z }));
+            if (undo) res.addedPieces.push(add);  // the piece had been removed (move it from the auxiliary board to the game)
+            else { // invokes dragon
+                const dragon = this.createDice(add.player, add.value, { x: add.x, z: add.z });
+                this.pieces.push(dragon);
+                res.addedPieces.push(dragon);
+            }
         }
 
-        return piecesToRemove;
+        return res;
     }
 
-    correspondIdsToObjects(objMap) {
+    correspondIdsToObjects(objMap, animMap) {
         const ids = new Map([['whiteTile', this.whiteTileId], 
             ['blackTile', this.blackTileId], 
             ['whiteDice', this.whiteDiceId], 
             ['blackDice', this.blackDiceId], 
             ['dragonAltarSteps', this.dragonAltarStepsId], 
-            ['dragonAltarShard', this.dragonAltarShardId]]);
+            ['dragonAltarShard', this.dragonAltarShardId],
+            ['mountain', this.mountainId]]);
         
         for (const [key, id] of ids) {
             if (objMap[id] == undefined) {
-                throw new Error(`The id '${id}' given to leaf 'board' has no match.`);
+                //throw new Error(`The id '${id}' given to leaf 'board' has no match.`);
             }
             this[key+"Obj"] = objMap[id];
         }
         this.tiles = this.createTiles();
         this.pieces = this.createPieces();
+
+        console.log("SCENE:", this.scene);
+        this.appearAnimation = animMap[this.dragonAltarAppearAnimId];
+        this.disappearAnimation = this.appearAnimation.reverse();
+        console.log("ANIMATIONS: ", this.appearAnimation, this.disappearAnimation);
     }
 
     copy(Obj) {
@@ -212,7 +267,7 @@ class MyBoard extends CGFobject {
                 break;
             case 4:
                 this.scene.rotate(-90*DEGREE_TO_RAD, 1, 0, 0);
-                break;
+                break;a
             case 5:
                 this.scene.rotate(-90*DEGREE_TO_RAD, 0, 0, 1);
                 break;
@@ -259,16 +314,21 @@ class MyBoard extends CGFobject {
 
             this.scene.pushMatrix();
 
+            if (this.isDragonCavePosition(piece.position)) this.scene.translate(0, 0.4, 0);
+            this.translateToBoardPosition(piece.position);
+            
+            
             if (piece.animation && !piece.animation.finishedMovingState) {
                 //console.log("Applying piece animation");
-                piece.animation.apply(this.scene);
+                if (!piece.animation.apply(this.scene) && !(piece.animation instanceof MyCurveAnimation)) {
+                    this.scene.popMatrix();
+                    continue;
+                }
             } else if (piece.animation) {
                 piece.animation.finishedMovingState = false;
                 piece.animation = null;
             }
 
-            if (this.isDragonCavePosition(piece.position)) this.scene.translate(0, 0.4, 0);
-            this.translateToBoardPosition(piece.position);
             this.showDiceFace(piece.value);
 
             piece.display();
@@ -285,8 +345,19 @@ class MyBoard extends CGFobject {
             this.translateToBoardPosition(dragonCavePosition);
 
             this.dragonAltarStepsObj.display();
-            this.dragonAltarShardObj.display();
+            if (!dragonCavePosition.invoked) {
+                if (dragonCavePosition.animation) dragonCavePosition.animation.apply(this.scene);
+                if (dragonCavePosition.x == 5) this.scene.scale(1.5, 1.5, 1.5);
+                this.dragonAltarShardObj.display();
+            }
 
+            this.scene.popMatrix();
+        }
+
+        for (const mountainPosition of this.mountainPositions) {
+            this.scene.pushMatrix();
+            this.translateToBoardPosition(mountainPosition);
+            this.mountainObj.display();
             this.scene.popMatrix();
         }
 
@@ -294,7 +365,7 @@ class MyBoard extends CGFobject {
     }
 
     isDragonCavePosition(position) {
-        return this.dragonCavePositions.find((pos) => pos.x == position.x && pos.z == position.z) ? true : false;
+        return this.dragonCavePositions.find((pos) => pos.x == position.x && pos.z == position.z);
     }
 
     isValidMovePosition(row, col) {

@@ -2,7 +2,7 @@ class MyGameOrchestrator {
     constructor(scene) {
         this.state = new MyStateMainMenu(scene, this);
         this.scene = scene;
-        //this.scene.lockCamera();
+        this.scene.lockCamera();
         this.scene.initSceneGraph(0);
     }
 
@@ -24,6 +24,10 @@ class MyGameOrchestrator {
     setStrategyDifficulty(difficulty) {
         if (this.strategy instanceof MyHvHStrategy) throw new Error("Trying to set difficulty of a HvH strategy.");
         this.strategy.setMachineDifficulty(difficulty);
+    }
+
+    exit() {
+        this.setState(new MyStateMainMenu(this.scene, this));
     }
 
     display() {

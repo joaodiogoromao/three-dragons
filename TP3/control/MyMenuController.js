@@ -13,7 +13,6 @@ class MyMenuController {
             "hvm": this.setHvMMode.bind(this),
             "mvm": this.setMvMMode.bind(this),
             "exit": this.exitGame.bind(this),
-            "undo": this.undoMove.bind(this),
             "movie": this.seeGameMovie.bind(this),
             "back": this.goBack.bind(this),
             "next": this.goForward.bind(this),
@@ -82,15 +81,11 @@ class MyMenuController {
     }
     
     exitGame() {
-        this.state.gameOrchestrator.setState(new MyStateMainMenu(this.state.scene, this.state.gameOrchestrator));
-    }
-    
-    undoMove() {
-        console.log("undo!");
+        this.state.gameOrchestrator.exit();
     }
     
     seeGameMovie() {
-        console.log("movie!");
+        this.state.seeGameMovie();
     }
     
     goBack() {

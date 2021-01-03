@@ -853,8 +853,8 @@ class MySceneGraph {
 
         // ESTABLISHES CONNECTIONS BETWEEN REFERENCED IDS AND NODES
         let unmatchedIds = [];
-        for (let n in this.nodes) {
-            unmatchedIds = unmatchedIds.concat(this.nodes[n].correspondIdsToObjects(this.nodes));
+        for (const n in this.nodes) {
+            unmatchedIds = unmatchedIds.concat(this.nodes[n].correspondIdsToObjects(this.nodes, this.animations));
         }
         unmatchedIds = unmatchedIds.filter((val, idx, arr) => {
             return arr.indexOf(val) === idx;

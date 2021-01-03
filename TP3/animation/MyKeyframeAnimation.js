@@ -38,10 +38,41 @@ class MyKeyframeAnimation extends MyAnimation{
         this.keyframeArray = keyframeArray;
         this.infiniteReplay = infiniteReplay;
 
-        // how long until the final animation state is reached
-        this.finalKeyframeInstant = this.keyframeArray[this.keyframeArray.length -1].instant;  // array is ordered by instant
 
         this.replayCount = 0; // the number of times that the animation was repeated (used in case infiniteReplay == false)
+
+        this.previousStartTime = 0;
+    }
+
+    getFinalKeyframeInstant() {
+        // how long until the final animation state is reached
+        return this.keyframeArray[this.keyframeArray.length -1].instant;  // array is ordered by instant
+    }
+
+    reverse() {
+        const newArray = [];
+        this.keyframeArray.forEach(keyframe => newArray.push({...keyframe}));
+        const instants = [];
+        newArray.forEach(keyframe => instants.push(keyframe.instant));
+        instants.reverse();
+        instants.forEach((instant, idx) => newArray[idx].instant = instant);
+        return new MyKeyframeAnimation(newArray, this.infiniteReplay);
+    }
+
+    getDuration() {
+        return this.getFinalKeyframeInstant() - this.keyframeArray[0].instant;
+    }
+
+    makeStartAtTime(time) {
+        this.keyframeArray.forEach(function(keyframe) {
+            keyframe.instant = keyframe.instant + time;
+        }.bind(this));
+        
+        if (this.keyframeArray.length === 1) {   // only 1 keyframe
+            this.setAnimationVariables(this.keyframeArray[0], this.keyframeArray[0]);
+        } else {  // already sorted    
+            this.setAnimationVariables(this.keyframeArray[0], this.keyframeArray[1]);
+        }
     }
 
     /**
@@ -74,7 +105,7 @@ class MyKeyframeAnimation extends MyAnimation{
      * @return time since animation started in seconds
      */
     currentTime(timeSinceProgramStarted) {
-        return timeSinceProgramStarted - (this.replayCount*this.finalKeyframeInstant);
+        return timeSinceProgramStarted - (this.replayCount*this.getFinalKeyframeInstant());
     }
 
     /**
@@ -87,8 +118,8 @@ class MyKeyframeAnimation extends MyAnimation{
         let currentTime = this.currentTime(timeSinceProgramStarted);
 
         // resets the currentTime in case this.infiniteReplay is true and there are any inconsistensies
-        if (Math.floor(currentTime) > this.finalKeyframeInstant && this.infiniteReplay) {  // this may happen if the tab becomes inactive (the loop is inactive)
-            this.replayCount += Math.floor(currentTime/this.finalKeyframeInstant);
+        if (Math.floor(currentTime) > this.getFinalKeyframeInstant() && this.infiniteReplay) {  // this may happen if the tab becomes inactive (the loop is inactive)
+            this.replayCount += Math.floor(currentTime/this.getFinalKeyframeInstant());
             currentTime = this.currentTime(timeSinceProgramStarted);
         }
 
@@ -115,6 +146,8 @@ class MyKeyframeAnimation extends MyAnimation{
      * @return the copy
      */
     copy() {
-        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+        const newArray = [];
+        this.keyframeArray.forEach(keyframe => newArray.push({...keyframe}));
+        return new MyKeyframeAnimation(newArray, this.infiniteReplay);
     }
 }

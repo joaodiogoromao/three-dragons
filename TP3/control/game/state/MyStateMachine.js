@@ -7,7 +7,7 @@ class MyStateMachine extends MyGameState {
         // request move to perform machine play (get move as a server answer)
         //this.game.updateBoard();
 
-        console.log(this.game.prologGameState);
+        //console.log(this.game.prologGameState);
         
         this.game.makeWaitingForStateUpdate();
         this.game.connection.applyBotMove(this.game.prologGameState, difficulty, function(res) {

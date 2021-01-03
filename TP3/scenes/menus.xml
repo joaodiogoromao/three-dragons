@@ -80,7 +80,8 @@
 
             <descendants>
                 <leaf type="menu" name="gameOver" title="Game Over" aspectRatio="1.778" gridGap="3" rows="3" cols="4" horizontalPadding="5" verticalPadding="5">
-                    <button action="back" name="" text="Go to Main Menu" rowStart="2" rowEnd="3" colStart="2" colEnd="4" />
+                    <button action="back" name="" text="Go to Main Menu" rowStart="1" rowEnd="2" colStart="2" colEnd="4" />
+                    <button action="movie" name="" text="See Game Movie" rowStart="2" rowEnd="3" colStart="2" colEnd="4" />
                 </leaf>
             </descendants>
         </node>

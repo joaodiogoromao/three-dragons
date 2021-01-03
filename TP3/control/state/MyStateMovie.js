@@ -1,9 +1,11 @@
-class MyStatePlaying extends MyState {
-    constructor(scene, gameOrchestrator) {
-        console.log("playing");
+class MyStateMovie extends MyState {
+    constructor(scene, gameOrchestrator, history) {
+        console.log("movie");
         super(scene, gameOrchestrator);
-        this.game = new MyGame(scene, gameOrchestrator.strategy, this.updateScore.bind(this), new MyHistory(), false);
-        this.addUndoButton();
+        this.history = history;
+
+        this.game = new MyGame(scene, gameOrchestrator.strategy, this.updateScore.bind(this), this.history, true);
+        this.game.setState(new MyStateMoviePlay(this.scene, this.game));
 
         this.sceneGraphIndex = 0;
 
@@ -50,10 +52,7 @@ class MyStatePlaying extends MyState {
     update(timeSinceProgramStarted) {
         if (!this.game.initComplete) return;
 
-        if (this.game.state instanceof MyStateMoving) { // stops the timer as soon as the player moves a piece
-            if (this.timeLeftInterval) clearInterval(this.timeLeftInterval);
-            this.timeLeftInterval = null;
-        } else {
+        if (!(this.game.state instanceof MyStateMoving)) {
             const player = this.getCurrentPlayer();
             if (player != this.activeMenu.player) {
                 this.setActivePlayerMenu(player);
@@ -62,7 +61,6 @@ class MyStatePlaying extends MyState {
         }
         if (this.game.update(timeSinceProgramStarted)) {
             this.gameOrchestrator.setState(new MyStateOverMenu(this.scene, this.gameOrchestrator, this.game.prologGameState.gameOver, this.game.history));
-            this.removeUndoButton();
         }
     }
 
@@ -85,36 +83,13 @@ class MyStatePlaying extends MyState {
         }
     }
 
-    updateTimeLeft() {
-        this.activeMenu.menu.setButtonValue("playTimeLeft", this.playTimeLeft.toString() + "s");
-        this.playTimeLeft--;
-
-        if (this.playTimeLeft == -1) {
-            this.game.nextPlayer();
-            
-            const nextPlayer = this.activeMenu.player == "white" ? "black" : "white";
-            this.game.prologGameState.player = nextPlayer;
-        }
-    }
-
     setActivePlayerMenu(player) {
         if (this.timeLeftInterval) throw new Error("Trying to set new interval when an interval was already set.");
-        this.timeLeftInterval = setInterval(this.updateTimeLeft.bind(this), 1000);
         if (player === "white") {
             this.activeMenu = { player: player, menu: this.whitesMenu };
         }
         else if (player === "black") {
             this.activeMenu = { player: player, menu: this.blacksMenu };
         }
-        this.playTimeLeft = 30;
-        this.activeMenu.menu.setButtonValue("playTimeLeft", "30s");
-    }
-
-    addUndoButton() {
-        this.undoButton = this.scene.addInterfaceField(this.game, 'undo', 'Undo last move');
-    }
-
-    removeUndoButton() {
-        if (this.undoButton) this.scene.removeInterfaceField(this.undoButton);
     }
 }

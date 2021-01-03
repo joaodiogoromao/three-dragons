@@ -83,10 +83,10 @@ class Node extends CGFobject {
      * Corresponds the ids in descendantIds to real objects
      * @param {array} array that maps ids to objects
      */
-    correspondIdsToObjects(objMap) {
+    correspondIdsToObjects(objMap, animMap) {
         for (let obj of this.descendantObjs) {
             if (obj instanceof LeafNode && obj.obj instanceof MyBoard) {
-                obj.obj.correspondIdsToObjects(objMap);
+                obj.obj.correspondIdsToObjects(objMap, animMap);
             }
         }
 

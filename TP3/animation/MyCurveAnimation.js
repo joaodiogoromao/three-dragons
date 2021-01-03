@@ -63,7 +63,7 @@ class MyCurveAnimation extends MyKeyframeAnimation {
     }
 
     static createPieceMovingAnimation(piece, timeSinceProgramStarted, startPos, endPos) {
-        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, 5, 15);
+        const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, 10, 15);
         piece.animation = animation;
         return animation;
     }

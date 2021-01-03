@@ -1,5 +1,5 @@
 class MyStateOverMenu extends MyState{
-    constructor(scene, gameOrchestrator, winner) {
+    constructor(scene, gameOrchestrator, winner, history) {
         super(scene, gameOrchestrator);
 
         this.scene.setMenuCamera();
@@ -7,6 +7,7 @@ class MyStateOverMenu extends MyState{
         this.menuController = new MyMenuController(scene, this);
         
         this.winner = winner.charAt(0).toUpperCase() + winner.substring(1, winner.length);
+        this.history = history;
 
         const gameOverMenuNode = scene.menus["gameOverMenu"];
         this.menu = gameOverMenuNode.getLeafNode("gameOver");
@@ -15,8 +16,25 @@ class MyStateOverMenu extends MyState{
     }
 
     goBack() {
-        this.scene.graph.board.reset();   
+        this.scene.game.board.reset();
         this.gameOrchestrator.setState(new MyStateMainMenu(this.scene, this.gameOrchestrator));
+    }
+
+    seeGameMovie() {
+        this.scene.game.board.reset();
+        this.scene.setGameCamera();
+        console.log(this.history.history, this.gameOrchestrator.history);
+        if (this.history.history.length != 0) {
+            console.log("Not empty");
+            this.gameOrchestrator.history = new MyHistory([...this.history.history]);
+            this.gameOrchestrator.setState(new MyStateMovie(this.scene, this.gameOrchestrator, this.history));
+        }
+        else if (this.gameOrchestrator.history) {
+            console.log("empty")
+            const history = new MyHistory([...this.gameOrchestrator.history.history]);
+            this.gameOrchestrator.setState(new MyStateMovie(this.scene, this.gameOrchestrator, history));
+
+        }
     }
 
     display() {

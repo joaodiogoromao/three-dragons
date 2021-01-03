@@ -6,10 +6,14 @@ class MyHvMStrategy extends MyStrategy {
 
     apply(extender) {
         const fn = function() {
-            if (this.game.prologGameState.player == this.humanPiece) {
-                this.game.setState(new MyStateWaiting(this.scene, this.game));
-            } else {
-                this.game.setState(new MyStateMachine(this.scene, this.game, this.difficulty));
+            if (this.game.movie)
+                this.game.setState(new MyStateMoviePlay(this.scene, this.game));
+            else {
+                if (this.game.prologGameState.player == this.humanPiece) {
+                    this.game.setState(new MyStateWaiting(this.scene, this.game));
+                } else {
+                    this.game.setState(new MyStateMachine(this.scene, this.game, this.difficulty));
+                }
             }
         }.bind(this);
         super.apply(fn, extender);

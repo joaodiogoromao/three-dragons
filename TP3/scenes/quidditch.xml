@@ -379,7 +379,7 @@
         <node id="tunnel">
             <material id="null" />
 
-            <texture id="groundBarrierTexture">
+            <texture id="null">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -451,7 +451,7 @@
         <node id="groundSurface">
             <material id="groundMaterial" />
 
-            <texture id="groundTexture">
+            <texture id="null">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -467,7 +467,7 @@
         <node id="cylinderRadiusDemo">
             <material id="groundMaterial" />
 
-            <texture id="groundTexture">
+            <texture id="nu">
                 <amplification afs="60" aft="60" />
             </texture>
 
