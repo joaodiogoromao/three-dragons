@@ -53,13 +53,14 @@ class MyGame {
         this.onStateUpToDate = undefined;
     }
 
-    nextPlayer(moveCamera = true) {
-        if (moveCamera) {
+    nextPlayer() {
+        if (this.scene.cameraLocked) {
             const cameraAnimation = new MyCameraAnimation(this.scene, this.timeSinceProgramStarted, 1);
             this.setState(new MyStateMoving(this.scene, this.game, [[cameraAnimation]], function() {
                 this.nextMoveStrategy.apply();
             }.bind(this)));
         } else {
+            this.scene.playerChangesSinceCameraUnlocked++;
             this.nextMoveStrategy.apply();
         }
     }

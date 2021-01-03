@@ -97,7 +97,12 @@ class XMLscene extends CGFscene {
             this.setCamera(this.previousCamera);
             this.previousCamera = null;
         }
-        
+
+        if (this.playerChangesSinceCameraUnlocked && this.playerChangesSinceCameraUnlocked % 2 == 1) {
+            this.camera.orbit({X: (1, 0, 0), Y: (0, 1, 0), Z: (0, 0, 1)}, Math.PI);
+            this.playerChangesSinceCameraUnlocked = null;
+        }
+
         this.previousProcessMouseMove = this.interface.processMouseMove;
         this.interface.processMouseMove = () => {};
     }
@@ -113,6 +118,8 @@ class XMLscene extends CGFscene {
 
         this.interface.processMouseMove = this.previousProcessMouseMove;
         this.previousProcessMouseMove = null;
+
+        this.playerChangesSinceCameraUnlocked = 0;
     }
 
     /**
