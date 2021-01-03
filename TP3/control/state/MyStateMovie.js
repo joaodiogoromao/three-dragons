@@ -60,7 +60,7 @@ class MyStateMovie extends MyState {
             this.menuController.update(false);
         }
         if (this.game.update(timeSinceProgramStarted)) {
-            this.gameOrchestrator.setState(new MyStateOverMenu(this.scene, this.gameOrchestrator, this.game.prologGameState.gameOver, this.game.history));
+            this.gameOrchestrator.setState(new MyStateOverMenu(this.scene, this.gameOrchestrator, this.game.prologGameState.gameOver, new MyHistory([])));
         }
     }
 

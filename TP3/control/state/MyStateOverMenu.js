@@ -23,7 +23,7 @@ class MyStateOverMenu extends MyState{
     seeGameMovie() {
         this.scene.game.board.reset();
         this.scene.setGameCamera();
-        console.log(this.history.history, this.gameOrchestrator.history);
+        
         if (this.history.history.length != 0) {
             console.log("Not empty");
             this.gameOrchestrator.history = new MyHistory([...this.history.history]);
