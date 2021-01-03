@@ -64,12 +64,19 @@ class XMLscene extends CGFscene {
     }
 
     /**
+     * Creates a game camera
+     */
+    createGameCamera() {
+        return new CGFcamera(Math.PI/4, 0.1, 500, vec3.fromValues(0, 24, 16), vec3.fromValues(0, 3, 0));
+
+    }
+
+    /**
      * Initializes the scene cameras.
      */
     initCameras() {
         this.menuCamera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 140, 0.01), vec3.fromValues(0, 0, 0));
-        this.gameCamera = new CGFcamera(Math.PI/4, 0.1, 500, vec3.fromValues(0, 20, 12), vec3.fromValues(0, 0, 0));
-        
+        this.gameCamera = this.createGameCamera();
         this.camera = this.defaultCamera;
     }
 
@@ -157,7 +164,7 @@ class XMLscene extends CGFscene {
     setLights(lights) {
         this.resetLights();
         this.initLights(lights);
-        this.interface.createLightsInterface(sceneGraph.lights);
+        this.interface.createLightsInterface(lights);
     }
 
     resetLights() {
@@ -192,7 +199,7 @@ class XMLscene extends CGFscene {
 
         this.setGlobalAmbientLight(...sceneGraph.ambient);
 
-        this.initLights(sceneGraph.lights);
+        this.setLights(sceneGraph.lights);
 
         this.interface.createLightsInterface(sceneGraph.lights);
 
@@ -281,6 +288,7 @@ class XMLscene extends CGFscene {
      * Sets the game camera
      */
     setGameCamera() {
+        this.gameCamera = this.createGameCamera();
         this.setCamera(this.gameCamera);
     }
 

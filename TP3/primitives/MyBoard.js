@@ -345,11 +345,12 @@ class MyBoard extends CGFobject {
             this.translateToBoardPosition(dragonCavePosition);
 
             this.dragonAltarStepsObj.display();
-            if (!dragonCavePosition.invoked) {
-                if (dragonCavePosition.animation) dragonCavePosition.animation.apply(this.scene);
-                if (dragonCavePosition.x == 5) this.scene.scale(1.1, 1.1, 1.1);
-                else this.scene.scale(0.9, 0.9, 0.9);
+            if (!dragonCavePosition.evoked) {
+                if (dragonCavePosition.animation) dragonCavePosition.animation.apply(this.scene, true);
+                if (dragonCavePosition.x != 5) this.scene.scale(0.9, 0.9, 0.9);
                 this.dragonAltarShardObj.display();
+            } else if (dragonCavePosition.animation) {
+                dragonCavePosition.animation = null;
             }
 
             this.scene.popMatrix();

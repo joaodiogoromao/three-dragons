@@ -70,14 +70,14 @@ class MyGame {
             const cameraAnimation = new MyCameraAnimation(this.scene, this.timeSinceProgramStarted + disappearAnim.getDuration(), cameraAnimationDuration);
             appearAnim.makeStartAtTime(this.timeSinceProgramStarted + disappearAnim.getDuration() + cameraAnimationDuration);
 
-            this.setState(new MyStateMoving(this.scene, this.game, [[disappearAnim, cameraAnimation, appearAnim]], function() {
+            this.setState(new MyStateMoving(this.scene, this, [[disappearAnim, cameraAnimation, appearAnim]], function() {
                 this.nextMoveStrategy.apply();
             }.bind(this)));
         } else {
             appearAnim.makeStartAtTime(this.timeSinceProgramStarted + disappearAnim.getDuration());
 
 
-            this.setState(new MyStateMoving(this.scene, this.game, [[disappearAnim, appearAnim]], function() {
+            this.setState(new MyStateMoving(this.scene, this, [[disappearAnim, appearAnim]], function() {
                 this.nextMoveStrategy.apply();
             }.bind(this)));
 
@@ -105,24 +105,20 @@ class MyGame {
                     const appearAnim = this.board.appearAnimation.copy();
                     const disappearAnim = this.board.disappearAnimation.copy();
 
-                    console.log("Dragon animations: ", this.board.appearAnimation, this.board.disappearAnimation, appearAnim, disappearAnim);
-
                     disappearAnim.makeStartAtTime(this.timeSinceProgramStarted);
                     appearAnim.makeStartAtTime(this.timeSinceProgramStarted + disappearAnim.getDuration());
-                    console.log("Disappear anim duration: ", disappearAnim.getDuration());
-                    console.log("Dragon animations after make start a time " +this.timeSinceProgramStarted+ ": ", this.board.appearAnimation, this.board.disappearAnimation, appearAnim, disappearAnim);
 
                     piece.animation = appearAnim;
 
                     const cave = this.board.isDragonCavePosition(piece.position);
-                    console.log("Adding dragon: ", piece, cave);
+
                     cave.animation = disappearAnim;
                     evokedCaves.push(cave);
 
                     animations.push([disappearAnim, appearAnim]);   
                 });
                 this.updateScore(scoreDiff);
-                const movingState = new MyStateMoving(this.scene, this.game, animations, function(onStateChange) {
+                const movingState = new MyStateMoving(this.scene, this, animations, function(onStateChange) {
                     diff.removedPieces.forEach((piece) => {
                         piece.position = piece.nextPosition;
                         piece.nextPosition = null;
@@ -153,16 +149,33 @@ class MyGame {
                     piecesToUpdatePosition.push(piece);
                     animations.push([MyCurveAnimation.createPieceMovingAnimation(piece, this.timeSinceProgramStarted, piece.position, piece.nextPosition)]);
                 });
-                diff.removedPieces.forEach((remove) => {
-                    // TODO
+                const piecesToRemove = [];
+                diff.removedPieces.forEach((piece) => {
+                    const appearAnim = this.board.appearAnimation.copy();
+                    const disappearAnim = this.board.disappearAnimation.copy();
+
+                    disappearAnim.makeStartAtTime(this.timeSinceProgramStarted);
+                    appearAnim.makeStartAtTime(this.timeSinceProgramStarted + disappearAnim.getDuration());
+
+                    piece.animation = disappearAnim;
+                    piecesToRemove.push(piece);
+
+                    const cave = this.board.isDragonCavePosition(piece.position);
+                    cave.evoked = false;
+                    cave.animation = appearAnim;
+
+                    animations.push([disappearAnim, appearAnim]);  
                 });
                 this.updateScore(scoreDiff);
-                const movingState = new MyStateMoving(this.scene, this.game, animations, function(onStateChange) {
+                const movingState = new MyStateMoving(this.scene, this, animations, function(onStateChange) {
                     piecesToUpdatePosition.forEach((piece) => {
                         console.log(piece);
                         piece.position = piece.nextPosition;
                         piece.nextPosition = null;
                     });
+                    for (const piece of piecesToRemove) {
+                        this.board.pieces.splice(this.board.pieces.indexOf(piece), 1);
+                    }
                     // run camera and toggle player
                     this.nextPlayer();
                     if (onStateChange) onStateChange();  // this is the onStateChange that comes as a parameter to this anonymous function
@@ -190,6 +203,7 @@ class MyGame {
 
     undo() {
         if (this.state instanceof MyStateMoving) throw new Error("Trying to undo during animation.");
+        this.board.possibleMoves = null;
         this.history.popLast();
         this.prologGameState = this.history.last();
         this.updateBoard(null, true);

@@ -22,8 +22,11 @@ class MyCurveAnimation extends MyKeyframeAnimation {
             let xOffsetDelta = 0, zOffsetDelta = 0;
             let keyframes = [];
 
+            let height = 4;
             let radius = Math.sqrt(xOffset * xOffset + zOffset * zOffset) / 2;
             let duration = (Math.PI * radius) / speed;
+
+            if (2*radius < 4) frameNum = 10 * radius;
 
             let initialTime = currentTime;
             let finalTime = initialTime + duration;
@@ -41,15 +44,13 @@ class MyCurveAnimation extends MyKeyframeAnimation {
                 let currentDistance = Math.sqrt(translation.x * translation.x + translation.z * translation.z);
 
                 let distanceFromCenter = radius - currentDistance;
-                translation.y = Math.sqrt(radius * radius - distanceFromCenter * distanceFromCenter);
+                translation.y = Math.min(Math.sqrt(radius * radius - distanceFromCenter * distanceFromCenter) * 2, 5);
 
                 time = i * timeOffset + initialTime;
                 keyframes.push(new Keyframe(time, initTransformationObj(translation)));
             }
 
             keyframes.push(new Keyframe(finalTime, initTransformationObj({ x: xOffset, y: 0, z: zOffset })));
-
-            //console.log("KEYFRAMES", keyframes);
 
             return keyframes;
         }

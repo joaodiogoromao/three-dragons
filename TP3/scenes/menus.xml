@@ -18,9 +18,11 @@
     </lights>
 
     <textures>
-        <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
+        <texture id="metalTexture" path="./scenes/images/rainbow.jpeg" />
         <texture id="blackTexture" path="./scenes/images/blackTexture.jpg" />
-        <texture id="whitishTexture" path="./scenes/images/whitishTexture.jpg" />
+        <texture id="witishTexture" path="./scenes/images/witishTexture.jpg" />
+        <texture id="redTexture" path="./scenes/images/redTexture.png" />
+        <texture id="test" path="./scenes/images/test.jpg" />
     </textures>
 
     <spritesheets>
@@ -40,14 +42,14 @@
             <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
             <specular r="0.01" g="0.01" b="0.01" a="1.0" />
             <emissive r="0" g="0" b="0" a="1.0" />
-        </material>
-        <material id="metalMaterial">
-            <shininess value="1" />
-            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
-            <diffuse r="0.01" g="0.01" b="0.01" a="1.0" />
-            <specular r="1" g="1" b="1" a="1.0" />
-            <emissive r="0" g="0" b="0" a="1.0" />
         </material> -->
+        <material id="menuMaterial">
+            <shininess value="1" />
+            <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
     </materials>
 
     <animations>
@@ -55,7 +57,7 @@
             <keyframe instant="0">
                 <translation x="0" y="10" z="0" />
             </keyframe>
-            <keyframe instant="1">
+            <keyframe instant="0.5">
                 <translation x="0" y="0" z="0" />
             </keyframe>
         </animation>
@@ -67,27 +69,27 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <material id="null"/>
+            <material id="menuMaterial"/>
 
             <transformations>
             </transformations>
 
             <descendants>
                 <leaf type="menu" name="main" title="Three Dragons" aspectRatio="1.778" gridGap="3" rows="1" cols="3" horizontalPadding="5" verticalPadding="5">
-                    <button action="hvh" name="" text="H vs H" rowStart="1" rowEnd="2" colStart="1" colEnd="2" texture="blackTexture" />
-                    <button action="hvm" name="" text="H vs M" rowStart="1" rowEnd="2" colStart="2" colEnd="3" texture="blackTexture" />
-                    <button action="mvm" name="" text="M vs M" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" />
+                    <button action="hvh" name="" text="H vs H" rowStart="1" rowEnd="2" colStart="1" colEnd="2" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="hvm" name="" text="H vs M" rowStart="1" rowEnd="2" colStart="2" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="mvm" name="" text="M vs M" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
                 </leaf>
                 <leaf type="menu" name="difficulty" title="Select Difficulty" aspectRatio="1.778" gridGap="3" rows="3" cols="6" horizontalPadding="5" verticalPadding="5">
-                    <button action="easy" name="" text="Easy" rowStart="1" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" />
-                    <button action="medium" name="" text="Medium" rowStart="1" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" />
-                    <button action="hard" name="" text="Hard" rowStart="1" rowEnd="3" colStart="5" colEnd="7" texture="blackTexture" />
-                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" texture="blackTexture" />
+                    <button action="easy" name="" text="Easy" rowStart="1" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="medium" name="" text="Medium" rowStart="1" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="hard" name="" text="Hard" rowStart="1" rowEnd="3" colStart="5" colEnd="7" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
                 </leaf>
                 <leaf type="menu" name="choosePlayer" title="Choose Player" aspectRatio="1.778" gridGap="3" rows="3" cols="6" horizontalPadding="5" verticalPadding="5">
-                    <button action="white" name="" text="White" rowStart="1" rowEnd="3" colStart="1" colEnd="4" texture="blackTexture" />
-                    <button action="black" name="" text="Black" rowStart="1" rowEnd="3" colStart="4" colEnd="7" texture="blackTexture" />
-                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" texture="blackTexture" />
+                    <button action="white" name="" text="White" rowStart="1" rowEnd="3" colStart="1" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="black" name="" text="Black" rowStart="1" rowEnd="3" colStart="4" colEnd="7" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
                 </leaf>
             </descendants>
         </node>
@@ -102,9 +104,9 @@
             </transformations>
 
             <descendants>
-                <leaf type="menu" name="gameOver" title="Game Over" aspectRatio="1.778" gridGap="3" rows="3" cols="4" horizontalPadding="5" verticalPadding="5">
-                    <button action="back" name="" text="Go to Main Menu" rowStart="1" rowEnd="2" colStart="2" colEnd="4" texture="blackTexture" />
-                    <button action="movie" name="" text="See Game Movie" rowStart="2" rowEnd="3" colStart="2" colEnd="4" texture="blackTexture" />
+                <leaf type="menu" name="gameOver" title="Game Over" aspectRatio="1.778" gridGap="3" rows="4" cols="4" horizontalPadding="5" verticalPadding="5">
+                    <button action="back" name="" text="Go to Main Menu" rowStart="2" rowEnd="3" colStart="2" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="movie" name="" text="See Game Movie" rowStart="3" rowEnd="4" colStart="2" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
                 </leaf>
             </descendants>
         </node>
@@ -115,7 +117,7 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <material id="null"/>
+            <material id="menuMaterial"/>
 
             <transformations>
                 <scale sx="0.1" sy="0.1" sz="0.1" />
@@ -127,19 +129,19 @@
 
             <descendants>
                 <leaf type="menu" name="blacks" title="Blacks" aspectRatio="1.778" gridGap="3" rows="3" cols="7" horizontalPadding="5" verticalPadding="5">
-                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" texture="blackTexture" />
-                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" />
-                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" texture="blackTexture" />
-                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" texture="blackTexture" />
-                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" texture="blackTexture" />
+                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
+                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
+                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
+                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
+                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
 
-                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" />
-                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" />
+                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
+                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
 
-                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" texture="blackTexture" />
-                    <button action="theme1" name="" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" texture="blackTexture" />
-                    <button action="theme2" name="" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" texture="blackTexture" />
-                    <button action="theme3" name="" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" texture="blackTexture" />
+                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="theme1" name="theme1" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="1"/>
+                    <button action="theme2" name="theme2" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
+                    <button action="theme3" name="theme3" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" texture="blackTexture" selectionTexture="metalTexture" selected="0"/>
                 </leaf>
             </descendants>
         </node>
@@ -149,7 +151,7 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <material id="null"/>
+            <material id="menuMaterial"/>
 
             <transformations>
                 <scale sx="0.1" sy="0.1" sz="0.1" />
@@ -160,19 +162,19 @@
 
             <descendants>
                 <leaf type="menu" name="whites" title="Whites" aspectRatio="1.778" gridGap="3" rows="3" cols="7" horizontalPadding="5" verticalPadding="5">
-                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" texture="blackTexture" />
-                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" />
-                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" texture="blackTexture" />
-                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" texture="blackTexture" />
-                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" texture="blackTexture" />
+                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
 
-                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" />
-                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" />
+                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
 
-                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" texture="blackTexture" />
-                    <button action="theme1" name="" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" texture="blackTexture" />
-                    <button action="theme2" name="" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" texture="blackTexture" />
-                    <button action="theme3" name="" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" texture="blackTexture" />
+                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="theme1" name="theme1" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" texture="blackTexture" selectionTexture="metalTexture" selected="1" />
+                    <button action="theme2" name="theme2" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
+                    <button action="theme3" name="theme3" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" texture="blackTexture" selectionTexture="metalTexture" selected="0" />
                 </leaf>
             </descendants>
         </node>

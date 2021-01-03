@@ -135,8 +135,9 @@ class MyAnimation {
 	 * @param {CGFscene} scene the scene object
 	 * @return false if the object must not appear, true otherwise
 	 */
-	apply(scene) {
-		if (this.transfMx == null) return false;   // the object doesn't appear
+	apply(scene, evenIfNotStarted = false) {
+		if (this.transfMx == null && !evenIfNotStarted) return false;   // the object doesn't appear
+		else if (this.transfMx == null) scene.multMatrix(this.startTrans);
 		else scene.multMatrix(this.transfMx);
 		return true;
 	}

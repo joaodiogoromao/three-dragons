@@ -43,7 +43,6 @@ class MyStatePlaying extends MyState {
 
         // Display game menus
         if (!this.game.initComplete) return;
-        console.log("Displaying current menu: ", this.activeMenu);
         if (this.activeMenu) {
             let canDisplay = true;
             if (this.activeMenu.menu.animation && !this.activeMenu.menu.animation.endedAnimation) {
@@ -56,6 +55,10 @@ class MyStatePlaying extends MyState {
                 this.activeMenu.menu.animation = null;
                 const otherMenu = this.menus.find(menu => menu.player != this.activeMenu.player);
                 if (otherMenu.menu.animation) {
+                    if (!this.resetMenus) {
+                        this.resetMenus = true;
+                        this.resetMenuTimers();
+                    }
                     this.activeMenu.node = otherMenu.node;
                     this.activeMenu.menu = otherMenu.menu;
                     this.activeMenu.changed = true;
@@ -73,6 +76,11 @@ class MyStatePlaying extends MyState {
         return this.activeMenu.player;
     }
 
+    resetMenuTimers() {
+        this.whitesMenu.setButtonValue("playTimeLeft", "30s");
+        this.blacksMenu.setButtonValue("playTimeLeft", "30s");
+    }
+
     update(timeSinceProgramStarted) {
         if (!this.game.initComplete) return;
 
@@ -81,6 +89,8 @@ class MyStatePlaying extends MyState {
             this.timeLeftInterval = null;
             if (this.undoButton) this.removeUndoButton();
         } else {
+            if (this.resetMenus) this.resetMenus = null;
+
             if (this.game.history.history.length < 2 && this.undoButton) this.removeUndoButton();
             else if (this.game.history.history.length >= 2 && !this.undoButton) this.addUndoButton();
 
@@ -117,7 +127,8 @@ class MyStatePlaying extends MyState {
 
     updateTimeLeft() {
         this.playTimeLeft--;
-        this.activeMenu.menu.setButtonValue("playTimeLeft", this.playTimeLeft.toString() + "s");
+        if (this.playTimeLeft >= 0)
+            this.activeMenu.menu.setButtonValue("playTimeLeft", this.playTimeLeft.toString() + "s");
 
         if (this.playTimeLeft == 0) {
             this.game.nextPlayer();

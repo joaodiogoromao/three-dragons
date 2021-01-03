@@ -1,5 +1,5 @@
 class MyButton extends CGFobject {
-    constructor(scene, action, gridPosition, text, init = false, name = null, texture = null, selected = false) {
+    constructor(scene, action, gridPosition, text, init = false, name = null, texture = null, selectionTexture = null, selected = false) {
         super(scene);
 
         this.action = action;
@@ -9,7 +9,11 @@ class MyButton extends CGFobject {
         this.width = gridPosition.col.end - gridPosition.col.start;
         this.height = gridPosition.row.end - gridPosition.row.start;
         this.name = name;
+
         this.texture = texture;
+        this.selectionTexture = selectionTexture;
+        this.activeTexture = selected ? selectionTexture : texture;
+
         this.selected = selected;
 
         this.initComplete = false;
@@ -42,8 +46,7 @@ class MyButton extends CGFobject {
 
         this.scene.pushTexture();
         if (this.texture !== null && this.texture !== "null" && this.texture !== "clear") {
-            console.log("Displaying texture");
-            this.scene.setTexture(this.texture);
+            this.scene.setTexture(this.activeTexture);
         }
 
         this.displayText();
@@ -84,5 +87,15 @@ class MyButton extends CGFobject {
         this.scene.translate(0, 0, this.width);
         this.right.display();
         this.scene.popMatrix();
+    }
+
+    select() {
+        this.selected = true;
+        this.activeTexture = this.selectionTexture;
+    }
+
+    unselect() {
+        this.selected = false;
+        this.activeTexture = this.texture;
     }
 }

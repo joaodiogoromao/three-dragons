@@ -81,7 +81,7 @@ main=function()
     const files = [
         { name: "menus.xml", type: MySceneGraph.types.MENUS },
         { name: "three_dragons.xml", type: MySceneGraph.types.GAME },
-        { name: "demo1.xml", type: MySceneGraph.types.SCENE },
+        // { name: "demo1.xml", type: MySceneGraph.types.SCENE },
         { name: "demo2.xml", type: MySceneGraph.types.SCENE },
         { name: "demo3.xml", type: MySceneGraph.types.SCENE }
     ];

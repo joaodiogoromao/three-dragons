@@ -23,6 +23,8 @@ class MyMenuController {
             "theme2": (() => this.setTheme(1)).bind(this),
             "theme3": (() => this.setTheme(2)).bind(this)
         }
+
+        this.themeButtonsIds = [9, 10, 11];
     }
 
     doNothing(){}
@@ -96,6 +98,16 @@ class MyMenuController {
         
     }
 
+    select(nodeName, leafNodeName, selectedButton) {
+        const menuNode = this.scene.menus.nodes[nodeName];
+        const menu = menuNode.getLeafNode(leafNodeName).obj;
+
+        for (let button of menu.buttons) {
+            if (selectedButton.name === button.name) button.select();
+            else button.unselect();
+        }
+    }
+
     update(deleteAll = true) {
         if (this.scene.pickMode == false) {
             if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
@@ -103,6 +115,11 @@ class MyMenuController {
                 for (let i = 0; i < this.scene.pickResults.length; i++) {
                     const obj = this.scene.pickResults[i][0];
                     const id = this.scene.pickResults[i][1];
+
+                    if (this.themeButtonsIds.includes(id)) {
+                        this.select("whitesMenu", "whites", obj);
+                        this.select("blacksMenu", "blacks", obj);
+                    }
                     if (id && obj.action && this.actionGenerator[obj.action]) {
                         this.actionGenerator[obj.action](this.state);
                         deleteResults.push(id);

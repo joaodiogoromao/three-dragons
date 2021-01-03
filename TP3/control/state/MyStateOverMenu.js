@@ -39,6 +39,10 @@ class MyStateOverMenu extends MyState{
     }
 
     display() {
+        if (!this.setLights) {
+            this.scene.setLights(this.scene.menus.lights);
+            this.setLights = true;
+        }
         this.menu.display();
     }
 
