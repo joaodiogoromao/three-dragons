@@ -5,7 +5,6 @@ class MyMenuController {
         this.state = state;
 
         this.actionGenerator = {
-            "pause": this.pauseGame.bind(this),
             "easy": this.setEasyDifficulty.bind(this),
             "medium": this.setMediumDifficulty.bind(this),
             "hard": this.setHardDifficulty.bind(this),
@@ -15,7 +14,6 @@ class MyMenuController {
             "exit": this.exitGame.bind(this),
             "movie": this.seeGameMovie.bind(this),
             "back": this.goBack.bind(this),
-            "next": this.goForward.bind(this),
             "white": this.selectWhitePieces.bind(this),
             "black": this.selectBlackPieces.bind(this),
             "nothing": this.doNothing,
@@ -43,10 +41,6 @@ class MyMenuController {
     selectBlackPieces() {
         if (typeof this.state.setPlayerColor == 'function')
             this.state.setPlayerColor("black");
-    }
-
-    pauseGame() {
-        console.log("paused game!");
     }
     
     setEasyDifficulty() {
@@ -92,10 +86,6 @@ class MyMenuController {
     
     goBack() {
         if (typeof this.state.goBack == 'function') this.state.goBack();
-    }
-    
-    goForward() {
-        
     }
 
     select(nodeName, leafNodeName, selectedButton) {

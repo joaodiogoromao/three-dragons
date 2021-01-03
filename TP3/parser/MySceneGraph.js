@@ -97,12 +97,7 @@ class MySceneGraph {
         }
 
         let index, error;
-        if ((index = nodeNames.indexOf("views")) == -1)
-            this.onXMLMinorError("tag <views> missing");
-        else {
-            if (index != VIEWS_INDEX)
-                this.onXMLMinorError("tag <views> out of order");
-
+        if ((index = nodeNames.indexOf("views")) != -1){
             //Parse views block
             if ((error = this.parseViews(nodes[index])) != null)
                 return error;
@@ -153,12 +148,7 @@ class MySceneGraph {
 
         let error, index;
 
-        if ((index = nodeNames.indexOf("initials")) == -1)
-            return "tag <initials> missing";
-        else {
-            if (index != INITIALS_INDEX)
-                this.onXMLMinorError("tag <initials> out of order " + index);
-
+        if ((index = nodeNames.indexOf("initials")) != -1) {
             //Parse initials block
             if ((error = this.parseInitials(nodes[index])) != null)
                 return error;
@@ -168,24 +158,14 @@ class MySceneGraph {
         //if (this.type == MySceneGraph.types.SCENE) {
 
             // <illumination>
-            if ((index = nodeNames.indexOf("illumination")) == -1)
-                this.onXMLMinorError("Tag <illumination> missing");
-            else {
-                if (index != ILLUMINATION_INDEX)
-                    this.onXMLMinorError("tag <illumination> out of order");
-
+            if ((index = nodeNames.indexOf("illumination")) != -1){
                 //Parse illumination block
                 if ((error = this.parseIllumination(nodes[index])) != null)
                     return error;
             }
 
             // <lights>
-            if ((index = nodeNames.indexOf("lights")) == -1)
-                this.onXMLMinorError("Tag <lights> missing");
-            else {
-                if (index != LIGHTS_INDEX)
-                    this.onXMLMinorError("tag <lights> out of order");
-
+            if ((index = nodeNames.indexOf("lights")) != -1){
                 //Parse lights block
                 if ((error = this.parseLights(nodes[index])) != null)
                     return error;
@@ -193,60 +173,35 @@ class MySceneGraph {
         //}
 
         // <textures>
-        if ((index = nodeNames.indexOf("textures")) == -1)
-            return "tag <textures> missing";
-        else {
-            if (index != TEXTURES_INDEX)
-                this.onXMLMinorError("tag <textures> out of order");
-
+        if ((index = nodeNames.indexOf("textures")) != -1) {
             //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
                 return error;
         }
 
         // <spritesheets>
-        if ((index = nodeNames.indexOf("spritesheets")) == -1)
-            return "tag <spritesheets> missing";
-        else {
-            if (index != SPRITESHEETS_INDEX)
-                this.onXMLMinorError("tag <spritesheets> out of order");
-
+        if ((index = nodeNames.indexOf("spritesheets")) != -1) {
             //Parse spritesheets block
             if ((error = this.parseSpritesheets(nodes[index])) != null)
                 return error;
         }
 
         // <materials>
-        if ((index = nodeNames.indexOf("materials")) == -1)
-            return "tag <materials> missing";
-        else {
-            if (index != MATERIALS_INDEX)
-                this.onXMLMinorError("tag <materials> out of order");
-
+        if ((index = nodeNames.indexOf("materials")) != -1) {
             //Parse materials block
             if ((error = this.parseMaterials(nodes[index])) != null)
                 return error;
         }
 
         // <animations>
-        if ((index = nodeNames.indexOf("animations")) == -1)
-            return "tag <animations> missing";
-        else {
-            if (index != ANIMATIONS_INDEX)
-                this.onXMLMinorError("tag <animations> out of order");
-
+        if ((index = nodeNames.indexOf("animations")) != -1) {
             //Parse animations block
             if ((error = this.parseAnimations(nodes[index])) != null)
                 return error;
         }
 
         // <nodes>
-        if ((index = nodeNames.indexOf("nodes")) == -1)
-            return "tag <nodes> missing";
-        else {
-            if (index != NODES_INDEX)
-                this.onXMLMinorError("tag <nodes> out of order");
-
+        if ((index = nodeNames.indexOf("nodes")) != -1) {
             //Parse nodes block
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
@@ -274,22 +229,17 @@ class MySceneGraph {
             const rootNode = children[rootIndex];
             id = this.reader.getString(rootNode, 'id');
         }
-        if (rootIndex == -1 || isNull(id)) {
-            this.onXMLMinorError("No root id defined for scene. Using the first defined node.");
-        }
 
         this.idRoot = id;
 
         // Get axis length       
         let axis_length; 
         if(referenceIndex == -1) {
-            this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
             axis_length = 1;
         } else {
             var refNode = children[referenceIndex];
             axis_length = this.reader.getFloat(refNode, 'length');
             if (axis_length == null) {
-                this.onXMLMinorError("no axis_length defined for scene; assuming 'length = 1'");
                 axis_length = 1;
             }
         }

@@ -1,6 +1,5 @@
 class MyStateMovie extends MyState {
     constructor(scene, gameOrchestrator, history) {
-        console.log("movie");
         super(scene, gameOrchestrator);
         this.history = history;
 

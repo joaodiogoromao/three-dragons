@@ -26,12 +26,10 @@ class MyStateOverMenu extends MyState{
         this.scene.setGameCamera();
         
         if (this.history.history.length != 0) {
-            console.log("Not empty");
             this.gameOrchestrator.history = new MyHistory([...this.history.history]);
             this.gameOrchestrator.setState(new MyStateMovie(this.scene, this.gameOrchestrator, this.history));
         }
         else if (this.gameOrchestrator.history) {
-            console.log("empty")
             const history = new MyHistory([...this.gameOrchestrator.history.history]);
             this.gameOrchestrator.setState(new MyStateMovie(this.scene, this.gameOrchestrator, history));
 

@@ -1,36 +1,21 @@
 <lsf>
     <initials>
-        <reference length="2" />
-        <!-- axis length; "0" means no axis displayed -->
-        <root id="demoRoot" />
-        <!-- identifier of root node of the scene graph; this node -->
-        <!-- must be defined in one of the following NODE declarations -->
+        <reference length="20" />
+        <root id="myroot" />
     </initials>
-    <views default="defaultCamera">
-        <!-- at least one of the following type of cameras must be declared -->
-        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="30" y="15" z="30" />
-            <to x="0" y="-2" z="0" />
-        </perspective>
-        <ortho id="demoOrtho" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
-            <from x="5" y="0" z="10" />
-            <to x="5" y="0" z="0" />
-            <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
-        </ortho>
-    </views>
 
     <illumination>
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />           <!-- global ambient -->
+        <ambient r="0.5" g="0.5" b="0.5" a="1.0" />           <!-- global ambient -->
         <background r="0" g="0" b="0" a="1.0" />        <!-- background color -->
     </illumination>
 
     <lights>
-        <light id="defaultLight1">
+        <light id="defaultLight1">            
             <enable value="1" />
             <position x="0" y="-20" z="-12" w="1.0" />
-            <ambient r="0" g="0" b="0" a="1.0" />
-            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
-            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />                   
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />            
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />            
         </light>
         <light id="defaultLight2">            
             <enable value="1" />
@@ -50,175 +35,571 @@
             <enable value="1" />
             <position x="0" y="20" z="0" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />                   
-            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />            
-            <specular r="0.5" g="0.5" b="0.5" a="1.0" />            
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />            
+            <specular r="0.4" g="0.4" b="0.4" a="1.0" />            
         </light>
     </lights>
 
 
     <textures>
-        <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
-        <texture id="demoTexture" path="./scenes/images/vidral.jpg" />
+        <texture id="lightWood" path="./scenes/images/lightWood.jpeg" />
+        <texture id="groundBarrierTexture" path="./scenes/images/groundBarrierTexture.jpeg" />
+        <texture id="skyBox1" path="./scenes/images/cubemap/f.jpg" />
+        <texture id="skyBox2" path="./scenes/images/cubemap/b.jpg" />
+        <texture id="skyBox3" path="./scenes/images/cubemap/e.jpg" />
+        <texture id="skyBox4" path="./scenes/images/cubemap/d.jpg" />
+        <texture id="skyBox5" path="./scenes/images/genericWood.jpeg" />
+        <texture id="skyBox6" path="./scenes/images/cubemap/c.jpg" />
     </textures>
 
-    <spritesheets></spritesheets>
+    <spritesheets>
+    </spritesheets>
 
     <materials>
-        <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
-         requires a distinct "id". At least one material should be present. -->
-        <material id="demoMaterial">
+        <material id="defaultMaterial">
             <shininess value="1.0" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="woodMaterial">
+            <shininess value="0" />
+            <ambient r="0.65" g="0.65" b="0.65" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.01" g="0.01" b="0.01" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
+        </material>
+        <material id="skyBoxMaterial">
+            <shininess value="0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+        <material id="wallMaterial">
+            <shininess value="0" />
+            <ambient r="0.23" g="0.23" b="0.2" a="1.0" />
+            <diffuse r="0.65" g="0.65" b="0.6" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
     </materials>
 
-    <!--informacao de animacao -->
-    <!-- o bloco "animations" é opcional, mas quando existir -->
-    <!-- deve ser declarado imediatamente antes do bloco  "nodes" -->
-    <animations>
-    <!-- O bloco animations pode ser vazio, isto é, pode -->
-    <!-- não ser declarada qualquer animação -->
-        <animation id="animation" >
-            <!-- A animação inicia-se no tempo da primeira keyframe, -->
-            <!-- sendo que o objeto em causa deve permanecer -->
-            <!-- invisível até esse momento -->
-
-            <!-- Deve existir pelo menos 1 elemento keyframe. -->
-            <!-- instant e’ o tempo expresso em segundos -->
-            <!-- desde o inicio da animação. -->
-            <!-- Os keyframes devem ser declarados por -->
-            <!-- ordem crescente do tempo. -->
-                <keyframe instant="0">
-
-                    <!-- translate, rotate e scale representam as -->
-                    <!-- quantidades das transformações -->
-                    <!-- correspondentes, medidas em relação à -->
-                    <!-- situação inicial (instante zero) -->
-                    <!-- Para uma mesma keyframe, os elementos -->
-                    <!-- translate, rotate e scale sao obrigatorios -->
-                    <!-- e fornecidos por esta ordem -->
-
-                    <translation x="1" y="1" z="1" />
-                    <rotation axis="x" angle="25" />
-                    <rotation axis="y" angle="0" />
-                    <rotation axis="z" angle="0" />
-                    <scale sx="1" sy="1" sz="1" />
-                </keyframe>
-
-                <keyframe instant="2">
-
-                    <!-- translate, rotate e scale representam as -->
-                    <!-- quantidades das transformações -->
-                    <!-- correspondentes, medidas em relação à -->
-                    <!-- situação inicial (instante zero) -->
-                    <!-- Para uma mesma keyframe, os elementos -->
-                    <!-- translate, rotate e scale sao obrigatorios -->
-                    <!-- e fornecidos por esta ordem -->
-
-                    <translation x="1" y="1" z="1" />
-                    <rotation axis="x" angle="25" />
-                    <rotation axis="y" angle="0" />
-                    <rotation axis="z" angle="0" />
-                    <scale sx="1" sy="1" sz="1" />
-                </keyframe>
-        </animation>
-
-        <animation id="test" >
-            <!-- A animação inicia-se no tempo da primeira keyframe, -->
-            <!-- sendo que o objeto em causa deve permanecer -->
-            <!-- invisível até esse momento -->
-
-            <!-- Deve existir pelo menos 1 elemento keyframe. -->
-            <!-- instant e’ o tempo expresso em segundos -->
-            <!-- desde o inicio da animação. -->
-            <!-- Os keyframes devem ser declarados por -->
-            <!-- ordem crescente do tempo. -->
-                <keyframe instant="0">
-
-                    <!-- translate, rotate e scale representam as -->
-                    <!-- quantidades das transformações -->
-                    <!-- correspondentes, medidas em relação à -->
-                    <!-- situação inicial (instante zero) -->
-                    <!-- Para uma mesma keyframe, os elementos -->
-                    <!-- translate, rotate e scale sao obrigatorios -->
-                    <!-- e fornecidos por esta ordem -->
-
-                    <translation x="1" y="1" z="1" />
-                    <rotation axis="x" angle="25" />
-                    <rotation axis="y" angle="0" />
-                    <rotation axis="z" angle="0" />
-                    <scale sx="1" sy="1" sz="1" />
-                </keyframe>
-
-                <keyframe instant="2">
-
-                    <!-- translate, rotate e scale representam as -->
-                    <!-- quantidades das transformações -->
-                    <!-- correspondentes, medidas em relação à -->
-                    <!-- situação inicial (instante zero) -->
-                    <!-- Para uma mesma keyframe, os elementos -->
-                    <!-- translate, rotate e scale sao obrigatorios -->
-                    <!-- e fornecidos por esta ordem -->
-
-                    <translation x="1" y="1" z="1" />
-                    <rotation axis="x" angle="25" />
-                    <rotation axis="y" angle="0" />
-                    <rotation axis="z" angle="0" />
-                    <scale sx="1" sy="1" sz="1" />
-                </keyframe>
-        </animation>
-    </animations>
-
     <nodes>
-        <node id="demoRoot">            <!-- defines one intermediate node; may be repeated as necessary -->
-            <!-- next two lines are mandatory -->
-            <material id="demoMaterial" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+        <node id="myroot">
+            <material id="null" />
 
-            <texture id="demoTexture"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
-                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
-                <translation x="0" y="1.0" z="1.0" />
-                <rotation axis="yy" angle="45" />
-                <scale sx="2" sy="1" sz="1" />
             </transformations>
 
-            <!-- declaring descendants, at least one node or one leaf must be present
-             descendants may be mixed, nodes and leafs -->
             <descendants>
-                <noderef id="demoChild" />
-                <!-- "ss" is the identifier of a node or of leaf; -->
-                <!-- may be repeated as necessary. It can refer an -->
-                <!-- identifier of another node, before or later defined in the file. -->
-                <!-- next lines define nodes of type leaf; may be repeated, in any order, as necessary -->
-                <!-- <leaf type="rectangle" x1="0" y1="1" x2="1" y2="0" /> -->
-                <!-- 2D coordinates on the XY plane for left-top and right-bottom vertices. -->
+                <noderef id="skyBox" />
+                <noderef id="table" />
+                <noderef id="stool1" />
+                <noderef id="stool2" />
             </descendants>
         </node>
-        <node id="demoChild">            <!-- defines one intermediate node; may be repeated as necessary -->
-            <!-- next two lines are mandatory -->
-            <material id="null" /><!-- this superimposes the material received from parent node id="null" maintains material from parent node -->
+        <node id="skyBox">
+            <material id="skyBoxMaterial" />
 
-            <texture id="clear"><!-- declared texture superimposes the texture received from parent node id="null" maintains texture from parent node id="clear" clears texture declaration received from parent node -->
-                <amplification afs="2.0" aft="2.0" /><!-- for primitives = dx/afs, dy/aft -->
+            <texture id="null" >
+                <amplification afs="1.0" aft="1.0" />
             </texture>
 
-            <!-- geom. transf. are optional and may be repeated, in any order, as necessary: -->
             <transformations>
-                <translation x="2" y="0.0" z="2.0" />
+                <translation x="0" y="16" z="0" />
+                <scale sx="0.5" sy="0.5" sz="0.5" />
+                <rotation axis="x" angle="180" />
+            </transformations>
+ 
+            <descendants>
+                <noderef id="skyBoxRectangle1"/>
+                <noderef id="skyBoxRectangle2"/>
+                <noderef id="skyBoxRectangle3"/>
+                <noderef id="skyBoxRectangle4"/>
+                <noderef id="skyBoxRectangle5"/>
+                <noderef id="skyBoxRectangle6"/>
+            </descendants>
+        </node>
+        <node id="skyBoxRectangle1">
+            <material id="wallMaterial" />
+
+            <texture id="null" >
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-59.8" />
+            </transformations>
+ 
+            <descendants>               
+                <noderef id="skyBoxRectangle" />
+            </descendants>
+        </node>
+        <node id="skyBoxRectangle2">
+            <material id="wallMaterial" />
+
+            <texture id="null" >
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-59.8" y="0" z="0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <noderef id="skyBoxRectangle" />
+            </descendants>
+        </node>
+        <node id="skyBoxRectangle3">
+            <material id="wallMaterial" />
+
+            <texture id="null" >
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="59.8" y="0" z="0" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+ 
+            <descendants>               
+                <noderef id="skyBoxRectangle" />
+            </descendants>
+        </node>
+        <node id="skyBoxRectangle4">
+            <material id="wallMaterial" />
+
+            <texture id="null" >
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="59.8" />
+                <rotation axis="y" angle="180" />
+            </transformations>
+ 
+            <descendants>               
+                <noderef id="skyBoxRectangle" />
+            </descendants>
+        </node>
+        <node id="skyBoxRectangle5">
+            <material id="null" />
+
+            <texture id="skyBox5" >
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="59.8" z="0" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+ 
+            <descendants>               
+                <noderef id="skyBoxRectangle" />
+            </descendants>
+        </node>
+        <node id="skyBoxRectangle6">
+            <material id="wallMaterial" />
+
+            <texture id="null" >
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-59.8" z="0" />
+                <rotation axis="y" angle="90" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+ 
+            <descendants>               
+                <noderef id="skyBoxRectangle" />
+            </descendants>
+        </node>
+        <node id="skyBoxRectangle">
+            <material id="null" />
+
+            <texture id="null" >
+                <amplification afs="120" aft="120" />
+            </texture>
+
+            <transformations>
+            </transformations>
+ 
+            <descendants>               
+                <leaf type="rectangle" x1="-60" y1="-60" x2="60" y2="60" />
+            </descendants>
+        </node>
+
+        <node id="stool1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-14" z="-12" />
+            </transformations>
+            
+            <descendants>
+                <noderef id="stool" />
+            </descendants>
+        </node>
+
+        <node id="stool2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-14" z="12" />
+            </transformations>
+            
+            <descendants>
+                <noderef id="stool" />
+            </descendants>
+        </node>
+
+        <node id="stool">
+            <material id="defaultMaterial" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
             </transformations>
 
-            <animationref id="animation" />
-
-            <!-- declaring descendants, at least one node or one leaf must be present
-             descendants may be mixed, nodes and leafs -->
             <descendants>
-                <!-- x y z coordinates of each vertex -->
+                <noderef id="stoolTop" />
+                <noderef id="stoolLeg1" />
+                <noderef id="stoolLeg2" />
+                <noderef id="stoolLeg3" />
+                <noderef id="stoolLeg4" />
+            </descendants>
+        </node>
+
+        <node id="stoolLeg1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-3.5" />
+                <rotation axis="x" angle="-80" />
+            </transformations>
+            
+            <descendants>
+                <leaf type="cylinder" height="10.2" topRadius="0.5" bottomRadius="0.5" stacks="20" slices="30" />
+            </descendants>
+        </node>
+
+        <node id="stoolLeg2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="90" />
+            </transformations>
+            
+            <descendants>
+                <noderef id="stoolLeg1" />
+            </descendants>
+        </node>
+
+        <node id="stoolLeg3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+            </transformations>
+            
+            <descendants>
+                <noderef id="stoolLeg1" />
+            </descendants>
+        </node>
+
+        <node id="stoolLeg4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="270" />
+            </transformations>
+            
+            <descendants>
+                <noderef id="stoolLeg1" />
+            </descendants>
+        </node>
+
+        <node id="stoolTop">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="10" z="0" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="stoolTopCylinder" />
+                <leaf type="torus" inner="0.5" outer="3" slices="50" loops="50"/>
+            </descendants>
+        </node>
+        <node id="stoolTopCylinder">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-0.5" />
+            </transformations>
+            
+            <descendants>
+                <leaf type="cylinder" height="1" topRadius="3" bottomRadius="3" stacks="2" slices="20" />
+            </descendants>
+        </node>
+
+        <node id="table">
+            <material id="woodMaterial" />
+
+            <texture id="lightWood">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tableTop" />
+                <noderef id="tableLeg1" />
+                <noderef id="tableLeg2" />
+                <noderef id="tableLeg3" />
+                <noderef id="tableLeg4" />
+            </descendants>
+        </node>
+        <node id="tableTop">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tableTopTopFace" />
+                <noderef id="tableTopBackFace" />
+                <noderef id="tableTopLeftSideFace" />
+                <noderef id="tableTopRightSideFace" />
+                <noderef id="tableTopFrontSideFace" />
+                <noderef id="tableTopBackSideFace" />
+            </descendants>
+        </node>
+        <node id="tableTopTopFace">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="20" sy="1" sz="20" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        <node id="tableTopBackFace">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-1" z="0" />
+                <scale sx="20" sy="1" sz="20" />
+                <rotation axis="x" angle="180" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        <node id="tableTopLeftSideFace">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-0.5" z="10" />
+                <scale sx="20" sy="1" sz="1" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        <node id="tableTopRightSideFace">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-0.5" z="-10" />
+                <scale sx="20" sy="1" sz="1" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        <node id="tableTopFrontSideFace">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-10" y="-0.5" z="0" />
+                <scale sx="1" sy="1" sz="20" />
+                <rotation axis="z" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        <node id="tableTopBackSideFace">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="10" y="-0.5" z="0" />
+                <scale sx="1" sy="1" sz="20" />
+                <rotation axis="z" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="60" npartsV="60" />
+            </descendants>
+        </node>
+        
+        <node id="tableLeg1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-8.0" y="0.0" z="-8.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tableLeg" />
+            </descendants>
+        </node>
+        <node id="tableLeg2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-8.0" y="0.0" z="8.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tableLeg" />
+            </descendants>
+        </node>
+        <node id="tableLeg3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="8.0" y="0.0" z="-8.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tableLeg" />
+            </descendants>
+        </node>
+        <node id="tableLeg4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="8.0" y="0.0" z="8.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="tableLeg" />
+            </descendants>
+        </node>
+        <node id="tableLeg">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            <translation x="0" y="-0.5" z="0" />
+                <scale sx="1.2" sy="1" sz="1.2" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="14" topRadius="0.5" bottomRadius="0.5" stacks="5" slices="20"/>
             </descendants>
         </node>
     </nodes>

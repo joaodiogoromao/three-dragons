@@ -20,8 +20,7 @@ class MyStateMoving extends MyGameState {
         });
     }
 
-    update(timeSinceProgramStarted) { 
-        console.log('moving');
+    update(timeSinceProgramStarted) {
         if (this.ended) return;
 
         const remove = [];

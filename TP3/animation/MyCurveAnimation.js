@@ -18,6 +18,9 @@ class MyCurveAnimation extends MyKeyframeAnimation {
             return transformationObj;
         }
         
+        /**
+         * @method calculateKeyframeArray create the keyframe array to animate piece movement
+         */
         const calculateKeyframeArray = function () {
             let xOffsetDelta = 0, zOffsetDelta = 0;
             let keyframes = [];
@@ -63,6 +66,13 @@ class MyCurveAnimation extends MyKeyframeAnimation {
         this.frameNum = frameNum;
     }
 
+    /**
+     * @method createPieceMovingAnimation create an instance of MyCurveAnimation
+     * @param {Object} piece the piece object to animate
+     * @param {Number} timeSinceProgramStarted
+     * @param {Number} startPos animation final position
+     * @param {Number} endPos animation final position
+     */
     static createPieceMovingAnimation(piece, timeSinceProgramStarted, startPos, endPos) {
         const animation = new MyCurveAnimation(this.scene, timeSinceProgramStarted, endPos.x-startPos.x, endPos.z-startPos.z, 10, 15);
         piece.animation = animation;

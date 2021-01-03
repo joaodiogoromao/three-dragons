@@ -88,7 +88,6 @@ class XMLscene extends CGFscene {
     }
 
     updateCameraLock() {
-        console.log("Update camera lock", this.cameraLocked);
         if (this.cameraLocked) this.lockCamera();
         else this.unlockCamera();
     }
@@ -193,7 +192,7 @@ class XMLscene extends CGFscene {
             sceneGraph = this.sceneGraphs[sceneGraphIndex];
         }
 
-        sceneGraph.initCameras();
+        //sceneGraph.initCameras();
 
         this.gl.clearColor(...sceneGraph.background);
 
@@ -211,7 +210,6 @@ class XMLscene extends CGFscene {
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
     onGraphLoaded(type, data, filesLength) {
-        console.log("ON GRAPH LOADED", type);
         if (type == MySceneGraph.types.SCENE) {
 
             //this.graph = data;
@@ -386,8 +384,7 @@ class XMLscene extends CGFscene {
 				for (var i = 0; i < this.pickResults.length; i++) {
 					var obj = this.pickResults[i][0];
 					if (obj) {
-						var customId = this.pickResults[i][1];
-						console.log("Picked object: ", obj, ", with pick id " + customId);						
+						var customId = this.pickResults[i][1];					
 					}
 				}
 				this.pickResults.splice(0, this.pickResults.length);

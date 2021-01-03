@@ -57,7 +57,6 @@ class MyBoard extends CGFobject {
     }
 
     reset() {
-        console.log("RESET BOARD");
         this.pieces.splice(0, this.pieces.length);
         this.createPieces().forEach((piece) => this.pieces.push(piece));
         this.dragonCavePositions.forEach((dragonCave) => { dragonCave.invoked = null; dragonCave.animation = null });
@@ -86,7 +85,6 @@ class MyBoard extends CGFobject {
     }
 
     setGameBoard(newGameBoard, undo = false) {
-        console.log("Updating game board with", newGameBoard);
         const res = this.updatePieces(newGameBoard, undo);
         this.gameBoard = newGameBoard;
         return res;
@@ -148,8 +146,6 @@ class MyBoard extends CGFobject {
 
         const [ added, removed ] = this.getPiecesDiff(newGameBoard);
 
-        console.log("Added, removed: ", added, removed);
-
         for (const piece of this.pieces) {
             if (piece.removed) continue;
 
@@ -208,10 +204,8 @@ class MyBoard extends CGFobject {
         this.tiles = this.createTiles();
         this.pieces = this.createPieces();
 
-        console.log("SCENE:", this.scene);
         this.appearAnimation = animMap[this.dragonAltarAppearAnimId];
         this.disappearAnimation = this.appearAnimation.reverse();
-        console.log("ANIMATIONS: ", this.appearAnimation, this.disappearAnimation);
     }
 
     copy(Obj) {
@@ -319,7 +313,6 @@ class MyBoard extends CGFobject {
             
             
             if (piece.animation && !piece.animation.finishedMovingState) {
-                //console.log("Applying piece animation");
                 if (!piece.animation.apply(this.scene) && !(piece.animation instanceof MyCurveAnimation)) {
                     this.scene.popMatrix();
                     continue;
@@ -347,7 +340,8 @@ class MyBoard extends CGFobject {
             this.dragonAltarStepsObj.display();
             if (!dragonCavePosition.evoked) {
                 if (dragonCavePosition.animation) dragonCavePosition.animation.apply(this.scene, true);
-                if (dragonCavePosition.x != 5) this.scene.scale(0.9, 0.9, 0.9);
+                if (dragonCavePosition.x == 5) this.scene.scale(1.2, 1.2, 1.2);
+                else this.scene.scale(0.9, 0.9, 0.9);
                 this.dragonAltarShardObj.display();
             } else if (dragonCavePosition.animation) {
                 dragonCavePosition.animation = null;

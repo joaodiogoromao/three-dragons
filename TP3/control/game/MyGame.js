@@ -17,11 +17,9 @@ class MyGame {
             this.prologGameState = res;
             this.stopWaitingForStateUpdate();
             this.board.gameBoard = this.prologGameState.gameBoard;
-            console.log("stopped waiting");
             this.nextMoveStrategy.apply(function() {
                 this.initComplete = true;
             }.bind(this));
-            console.log("applied");
         }.bind(this));
 
         this.initComplete = false;
@@ -37,7 +35,6 @@ class MyGame {
         if (this.stateUpToDate === true) throw new Error("Trying to make game stop waiting for state update, but wasn't waiting.");
         this.stateUpToDate = true;
         this.history.push(this.prologGameState);
-        console.log("Prolog state was updated", this.history);
         if (this.onStateUpToDate) {
             this.onStateUpToDate();
             this.unsetOnStateUpToDate();
@@ -61,7 +58,6 @@ class MyGame {
 
         currentMenu.animation = disappearAnim;
         nextMenu.animation = appearAnim;
-        console.log("Current menu, next menu: ", currentMenu, nextMenu);
 
         disappearAnim.makeStartAtTime(this.timeSinceProgramStarted);
         if (this.scene.cameraLocked) {
@@ -86,7 +82,6 @@ class MyGame {
     }
 
     updateBoard(onStateChange, undo = false) {
-        //console.log("Update board called with", onStateChange, this.prologGameState);
         const fn = function() {
             const diff = this.board.setGameBoard(this.prologGameState.gameBoard, undo);
 
@@ -99,7 +94,6 @@ class MyGame {
                     piece.nextPosition = this.board.getRemovedPiecePosition(piece.player);
                     animations.push([MyCurveAnimation.createPieceMovingAnimation(piece, this.timeSinceProgramStarted, piece.position, piece.nextPosition)]);
                 });
-                console.log("DIFF: ", diff);
                 const evokedCaves = [];
                 diff.addedPieces.forEach((piece) => {
                     const appearAnim = this.board.appearAnimation.copy();
@@ -169,7 +163,6 @@ class MyGame {
                 this.updateScore(scoreDiff);
                 const movingState = new MyStateMoving(this.scene, this, animations, function(onStateChange) {
                     piecesToUpdatePosition.forEach((piece) => {
-                        console.log(piece);
                         piece.position = piece.nextPosition;
                         piece.nextPosition = null;
                     });

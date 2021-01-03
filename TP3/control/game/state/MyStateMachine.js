@@ -3,11 +3,6 @@ class MyStateMachine extends MyGameState {
         super(scene, game);
         this.game = game;
         this.difficulty = difficulty;
-
-        // request move to perform machine play (get move as a server answer)
-        //this.game.updateBoard();
-
-        //console.log(this.game.prologGameState);
         
         this.game.makeWaitingForStateUpdate();
         this.game.connection.applyBotMove(this.game.prologGameState, difficulty, function(res) {
@@ -18,7 +13,6 @@ class MyStateMachine extends MyGameState {
     }
 
     update(timeSinceProgramStarted) {
-        console.log('machine picking');
         const endPos = this.move.final;
         const startPos = this.move.initial;
  

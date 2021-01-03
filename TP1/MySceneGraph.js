@@ -275,7 +275,7 @@ class MySceneGraph {
 
             const cameraId = this.getNodeID(child);
             if (isNull(cameraId)) continue;
-            //console.log(cameraId);
+
             if (isNotNull(this.cameras[cameraId])) {
                 this.onXMLMinorError("ID must be unique for each camera (conflict: ID = " + cameraId + "). Ignoring repeated ids.");
             }

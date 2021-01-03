@@ -233,7 +233,6 @@ function getBoardPrimitive(sceneGraph, node, parent) {
         sceneGraph.onXMLMinorError(`Leaf 'board', descendant of node with id '${parent.id}' hasn't got a mountain id.`);
         return;
     }
-    console.log(mountain);
     
     const dimensions = sceneGraph.getIntegerParameters(node, ['width', 'height'], parent);
     return new MyBoard(sceneGraph.scene, whiteTile, blackTile, whiteDice, blackDice, dimensions.width, dimensions.height, dragonAltarSteps, dragonAltarShard, dragonAltarAppearAnim, mountain);

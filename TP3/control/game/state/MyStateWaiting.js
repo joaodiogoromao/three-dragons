@@ -3,11 +3,9 @@ class MyStateWaiting extends MyGameState {
         super(scene, game);
         this.game = game;
         this.initComplete = false;
-        //console.log("PossibleMoves: ", possibleMoves);
         if (possibleMoves) {
             this.possibleMoves = possibleMoves;
             this.initComplete = true;
-            //this.game.updateBoard();
         } else if (game.stateUpToDate) {
             this.init();
         } else {
@@ -35,7 +33,6 @@ class MyStateWaiting extends MyGameState {
     pickPiece(obj) {
         const canMove = this.canMovePiece(obj);
         if (canMove.length) {
-            console.log("Picked piece");
             this.game.board.setPossibleMoves(canMove);
             this.game.setState(new MyStatePiecePicked(this.scene, this.game, obj, this.possibleMoves));
             return true;

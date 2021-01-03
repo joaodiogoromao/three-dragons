@@ -31,8 +31,6 @@
         <texture id="whiteDice6" path="./scenes/images/dice/whiteDice6.jpg" />
     </textures>
 
-    <spritesheets/>
-
     <materials>
         <material id="defaultMaterial">
             <shininess value="0" />
@@ -61,6 +59,13 @@
             <diffuse r="0.01" g="0.01" b="0.01" a="1.0" />
             <specular r="1" g="1" b="1" a="1.0" />
             <emissive r="0.5" g="0" b="0" a="1.0" />
+        </material>
+        <material id="borderMaterial">
+            <shininess value="1" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0" g="0" b="0" a="1.0" />
         </material>
     </materials>
 
@@ -253,22 +258,6 @@
 
             <descendants>
                 <noderef id="gameBoard" />
-                <noderef id="groundSurface" />
-            </descendants>
-        </node>
-        <node id="groundSurface">       
-            <material id="metalMaterial" />
-
-            <texture id="metalTexture">
-                <amplification afs="1" aft="1" />
-            </texture>
-
-            <transformations>
-                <scale sx="20" sy="1" sz="20" />
-            </transformations>
-
-            <descendants>
-                <leaf type="plane" npartsU="60" npartsV="60" />
             </descendants>
         </node>
         <node id="gameBoard">       
@@ -332,7 +321,7 @@
             </descendants>
         </node>
         <node id="gameBoardSupportStructure">
-            <material id="null" />
+            <material id="borderMaterial" />
 
             <texture id="null">
                 <amplification afs="1" aft="1" />
