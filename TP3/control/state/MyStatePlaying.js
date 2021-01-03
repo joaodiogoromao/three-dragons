@@ -6,6 +6,7 @@ class MyStatePlaying extends MyState {
         this.addUndoButton();
 
         this.sceneGraphIndex = 0;
+        this.scene.initSceneGraph(this.sceneGraphIndex);
 
         this.playTimeLeft = 30;
 
@@ -16,10 +17,10 @@ class MyStatePlaying extends MyState {
 
         this.menuController = new MyMenuController(scene, this);
 
-        this.whitesMenuNode = scene.menus["whitesMenu"];
+        this.whitesMenuNode = scene.menus.nodes["whitesMenu"];
         this.whitesMenu = this.whitesMenuNode.getLeafNode("whites").obj;
 
-        this.blacksMenuNode = scene.menus["blacksMenu"];
+        this.blacksMenuNode = scene.menus.nodes["blacksMenu"];
         this.blacksMenu = this.blacksMenuNode.getLeafNode("blacks").obj;
 
         this.menus = [this.whitesMenu, this.blacksMenu];

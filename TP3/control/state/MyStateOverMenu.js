@@ -3,13 +3,14 @@ class MyStateOverMenu extends MyState{
         super(scene, gameOrchestrator);
 
         this.scene.setMenuCamera();
+        this.scene.initSceneGraph(this.scene.menus);
 
         this.menuController = new MyMenuController(scene, this);
         
         this.winner = winner.charAt(0).toUpperCase() + winner.substring(1, winner.length);
         this.history = history;
 
-        const gameOverMenuNode = scene.menus["gameOverMenu"];
+        const gameOverMenuNode = scene.menus.nodes["gameOverMenu"];
         this.menu = gameOverMenuNode.getLeafNode("gameOver");
 
         this.menu.obj.setTitle(this.winner + " wins!");

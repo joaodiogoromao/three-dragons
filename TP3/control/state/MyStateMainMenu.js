@@ -3,10 +3,11 @@ class MyStateMainMenu extends MyState {
         super(scene, gameOrchestrator);
 
         this.scene.setMenuCamera();
+        this.scene.initSceneGraph(this.scene.menus);
 
         this.menuController = new MyMenuController(scene, this);
 
-        const mainMenuNode = scene.menus["mainMenu"];
+        const mainMenuNode = scene.menus.nodes["mainMenu"];
         this.menus = {
             main: mainMenuNode.getLeafNode("main"),
             difficulty: mainMenuNode.getLeafNode("difficulty"),

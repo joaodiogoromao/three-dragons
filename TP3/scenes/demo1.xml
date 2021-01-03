@@ -21,17 +21,38 @@
 
     <illumination>
         <ambient r="0.2" g="0.2" b="0.2" a="1.0" />           <!-- global ambient -->
-        <background r="0.7" g="0" b="0.1" a="1.0" />        <!-- background color -->
+        <background r="0" g="0" b="0" a="1.0" />        <!-- background color -->
     </illumination>
 
     
     <lights>
-        <light id="defaultLight">            
+        <light id="defaultLight1">            
             <enable value="1" />
-            <position x="0" y="50" z="0" w="1.0" />
+            <position x="0" y="-20" z="-12" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />                   
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />            
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />            
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />            
+        </light>
+        <light id="defaultLight2">            
+            <enable value="1" />
+            <position x="0" y="-20" z="12" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />                   
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />            
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />            
+        </light>
+        <light id="dragonLight">            
+            <enable value="1" />
+            <position x="0" y="4" z="0" w="0.9" />
+            <ambient r="0" g="0" b="0" a="1.0" />        
+            <diffuse r="1" g="0.05" b="0.05" a="1.0" />            
+            <specular r="1" g="0.05" b="0.05" a="1.0" />            
+        </light>
+        <light id="globalLight">            
+            <enable value="1" />
+            <position x="0" y="20" z="0" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />                   
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />            
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />            
         </light>
     </lights>
 

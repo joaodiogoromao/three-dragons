@@ -43,13 +43,13 @@ class MyInterface extends CGFinterface {
     /**
      * Created the light's interface
      */
-    createLightsInterface(){
-        var lights_folder = this.gui.addFolder("Lights");
-        const lights = this.scene.graph.lights;
-        for (let id in lights){
+    createLightsInterface(lights){
+        if (this.lights_folder) this.gui.removeFolder(this.lights_folder);
+        this.lights_folder = this.gui.addFolder("Lights");
+        for (const id in lights){
             this.scene[id] = lights[id][0];
 
-            lights_folder.add(this.scene, id).name(id).onChange(this.scene.updateLights.bind(this.scene));
+            this.lights_folder.add(this.scene, id).name(id).onChange(function() { this.updateLights.bind(this)(lights) }.bind(this.scene));
         }
     }
 

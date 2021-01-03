@@ -3,12 +3,12 @@ class MyGameOrchestrator {
         this.state = new MyStateMainMenu(scene, this);
         this.scene = scene;
         this.scene.lockCamera();
-        this.scene.initSceneGraph(0);
     }
 
     setState(state) {
         if (!(state instanceof MyState)) throw new Error("The state of the game orchestrator may only be an extension of MyState.");
         this.state = state;
+        this.state.updatedLights = false;
     }
 
     setPlayingStrategy(strategy) {
@@ -31,6 +31,14 @@ class MyGameOrchestrator {
     }
 
     display() {
+        if (!this.state.updatedLights) {
+            if (this.state instanceof MyStatePlaying || this.state instanceof MyStateMovie) {
+                this.scene.updateLights(this.scene.sceneGraphs[this.state.sceneGraphIndex].lights);
+            } else {
+                this.scene.updateLights(this.scene.menus.lights);
+            }
+            this.state.updatedLights = true;
+        }
         this.state.display();
     }
 

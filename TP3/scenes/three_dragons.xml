@@ -3,29 +3,6 @@
         <reference length="10" />
         <root id="ground" />
     </initials>
-    <views default="defaultCamera">
-        <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="0" y="30" z="9" /> 
-            <to x="0" y="0" z="0" />
-        </perspective>
-    </views> 
-
-    <illumination>
-        <ambient r="0.6" g="0.6" b="0.6" a="1.0" />          
-        <background r="0" g="0" b="0" a="1.0" />    
-    </illumination>
-
-
-    <lights>
-        <light id="defaultLight">            
-            <enable value="1" />
-            <position x="0" y="50" z="0" w="1.0" />
-            <ambient r="0" g="0" b="0" a="1.0" />                   
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />            
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            
-        </light>
-    </lights>
-
 
     <textures>
         <texture id="gameBoard" path="./scenes/images/board.jpg" />
@@ -78,6 +55,13 @@
             <specular r="1" g="1" b="1" a="1.0" />
             <emissive r="0" g="0" b="0" a="1.0" />
         </material>
+        <material id="rubyMaterial">
+            <shininess value="1" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.01" g="0.01" b="0.01" a="1.0" />
+            <specular r="1" g="1" b="1" a="1.0" />
+            <emissive r="0.5" g="0" b="0" a="1.0" />
+        </material>
     </materials>
 
     <animations>
@@ -96,7 +80,7 @@
 
     <nodes>
         <node id="dragonAltarSteps">            
-            <material id="defaultMaterial" />
+            <material id="metalMaterial" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -115,7 +99,7 @@
         <node id="bottomStep">            
             <material id="null" />
 
-            <texture id="null">
+            <texture id="whitishTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -129,7 +113,7 @@
         <node id="topStep">            
             <material id="null" />
 
-            <texture id="null">
+            <texture id="whitishTexture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -143,7 +127,7 @@
         </node>
 
         <node id="dragonAltarShard">            
-            <material id="defaultMaterial" />
+            <material id="rubyMaterial" />
 
             <texture id="shardTexture">
                 <amplification afs="1.0" aft="1.0" />

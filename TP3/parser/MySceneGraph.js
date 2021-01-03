@@ -82,13 +82,7 @@ class MySceneGraph {
         
         // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
 
-        if (this.type == MySceneGraph.types.SCENE) {
-            this.scene.onGraphLoaded(this.type, this, this.filesLength);
-        } else if (this.type == MySceneGraph.types.MODULE) {
-            this.scene.onGraphLoaded(this.type, this.nodes, this.filesLength);
-        } else if (this.type == MySceneGraph.types.GAME) {
-            this.scene.onGraphLoaded(this.type, this, this.filesLength);
-        }
+        this.scene.onGraphLoaded(this.type, this, this.filesLength);
 
         this.loadedOk = true;
     }
@@ -104,7 +98,7 @@ class MySceneGraph {
 
         let index, error;
         if ((index = nodeNames.indexOf("views")) == -1)
-            return "tag <views> missing";
+            this.onXMLMinorError("tag <views> missing");
         else {
             if (index != VIEWS_INDEX)
                 this.onXMLMinorError("tag <views> out of order");
@@ -171,11 +165,11 @@ class MySceneGraph {
         }
 
         // graph only needs views, illumination and lights if it's a scene
-        if (this.type == MySceneGraph.types.SCENE) {
+        //if (this.type == MySceneGraph.types.SCENE) {
 
             // <illumination>
             if ((index = nodeNames.indexOf("illumination")) == -1)
-                return "tag <illumination> missing";
+                this.onXMLMinorError("Tag <illumination> missing");
             else {
                 if (index != ILLUMINATION_INDEX)
                     this.onXMLMinorError("tag <illumination> out of order");
@@ -187,7 +181,7 @@ class MySceneGraph {
 
             // <lights>
             if ((index = nodeNames.indexOf("lights")) == -1)
-                return "tag <lights> missing";
+                this.onXMLMinorError("Tag <lights> missing");
             else {
                 if (index != LIGHTS_INDEX)
                     this.onXMLMinorError("tag <lights> out of order");
@@ -196,7 +190,7 @@ class MySceneGraph {
                 if ((error = this.parseLights(nodes[index])) != null)
                     return error;
             }
-        }
+        //}
 
         // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)

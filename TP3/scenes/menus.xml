@@ -2,6 +2,21 @@
     <initials>
     </initials>
 
+    <illumination>
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />          
+        <background r="0" g="0" b="0" a="1.0" />    
+    </illumination>
+
+    <lights>
+        <light id="defaultLight1">
+            <enable value="1" />
+            <position x="-30" y="60" z="-60" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />                   
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />            
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />            
+        </light>
+    </lights>
+
     <textures>
         <texture id="metalTexture" path="./scenes/images/metalTexture.jpeg" />
         <texture id="blackTexture" path="./scenes/images/blackTexture.jpg" />

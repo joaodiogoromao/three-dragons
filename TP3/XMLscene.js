@@ -68,7 +68,7 @@ class XMLscene extends CGFscene {
      */
     initCameras() {
         this.menuCamera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 140, 0.01), vec3.fromValues(0, 0, 0));
-        this.gameCamera = new CGFcamera(Math.PI/4, 0.1, 500, vec3.fromValues(0, 30, 9), vec3.fromValues(0, 0, 0));
+        this.gameCamera = new CGFcamera(Math.PI/4, 0.1, 500, vec3.fromValues(0, 20, 12), vec3.fromValues(0, 0, 0));
         
         this.camera = this.defaultCamera;
     }
@@ -117,7 +117,7 @@ class XMLscene extends CGFscene {
                 this.lights[i].setDiffuse(...graphLight[3]);
                 this.lights[i].setSpecular(...graphLight[4]);
 
-                this.lights[i].setVisible(true);
+                this.lights[i].setVisible(false);
                 if (graphLight[0])
                     this.lights[i].enable();
                 else
@@ -130,21 +130,37 @@ class XMLscene extends CGFscene {
         }
     }
 
-    resetSceneGraph() {
-        this.sceneInited = false;
-        this.setUpdatePeriod(0);
+    setLights(lights) {
+        this.resetLights();
+        this.initLights(lights);
+        this.interface.createLightsInterface(sceneGraph.lights);
+    }
 
+    resetLights() {
         for (const light of this.lights) {
             light.disable();
             light.setVisible(false);
         }
+    }
+
+    resetSceneGraph() {
+        this.sceneInited = false;
+        this.setUpdatePeriod(0);
+
+        this.resetLights();
+        
         this.setCamera(this.gameCamera);
 
         this.cameras.splice(0, this.lights.length);
     }
 
     initSceneGraph(sceneGraphIndex) {
-        const sceneGraph = this.sceneGraphs[sceneGraphIndex];
+        let sceneGraph;
+        if (sceneGraphIndex instanceof MySceneGraph) {
+            sceneGraph = sceneGraphIndex;
+        } else {
+            sceneGraph = this.sceneGraphs[sceneGraphIndex];
+        }
 
         sceneGraph.initCameras();
 
@@ -153,6 +169,8 @@ class XMLscene extends CGFscene {
         this.setGlobalAmbientLight(...sceneGraph.ambient);
 
         this.initLights(sceneGraph.lights);
+
+        this.interface.createLightsInterface(sceneGraph.lights);
 
         this.sceneInited = true;
         this.setUpdatePeriod(30);
@@ -177,16 +195,13 @@ class XMLscene extends CGFscene {
 
         } else if (type == MySceneGraph.types.GAME) {
             this.game = data;
-
             this.axis = new CGFaxis(this, this.game.referenceLength);
-
-            this.interface.createInterface();
         }
 
         this.filesReceived = this.filesReceived ? this.filesReceived + 1 : 1;
         if (this.filesReceived == filesLength) {
-            console.log("Orchestrator");
             if (this.menus && this.game && this.sceneGraphs.length) {
+                this.interface.createInterface();
                 this.gameOrchestrator = new MyGameOrchestrator(this);
             } else {
                 throw new Error("Received last graph but not all required types (game, menus and scene) received.");
@@ -237,9 +252,10 @@ class XMLscene extends CGFscene {
     /**
      * Updates the scene's lights
      */
-    updateLights(){
+    updateLights(lights){
         var i = 0;
-        for (let id in this.graph.lights) {
+        for (let id in lights) {
+            this.lights[i].setVisible(false);
             if (this[id])
                 this.lights[i].enable();
             else
