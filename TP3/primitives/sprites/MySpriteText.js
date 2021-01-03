@@ -13,7 +13,8 @@ class MySpriteText {
         this.charHeight = 1;
 
         this.geometry = new MyRectangle(scene, 0, 0, this.charWidth, this.charHeight);
-        this.spriteSheet = new MySpriteSheet(scene, './scenes/images/oolite-font.png', 16, 16);
+
+        this.spriteSheet = new MySpriteSheet(scene, './scenes/images/oolite-font-black.png', 16, 16);
     }
 
     /**

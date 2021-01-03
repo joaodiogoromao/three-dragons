@@ -257,11 +257,18 @@ function getButtonPrimitive(sceneGraph, node, parent) {
         return;
     }
 
+    const textureId = sceneGraph.reader.getString(node, 'texture');
+    let texture;
+    if (!isNull(text)) {
+        texture = sceneGraph.textures[textureId];
+        console.log("TEXTURES", sceneGraph.textures, textureId, texture);
+    }
+
     const name = sceneGraph.reader.getString(node, 'name');
 
     const iParams = sceneGraph.getIntegerParameters(node, ['rowStart', 'rowEnd', 'colStart', 'colEnd'], parent);
     if (isNotNull(iParams))
-        return new MyButton(sceneGraph.scene, action, { row: { start: iParams.rowStart, end: iParams.rowEnd }, col: { start: iParams.colStart, end: iParams.colEnd } }, text, false, name);
+        return new MyButton(sceneGraph.scene, action, { row: { start: iParams.rowStart, end: iParams.rowEnd }, col: { start: iParams.colStart, end: iParams.colEnd } }, text, false, name, texture);
     return null;
 }
 

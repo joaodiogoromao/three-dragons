@@ -213,9 +213,15 @@ class XMLscene extends CGFscene {
 
             //this.interface.createInterface();
 
-        } else if (type == MySceneGraph.types.MODULE) {
+        } else if (type == MySceneGraph.types.MENUS) {
 
             this.menus = data;
+            if (this.menus.animations["inGameMenuAppear"]) {
+                this.menus.appearAnimation = this.menus.animations["inGameMenuAppear"];
+                this.menus.disappearAnimation = this.menus.appearAnimation.reverse();
+            } else {
+                throw new Error("No inGameMenuAppear animation in menus.");
+            }
 
         } else if (type == MySceneGraph.types.GAME) {
             this.game = data;

@@ -51,6 +51,14 @@
     </materials>
 
     <animations>
+        <animation id="inGameMenuAppear">  <!-- the dragon altar disappear is the reverse of the appear -->
+            <keyframe instant="0">
+                <translation x="0" y="10" z="0" />
+            </keyframe>
+            <keyframe instant="1">
+                <translation x="0" y="0" z="0" />
+            </keyframe>
+        </animation>
     </animations>
 
     <nodes>
@@ -66,20 +74,20 @@
 
             <descendants>
                 <leaf type="menu" name="main" title="Three Dragons" aspectRatio="1.778" gridGap="3" rows="1" cols="3" horizontalPadding="5" verticalPadding="5">
-                    <button action="hvh" name="" text="H vs H" rowStart="1" rowEnd="2" colStart="1" colEnd="2" />
-                    <button action="hvm" name="" text="H vs M" rowStart="1" rowEnd="2" colStart="2" colEnd="3" />
-                    <button action="mvm" name="" text="M vs M" rowStart="1" rowEnd="2" colStart="3" colEnd="4" />
+                    <button action="hvh" name="" text="H vs H" rowStart="1" rowEnd="2" colStart="1" colEnd="2" texture="blackTexture" />
+                    <button action="hvm" name="" text="H vs M" rowStart="1" rowEnd="2" colStart="2" colEnd="3" texture="blackTexture" />
+                    <button action="mvm" name="" text="M vs M" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" />
                 </leaf>
                 <leaf type="menu" name="difficulty" title="Select Difficulty" aspectRatio="1.778" gridGap="3" rows="3" cols="6" horizontalPadding="5" verticalPadding="5">
-                    <button action="easy" name="" text="Easy" rowStart="1" rowEnd="3" colStart="1" colEnd="3" />
-                    <button action="medium" name="" text="Medium" rowStart="1" rowEnd="3" colStart="3" colEnd="5" />
-                    <button action="hard" name="" text="Hard" rowStart="1" rowEnd="3" colStart="5" colEnd="7" />
-                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" />
+                    <button action="easy" name="" text="Easy" rowStart="1" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" />
+                    <button action="medium" name="" text="Medium" rowStart="1" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" />
+                    <button action="hard" name="" text="Hard" rowStart="1" rowEnd="3" colStart="5" colEnd="7" texture="blackTexture" />
+                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" texture="blackTexture" />
                 </leaf>
                 <leaf type="menu" name="choosePlayer" title="Choose Player" aspectRatio="1.778" gridGap="3" rows="3" cols="6" horizontalPadding="5" verticalPadding="5">
-                    <button action="white" name="" text="White" rowStart="1" rowEnd="3" colStart="1" colEnd="4" />
-                    <button action="black" name="" text="Black" rowStart="1" rowEnd="3" colStart="4" colEnd="7" />
-                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" />
+                    <button action="white" name="" text="White" rowStart="1" rowEnd="3" colStart="1" colEnd="4" texture="blackTexture" />
+                    <button action="black" name="" text="Black" rowStart="1" rowEnd="3" colStart="4" colEnd="7" texture="blackTexture" />
+                    <button action="back" name="" text="&lt; Back" rowStart="3" rowEnd="4" colStart="1" colEnd="4" texture="blackTexture" />
                 </leaf>
             </descendants>
         </node>
@@ -95,8 +103,8 @@
 
             <descendants>
                 <leaf type="menu" name="gameOver" title="Game Over" aspectRatio="1.778" gridGap="3" rows="3" cols="4" horizontalPadding="5" verticalPadding="5">
-                    <button action="back" name="" text="Go to Main Menu" rowStart="1" rowEnd="2" colStart="2" colEnd="4" />
-                    <button action="movie" name="" text="See Game Movie" rowStart="2" rowEnd="3" colStart="2" colEnd="4" />
+                    <button action="back" name="" text="Go to Main Menu" rowStart="1" rowEnd="2" colStart="2" colEnd="4" texture="blackTexture" />
+                    <button action="movie" name="" text="See Game Movie" rowStart="2" rowEnd="3" colStart="2" colEnd="4" texture="blackTexture" />
                 </leaf>
             </descendants>
         </node>
@@ -119,19 +127,19 @@
 
             <descendants>
                 <leaf type="menu" name="blacks" title="Blacks" aspectRatio="1.778" gridGap="3" rows="3" cols="7" horizontalPadding="5" verticalPadding="5">
-                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" />
-                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" />
-                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" />
-                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" />
-                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" />
+                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" texture="blackTexture" />
+                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" />
+                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" texture="blackTexture" />
+                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" texture="blackTexture" />
+                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" texture="blackTexture" />
 
-                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" />
-                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" />
+                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" />
+                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" />
 
-                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" />
-                    <button action="theme1" name="" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" />
-                    <button action="theme2" name="" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" />
-                    <button action="theme3" name="" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" />
+                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" texture="blackTexture" />
+                    <button action="theme1" name="" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" texture="blackTexture" />
+                    <button action="theme2" name="" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" texture="blackTexture" />
+                    <button action="theme3" name="" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" texture="blackTexture" />
                 </leaf>
             </descendants>
         </node>
@@ -152,19 +160,19 @@
 
             <descendants>
                 <leaf type="menu" name="whites" title="Whites" aspectRatio="1.778" gridGap="3" rows="3" cols="7" horizontalPadding="5" verticalPadding="5">
-                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" />
-                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" />
-                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" />
-                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" />
-                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" />
+                    <button action="nothing" name="" text="Whites" rowStart="1" rowEnd="2" colStart="1" colEnd="3" texture="blackTexture" />
+                    <button action="nothing" name="whitesScore" text="0" rowStart="1" rowEnd="2" colStart="3" colEnd="4" texture="blackTexture" />
+                    <button action="nothing" name="" text=":" rowStart="1" rowEnd="2" colStart="4" colEnd="5" texture="blackTexture" />
+                    <button action="nothing" name="blacksScore" text="0" rowStart="1" rowEnd="2" colStart="5" colEnd="6" texture="blackTexture" />
+                    <button action="nothing" name="" text="Blacks" rowStart="1" rowEnd="2" colStart="6" colEnd="8" texture="blackTexture" />
 
-                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" />
-                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" />
+                    <button action="nothing" name="" text="Time:" rowStart="2" rowEnd="3" colStart="1" colEnd="3" texture="blackTexture" />
+                    <button action="nothing" name="playTimeLeft" text="30s" rowStart="2" rowEnd="3" colStart="3" colEnd="5" texture="blackTexture" />
 
-                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" />
-                    <button action="theme1" name="" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" />
-                    <button action="theme2" name="" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" />
-                    <button action="theme3" name="" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" />
+                    <button action="nothing" name="" text="Themes:" rowStart="3" rowEnd="4" colStart="1" colEnd="3" texture="blackTexture" />
+                    <button action="theme1" name="" text="1" rowStart="3" rowEnd="4" colStart="3" colEnd="4" texture="blackTexture" />
+                    <button action="theme2" name="" text="2" rowStart="3" rowEnd="4" colStart="4" colEnd="5" texture="blackTexture" />
+                    <button action="theme3" name="" text="3" rowStart="3" rowEnd="4" colStart="5" colEnd="6" texture="blackTexture" />
                 </leaf>
             </descendants>
         </node>

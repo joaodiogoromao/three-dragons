@@ -1,12 +1,13 @@
 
 
 class MyGame {
-    constructor(scene, strategy, updateScore, history, movie) {
+    constructor(scene, strategy, updateScore, history, movie, getCurrentNextMenu) {
         this.board = scene.game.board;
         this.scene = scene;
         this.updateScore = updateScore;
         this.movie = movie;
         this.history = history;
+        this.getCurrentNextMenu = getCurrentNextMenu;
 
         this.nextMoveStrategy = strategy;
         this.nextMoveStrategy.setGame(this);
@@ -54,14 +55,33 @@ class MyGame {
     }
 
     nextPlayer() {
+        const appearAnim = this.scene.menus.appearAnimation.copy();
+        const disappearAnim = this.scene.menus.disappearAnimation.copy();
+        const [currentMenu, nextMenu] = this.getCurrentNextMenu();
+
+        currentMenu.animation = disappearAnim;
+        nextMenu.animation = appearAnim;
+        console.log("Current menu, next menu: ", currentMenu, nextMenu);
+
+        disappearAnim.makeStartAtTime(this.timeSinceProgramStarted);
         if (this.scene.cameraLocked) {
-            const cameraAnimation = new MyCameraAnimation(this.scene, this.timeSinceProgramStarted, 1);
-            this.setState(new MyStateMoving(this.scene, this.game, [[cameraAnimation]], function() {
+            const cameraAnimationDuration = 1;
+
+            const cameraAnimation = new MyCameraAnimation(this.scene, this.timeSinceProgramStarted + disappearAnim.getDuration(), cameraAnimationDuration);
+            appearAnim.makeStartAtTime(this.timeSinceProgramStarted + disappearAnim.getDuration() + cameraAnimationDuration);
+
+            this.setState(new MyStateMoving(this.scene, this.game, [[disappearAnim, cameraAnimation, appearAnim]], function() {
                 this.nextMoveStrategy.apply();
             }.bind(this)));
         } else {
+            appearAnim.makeStartAtTime(this.timeSinceProgramStarted + disappearAnim.getDuration());
+
+
+            this.setState(new MyStateMoving(this.scene, this.game, [[disappearAnim, appearAnim]], function() {
+                this.nextMoveStrategy.apply();
+            }.bind(this)));
+
             this.scene.playerChangesSinceCameraUnlocked++;
-            this.nextMoveStrategy.apply();
         }
     }
 

@@ -19,7 +19,7 @@ const isNull = (v) => v === null;
  */
 class MySceneGraph {
     static types = {
-        MODULE: 0,
+        MENUS: 0,
         SCENE: 1,
         GAME: 2
     };

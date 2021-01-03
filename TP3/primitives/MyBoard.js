@@ -347,7 +347,8 @@ class MyBoard extends CGFobject {
             this.dragonAltarStepsObj.display();
             if (!dragonCavePosition.invoked) {
                 if (dragonCavePosition.animation) dragonCavePosition.animation.apply(this.scene);
-                if (dragonCavePosition.x == 5) this.scene.scale(1.5, 1.5, 1.5);
+                if (dragonCavePosition.x == 5) this.scene.scale(1.1, 1.1, 1.1);
+                else this.scene.scale(0.9, 0.9, 0.9);
                 this.dragonAltarShardObj.display();
             }
 
