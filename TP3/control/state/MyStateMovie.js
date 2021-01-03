@@ -1,3 +1,8 @@
+/**
+ * @class MyStateMovie
+ * State of the program where game movie is being visualized
+ * @param {MyHistory} history history of the played game
+ */
 class MyStateMovie extends MyState {
     constructor(scene, gameOrchestrator, history) {
         super(scene, gameOrchestrator);
@@ -36,6 +41,10 @@ class MyStateMovie extends MyState {
         return [ this.activeMenu.menu, this.menus.find(menu => menu.player != this.activeMenu.player).menu ];
     }
 
+    /**
+     * @method display
+     * Displays the game movie
+     */
     display() {
         // Display scene
         this.scene.sceneGraphs[this.sceneGraphIndex].displayScene();
@@ -67,6 +76,10 @@ class MyStateMovie extends MyState {
         }
     }
 
+    /**
+     * @method getCurrentPlayer
+     * Gets player that is performing a move in the movie in order to visualize its score board
+     */
     getCurrentPlayer() {
         if (this.game.state instanceof MyStateWaiting || (this.game.state instanceof MyStateMachine && !this.game.stateUpToDate)) {
             return this.game.prologGameState.player;
@@ -74,6 +87,10 @@ class MyStateMovie extends MyState {
         return this.activeMenu.player;
     }
 
+    /**
+     * @method update
+     * Updates game movie redirecting to moving state or state over menu once it has finished
+     */
     update(timeSinceProgramStarted) {
         if (!this.game.initComplete) return;
 
@@ -89,6 +106,10 @@ class MyStateMovie extends MyState {
         }
     }
 
+    /**
+     * @method setButtonInAllMenus
+     * Sets button in both player menus
+     */
     setButtonInAllMenus(buttonName, value) {
         this.menus.forEach((menu) => menu.menu.setButtonValue(buttonName, String(value)));
     }
@@ -97,6 +118,10 @@ class MyStateMovie extends MyState {
         this.sceneGraphIndex = sceneGraphIndex;
     }
 
+    /**
+     * @method updateScore
+     * Updates players score boards
+     */
     updateScore(scoreDiff) {
         if (scoreDiff.whites > 0) {
             this.score.whites += scoreDiff.whites;
@@ -108,6 +133,10 @@ class MyStateMovie extends MyState {
         }
     }
 
+    /**
+     * @method setActivePlayerMenu
+     * Activates the score board the current player
+     */
     setActivePlayerMenu(player) {
         if (this.timeLeftInterval) throw new Error("Trying to set new interval when an interval was already set.");
         this.activeMenu = {...this.menus.find(menu => menu.player == player)};

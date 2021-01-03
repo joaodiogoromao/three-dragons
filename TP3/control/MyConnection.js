@@ -1,13 +1,27 @@
+/**
+ * @class MyConnection
+ * This manages all comunication with the prolog server
+ */
 class MyConnection {
+    /**
+     * @param {String} server server address
+     */
     constructor(server) {
         this.server = server;
 
+        // Certifies that the server is on
         this.sendRequest("handshake", function(res) {
             if (res == "handshake") return;
             throw new Error("Couldn't connect to server " + this.server);
         }, false);
     }
 
+    /**
+     * 
+     * @param {String} params the url params
+     * @param {Function} action function to be executed when the response is received
+     * @param {Boolean} json Whether to parse the answer as json or not
+     */
     sendRequest(params, action, json = true) {
         const reqHeaders = new Headers();
         reqHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -25,6 +39,10 @@ class MyConnection {
             });
     }
 
+    /**
+     * Converts a game board to a string that can be passed as url argument
+     * @param {Array[Array[]]} gameBoard the game board
+     */
     gameBoardToUrlFormat(gameBoard) {
         let res = "[";
 
@@ -47,16 +65,28 @@ class MyConnection {
         return res;
     }
 
+    /**
+     * Converts a predicate to a string that can be passed as url argument
+     * @param {Array[]} el predicate
+     */
     predicateCompoundToUrlFormat(el) {
         const temp = [...el];
         const predicate = temp.splice(0, 1);
         return `${predicate}(${temp.join(",")})`;
     }
 
+    /**
+     * Converts the game state to a string that can be passed as url argument
+     * @param {AObject} gameState game state
+     */
     gameStateToUrlFomat(gameState) {
         return `[${gameState.player},[${gameState.npieces[0]},${gameState.npieces[1]}],${this.gameBoardToUrlFormat(gameState.gameBoard)}]`;
     }
 
+    /**
+     * Converts a move to a string that can be passed as url argument
+     * @param {Object} move
+     */
     moveToUrlFormat(move) {
         return `[${move.initial.x},${move.initial.z},${move.final.x},${move.final.z},${this.predicateCompoundToUrlFormat(move.piece)}]`;
     }

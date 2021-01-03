@@ -1,3 +1,11 @@
+/**
+ * @class MyStateWaiting
+ * State of the game that wait for piece selection redirecting to MyStatePiecePicked when so
+ * Responsible getting the player piece selection
+ * @param {MyScene} scene
+ * @param {MyGame} game
+ * @param {Array} possibleMoves Array of possible moves associated to the picked piece
+ */
 class MyStateWaiting extends MyGameState {
     constructor(scene, game, possibleMoves) {
         super(scene, game);
@@ -13,6 +21,10 @@ class MyStateWaiting extends MyGameState {
         }
     }
 
+    /**
+     * @method canMovePiece
+     * Verifies if object given as parameter can be moved
+     */
     canMovePiece(obj) {
         const position = obj.position;
         const canMove = this.possibleMoves.filter(function(move) {
@@ -22,14 +34,22 @@ class MyStateWaiting extends MyGameState {
         return canMove;
     }
 
+    /**
+     * @method init
+     * Gets all the possible moves associated with current state of the game
+     */
     init() {
-        //this.game.updateBoard();
         this.game.connection.getPossibleMoves(this.game.prologGameState, function(res) {
             this.initComplete = true;
             this.possibleMoves = res.moves;
         }.bind(this));
     }
 
+    /**
+     * @method pickPiece
+     * Sets picked piece posiible moves to game
+     * Advances to new state if piece can be moved
+     */
     pickPiece(obj) {
         const canMove = this.canMovePiece(obj);
         if (canMove.length) {
@@ -40,8 +60,12 @@ class MyStateWaiting extends MyGameState {
         return false;
     }
 
+    /**
+     * @method update Interprets player picking
+     * Waits for piece selection
+     * Once the move is obtained sends server requests to perform move
+     */
     update() {
-        // TODO make functions in scene to deal with pickResults in a better way
         if (!this.initComplete) {
             this.scene.discardPickResults();
             return;

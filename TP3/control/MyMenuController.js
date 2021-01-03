@@ -1,3 +1,7 @@
+/**
+ * @class MyMenuController
+ * Controls the menus actions
+ */
 class MyMenuController {
 
     constructor(scene, state) {
@@ -24,6 +28,56 @@ class MyMenuController {
 
         this.themeButtonsIds = [9, 10, 11];
     }
+
+    /**
+     * Selects a button in the menu
+     * @param {String} nodeName 
+     * @param {String} leafNodeName 
+     * @param {MyButton} selectedButton 
+     */
+
+    select(nodeName, leafNodeName, selectedButton) {
+        const menuNode = this.scene.menus.nodes[nodeName];
+        const menu = menuNode.getLeafNode(leafNodeName).obj;
+
+        for (let button of menu.buttons) {
+            if (selectedButton.name === button.name) button.select();
+            else button.unselect();
+        }
+    }
+    /**
+     * Checks the pick results and executes the picked action
+     * @param {Boolean} deleteAll whether to delete all pick results
+     */
+    update(deleteAll = true) {
+        if (this.scene.pickMode == false) {
+            if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+                const deleteResults = [];
+                for (let i = 0; i < this.scene.pickResults.length; i++) {
+                    const obj = this.scene.pickResults[i][0];
+                    const id = this.scene.pickResults[i][1];
+
+                    if (this.themeButtonsIds.includes(id)) {
+                        this.select("whitesMenu", "whites", obj);
+                        this.select("blacksMenu", "blacks", obj);
+                    }
+                    if (id && obj.action && this.actionGenerator[obj.action]) {
+                        this.actionGenerator[obj.action](this.state);
+                        deleteResults.push(id);
+                    }
+                }
+                if (deleteAll) this.scene.discardPickResults();
+                else {
+                    deleteResults.forEach((res) => this.scene.pickResults.splice(res, 1));
+                }
+            }
+        }
+    }
+
+
+    /**
+     * THE FOLLOWING ARE ACTION FUNCTIONS; THAT EXECUTE A GIVEN MENU ACTION
+     */
 
     doNothing(){}
 
@@ -86,41 +140,6 @@ class MyMenuController {
     
     goBack() {
         if (typeof this.state.goBack == 'function') this.state.goBack();
-    }
-
-    select(nodeName, leafNodeName, selectedButton) {
-        const menuNode = this.scene.menus.nodes[nodeName];
-        const menu = menuNode.getLeafNode(leafNodeName).obj;
-
-        for (let button of menu.buttons) {
-            if (selectedButton.name === button.name) button.select();
-            else button.unselect();
-        }
-    }
-
-    update(deleteAll = true) {
-        if (this.scene.pickMode == false) {
-            if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-                const deleteResults = [];
-                for (let i = 0; i < this.scene.pickResults.length; i++) {
-                    const obj = this.scene.pickResults[i][0];
-                    const id = this.scene.pickResults[i][1];
-
-                    if (this.themeButtonsIds.includes(id)) {
-                        this.select("whitesMenu", "whites", obj);
-                        this.select("blacksMenu", "blacks", obj);
-                    }
-                    if (id && obj.action && this.actionGenerator[obj.action]) {
-                        this.actionGenerator[obj.action](this.state);
-                        deleteResults.push(id);
-                    }
-                }
-                if (deleteAll) this.scene.discardPickResults();
-                else {
-                    deleteResults.forEach((res) => this.scene.pickResults.splice(res, 1));
-                }
-            }
-        }
     }
 }
 

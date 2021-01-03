@@ -1,3 +1,10 @@
+/**
+ * @class MyStateMachine
+ * State of the game that corresponds to a machine play
+ * @param {MyScene} scene
+ * @param {MyGame} game
+ * @param {String} difficulty Difficulty of the machine that is playing
+ */
 class MyStateMachine extends MyGameState {
     constructor(scene, game, difficulty) {
         super(scene, game);
@@ -12,6 +19,10 @@ class MyStateMachine extends MyGameState {
         }.bind(this));
     }
 
+    /**
+     * @method update updates the machine game state by getting the selected piece and setting the game to a moving state
+     * @param timeSinceProgramStarted
+     */
     update(timeSinceProgramStarted) {
         const endPos = this.move.final;
         const startPos = this.move.initial;
@@ -22,6 +33,10 @@ class MyStateMachine extends MyGameState {
         this.game.setState(pieceMovement);
     }
 
+    /**
+     * @method getPickedPiece gets the selected piece of the machine strategy given its position
+     * @param {Object} position
+     */
     getPickedPiece(position) {
         return this.game.board.pieces.find(piece => piece.position != null && piece.position.x == position.x && piece.position.z == position.z);  // TODO change null to the used way to put removed pieces
     }

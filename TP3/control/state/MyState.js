@@ -1,4 +1,8 @@
-
+/**
+ * @class MyState
+ * Represents state of the program
+ * Managed by game orchestrator
+ */
 class MyState {
     constructor(scene, gameOrchestrator) {
 		if (this.constructor == MyState) {

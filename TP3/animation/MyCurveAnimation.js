@@ -25,7 +25,6 @@ class MyCurveAnimation extends MyKeyframeAnimation {
             let xOffsetDelta = 0, zOffsetDelta = 0;
             let keyframes = [];
 
-            let height = 4;
             let radius = Math.sqrt(xOffset * xOffset + zOffset * zOffset) / 2;
             let duration = (Math.PI * radius) / speed;
 
@@ -47,7 +46,7 @@ class MyCurveAnimation extends MyKeyframeAnimation {
                 let currentDistance = Math.sqrt(translation.x * translation.x + translation.z * translation.z);
 
                 let distanceFromCenter = radius - currentDistance;
-                translation.y = Math.min(Math.sqrt(radius * radius - distanceFromCenter * distanceFromCenter) * 2, 5);
+                translation.y = Math.min(Math.sqrt(radius * radius - distanceFromCenter * distanceFromCenter) * 1.5, 5000);
 
                 time = i * timeOffset + initialTime;
                 keyframes.push(new Keyframe(time, initTransformationObj(translation)));

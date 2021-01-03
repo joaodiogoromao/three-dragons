@@ -1,6 +1,10 @@
+/**
+ * @class MyStatePlaying
+ * State of the program where game is being played
+ * Allows player menu manipulation, undo move
+ */
 class MyStatePlaying extends MyState {
     constructor(scene, gameOrchestrator) {
-        console.log("playing");
         super(scene, gameOrchestrator);
         this.game = new MyGame(scene, gameOrchestrator.strategy, this.updateScore.bind(this), new MyHistory(), false, this.getCurrentNextMenu.bind(this));
 
@@ -34,6 +38,10 @@ class MyStatePlaying extends MyState {
         return [ this.activeMenu.menu, this.menus.find(menu => menu.player != this.activeMenu.player).menu ];
     }
 
+    /**
+     * @method display
+     * Displays the game
+     */
     display() {
         // Display scene
         this.scene.sceneGraphs[this.sceneGraphIndex].displayScene();
@@ -69,6 +77,10 @@ class MyStatePlaying extends MyState {
         }
     }
 
+    /**
+     * @method getCurrentPlayer
+     * Gets player that is performing a move in the movie in order to visualize its score board
+     */
     getCurrentPlayer() {
         if (this.game.state instanceof MyStateWaiting || (this.game.state instanceof MyStateMachine && !this.game.stateUpToDate)) {
             return this.game.prologGameState.player;
@@ -76,11 +88,19 @@ class MyStatePlaying extends MyState {
         return this.activeMenu.player;
     }
 
+    /**
+     * @method resetMenuTimers
+     * Reset playing time of each player
+     */
     resetMenuTimers() {
         this.whitesMenu.setButtonValue("playTimeLeft", "30s");
         this.blacksMenu.setButtonValue("playTimeLeft", "30s");
     }
 
+    /**
+     * @method update
+     * Updates game movie redirecting to moving state or state over menu once it has finished
+     */
     update(timeSinceProgramStarted) {
         if (!this.game.initComplete) return;
 
@@ -106,6 +126,10 @@ class MyStatePlaying extends MyState {
         }
     }
 
+    /**
+     * @method setButtonInAllMenus
+     * Sets button in both player menus
+     */
     setButtonInAllMenus(buttonName, value) {
         this.menus.forEach((menu) => menu.menu.setButtonValue(buttonName, String(value)));
     }
@@ -114,6 +138,10 @@ class MyStatePlaying extends MyState {
         this.sceneGraphIndex = sceneGraphIndex;
     }
 
+    /**
+     * @method updateScore
+     * Updates players score boards
+     */
     updateScore(scoreDiff) {
         if (scoreDiff.whites > 0) {
             this.score.whites += scoreDiff.whites;
@@ -125,6 +153,10 @@ class MyStatePlaying extends MyState {
         }
     }
 
+    /**
+     * @method updateTimeLeft
+     * Updates time left of playing user
+     */
     updateTimeLeft() {
         this.playTimeLeft--;
         if (this.playTimeLeft >= 0)
@@ -139,6 +171,10 @@ class MyStatePlaying extends MyState {
         }
     }
 
+    /**
+     * @method setActivePlayerMenu
+     * Activates the score board the current player
+     */
     setActivePlayerMenu(player) {
         if (this.timeLeftInterval) throw new Error("Trying to set new interval when an interval was already set.");
         this.timeLeftInterval = setInterval(this.updateTimeLeft.bind(this), 1000);
@@ -147,10 +183,18 @@ class MyStatePlaying extends MyState {
         this.activeMenu.menu.setButtonValue("playTimeLeft", "30s");
     }
 
+    /**
+     * @method addUndoButton
+     * Adds undo button to interface
+     */
     addUndoButton() {
         this.undoButton = this.scene.addInterfaceField(this.game, 'undo', 'Undo last move');
     }
 
+    /**
+     * @method removeUndoButton
+     * Removes the undo button from the interface
+     */
     removeUndoButton() {
         if (this.undoButton) {
             this.scene.removeInterfaceField(this.undoButton);

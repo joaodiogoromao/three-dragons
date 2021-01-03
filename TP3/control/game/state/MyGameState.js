@@ -1,4 +1,10 @@
 
+/**
+ * @class MyGameState
+ * Represents a state of the playing game
+ * @param {MyScene} scene
+ * @param {MyGame} game
+ */
 class MyGameState {
     constructor(scene, game) {
 		if (this.constructor == MyGameState) {

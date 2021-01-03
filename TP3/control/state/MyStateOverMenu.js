@@ -1,3 +1,9 @@
+/**
+ * @class MyStateOverMenu
+ * State of the program where the game has finished
+ * Redirects user either to main menu or game movie
+ * Displays the winner
+ */
 class MyStateOverMenu extends MyState{
     constructor(scene, gameOrchestrator, winner, history) {
         super(scene, gameOrchestrator);
@@ -21,6 +27,10 @@ class MyStateOverMenu extends MyState{
         this.gameOrchestrator.setState(new MyStateMainMenu(this.scene, this.gameOrchestrator));
     }
 
+    /**
+     * @method seeGameMovie
+     * Advances to game movie state
+     */
     seeGameMovie() {
         this.scene.game.board.reset();
         this.scene.setGameCamera();
@@ -36,6 +46,10 @@ class MyStateOverMenu extends MyState{
         }
     }
 
+    /**
+     * @method display
+     * displays the game over menu
+     */
     display() {
         if (!this.setLights) {
             this.scene.setLights(this.scene.menus.lights);
@@ -44,6 +58,10 @@ class MyStateOverMenu extends MyState{
         this.menu.display();
     }
 
+    /**
+     * @mthod update
+     * Updates the game over controller
+     */
     update() {
         this.menuController.update();
     }
