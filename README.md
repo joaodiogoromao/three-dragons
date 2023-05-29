@@ -1,3 +1,11 @@
+# Three Dragons
+
+A WebGL implementation of the [Three Dragons](https://boardgamegeek.com/boardgame/306972/three-dragons) board game. A Prolog server controls the game logic (valid moves, single-player mode against the computer with different difficulties), and the graphical interface displays the game scene with custom 3D objects, animations, and shaders and allows the user to interact with the board using the mouse, undo plays, and more.
+
+![Three Dragons](./three-dragons-demo.gif)
+
+---
+
 # LAIG 2020/2021
 
 ## Group T07G04
